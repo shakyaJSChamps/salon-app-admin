@@ -4,9 +4,9 @@ import Paper from "@mui/material/Paper";
 import { Row, Col, Container } from "react-bootstrap";
 function Login() {
   return (
-    <div className="login-form">
+    <div className="container-fluid">
+         <div className="login-form">
       <div className="image ">
-        {/* <img src={image} alt="bg-img.png" /> */}
         <Container className="login-page">
           <Row>
             <Col md={6} sm={12}>
@@ -80,6 +80,7 @@ function Login() {
           </Row>
         </Container>
       </div>
+    </div>
     </div>
   );
 }
