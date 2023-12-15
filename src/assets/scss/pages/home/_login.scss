@@ -1,266 +1,136 @@
-// body {
-//     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(100%, rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url("../../../image/bg-img.png");
-//     background-image: linear-gradient(rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5) 100%), url("../../../image/bg-img.png");
-//   }
-  .login-form {
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(100%, rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url("../../../image/bg-img.png");
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5) 100%), url("../../../image/bg-img.png");
-    background-size: cover;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.stylarx-page {
+  width: 100%;
+  height: 680px;
+  background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(100%, rgba(0, 0, 0, 0.5)),
+      to(rgba(0, 0, 0, 0.5))
+    ),
+    url("../../../image/bg-img.png");
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.5) 100%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    url("../../../image/bg-img.png");
+  background-size: cover;
+}
+/* login-form-start */
+.paper {
+  width: 540px;
+  height: 570px;
+  border-radius: 40px !important;
+}
+.paper h4 {
+  margin-top: 43px;
+  margin-left: 44px;
+}
+.sign-account {
+  margin-top: 46px;
+  font-size: 12px !important;
+  color: gray;
+}
+.sign-up {
+  color: rgb(103, 146, 103);
+}
+.paper h1 {
+  margin-top: 15px;
+  margin-left: 45px;
+  font-weight: 700;
+  font-size: 45px;
+}
+.form {
+  margin-left: 60px;
+  margin-top: 30px;
+}
+.text {
+  font-weight: 600;
+}
+.input {
+  margin-top: 15px;
+  width: 420px;
+  height: 55px;
+  border-radius: 10px;
+  padding-left: 25px;
+  border: 1px solid rgb(46, 182, 245);
+}
+.checkbox {
+  margin-top: 25px;
+  margin-left: 60px;
+}
+.para {
+  font-size: 15px !important;
+  color: rgb(126, 186, 186);
+  font-weight: 400;
+  margin-left: 90px;
+  margin-top: 45px;
+}
+.button {
+  margin-left: 230px;
+  width: 255px;
+  height: 50px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-family: 600;
+}
+.heading{
+  color: #fff;
+  font-size: 75px;
+  text-align: center;
+  line-height: 105px;
+  letter-spacing: -1.796193242073059px;
+}
+.second-para{
+  font-size: 27px;
+  font-weight: 500;
+  font-family: sans-serif;
+  color: #fff;
+}
+.stylrax{
+  margin-top: -15px;
+}
+@media screen and (max-width:1155px){
+  .heading{
+    font-size: 50px;
   }
-  .image img {
-    width: 100%;
-    height: 620px;
-  }
-  .image {
-    position: relative;
-  }
-  /* login-form-start */
-  .paper {
-    position: absolute;
-    width: 540px;
-    top: 20px;
-    left: 74px;
-    height: 570px;
-    border-radius: 40px !important;
-  }
-  .paper h4 {
-    margin-top: 43px;
-    margin-left: 44px;
-  }
-  .paper p {
-    margin-top: 40px;
-    margin-left: 80px;
-    left: 10px;
-    font-size: 25px;
-    font-weight: 500;
-  }
-  .paper span {
-    font-weight: bolder;
-  }
-  .paper h1 {
-    /* margin-top: 25px; */
-    margin-left: 45px;
-    font-weight: 700;
-    font-size: 45px;
-  }
-  .sign-account {
-    margin-top: 46px;
-    font-size: 12px !important;
-    color: gray;
-  }
-  .sign-up {
-    color: rgb(103, 146, 103);
-  }
-  .form {
-    margin-left: 60px;
-    margin-top: 30px;
-  }
-  .text {
-    font-weight: 600;
-  }
-  .input {
-    margin-top: 15px;
-    width: 420px;
-    height: 55px;
-    border-radius: 10px;
-    padding-left: 25px;
-    border: 1px solid rgb(46, 182, 245);
-  }
-  .checkbox {
-    margin-top: 25px;
-    margin-left: 60px;
-  }
-  .para {
-    font-size: 15px !important;
-    color: rgb(126, 186, 186);
-    font-weight: 400;
-    margin-left: 60px;
-  }
-  .button {
-    margin-left: 230px;
-    width: 255px;
-    height: 50px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: black;
-    color: white;
-    font-family: 600;
-  }
-  /* login-form-end */
-  /* text-section-start */
-  .login-form {
-    height: 620px;
-  }
-  .second-section {
-    margin-top: 160px;
-    margin-left: 60px;
-    color: white;
-  }
-  .heading {
-    font-family: Roboto;
-    font-size: 90px;
-    font-weight: 500;
-    line-height: 105px;
-    letter-spacing: -1.796193242073059px;
+  .stylrax{
     text-align: center;
   }
-  .stylrax {
-    font-family: impact, sans-serif;
-    font-size: 90px;
-    margin-left: -50px;
+  .stylrax img{
+    width: 400px;
   }
-  .stylrax img {
-    width: 569.78px;
-    height: 62.95px;
+  .second-para{
+    font-size: 23px;
   }
-  .second-para {
-    margin-top: 20px;
-    font-size: 27px;
-    font-weight: 500;
-    margin-left: -47px;
-    font-family: sans-serif;
+}
+@media screen and (max-width:992px){
+  .stylarx-page {
+    height: 900px;
   }
-  @media only screen and (max-width: 1230px) {
-    .stylrax img {
-      width: 445.78px;
-      margin-left: 60px;
-    }
-    .second-para {
-      margin-left: 30px;
-      font-size: 26px;
-    }
+  .stylarx-m {
+    flex-direction: column-reverse;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  @media only screen and (max-width: 1200px) {
-    .heading {
-      font-size: 60px;
-    }
-    .second-para {
-      margin-top: -14px;
-      font-size: 21px;
-    }
+  .paper{
+    width: 100%;
   }
-  @media only screen and (max-width: 1100px) {
-    .login-form{
-      height: 938px;
-    }
-    .second-section {
-      text-align: center;
-      margin-left: -500px;
-    }
-    .paper {
-      margin-top: 335px;
-      margin-left: 215px;
-    }
-    .heading {
-      margin-top: -120px;
-      font-size: 80px;
-    }
+  .form{
+    width: 100%;
+    margin-left: 0;
   }
-  @media only screen and (max-width: 1045px) {
-    .paper {
-      margin-left: 185px;
-    }
+  .button{
+    margin-left: 155px;
   }
-  @media only screen and (max-width: 991px) {
-    .second-section {
-      margin-left: -270px;
-    }
-    .paper {
-      margin-left: 155px;
-    }
-  }
-  @media only screen and (max-width: 900px) {
-    .paper {
-      margin-left: 100px;
-    }
-    .second-section {
-      margin-left: -384px;
-    }
-  }
-  @media only screen and (max-width: 800px) {
-    .paper {
-      margin-left: 60px;
-    }
-    .second-section {
-      margin-left: -360px;
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .second-section {
-      margin-left: -50px;
-    }
-    .paper {
-      margin-left: 25px;
-    }
-  }
-  @media only screen and (max-width: 700px) {
-    .paper {
-      margin-left: -1px;
-    }
-  }
-  @media only screen and (max-width: 690px) {
-    .second-section {
-      margin-left: -35px;
-    }
-  }
-  @media only screen and (max-width: 670px) {
-    .paper {
-      margin-left: -10px;
-    }
-  }
-  @media only screen and (max-width: 600px) {
-    .paper {
-      margin-left: -42px;
-    }
-    .second-section {
-      margin-left: 0px;
-    }
-  }
-  @media only screen and (max-width: 570px) {
-    .second-section {
-      margin-left: 10px;
-    }
-  }
-  @media only screen and (max-width: 575px) {
-    button {
-      margin-top: -15px;
-    }
-    .paper p {
-      margin-top: 11px;
-      margin-left: 345px;
-    }
-    .second-section {
-      margin-left: 70px;
-    }
-    .paper {
-      height: 600px;
-    }
-    .sign-account {
-      margin-left: 360px;
-      margin-top: -30px;
-    }
-  }
-  @media only screen and (max-width: 458px) {
-    .heading {
-      font-size: 70px;
-    }
-  }
-  @media only screen and (max-width: 425px) {
-    .second-para {
-      font-size: 20px;
-    }
-  }
-  @media only screen and (max-width: 410px) {
-    .heading {
-      font-size: 50px;
-    }
-    .second-para {
-      font-size: 18px;
-    }
-  }
-  @media only screen and (max-width: 410px) {
-    .second-para {
-      font-size: 15px;
-    }
-  }
+}
+
