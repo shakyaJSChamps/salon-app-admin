@@ -4,25 +4,25 @@ import Paper from "@mui/material/Paper";
 import { Row, Col, Container } from "react-bootstrap";
 function Login() {
   return (
-    <div className="stylarx-page">
+    <div className="login-page">
       <Container fluid>
-        <Row className="stylarx-m">
-          <Col md={6} sm={12} className="p-0 d-flex justify-content-center align-items-center mt-5 ">
+        <Row className="vh-100">
+          <Col md={6} sm={12} className="p-0 d-flex justify-content-center align-items-center  ">
             <Paper className="paper" elevation={3}>
               <Container className="p-0">
                 <Row className=" m-0 p-0">
-                  <Col sm={8} className="p-0">
+                  <Col sm={8} className="p-0 mt-4">
                     <h4>
                       Welcome to <span>STYLRAX</span>
                     </h4>
                   </Col>
-                  <Col sm={4} className="p-0 d-flex justify-content-center align-itemscenter">
+                  <Col sm={4} className="p-0 d-flex justify-content-center align-items-center mt-4">
                     <h6 className="sign-account">
                       No Account? <br />
                       <span className="sign-up">Sign up</span>
                     </h6>
                   </Col>
-                  <Col className="p-0">
+                  <Col className="p-0 mt-3">
                     <h1>Sign in</h1>
                   </Col>
                 </Row>
@@ -46,12 +46,12 @@ function Login() {
               </form>
               <Container className="p-0">
                 <Row className=" m-0 p-0">
-                  <Col sm={6} className="p-0">
+                  <Col sm={6} className="p-0  mt-3">
                     <input className="checkbox" type="checkbox" />
                     <label className="px-1">Remember me?</label>
                   </Col>
                   <Col sm={6} className="p-0">
-                    <p className="para">Forgot Password</p>
+                    <p className="para mt-4">Forgot Password</p>
                   </Col>
                 </Row>
               </Container>
