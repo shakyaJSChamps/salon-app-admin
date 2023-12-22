@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: $font-poppins;
 }
 .login-page {
   width: 100%;
@@ -21,26 +22,34 @@
     url("../../../image/bg-img.png");
   background-size: cover;
   .paper {
+    height: 76vh;
     padding-bottom: 10px;
     border-radius: 40px !important;
-    h4 {
+    p {
+      font-weight: 500;
       margin-left: 15px;
+      font-size: 20px;
+      color: $color-black;
+      span img {
+        width: 105px;
+        height: 19px;
+      }
     }
     .sign-account {
       font-size: 12px !important;
       color: $color-grey;
     }
     .sign-up {
-      color:$color-light-green;
+      color: $color-light-green;
     }
     h1 {
       margin-left: 25px;
-      font-weight: 700;
+      font-weight: 500;
       font-size: 45px;
     }
     .form {
       margin-left: 38px;
-      margin-top: 30px;
+      margin-top: 25px;
     }
     .text {
       font-weight: 600;
@@ -57,7 +66,7 @@
     }
     .para {
       font-size: 15px !important;
-      color:$color-Blue-Smoke;
+      color: $color-Blue-Smoke;
       font-weight: 400;
       margin-left: 90px;
     }
@@ -65,45 +74,43 @@
       margin-left: 210px;
       width: 255px;
       height: 45px;
-      margin-top: 10px;
+      margin-top: 9px;
       border-radius: 10px;
       border: none;
-      background-color:$color-black;
-      color:$color-white;
-      font-family: 600;
+      background-color: $color-black;
+      color: $color-white;
     }
   }
-  .second-section{
-    .heading{
-      color:$color-white;
-      font-size: 75px;
+  .second-section {
+    .heading {
+      color: $color-white;
+      font-weight: 600;
+      letter-spacing: 1;
+      font-size: 80px;
       text-align: center;
       line-height: 105px;
-      @include for-desktop{
+      @include for-desktop {
         font-size: 50px;
       }
     }
-    .second-para{
+    .second-para {
       font-size: 27px;
       font-weight: 500;
-      font-family: sans-serif;
-      color:$color-white;
-      @include for-desktop{
+      color: $color-white;
+      @include for-desktop {
         font-size: 23px;
       }
     }
-    .stylrax{
+    .stylrax {
       margin-top: -15px;
-      @include for-desktop{
+      @include for-desktop {
         text-align: center;
       }
-      img{
-        @include for-desktop{
+      img {
+        @include for-desktop {
           width: 400px;
         }
       }
     }
-    
   }
 }
-
