@@ -60,7 +60,7 @@ function Login() {
           </Col>
 
           <Col sm={6} className="p-0">
-            <Link to={"/user-forget-password"}
+            <Link to={"/user/forget-password"}
               className="para mt-4"
             >
               Forgot Password

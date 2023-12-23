@@ -12,7 +12,7 @@ const Login = lazy(() => import("../src/Component/Login"));
 const User = lazy(() => import("../src/Component/User"));
 const ForgetPassword = lazy(() => import("../src/Component/ForgetPassword"));
 
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 const router = createBrowserRouter([
   {
@@ -22,12 +22,12 @@ const router = createBrowserRouter([
         <DashBoard />
       </Suspense>
     ) : (
-      <Navigate to="/user" />
+      <Navigate to="/user/login" />
     ),
   },
   {
     path: "/user",
-    element: isLoggedIn ? (
+    element: !isLoggedIn ? (
       <Suspense fallback={<div>loading...</div>}>
         <User />
       </Suspense>
