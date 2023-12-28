@@ -17,13 +17,13 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Dlogo from "../assets/image/d-logo.png";
+import Profile from "../page/Profile";
 
 const drawerWidth = 240;
 
-
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  border: "none", 
+  border: "none",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -41,7 +41,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  border: "none", 
+  border: "none",
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -51,6 +51,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
+  borderLeft:"none",
 }));
 
 const AppBar = styled(MuiAppBar, {
@@ -104,7 +105,7 @@ function Dashboard() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -124,6 +125,7 @@ function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
+          <span style={{color:"black"}} id="rightCornerSpan"><Profile /></span>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -132,11 +134,7 @@ function Dashboard() {
             <img src={Dlogo} alt="dlogo.png" />
           </div>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <MenuIcon/>
-            )}
+            {theme.direction === "rtl" ? <ChevronRightIcon /> : <MenuIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />

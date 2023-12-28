@@ -22,8 +22,7 @@
     url("../../../image/bg-img.png");
   background-size: cover;
   .paper {
-    height: 95vh;
-    width: 515px;
+    height: 75vh;
     padding-bottom: 10px;
     border-radius: 40px !important;
     @include for-desktop{
@@ -51,39 +50,35 @@
       font-weight: 500;
       font-size: 45px;
     }
-    .form {
-      margin-left: 38px;
-      margin-top: 25px;
-    }
-    .text {
-      font-weight: 600;
-    }
-    .input {
-      width: 420px;
-      height: 55px;
-      border-radius: 10px;
-      padding-left: 25px;
-      border: 1px solid $color-Dodger-Blue;
-    }
-    .checkbox {
-      margin-left: 50px;
-    }
-    .para {
-      font-size: 15px !important;
-      color: $color-Blue-Smoke;
-      text-decoration-line: none;
+    .main-form {
+      .form {
+        .text {
+          font-weight: 600;
+        }
+        .input {
+          width: 420px;
+          height: 55px;
+          border-radius: 10px;
+          padding-left: 25px;
+          border: 1px solid $color-Dodger-Blue;
+        }
+        .para {
+          font-size: 15px !important;
+          color: $color-Blue-Smoke;
+          text-decoration-line: none;
       font-weight: 400;
-      margin-left: 90px;
-    }
-    .button {
-      margin-left: 210px;
-      width: 255px;
-      height: 45px;
-      margin-top: 9px;
-      border-radius: 10px;
-      border: none;
-      background-color: $color-black;
-      color: $color-white;
+        }
+        .button {
+          margin-left: 190px;
+          width: 230px;
+          height: 45px;
+          margin-top: 9px;
+          border-radius: 10px;
+          border: none;
+          background-color: $color-black;
+          color: $color-white;
+        }
+      }
     }
   }
   .second-section {
