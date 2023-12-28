@@ -1,0 +1,49 @@
+.paper{
+    .otp-field{
+        width:70px ;
+        height: 70px;
+        margin: 10px;
+        font-size: 30px;
+        text-align: center;
+        border: 1px solid rgba(155, 173, 202, 1);
+        border-radius: 7px;
+        cursor: not-allowed;
+        pointer-events: none;
+        &:focus{
+            outline: none;
+        }
+        &:nth-child(1){
+            cursor: pointer;
+            pointer-events: all;
+        }
+    }
+    .v-timer{
+        text-align: center;
+        padding-right: 35px;
+        color:$color-red;
+        @include for-desktop{
+            padding-right: 70px;
+        }
+    }
+    .v-btn{
+        margin-left: 60px;
+        width: 370px;
+        @include for-desktop{
+            margin-left: 32px;
+        }
+    }
+    .resend-text{
+        margin-top: 10px;
+        font-size: 12px;
+        font-weight: 200;
+        color: rgba(130, 130, 130, 1);
+        text-align: center;
+        @include for-desktop{
+            margin-right: 42px;
+        }
+    }
+    .resend-otp{
+        color: rgba(242, 69, 28, 1);
+        text-align: center;
+    }
+}

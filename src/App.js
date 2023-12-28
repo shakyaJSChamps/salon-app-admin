@@ -11,6 +11,9 @@ const DashBoard = lazy(() => import("../src/page/Dashboard"));
 const Login = lazy(() => import("../src/Component/Login"));
 const User = lazy(() => import("../src/Component/User"));
 const ForgetPassword = lazy(() => import("../src/Component/ForgetPassword"));
+const Verification = lazy(() => import("../src/Component/Verification"));
+const NewPassword = lazy(() => import("../src/Component/NewPassword"));
+const ChangedPassword = lazy(() => import("../src/Component/ChangedPassword"));
 
 const isLoggedIn = false;
 
@@ -48,6 +51,30 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <ForgetPassword />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/user/verification",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <Verification />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/user/new-password",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <NewPassword />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/user/changed-password",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <ChangedPassword />
           </Suspense>
         ),
       },

@@ -22,9 +22,13 @@
     url("../../../image/bg-img.png");
   background-size: cover;
   .paper {
-    height: 76vh;
+    height: 95vh;
+    width: 515px;
     padding-bottom: 10px;
     border-radius: 40px !important;
+    @include for-desktop{
+      height: 56vh;
+    }
     p {
       font-weight: 500;
       margin-left: 15px;
@@ -67,6 +71,7 @@
     .para {
       font-size: 15px !important;
       color: $color-Blue-Smoke;
+      text-decoration-line: none;
       font-weight: 400;
       margin-left: 90px;
     }

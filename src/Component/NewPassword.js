@@ -1,9 +1,9 @@
 import React from 'react'
 import Dlogo from "../assets/image/d-logo.png";
-import { Row, Col, Container } from "react-bootstrap";
+import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 
-function ForgetPassword() {
+function NewPassword() {
     return (
         <>
             <Container className="p-0">
@@ -17,27 +17,37 @@ function ForgetPassword() {
                         </h6>
                     </Col>
                     <Col className="p-0">
-                        <h2 className='for-password'>Forgot <br />
-                            Password</h2>
+                        <h2 className='for-password'>New Password</h2>
                     </Col>
                 </Row>
             </Container>
+            <h3 className='new-password-para'>Set up the New Password for your Account.</h3>
             <form className="form">
                 <label className="text Forget_text">
-                    Enter your registered email address for the <br />
-                    verification to get the 4 digits code.
-                    <br /><br/>
+                    Enter new password
+                    <br />
                     <input
                         className="input"
-                        placeholder="EMAIL ADDRESS"
+                        type='password'
+                        placeholder="8 symbls at least"
+                    />
+                    <br /><br />
+                </label>
+                <label className="text Forget_text">
+                    Confirm password
+                    <br />
+                    <input
+                        className="input"
+                        type='password'
+                        placeholder="8 symbls at least"
                     />
                 </label>
             </form>
             <button className=" Forget_btn" type="button">
-                <Link className='continue-link link-style' to='/user/verification'>CONTINUE</Link>
+                <Link className='continue-link link-style' to='/user/changed-password'>UPDATE PASSWORD</Link>
             </button>
         </>
-    );
+    )
 }
 
-export default ForgetPassword
+export default NewPassword
