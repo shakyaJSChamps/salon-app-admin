@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import "../src/assets/scss/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import UserManagement from "./page/UserManagement";
+import Main from "./page/Main";
 
 const DashBoard = lazy(() => import("../src/page/Dashboard"));
 const Login = lazy(() => import("../src/Component/Login"));
@@ -22,11 +24,20 @@ const router = createBrowserRouter([
     path: "/",
     element: isLoggedIn ? (
       <Suspense fallback={<div>loading...</div>}>
-        <DashBoard />
+        <Main />
       </Suspense>
     ) : (
       <Navigate to="/user/login" />
     ),
+    children:[
+      {path: "",
+      element: <Main />,
+      children:[
+        { path: "dashboard", element: <DashBoard /> },
+        { path: "user-management", element: <UserManagement /> },
+      ]
+    }
+    ]
   },
   {
     path: "/user",

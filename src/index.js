@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import theme from './theme';
 
+const useStyles = makeStyles((theme) =>({
+
+}));
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
+  
   <>
+  <ThemeProvider theme={theme}>
     <App />
+  </ThemeProvider>
   </>
 );
 
