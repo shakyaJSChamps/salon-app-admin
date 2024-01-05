@@ -1,65 +1,97 @@
-import {
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import _ from "lodash";
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaChartPie } from "react-icons/fa";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { MdOutlineSupervisorAccount } from "react-icons/md";
+import { MdOutlineContentCut } from "react-icons/md";
+import { MdOutlineAccessibility } from "react-icons/md";
+import { MdOutlineContentPaste } from "react-icons/md";
+import { MdOutlineConfirmationNumber } from "react-icons/md";
+import { RiBarChartFill } from "react-icons/ri";
+import { MdOutlineContactMail } from "react-icons/md";
+import { MdOutlinePayment } from "react-icons/md";
+import { IoMdNotifications } from "react-icons/io";
+import { MdSettingsSuggest } from "react-icons/md";
 
-const Sidebar = (props) => {
-  const { open } = props;
-
-  const sideNavItems = [
+const Sidebar=(props)=> {
+  const menus = [
     {
-      label: "Dashboard",
       icon: <FaChartPie />,
-      slug: "dashboard",
+      slug: "/",
+      label: "Dashboard",
     },
     {
+      icon: <MdOutlineSupervisorAccount />,
+      slug: "/user-management",
       label: "User Management",
-    //   icon: <ClassIcon />,
-      slug: "user-management",
+    },
+    {
+      icon: <MdOutlineContentCut />,
+      slug: "/salon-management",
+      label: "Salon Management",
+    },
+    {
+      icon: <MdOutlineAccessibility />,
+      slug: "/freelance-management",
+      label: "Freelance Management",
+    },
+    {
+      icon: <MdOutlineContentPaste />,
+      slug: "/service-type-management",
+      label: "Service Type Management",
+    },
+    {
+      icon: <MdOutlineConfirmationNumber />,
+      slug: "/coupon-management",
+      label: "Coupon Management",
+    },
+    {
+      icon: <MdOutlineSupervisorAccount />,
+      slug: "/appointment-management",
+      label: "Appointment Management",
+    },
+    {
+      icon: <RiBarChartFill />,
+      slug: "/sales-person",
+      label: "Sales Person",
+    },
+    {
+      icon: <MdOutlineContactMail />,
+      slug: "/ads-management",
+      label: "ADS Management",
+    },
+    {
+      icon: <MdOutlinePayment />,
+      slug: "/payment-management",
+      label: "Payment Management",
+    },
+    {
+      icon: <IoMdNotifications />,
+      slug: "/notification",
+      label: "Notification",
+    },
+    {
+      icon: <MdSettingsSuggest />,
+      slug: "/setting",
+      label: "Setting",
     },
   ];
   return (
-    <>
-      <List>
-          {_.map(sideNavItems,(item, index) => {
-            console.log("SidenavItem ::>  ", item);
-            return(
-
-            <ListItem key={item.label} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={<Typography>{item.label}</Typography>} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-            )
-          })}
-        </List>
-    </>
+    <ul className="sidebar list-unstyled">
+      {menus.map((item, i) => {
+        return (
+          <li>
+            <Link to={item.slug} className="text-decoration-none text-dark">
+            <div className="side-nav-item">
+              <span className="side-nav-icon m-auto ">{item.icon}</span>
+              {props.toggleSidebar && (
+                <span className="side-nav-label m-auto ps-2 ">{item.label}</span>
+              )}
+            </div>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
-};
-
+}
 export default Sidebar;

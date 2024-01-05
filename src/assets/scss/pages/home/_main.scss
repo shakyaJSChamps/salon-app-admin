@@ -1,26 +1,31 @@
-.css-19z1ozs-MuiPaper-root-MuiAppBar-root {
-    background-color:$color-white !important;
+.cursor-pointer {
+  cursor: pointer;
 }
-.css-78trlr-MuiButtonBase-root-MuiIconButton-root {
-    color: $color-black !important;
-}
-.css-1191obr-MuiPaper-root-MuiAppBar-root {
-    background-color:$color-white !important;
-}
-.css-19z1ozs-MuiPaper-root-MuiAppBar-root{
-    box-shadow: none !important;
-}
-.css-1191obr-MuiPaper-root-MuiAppBar-root{
-    box-shadow: none !important;
-}
-#rightCornerSpan {
-    position: fixed;
-    top: 10px; 
-    right: 10px;
-    background-color: #fff;
+.nav {
+  height: 60px;
+  .second-half{
+    margin-right: 25px;
   }
-.box-component{
-    background-image: url("../../../image/bg-img.png");
-    height: 100vh;
-    background-repeat: no-repeat;
+}
+.content {
+  width: 100%;
+  background-size: cover;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(236, 241, 228, 0.9),
+      rgba(78, 82, 81, 0.9)
+    ),
+    url("../../../image/bg-img.png");
+}
+.w-24{
+  width: 24%;
+}
+.w-6{
+  width: 6%;
+}
+.w-76{
+  width: 76%;
+}
+.w-94{
+  width: 94%;
 }

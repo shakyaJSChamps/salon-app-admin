@@ -22,7 +22,6 @@ const Profile = () => {
   };
 
   return (
-    <>
       <div className="profile-box" style={{
         display: "flex",
         justifyContent: "center",
@@ -62,7 +61,7 @@ const Profile = () => {
         <SettingsOutlinedIcon />
         </div>
       </div>
-    </>
+
   );
 };
 
