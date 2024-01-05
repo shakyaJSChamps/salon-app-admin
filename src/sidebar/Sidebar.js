@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaChartPie } from "react-icons/fa";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { MdOutlineContentCut } from "react-icons/md";
@@ -79,15 +79,15 @@ const Sidebar=(props)=> {
     <ul className="sidebar list-unstyled">
       {menus.map((item, i) => {
         return (
-          <li>
-            <Link to={item.slug} className="text-decoration-none text-dark">
+          <li key={i}>
+            <NavLink to={item.slug} className="text-decoration-none text-dark " exact>
             <div className="side-nav-item">
-              <span className="side-nav-icon m-auto ">{item.icon}</span>
+              <span className="side-nav-icon m-auto " >{item.icon}</span>
               {props.toggleSidebar && (
                 <span className="side-nav-label m-auto ps-2 ">{item.label}</span>
               )}
             </div>
-            </Link>
+            </NavLink>
           </li>
         );
       })}

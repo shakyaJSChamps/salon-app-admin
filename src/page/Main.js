@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  Outlet } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
@@ -6,10 +6,27 @@ import Sidebar from "../sidebar/Sidebar";
 import Dlogo from "../assets/image/d-logo.png";
 import Profile from "./Profile";
  
-const screenHeight = window.innerHeight;
-const mainAreaHeight = screenHeight - 60;
+// const screenHeight = window.innerHeight;
+// const mainAreaHeight = screenHeight - 60;
  const Main = () => {
   const [toggleSidebar, setToggleSidebar] = useState(true);
+  const [mainAreaHeight, setMainAreaHeight] = useState(0);
+  
+  useEffect(() => {
+    const updateMainAreaHeight = () => {
+      const screenHeight = window.innerHeight;
+      const updatedMainAreaHeight = screenHeight - 60;
+      setMainAreaHeight(updatedMainAreaHeight);
+    };
+      // Call the function on component mount and window resize
+      updateMainAreaHeight();
+      window.addEventListener("resize", updateMainAreaHeight);
+  
+      // Cleanup event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", updateMainAreaHeight);
+      };
+    }, []);
 
   return (
     <>
