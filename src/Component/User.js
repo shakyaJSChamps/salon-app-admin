@@ -24,7 +24,7 @@ function User() {
             sm={12}
             className="p-0 d-flex justify-content-center align-items-center  "
           >
-            <Paper className="paper" elevation={3}>
+            <Paper className="paper px-3" elevation={3}>
               <Outlet />
             </Paper>
           </Col>
