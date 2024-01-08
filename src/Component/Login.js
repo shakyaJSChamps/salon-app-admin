@@ -1,11 +1,12 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import Dlogo from "../assets/image/d-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function Login() {
+  const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
@@ -37,12 +38,14 @@ function Login() {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values, action) => {
-      // console.log("Value :: ", values);
+      console.log("Value :: ", values);
       setRememberMe(false);
       action.resetForm();
+      localStorage.setItem('token', 'myValue');
+      navigate("/");
     },
   });
-  console.log("Error ::>", errors);
+  // console.log("Error ::>", errors);
   return (
     <>
       <Container className="p-0">
