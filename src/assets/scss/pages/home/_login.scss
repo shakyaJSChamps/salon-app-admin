@@ -22,7 +22,8 @@
     url("../../../image/bg-img.png");
   background-size: cover;
   .paper {
-    height: 75vh;
+    height: 85vh;
+    width: 500px;
     padding-bottom: 10px;
     border-radius: 40px !important;
     @include for-desktop{

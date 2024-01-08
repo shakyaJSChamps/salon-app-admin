@@ -15,7 +15,7 @@ const Verification = lazy(() => import("../src/Component/Verification"));
 const NewPassword = lazy(() => import("../src/Component/NewPassword"));
 const ChangedPassword = lazy(() => import("../src/Component/ChangedPassword"));
 
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 const router = createBrowserRouter([
   {

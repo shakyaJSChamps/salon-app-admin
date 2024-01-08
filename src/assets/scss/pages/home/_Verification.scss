@@ -17,12 +17,17 @@
             pointer-events: all;
         }
     }
+    .otp-input{
+        @include for-desktop{
+            margin-left: 42px;
+        }
+    }
     .v-timer{
         text-align: center;
-        padding-right: 35px;
+        padding-right: 14px;
         color:$color-red;
         @include for-desktop{
-            padding-right: 70px;
+            padding-right: 58px 
         }
     }
     .v-btn{
@@ -38,8 +43,9 @@
         font-weight: 200;
         color: rgba(130, 130, 130, 1);
         text-align: center;
+        margin-right: 14px;
         @include for-desktop{
-            margin-right: 42px;
+            margin-right: 52px;
         }
     }
     .resend-otp{

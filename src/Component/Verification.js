@@ -37,7 +37,7 @@ function Verification() {
                 </Row>
             </Container>
             <form className="form">
-                <label className="text Forget_text">
+                <label className="text Forget_text otp-input">
                     Enter the 4 digit code that is send on your <br />
                     registered email address.
                     <br />
