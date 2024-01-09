@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   createBrowserRouter,
   Navigate,
@@ -27,6 +27,7 @@ const NewPassword = lazy(() => import("../src/Component/NewPassword"));
 const ChangedPassword = lazy(() => import("../src/Component/ChangedPassword"));
 
 const isLoggedIn = localStorage.getItem("token");
+
 
 const router = createBrowserRouter([
   {
@@ -204,5 +205,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  useEffect(() => {
+    console.log("");
+  }, [isLoggedIn])
+  
   return <RouterProvider router={router} />;
 }
