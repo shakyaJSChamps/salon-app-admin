@@ -127,7 +127,7 @@ function Login() {
               <label className="px-1">Remember me?</label>
             </div>
             <div className="forget-link">
-              <Link to={"/user/forget-password"} className="para mt-4">
+              <Link to={"/admin/forget-password"} className="para mt-4">
                 Forgot Password
               </Link>
             </div>

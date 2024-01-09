@@ -1,20 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 import { Row, Col, Container } from "react-bootstrap";
-import ForgetPassword from "./ForgetPassword";
 import image from "../assets/image/logo.png";
-import Dlogo from "../assets/image/d-logo.png";
 import { Outlet } from "react-router-dom";
-// import { Outlet, Route, useNavigate } from "react-router-dom";
 
-function User() {
-  const [showForgetPassword, setShowForgetPassword] = useState(false);
-  // const navigate = useNavigate();
+function Admin() {
 
-  const handleForgetPasswordClick = () => {
-    setShowForgetPassword(true);
-    // navigate("/user/forget-password");
-  };
   return (
     <div className="login-page">
       <Container fluid>
@@ -54,4 +45,4 @@ function User() {
     </div>
   );
 }
-export default User;
+export default Admin;

@@ -37,7 +37,7 @@ function ForgetPassword() {
             className="p-0 d-flex justify-content-center align-items-center mt-4"
           >
             <h6 className="sign-account back-sign">
-              <Link to="/user/login" className="link-style">
+              <Link to="/admin/login" className="link-style">
                 Back to Sign In
               </Link>
             </h6>
@@ -72,7 +72,7 @@ function ForgetPassword() {
             <button className=" Forget_btn" type="button">
               <Link
                 className="continue-link link-style"
-                to="/user/verification"
+                to="/admin/verification"
               >
                 CONTINUE
               </Link>

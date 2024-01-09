@@ -6,22 +6,21 @@ import {
 } from "react-router-dom";
 import "../src/assets/scss/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-import UserManagement from "./page/UserManagement";
-import SalonManagement from "./page/SalonManagement";
-import FreelanceManagement from "./page/FreelanceManagement";
-import ServiceTypeMan from "./page/ServiceTypeMan";
-import CouponManagement from "./page/CouponManagement";
-import AppointmentMan from "./page/AppointmentMan";
-import SalesPerson from "./page/SalesPerson";
-import ADSManagement from "./page/ADSMangement";
-import PaymentMan from "./page/PaymentMan";
-import Notification from "./page/Notification";
-import Setting from "./page/Settings";
-import Main from "../src/page/Main";
-
+const UserManagement = lazy(() => import("./page/UserManagement"));
+const SalonManagement = lazy(() => import("./page/SalonManagement"));
+const FreelanceManagement = lazy(() => import("./page/FreelanceManagement"));
+const ServiceTypeMan = lazy(() => import("./page/ServiceTypeMan"));
+const CouponManagement = lazy(() => import("./page/CouponManagement"));
+const AppointmentMan = lazy(() => import("./page/AppointmentMan"));
+const SalesPerson = lazy(() => import("./page/SalesPerson"));
+const ADSManagement = lazy(() => import("./page/ADSMangement"));
+const PaymentMan = lazy(() => import("./page/PaymentMan"));
+const Notification = lazy(() => import("./page/Notification"));
+const Setting = lazy(() => import("./page/Settings"));
+const Main = lazy(() => import("../src/page/Main"));
 const DashBoard = lazy(() => import("../src/page/Dashboard"));
 const Login = lazy(() => import("../src/Component/Login"));
-const User = lazy(() => import("../src/Component/User"));
+const Admin = lazy(() => import("../src/Component/Admin"));
 const ForgetPassword = lazy(() => import("../src/Component/ForgetPassword"));
 const Verification = lazy(() => import("../src/Component/Verification"));
 const NewPassword = lazy(() => import("../src/Component/NewPassword"));
@@ -37,35 +36,131 @@ const router = createBrowserRouter([
         <Main />
       </Suspense>
     ) : (
-      <Navigate to="/user/login" />
+      <Navigate to="/admin/login" />
     ),
     children: [
-      { path: "/", element: <DashBoard /> },
-      { path: "/user-management", element: <UserManagement /> },
-      { path: "/salon-management", element: <SalonManagement /> },
-      { path: "/freelance-management", element: <FreelanceManagement /> },
-      { path: "/service-type-management", element: <ServiceTypeMan /> },
-      { path: "/coupon-management", element: <CouponManagement /> },
-      { path: "/appointment-management", element: <AppointmentMan /> },
-      { path: "/sales-person", element: <SalesPerson /> },
-      { path: "/ads-management", element: <ADSManagement /> },
-      { path: "/payment-management", element: <PaymentMan /> },
-      { path: "/notification", element: <Notification /> },
-      { path: "/setting", element: <Setting /> },
+      {
+        path: "/",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <DashBoard />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/user-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <UserManagement />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/salon-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <SalonManagement />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/freelance-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <FreelanceManagement />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/service-type-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <ServiceTypeMan />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/coupon-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <CouponManagement />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/appointment-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <AppointmentMan />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/sales-person",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <SalesPerson />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/ads-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <ADSManagement />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/payment-management",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <PaymentMan />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/notification",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <Notification />{" "}
+          </Suspense>
+        ),
+      },
+      {
+        path: "/setting",
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            {" "}
+            <Setting />{" "}
+          </Suspense>
+        ),
+      },
     ],
   },
   {
-    path: "/user",
+    path: "/admin",
     element: !isLoggedIn ? (
       <Suspense fallback={<div>loading...</div>}>
-        <User />
+        <Admin />
       </Suspense>
     ) : (
       <Navigate to="/" />
     ),
     children: [
       {
-        path: "/user/login",
+        path: "/admin/login",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <Login />
@@ -73,7 +168,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/forget-password",
+        path: "/admin/forget-password",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <ForgetPassword />
@@ -81,7 +176,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/verification",
+        path: "/admin/verification",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <Verification />
@@ -89,7 +184,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/new-password",
+        path: "/admin/new-password",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <NewPassword />
@@ -97,7 +192,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/changed-password",
+        path: "/admin/changed-password",
         element: (
           <Suspense fallback={<div>loading...</div>}>
             <ChangedPassword />

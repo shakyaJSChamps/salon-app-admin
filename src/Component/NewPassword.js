@@ -13,7 +13,7 @@ function NewPassword() {
                     </Col>
                     <Col sm={4} className="p-0 d-flex justify-content-center align-itemscenter">
                         <h6 className="sign-account back-sign">
-                            <Link to='/user/login' className='link-style'>Back to Sign In</Link>
+                            <Link to='/admin/login' className='link-style'>Back to Sign In</Link>
                         </h6>
                     </Col>
                     <Col className="p-0">
@@ -44,7 +44,7 @@ function NewPassword() {
                 </label>
             </form>
             <button className=" Forget_btn" type="button">
-                <Link className='continue-link link-style' to='/user/changed-password'>UPDATE PASSWORD</Link>
+                <Link className='continue-link link-style' to='/admin/changed-password'>UPDATE PASSWORD</Link>
             </button>
         </>
     )
