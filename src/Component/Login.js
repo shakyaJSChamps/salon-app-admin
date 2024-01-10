@@ -28,28 +28,33 @@ function Login() {
   const {
     values,
     errors,
-    handleBlur,
+    touched,
     handleChange,
     handleSubmit,
-    touched,
     isValid,
     dirty,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values, action) => {
-      console.log("Value :: ", values);
-      setRememberMe(false);
-      action.resetForm();
-      localStorage.setItem('token', 'myValue');
-      navigate("/");
+    onSubmit: async (values, { resetForm }) => {
+      console.log("Values :: ", values);
+      try {
+        await validationSchema.validate(values);
+        console.log("Validation passed");
+        setRememberMe(false);
+        resetForm();
+        localStorage.setItem("token", "myValue");
+        navigate("/");
+      } catch (error) {
+        console.error("Validation error:", error.errors);
+      }
     },
   });
-  // console.log("Error ::>", errors);
+
   return (
     <>
       <Container className="p-0">
-        <Row className=" m-0 p-0">
+        <Row className="m-0 p-0">
           <Col sm={8} className="p-0 mt-4">
             <p>
               Welcome to{" "}
@@ -74,7 +79,7 @@ function Login() {
       </Container>
       <div className="main-form d-flex justify-content-center align-items-center">
         <form className="form mt-3 mb-2" onSubmit={handleSubmit}>
-          <label className="text  mb-3">
+          <label className="text mb-3">
             Enter your username or email address
             <br />
             <input
@@ -84,14 +89,10 @@ function Login() {
               id="email"
               value={values.email}
               onChange={handleChange}
-              onBlur={handleBlur}
             />
-            {errors.email && touched.email ? (
-              <>
-                <br />
-                <span className="error text-danger small">{errors.email}</span>
-              </>
-            ) : null}
+            {touched.email && errors.email && (
+              <span className="error text-danger small">{errors.email}</span>
+            )}
           </label>
           <br />
           <label className="text">
@@ -104,16 +105,10 @@ function Login() {
               placeholder="Password"
               value={values.password}
               onChange={handleChange}
-              onBlur={handleBlur}
             />
-            {errors.password && touched.password ? (
-              <>
-                <br />
-                <span className="error text-danger small">
-                  {errors.password}
-                </span>
-              </>
-            ) : null}
+            {touched.password && errors.password && (
+              <span className="error text-danger small">{errors.password}</span>
+            )}
           </label>
           <div className="checkbox-main d-flex justify-content-between mt-3 mb-3">
             <div className="checkbox">
@@ -133,21 +128,23 @@ function Login() {
             </div>
           </div>
           <button
-            className="button"
+            className={`button ${
+              !(isValid && dirty && rememberMe) ? "disable" : ""
+            }`}
             type="submit"
-            disabled={
-              !isValid ||
-              !dirty ||
-              values.email === "" ||
-              values.password === "" ||
-              !rememberMe
-            }
+            disabled={!isValid || !dirty || !rememberMe}
           >
             Sign in
           </button>
+          {(!isValid || !dirty || !rememberMe) && (
+            <div className="error text-danger small mt-2">
+              Please fill in all fields and check the Remember me box.
+            </div>
+          )}
         </form>
       </div>
     </>
   );
 }
+
 export default Login;

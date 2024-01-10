@@ -1,11 +1,13 @@
 import React from "react";
 import Dlogo from "../assets/image/d-logo.png";
 import { Row, Col, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 function ForgetPassword() {
+  const navigate = useNavigate();
+
   const initialValues = {
     email: "",
   };
@@ -14,23 +16,38 @@ function ForgetPassword() {
     email: Yup.string().email().required("Please enter your email"),
   });
 
-  const { values,errors,
+  const {
+    values,
+    errors,
     handleBlur,
     handleChange,
-    handleSubmit,touched} = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log("Values ::>", values);
+    handleSubmit,
+    touched,
+    isValid,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      console.log("Values :: ", values);
+
+      try {
+        await validationSchema.validate(values);
+        console.log("Validation passed");
+        resetForm();
+        console.log("Navigating to /admin/verification");
+        navigate("/admin/verification");
+      } catch (error) {
+        console.error("Validation error:", error.errors);
+      }
     },
   });
 
   return (
     <>
       <Container className="p-0">
-        <Row className=" m-0 p-0">
+        <Row className="m-0 p-0">
           <Col sm={8} className="p-0 mt-4">
-            <img className="d-logo " src={Dlogo} type="d-logo.png" />
+            <img className="d-logo " src={Dlogo} alt="d-logo.png" />
           </Col>
           <Col
             sm={4}
@@ -52,30 +69,35 @@ function ForgetPassword() {
       </Container>
       <div className="main-form d-flex justify-content-center align-items-center">
         <form className="form mt-3 mb-2" onSubmit={handleSubmit}>
-          <label className="text Forget_text  ">
+          <label className="text Forget_text">
             Enter your registered email address for the <br />
             verification to get the 4 digits code.
             <br />
             <br />
-            <input className="input mt-3" name="email" placeholder="EMAIL ADDRESS" id="email"
+            <input
+              className="input mt-3"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="EMAIL ADDRESS"
               value={values.email}
               onChange={handleChange}
-              onBlur={handleBlur} />
-               {errors.email && touched.email ? (
-                <>
+              onBlur={handleBlur}
+            />
+            {errors.email && touched.email && (
+              <>
                 <br />
-                <span className="invalid-feedback text-danger small">{errors.email}</span>
-                </>
-            ) : null}
+                <span className="error text-danger small">{errors.email}</span>
+              </>
+            )}
           </label>
-          <div className=" mt-4">
-            <button className=" Forget_btn" type="button">
-              <Link
-                className="continue-link link-style"
-                to="/admin/verification"
-              >
-                CONTINUE
-              </Link>
+          <div className="mt-4 mb-3">
+            <button
+              className={`forget_btn ${isValid ? "" : "disable"}`}
+              type="submit"
+              disabled={!isValid}
+            >
+              Continue
             </button>
           </div>
         </form>
@@ -83,5 +105,4 @@ function ForgetPassword() {
     </>
   );
 }
-
 export default ForgetPassword;
