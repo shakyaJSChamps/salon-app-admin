@@ -1,53 +1,113 @@
-import React from 'react'
+import React from "react";
 import Dlogo from "../assets/image/d-logo.png";
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Container, Row, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function NewPassword() {
-    return (
-        <>
-            <Container className="p-0">
-                <Row className=" m-0 p-0">
-                    <Col sm={8} className="pt-0 ">
-                        <img className='d-logo' src={Dlogo} type="d-logo.png" />
-                    </Col>
-                    <Col sm={4} className="p-0 d-flex justify-content-center align-itemscenter">
-                        <h6 className="sign-account back-sign">
-                            <Link to='/admin/login' className='link-style'>Back to Sign In</Link>
-                        </h6>
-                    </Col>
-                    <Col className="p-0">
-                        <h2 className='for-password'>New Password</h2>
-                    </Col>
-                </Row>
-            </Container>
-            <h3 className='new-password-para'>Set up the New Password for your Account.</h3>
-            <form className="form">
-                <label className="text Forget_text">
-                    Enter new password
-                    <br />
-                    <input
-                        className="input"
-                        type='password'
-                        placeholder="8 symbls at least"
-                    />
-                    <br /><br />
-                </label>
-                <label className="text Forget_text">
-                    Confirm password
-                    <br />
-                    <input
-                        className="input"
-                        type='password'
-                        placeholder="8 symbls at least"
-                    />
-                </label>
-            </form>
-            <button className=" Forget_btn" type="button">
-                <Link className='continue-link link-style' to='/admin/changed-password'>UPDATE PASSWORD</Link>
+    
+    const navigate = useNavigate();
+
+  const validationSchema = Yup.object().shape({
+    newPassword: Yup.string()
+      .required("Please enter your password")
+      .min(8, "Password must be 8 characters long")
+      .matches(/[0-9]/, "Password requires a number")
+      .matches(/[a-z]/, "Password requires a lowercase letter")
+      .matches(/[A-Z]/, "Password requires an uppercase letter")
+      .matches(/[^\w]/, "Password requires a symbol"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+      .required("Please confirm your password"),
+  });
+
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit, isValid, dirty } = useFormik({
+    initialValues: {
+      newPassword: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values, { resetForm }) => {
+      console.log("Values ::>", values);
+      resetForm();
+      navigate("/admin/changed-password");
+    },
+  });
+
+  return (
+    <>
+      <Container className="p-0 ">
+        <Row className="m-0 p-0 ">
+          <Col sm={8} className="p-0 mt-4 ">
+            <img className="d-logo" src={Dlogo} alt="d-logo.png" />
+          </Col>
+          <Col
+            sm={4}
+            className="p-0 d-flex justify-content-center align-items-center mt-4"
+          >
+            <h6 className="sign-account back-sign">
+              <Link to="/admin/login" className="link-style ">
+                Back to Sign In
+              </Link>
+            </h6>
+          </Col>
+          <Col className="p-0  mt-4">
+            <h2 className="for-password ">New Password</h2>
+          </Col>
+        </Row>
+      </Container>
+      <h3 className="new-password-para">
+        Set up the New Password for your Account.
+      </h3>
+      <div className="main-form  d-flex justify-content-center align-items-center">
+        <form className="form" onSubmit={handleSubmit}>
+          <label className="text mt-3">
+            Enter new password
+            <br />
+            <input
+              className={`input ${errors.newPassword && touched.newPassword ? "is-invalid" : ""}`}
+              type="password"
+              name="newPassword"
+              id="newPassword"
+              placeholder="8 symbols at least"
+              value={values.newPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.newPassword && touched.newPassword && (
+              <div className="invalid-feedback">{errors.newPassword}</div>
+            )}
+            <br />
+            <br />
+          </label>
+          <br />
+          <label className="text">
+            Confirm password
+            <br />
+            <input
+              className={`input ${errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""}`}
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              placeholder="8 symbols at least"
+              value={values.confirmPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {errors.confirmPassword && touched.confirmPassword && (
+              <div className="invalid-feedback">{errors.confirmPassword}</div>
+            )}
+          </label>
+          <div className="mt-4 mb-3">
+            <button className={`forget_btn ${!(isValid && dirty) ? "disable" : ""}`} type="submit" disabled={!isValid || !dirty}>
+                UPDATE PASSWORD
             </button>
-        </>
-    )
+          </div>
+        </form>
+      </div>
+    </>
+  );
 }
 
-export default NewPassword
+export default NewPassword;

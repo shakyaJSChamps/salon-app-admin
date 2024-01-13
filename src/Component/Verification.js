@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Dlogo from "../assets/image/d-logo.png";
@@ -7,16 +7,80 @@ import OTPInput from "react-otp-input";
 function Verification() {
   const [otp, setOtp] = useState(new Array(4).fill(""));
 
+
   const handleChange = (element, index) => {
-    if (isNaN(element.value)) return false;
-
-    setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
-
-    // focus on next element
+    const enteredValue = element.value;
+  
+    if (!/^\d+$/.test(enteredValue)) {
+      // If the entered value is not a number, do not update the state
+      console.log("Invalid input: Please enter numeric values only.");
+      return false;
+    }
+  
+    // Use the callback function to log the updated state
+    setOtp((prevOtp) => {
+      const newOtp = [...prevOtp];
+      newOtp[index] = +enteredValue; // Convert string to number using unary plus
+      console.log("Entered Value:", enteredValue);
+      console.log("Updated OTP:", newOtp);
+      return newOtp;
+    });
+  
+    // focus on the next element
     if (element.nextSibling) {
       element.nextSibling.focus();
     }
   };
+  
+  useEffect(() => {
+    console.log("Updated OTP in useEffect:", JSON.stringify(otp));
+  }, [otp]);
+  
+  console.log("Outside useEffect:", JSON.stringify(otp));
+  
+  
+  
+  
+  
+  
+  
+  // const handleChange = (element, index) => {
+  //   console.log("Element ::>", element);
+  //   const enteredValue = element.value;
+  
+  //   if (!/^\d+$/.test(enteredValue)) {
+  //     // If the entered value is not a number, do not update the state
+  //     console.log("Invalid input: Please enter numeric values only.");
+  //     return false;
+  //   }
+  
+  //   // Use the callback function to log the updated state
+  //   setOtp((prevOtp) => {
+  //     const newOtp = [...prevOtp];
+  //     newOtp[index] = enteredValue;
+  //     console.log("Updated OTP:", newOtp);
+  //     return newOtp;
+  //   });
+  
+  //   // focus on the next element
+  //   if (element.nextSibling) {
+  //     element.nextSibling.focus();
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   console.log("Updated OTP:", otp);
+  // }, [otp]);
+  // const handleChange = (element, index) => {
+  //   if (isNaN(element.value)) return false;
+
+  //   setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+
+  //   // focus on next element
+  //   if (element.nextSibling) {
+  //     element.nextSibling.focus();
+  //   }
+  // };
   // console.log("myOtp =", otp);
   return (
     <>
@@ -63,7 +127,7 @@ function Verification() {
         </div>
         {/* <h6 className="v-timer text-center mt-2 text-danger">00:30</h6> */}
         <button className="forget_btn " type="button">
-        <Link className="continue-link link-style" to="/">
+        <Link className="continue-link link-style" to="/admin/new-password">
           VERIFY
         </Link>
       </button>

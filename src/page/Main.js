@@ -59,7 +59,7 @@ import Profile from "./Profile";
           <Sidebar toggleSidebar={toggleSidebar}/>
         </div>
         <div
-          className={`content ${toggleSidebar ?  "w-76": "w-94"}`}
+          className={`content px-5 ${toggleSidebar ?  "w-76": "w-94"}`}
           // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
         ><Outlet /></div>
       </div>
