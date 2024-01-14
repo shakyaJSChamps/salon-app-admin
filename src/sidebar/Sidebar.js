@@ -16,7 +16,7 @@ const Sidebar=(props)=> {
   const menus = [
     {
       icon: <FaChartPie />,
-      slug: "/",
+      slug: "/dashboard",
       label: "Dashboard",
     },
     {

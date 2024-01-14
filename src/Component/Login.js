@@ -4,9 +4,13 @@ import Dlogo from "../assets/image/d-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { storeToken } from "../features/authInfo";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const initialValues = {
     email: "",
     password: "",
@@ -37,14 +41,14 @@ function Login() {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log("Values :: ", values);
+      // console.log("Values :: ", values);
       try {
         await validationSchema.validate(values);
-        console.log("Validation passed");
-        setRememberMe(false);
+        // console.log("Validation passed");
+        dispatch(storeToken("daskldjaj"));
+        navigate("/dashboard");
         resetForm();
-        localStorage.setItem("token", "myValue");
-        navigate("/");
+        setRememberMe(false);
       } catch (error) {
         console.error("Validation error:", error.errors);
       }

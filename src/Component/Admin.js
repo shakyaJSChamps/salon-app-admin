@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Paper from "@mui/material/Paper";
 import { Row, Col, Container } from "react-bootstrap";
 import image from "../assets/image/logo.png";
 import { Outlet } from "react-router-dom";
 
 function Admin() {
-
   return (
     <div className="login-page">
       <Container fluid>
@@ -16,7 +15,9 @@ function Admin() {
             className="p-0 d-flex justify-content-center align-items-center  "
           >
             <Paper className="paper px-3" elevation={3}>
-              <Outlet />
+              <Suspense fallback={<div>loading ...</div>}>
+                <Outlet />
+              </Suspense>
             </Paper>
           </Col>
           <Col

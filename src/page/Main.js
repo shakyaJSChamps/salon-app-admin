@@ -1,32 +1,33 @@
-import React, { useEffect, useState } from "react";
-import {  Outlet } from "react-router-dom";
+import React, { Suspense, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../sidebar/Sidebar";
 import Dlogo from "../assets/image/d-logo.png";
 import Profile from "./Profile";
- 
+
 // const screenHeight = window.innerHeight;
 // const mainAreaHeight = screenHeight - 60;
- const Main = () => {
+const Main = () => {
   const [toggleSidebar, setToggleSidebar] = useState(true);
   const [mainAreaHeight, setMainAreaHeight] = useState(0);
-  
+  console.log("main ::>");
+
   useEffect(() => {
     const updateMainAreaHeight = () => {
       const screenHeight = window.innerHeight;
       const updatedMainAreaHeight = screenHeight - 60;
       setMainAreaHeight(updatedMainAreaHeight);
     };
-      // Call the function on component mount and window resize
-      updateMainAreaHeight();
-      window.addEventListener("resize", updateMainAreaHeight);
-  
-      // Cleanup event listener on component unmount
-      return () => {
-        window.removeEventListener("resize", updateMainAreaHeight);
-      };
-    }, []);
+    // Call the function on component mount and window resize
+    updateMainAreaHeight();
+    window.addEventListener("resize", updateMainAreaHeight);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", updateMainAreaHeight);
+    };
+  }, []);
 
   return (
     <>
@@ -53,17 +54,21 @@ import Profile from "./Profile";
         style={{ height: `${mainAreaHeight}px` }}
       >
         <div
-          className={`side-nav ${toggleSidebar ? "w-24": "w-6"}`}
+          className={`side-nav ${toggleSidebar ? "w-24" : "w-6"}`}
           // style={{ width: `${toggleSidebar ? "w-24" : "6%"}` }}
         >
-          <Sidebar toggleSidebar={toggleSidebar}/>
+          <Sidebar toggleSidebar={toggleSidebar} />
         </div>
         <div
-          className={`content px-5 ${toggleSidebar ?  "w-76": "w-94"}`}
+          className={`content px-5 ${toggleSidebar ? "w-76" : "w-94"}`}
           // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
-        ><Outlet /></div>
+        >
+          <Suspense fallback={<div>loading ...</div>}>
+            <Outlet />
+          </Suspense>
+        </div>
       </div>
     </>
   );
-}
+};
 export default Main;
