@@ -13,7 +13,7 @@ function App() {
 
   //If user is already logged in redirect to dashboard
   if(authToken && location.pathname === "/admin/login"){
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/dashboard"} />;
   } 
 
   return (

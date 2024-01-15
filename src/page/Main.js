@@ -11,7 +11,6 @@ import Profile from "./Profile";
 const Main = () => {
   const [toggleSidebar, setToggleSidebar] = useState(true);
   const [mainAreaHeight, setMainAreaHeight] = useState(0);
-  console.log("main ::>");
 
   useEffect(() => {
     const updateMainAreaHeight = () => {

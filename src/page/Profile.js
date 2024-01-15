@@ -9,15 +9,18 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removeToken } from "../features/authInfo";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    dispatch(removeToken());
     navigate("/admin/login");
     setAnchorElUser(null);
   };

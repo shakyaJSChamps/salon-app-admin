@@ -46,9 +46,9 @@ function Login() {
         await validationSchema.validate(values);
         // console.log("Validation passed");
         dispatch(storeToken("daskldjaj"));
-        navigate("/dashboard");
         resetForm();
         setRememberMe(false);
+        navigate("/dashboard");
       } catch (error) {
         console.error("Validation error:", error.errors);
       }

@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 const UserManagement = lazy(() => import("./page/UserManagement"));
 const SalonManagement = lazy(() => import("./page/SalonManagement"));
@@ -26,11 +26,10 @@ const ProtectedRoutes = ({ authToken }) =>{
 }
 
 const AppRoute = (props) => {
-  console.log("Props ::>", props);
   const _routes = [
     {
       path: "",
-      element: <ProtectedRoutes {...props} />,
+      element: <Suspense fallback={<div>loading...</div>}><ProtectedRoutes {...props} /></Suspense>,
       children: [
         {
           path: "",
@@ -54,7 +53,7 @@ const AppRoute = (props) => {
     },
     {
       path: "/admin",
-      element: <Admin />,
+      element: <Suspense fallback={<div>loading...</div>}><Admin /></Suspense> ,
       children: [
         { path: "login", element: <Login /> },
         { path: "forget-password", element: <ForgetPassword /> },
