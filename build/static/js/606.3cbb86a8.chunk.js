@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[606],{3606:(a,e,n)=>{n.r(e),n.d(e,{default:()=>p});n(2791);var s=n(184);const p=()=>(0,s.jsx)("div",{children:"CouponManagement"})}}]);
+//# sourceMappingURL=606.3cbb86a8.chunk.js.map

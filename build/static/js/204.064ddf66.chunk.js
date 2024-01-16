@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[204],{9204:(e,a,n)=>{n.r(a),n.d(a,{default:()=>l});n(2791);var s=n(184);const l=()=>(0,s.jsx)("div",{children:"FreelanceManagement"})}}]);
+//# sourceMappingURL=204.064ddf66.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[460],{1460:(a,e,s)=>{s.r(e),s.d(e,{default:()=>p});s(2791);var n=s(184);const p=()=>(0,n.jsx)("div",{children:"ADSMangement"})}}]);
+//# sourceMappingURL=460.16a46aef.chunk.js.map

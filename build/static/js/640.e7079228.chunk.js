@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[640],{6640:(a,e,n)=>{n.r(e),n.d(e,{default:()=>l});n(2791);var s=n(184);const l=()=>(0,s.jsx)("div",{children:"SalonManagement"})}}]);
+//# sourceMappingURL=640.e7079228.chunk.js.map
