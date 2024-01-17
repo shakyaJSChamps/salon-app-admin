@@ -7,23 +7,25 @@ import { Outlet } from "react-router-dom";
 function Admin() {
   return (
     <div className="login-page">
-      <Container fluid>
-        <Row className="vh-100">
+      <Container >
+        <Row className="vh-100 w-100 m-auto ">
           <Col
-            md={6}
+            lg={6}
+            md={12}
             sm={12}
             className="p-0 d-flex justify-content-center align-items-center  "
           >
-            <Paper className="paper px-3" elevation={3}>
+            <Paper className="paper px-3 " elevation={3}>
               <Suspense fallback={<div>loading ...</div>}>
                 <Outlet />
               </Suspense>
             </Paper>
           </Col>
           <Col
-            md={6}
+            lg={6}
+            md={12}
             sm={12}
-            className="p-0 d-flex justify-content-center align-items-center "
+            className="p-0 d-flex  justify-content-center align-items-center "
           >
             <div className="second-section">
               <p className="heading">

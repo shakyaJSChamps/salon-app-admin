@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
-import Dlogo from "../assets/image/d-logo.png";
+import Dlogo from "../assets/image/DLogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -59,8 +59,8 @@ function Login() {
     <>
       <Container className="p-0">
         <Row className="m-0 p-0">
-          <Col sm={8} className="p-0 mt-4">
-            <p>
+          <Col sm={8} className="p-0 mt-4 ">
+            <p className="">
               Welcome to{" "}
               <span>
                 <img src={Dlogo} alt="dlogo.png" />
@@ -76,44 +76,43 @@ function Login() {
               <span className="sign-up">Sign up</span>
             </h6>
           </Col>
-          <Col className="p-0 mt-3">
-            <h1>Sign in</h1>
+          <Col className="p-0 mt-3 ">
+            <h1 className="">Sign in</h1>
           </Col>
         </Row>
       </Container>
       <div className="main-form d-flex justify-content-center align-items-center">
-        <form className="form mt-3 mb-2" onSubmit={handleSubmit}>
+        <form className="form mt-3 mb-2 w-100" onSubmit={handleSubmit}>
           <label className="text mb-3">
             Enter your username or email address
-            <br />
-            <input
-              className="input"
-              placeholder="username or email address"
-              name="email"
-              id="email"
-              value={values.email}
-              onChange={handleChange}
-            />
-            {touched.email && errors.email && (
-              <span className="error text-danger small">{errors.email}</span>
-            )}
+          </label>
+          <input
+            className="email-input"
+            placeholder="username or email address"
+            name="email"
+            id="email"
+            value={values.email}
+            onChange={handleChange}
+          />
+          {touched.email && errors.email && (
+            <span className="error text-danger small">{errors.email}</span>
+          )}
+          <br />
+          <label className="text mt-3">
+            Enter your Password
           </label>
           <br />
-          <label className="text">
-            Enter your Password
-            <br />
-            <input
-              className="input"
-              name="password"
-              id="password"
-              placeholder="Password"
-              value={values.password}
-              onChange={handleChange}
-            />
-            {touched.password && errors.password && (
-              <span className="error text-danger small">{errors.password}</span>
-            )}
-          </label>
+          <input
+            className="password-input"
+            name="password"
+            id="password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
+          />
+          {touched.password && errors.password && (
+            <span className="error text-danger small">{errors.password}</span>
+          )}
           <div className="checkbox-main d-flex justify-content-between mt-3 mb-3">
             <div className="checkbox">
               <input
@@ -131,6 +130,7 @@ function Login() {
               </Link>
             </div>
           </div>
+          <div className="d-flex justify-content-end">
           <button
             className={`button ${
               !(isValid && dirty && rememberMe) ? "disable" : ""
@@ -140,8 +140,9 @@ function Login() {
           >
             Sign in
           </button>
+          </div>
           {(!isValid || !dirty || !rememberMe) && (
-            <div className="error text-danger small mt-2">
+            <div className="error text-danger small mt-2 text-center">
               Please fill in all fields and check the Remember me box.
             </div>
           )}

@@ -1,5 +1,5 @@
 import React from "react";
-import Dlogo from "../assets/image/d-logo.png";
+import Dlogo from "../assets/image/DLogo.png";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";

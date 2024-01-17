@@ -21,15 +21,16 @@
     ),
     url("../../../image/bg-img.png");
   background-size: cover;
+  background-attachment: fixed;
+ 
   .paper {
-    min-height: 66vh;
-    border-radius: 40px !important;
-    @include for-desktop{
-      height: 56vh;
+    width: 75%;
+    @include smallPhone{
+      width: 100%;
     }
+    border-radius: 40px !important;
     p {
       font-weight: 500;
-      margin-left: 15px;
       font-size: 20px;
       color: $color-black;
       span img {
@@ -45,7 +46,6 @@
       color: $color-light-green;
     }
     h1 {
-      margin-left: 25px;
       font-weight: 500;
       font-size: 45px;
     }
@@ -54,12 +54,19 @@
         .text {
           font-weight: 600;
         }
-        .input {
-          width: 420px;
-          height: 55px;
+        .email-input {
+          width: 100%;
+          padding: 10px;
           border-radius: 10px;
-          padding-left: 25px;
           border: 1px solid $color-Dodger-Blue;
+          background-color: $color-light-grey;
+        }
+        .password-input{
+          width: 100%;
+          padding: 10px;
+          border-radius: 10px;
+          border: 1px solid $color-Dodger-Blue;
+          background-color: $color-light-grey;
         }
         .para {
           font-size: 15px !important;
@@ -68,7 +75,6 @@
       font-weight: 400;
         }
         .button {
-          margin-left: 190px;
           width: 230px;
           height: 45px;
           margin-top: 9px;

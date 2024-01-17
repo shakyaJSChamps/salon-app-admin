@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../sidebar/Sidebar";
-import Dlogo from "../assets/image/d-logo.png";
+import Dlogo from "../assets/image/DLogo.png";
 import Profile from "./Profile";
 
 // const screenHeight = window.innerHeight;

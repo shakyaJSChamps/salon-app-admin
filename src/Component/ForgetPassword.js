@@ -1,5 +1,5 @@
 import React from "react";
-import Dlogo from "../assets/image/d-logo.png";
+import Dlogo from "../assets/image/DLogo.png";
 import { Row, Col, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -68,30 +68,29 @@ function ForgetPassword() {
         </Row>
       </Container>
       <div className="main-form d-flex justify-content-center align-items-center">
-        <form className="form mt-3 mb-2" onSubmit={handleSubmit}>
+        <form className="form mt-3 mb-2 w-100" onSubmit={handleSubmit}>
           <label className="text Forget_text">
             Enter your registered email address for the <br />
             verification to get the 4 digits code.
             <br />
-            <br />
-            <input
-              className="input mt-3"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="EMAIL ADDRESS"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.email && touched.email && (
-              <>
-                <br />
-                <span className="error text-danger small">{errors.email}</span>
-              </>
-            )}
           </label>
-          <div className="mt-4 mb-3">
+          <input
+            className="email-input mt-3"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="EMAIL ADDRESS"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.email && touched.email && (
+            <>
+              <br />
+              <span className="error text-danger small">{errors.email}</span>
+            </>
+          )}
+          <div className="mt-4 mb-3 d-flex justify-content-center">
             <button
               className={`forget_btn ${isValid ? "" : "disable"}`}
               type="submit"

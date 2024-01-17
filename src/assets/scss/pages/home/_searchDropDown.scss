@@ -8,17 +8,19 @@
       display: flex;
       align-items: center;
       background-color: $color-light-grey;
-  
+      border-radius: 5px;
       .search-bar,
       .vertical-line,
       .dropdown {
         border: none;
         background-color: $color-light-grey;
+        border-radius: 5px;
+        color: $color-lgrey;
       }
   
       .search-bar { // Text color for the search bar
         &::placeholder {
-          color: $color-black; // Placeholder color
+          color: $color-lgrey; // Placeholder color
         }
         &:focus{
           border: none;
@@ -27,8 +29,8 @@
   
       .vertical-line {
         width: 2px;
-        height: 20px;
-        background-color:$color-black;
+        height: 32px;
+        background-color:$color-lgrey;
         margin-right: 5px;
       }
     }

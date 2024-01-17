@@ -5,13 +5,13 @@ import { AiOutlineUser } from "react-icons/ai";
 import SearchDropDown from "../Component/SearchDropDown";
 
 const UserManagement = () => {
-
   const [countries, setCountries] = useState([]);
 
   const getCountries = async () => {
     try {
       const response = await axios.get("https://restcountries.com/v2/all");
       setCountries(response.data);
+      console.log("Response ::", response.data);
     } catch (error) {
       console.log(error);
     }
@@ -20,7 +20,7 @@ const UserManagement = () => {
   useEffect(() => {
     getCountries();
   }, []);
-  console.log("prop");
+  // console.log("prop");
   const columns = [
     {
       name: "Country Name",
@@ -28,12 +28,25 @@ const UserManagement = () => {
       sortable: true,
     },
     {
+      name: "Active",
+      cell: (row, index) => (
+        <span className={`rounded-pill ${index % 2 === 0 ? 'blocked-pill' : 'active-pill'}`}>
+          {index % 2 === 0 ? 'Blocked' : 'Active'}
+        </span>
+      ),
+      //  row.capital ? (
+      //     <span className="rounded-pill active-pill"> Active</span>
+      //   ) : (
+      //     <span className="rounded-pill blocked-pill"> Blocked</span>
+      //   ),
+    },
+    {
       name: "Country Native Name",
       selector: (row) => row.nativeName,
     },
     {
       name: "Country Captial",
-      selector: (row) => row.captial,
+      selector: (row) => row.capital,
     },
     {
       name: "Country Flag",
@@ -54,20 +67,17 @@ const UserManagement = () => {
     },
   ];
 
-const CustomTitle = () => (
-  <div className="d-flex align-items-center justify-content-between">
-    <div className="d-flex align-items-center">
-      <AiOutlineUser size={20} style={{ marginRight: 10 }} />
-      User Management
+  const CustomTitle = () => (
+    <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-center">
+        <AiOutlineUser size={20} style={{ marginRight: 10 }} />
+        User Management
+      </div>
+      <div className="d-flex align-items-center">
+        <SearchDropDown />
+      </div>
     </div>
-    <div className="d-flex align-items-center">
-     <SearchDropDown />
-    </div>
-  </div>
-);
-
-// ...
-
+  );
 
   return (
     <div className="mt-5">
@@ -85,63 +95,3 @@ const CustomTitle = () => (
 };
 
 export default UserManagement;
-
-// import React, { useEffect, useState } from "react";
-// import Table from "../Component/Table";
-// import axios from "axios";
-
-// const UserManagement = () => {
-//   const [data, setData] = useState([]);
-
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.get(
-//         "https://hub.dummyapis.com/employee?noofRecords=10&idStarts=1001"
-//       );
-//       setData(response.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const columns = [
-//     {
-//       name: "ID",
-//       selector: "id",
-//       sortable: true,
-//     },
-//     {
-//       name: "Name",
-//       selector: "employee_name",
-//       sortable: true,
-//     },
-//     {
-//       name: "Image",
-//       cell: (row) => (
-//         <img
-//           src={row.imageUrl}
-//           alt="Employee"
-//           style={{ width: "50px", height: "50px" }}
-//         />
-//       ),
-//     },
-//     {
-//       name: "Salary",
-//       selector: "employee_salary",
-//       sortable: true,
-//     },
-//     {
-//       name: "Age",
-//       selector: "employee_age",
-//       sortable: true,
-//     },
-//   ];
-
-//   return <Table title="User Management" columns={columns} data={data} />;
-// };
-
-// export default UserManagement;

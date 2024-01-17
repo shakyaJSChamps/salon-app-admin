@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Dlogo from "../assets/image/d-logo.png";
+import Dlogo from "../assets/image/DLogo.png";
 import OTPInput from "react-otp-input";
 
 function Verification() {
@@ -105,7 +105,7 @@ function Verification() {
         </Row>
       </Container>
       <div className="main-form d-flex justify-content-center align-items-center">
-      <form className="form ">
+      <form className="form  w-100">
         <label className="otp-input mt-3 m-auto">
           Enter the 4 digit code that is send on your <br />
           registered email address.
@@ -126,11 +126,13 @@ function Verification() {
           })}
         </div>
         {/* <h6 className="v-timer text-center mt-2 text-danger">00:30</h6> */}
+        <div className="d-flex justify-content-center">
         <button className="forget_btn " type="button">
         <Link className="continue-link link-style" to="/admin/new-password">
           VERIFY
         </Link>
       </button>
+        </div>
       <h5 className="resend-text mt-3">
         If you didn’t receive a code!
       </h5>

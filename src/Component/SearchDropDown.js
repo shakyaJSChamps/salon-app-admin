@@ -3,7 +3,7 @@ import React from "react";
 
 const SearchDropDown = ({ value, onChange }) => {
   const data = [
-    { text: "option1", value: "1" },
+    { text: "Category", value: "1" },
     { text: "option2", value: "2" },
     { text: "option3", value: "3" },
   ];
@@ -11,10 +11,10 @@ const SearchDropDown = ({ value, onChange }) => {
   return (
     <div className="dropdown-container">
       <div className="search-container">
-        <input type="text" placeholder="Search" className="search-bar" 
+        <input type="text" placeholder="Search" className="search-bar ps-3" 
         />
         <div className="vertical-line"></div>
-        <select value={value} onChange={onChange} className="dropdown">
+        <select value={value} onChange={onChange} className="dropdown ps-2">
         {data.map((item) => (
           <option key={item.value} value={item.value}>
             {item.text}
