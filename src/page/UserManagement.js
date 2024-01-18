@@ -30,8 +30,12 @@ const UserManagement = () => {
     {
       name: "Active",
       cell: (row, index) => (
-        <span className={`rounded-pill ${index % 2 === 0 ? 'blocked-pill' : 'active-pill'}`}>
-          {index % 2 === 0 ? 'Blocked' : 'Active'}
+        <span
+          className={`rounded-pill ${
+            index % 2 === 0 ? "blocked-pill" : "active-pill"
+          }`}
+        >
+          {index % 2 === 0 ? "Blocked" : "Active"}
         </span>
       ),
       //  row.capital ? (
@@ -47,6 +51,28 @@ const UserManagement = () => {
     {
       name: "Country Captial",
       selector: (row) => row.capital,
+    },
+    {
+      name: "Appointment",
+      cell: (row) => (
+        <div>
+          <span
+            className={`appointment ${
+              row.capital ? "appointment-completed" : "appointment-canceled"
+            }`}
+          >
+            Completed
+          </span>
+          <br />
+          <span
+            className={`appointment ${
+              !row.capital ? "appointment-canceled" : "appointment-canceled"
+            }`}
+          >
+            Canceled
+          </span>
+        </div>
+      ),
     },
     {
       name: "Country Flag",

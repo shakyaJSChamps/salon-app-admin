@@ -111,7 +111,7 @@ function Verification() {
           registered email address.
           <br />
         </label>
-        <div className="d-flex justify-content-between my-3">
+        <div className="otp-box d-flex justify-content-center  my-3">
         {otp.map((data, index) => {
             return (
               <input

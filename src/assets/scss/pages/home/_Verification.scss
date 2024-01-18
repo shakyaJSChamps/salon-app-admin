@@ -1,50 +1,47 @@
-.paper{
-    // .otp-input{
-    //     @include for-desktop{
-    //         margin-left: 42px;
-    //     }
-    // }
-    .otp-field{
-        width:70px ;
-        height: 70px;
-        font-size: 30px;
-        text-align: center;
-        border: 1px solid rgba(155, 173, 202, 1);
-        border-radius: 7px;
-        cursor: not-allowed;
-        pointer-events: none;
-        &:focus{
-            outline: none;
-        }
-        &:nth-child(1){
-            cursor: pointer;
-            pointer-events: all;
-        }
+.paper {
+  .otp-field {
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+    text-align: center;
+    border: 1px solid rgba(155, 173, 202, 1);
+    border-radius: 7px;
+    cursor: not-allowed;
+    pointer-events: none;
+    &:focus {
+      outline: none;
     }
-    .resend-text{
-        font-size: 12px;
-        font-weight: 200;
-        color: $color-grey;
-        text-align: center;
+    &:nth-child(1) {
+      cursor: pointer;
+      pointer-events: all;
     }
-    .resend-otp{
-        color: $color-red;
-        text-align: center;
-    }
-    // .v-timer{
-    //     text-align: center;
-    //     padding-right: 14px;
-    //     color:$color-red;
-    //     @include for-desktop{
-    //         padding-right: 58px 
-    //     }
-    // }
-    // .v-btn{
-    //     margin-left: 60px;
-    //     width: 370px;
-    //     @include for-desktop{
-    //         margin-left: 32px;
-    //     }
-    // }
-    
+  }
+  .otp-box {
+    gap: 10px;
+  }
+  .resend-text {
+    font-size: 12px;
+    font-weight: 200;
+    color: $color-grey;
+    text-align: center;
+  }
+  .resend-otp {
+    color: $color-red;
+    text-align: center;
+  }
+  // .v-timer{
+  //     text-align: center;
+  //     padding-right: 14px;
+  //     color:$color-red;
+  //     @include for-desktop{
+  //         padding-right: 58px
+  //     }
+  // }
+  // .v-btn{
+  //     margin-left: 60px;
+  //     width: 370px;
+  //     @include for-desktop{
+  //         margin-left: 32px;
+  //     }
+  // }
 }

@@ -61,12 +61,13 @@ function NewPassword() {
         Set up the New Password for your Account.
       </h3>
       <div className="main-form  d-flex justify-content-center align-items-center">
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form w-100" onSubmit={handleSubmit}>
           <label className="text mt-3">
             Enter new password
+          </label>
             <br />
-            <input
-              className={`input ${errors.newPassword && touched.newPassword ? "is-invalid" : ""}`}
+          <input
+              className={`password-input ${errors.newPassword && touched.newPassword ? "is-invalid" : ""}`}
               type="password"
               name="newPassword"
               id="newPassword"
@@ -78,15 +79,13 @@ function NewPassword() {
             {errors.newPassword && touched.newPassword && (
               <div className="invalid-feedback">{errors.newPassword}</div>
             )}
-            <br />
-            <br />
-          </label>
           <br />
           <label className="text">
             Confirm password
+          </label>
             <br />
-            <input
-              className={`input ${errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""}`}
+          <input
+              className={`password-input ${errors.confirmPassword && touched.confirmPassword ? "is-invalid" : ""}`}
               type="password"
               name="confirmPassword"
               id="confirmPassword"
@@ -98,8 +97,7 @@ function NewPassword() {
             {errors.confirmPassword && touched.confirmPassword && (
               <div className="invalid-feedback">{errors.confirmPassword}</div>
             )}
-          </label>
-          <div className="mt-4 mb-3">
+          <div className="mt-4 mb-3 d-flex justify-content-center">
             <button className={`forget_btn ${!(isValid && dirty) ? "disable" : ""}`} type="submit" disabled={!isValid || !dirty}>
                 UPDATE PASSWORD
             </button>

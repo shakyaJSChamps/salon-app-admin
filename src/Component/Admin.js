@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 function Admin() {
   return (
-    <div className="login-page">
+    <div className="login-page overflow-hidden">
       <Container >
         <Row className="vh-100 w-100 m-auto ">
           <Col
