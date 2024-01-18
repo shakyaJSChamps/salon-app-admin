@@ -56,7 +56,6 @@ function Login() {
         navigate("/dashboard");
       } catch (error) {
         setApiLoading(false);
-        // console.error("Validation error:", error.message);
         Notify.error(error.message);
       }
     },
