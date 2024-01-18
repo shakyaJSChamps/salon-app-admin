@@ -12,8 +12,8 @@ export const authInfo = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes.
       // Also, no return statement is required from these functions.
-      state.token = action.payload;
-      Session.set("token", action.payload);
+      state.token = action.payload.token;
+      Session.set("token", action.payload.token);
     },
     removeToken: (state)=>{
 
