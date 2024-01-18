@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import Dlogo from "../assets/image/DLogo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,8 +6,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { storeToken } from "../features/authInfo";
+import { doLogin } from "../api/account.api";
+import Notify from "../utils/notify";
+import Loader from "./Loader";
 
 function Login() {
+  const [apiloading, setApiLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,13 +22,7 @@ function Login() {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Please enter your email"),
-    password: Yup.string()
-      .required("Please enter your password")
-      .min(8, "Password must be 8 characters long")
-      .matches(/[0-9]/, "Password requires a number")
-      .matches(/[a-z]/, "Password requires a lowercase letter")
-      .matches(/[A-Z]/, "Password requires an uppercase letter")
-      .matches(/[^\w]/, "Password requires a symbol"),
+    password: Yup.string(),
   });
 
   const [rememberMe, setRememberMe] = React.useState(false);
@@ -44,13 +42,22 @@ function Login() {
       // console.log("Values :: ", values);
       try {
         await validationSchema.validate(values);
+        setApiLoading(true);
         // console.log("Validation passed");
-        dispatch(storeToken("daskldjaj"));
+        const { email, password } = values;
+        // console.log("User Details ::>", email, "&", password);
+        const res = await doLogin({ email, password });
+        setApiLoading(false);
+        // console.log("resp", res);
+        const { authToken: token, userInfo } = res.data.data;
+        dispatch(storeToken({ token, userInfo }));
         resetForm();
         setRememberMe(false);
         navigate("/dashboard");
       } catch (error) {
-        console.error("Validation error:", error.errors);
+        setApiLoading(false);
+        // console.error("Validation error:", error.message);
+        Notify.error(error.message);
       }
     },
   });
@@ -98,9 +105,7 @@ function Login() {
             <span className="error text-danger small">{errors.email}</span>
           )}
           <br />
-          <label className="text mt-3">
-            Enter your Password
-          </label>
+          <label className="text mt-3">Enter your Password</label>
           <br />
           <input
             className="password-input"
@@ -131,15 +136,15 @@ function Login() {
             </div>
           </div>
           <div className="d-flex justify-content-end">
-          <button
-            className={`button ${
-              !(isValid && dirty && rememberMe) ? "disable" : ""
-            }`}
-            type="submit"
-            disabled={!isValid || !dirty || !rememberMe}
-          >
-            Sign in
-          </button>
+            <button
+              className={`button ${
+                !(isValid && dirty && rememberMe) ? "disable" : ""
+              }`}
+              type="submit"
+              disabled={!isValid || !dirty || !rememberMe}
+            >
+              {apiloading ? <Loader /> : "Sign in"}
+            </button>
           </div>
           {(!isValid || !dirty || !rememberMe) && (
             <div className="error text-danger small mt-2 text-center">

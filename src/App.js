@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import AppRoute from './AppRoute';
 import "../src/assets/scss/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   
@@ -19,7 +20,7 @@ function App() {
   return (
     <>
     <AppRoute authToken={authToken}/>
-    <ToastContainer></ToastContainer>
+    <ToastContainer />
     </>
       
   );
