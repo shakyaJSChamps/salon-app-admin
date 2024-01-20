@@ -24,7 +24,6 @@ const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) =>{
   return authToken ? <Outlet /> : <Navigate to="/login" />;
-  return authToken ? <Outlet /> : <Navigate to="/login" />;
 }
 
 const AppRoute = (props) => {
