@@ -22,7 +22,7 @@ const ChangedPassword = lazy(() => import("../src/Component/ChangedPassword"));
 const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) =>{
-  return authToken ? <Outlet /> : <Navigate to="/admin/login" />;
+  return authToken ? <Outlet /> : <Navigate to="/login" />;
 }
 
 const AppRoute = (props) => {
@@ -52,7 +52,7 @@ const AppRoute = (props) => {
       ],
     },
     {
-      path: "/admin",
+      path: "/",
       element: <Suspense fallback={<div>loading...</div>}><Admin /></Suspense> ,
       children: [
         { path: "login", element: <Login /> },

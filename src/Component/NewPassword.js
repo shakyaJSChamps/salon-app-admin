@@ -31,7 +31,7 @@ function NewPassword() {
     onSubmit: (values, { resetForm }) => {
       console.log("Values ::>", values);
       resetForm();
-      navigate("/admin/changed-password");
+      navigate("/changed-password");
     },
   });
 
@@ -47,7 +47,7 @@ function NewPassword() {
             className="p-0 d-flex justify-content-center align-items-center mt-4"
           >
             <h6 className="sign-account back-sign">
-              <Link to="/admin/login" className="link-style ">
+              <Link to="/login" className="link-style ">
                 Back to Sign In
               </Link>
             </h6>

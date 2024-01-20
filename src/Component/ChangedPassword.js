@@ -17,7 +17,7 @@ function ChangedPassword() {
             className="p-0 d-flex justify-content-center align-items-center mt-4"
           >
             <h6 className="sign-account back-sign">
-              <Link to="/admin/login" className="link-style ">
+              <Link to="/login" className="link-style ">
                 Back to Sign In
               </Link>
             </h6>
@@ -39,7 +39,7 @@ function ChangedPassword() {
             <button className="forget_btn" type="button">
               <Link
                 className="continue-link link-style continue-btn"
-                to="/admin/login"
+                to="/login"
               >
                 CONTINUE
               </Link>

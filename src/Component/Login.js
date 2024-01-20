@@ -22,7 +22,7 @@ function Login() {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Please enter your email"),
-    password: Yup.string(),
+    password: Yup.string().required("Please enter your email"),
   });
 
   const [rememberMe, setRememberMe] = React.useState(false);
@@ -110,6 +110,7 @@ function Login() {
             className="password-input"
             name="password"
             id="password"
+            type="password"
             placeholder="Password"
             value={values.password}
             onChange={handleChange}
@@ -129,7 +130,7 @@ function Login() {
               <label className="px-1">Remember me?</label>
             </div>
             <div className="forget-link">
-              <Link to={"/admin/forget-password"} className="para mt-4">
+              <Link to={"/forget-password"} className="para mt-4">
                 Forgot Password
               </Link>
             </div>
