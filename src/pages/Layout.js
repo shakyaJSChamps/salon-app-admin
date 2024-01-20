@@ -2,13 +2,13 @@ import React, { Suspense, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
-import Sidebar from "../sidebar/Sidebar";
+import Sidebar from "../Component/dashboard/Sidebar";
 import Dlogo from "../assets/image/DLogo.png";
 import Profile from "./Profile";
 
 // const screenHeight = window.innerHeight;
 // const mainAreaHeight = screenHeight - 60;
-const Main = () => {
+const Layout = () => {
   const [toggleSidebar, setToggleSidebar] = useState(true);
   const [mainAreaHeight, setMainAreaHeight] = useState(0);
 
@@ -70,4 +70,4 @@ const Main = () => {
     </>
   );
 };
-export default Main;
+export default Layout;

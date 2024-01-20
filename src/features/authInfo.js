@@ -3,7 +3,7 @@ import Session from '../service/session';
 export const authInfo = createSlice({
   name: 'token',
   initialState: {
-    token: Session.get('token') || false,
+    token: Session.get('token') || "",
   },
   reducers: {
     storeToken: (state, action) => {
@@ -18,7 +18,7 @@ export const authInfo = createSlice({
     removeToken: (state)=>{
 
       Session.remove("token");
-      state.token = false;
+      state.token = "";
     }
   },
 })

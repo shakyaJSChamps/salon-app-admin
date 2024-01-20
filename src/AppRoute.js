@@ -1,39 +1,40 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
-const UserManagement = lazy(() => import("./page/UserManagement"));
-const SalonManagement = lazy(() => import("./page/SalonManagement"));
-const FreelanceManagement = lazy(() => import("./page/FreelanceManagement"));
-const ServiceTypeMan = lazy(() => import("./page/ServiceTypeMan"));
-const CouponManagement = lazy(() => import("./page/CouponManagement"));
-const AppointmentMan = lazy(() => import("./page/AppointmentMan"));
-const SalesPerson = lazy(() => import("./page/SalesPerson"));
-const ADSManagement = lazy(() => import("./page/ADSMangement"));
-const PaymentMan = lazy(() => import("./page/PaymentMan"));
-const Notification = lazy(() => import("./page/Notification"));
-const Setting = lazy(() => import("./page/Settings"));
-const Main = lazy(() => import("../src/page/Main"));
-const DashBoard = lazy(() => import("../src/page/Dashboard"));
-const Login = lazy(() => import("../src/Component/Login"));
-const Admin = lazy(() => import("../src/Component/Admin"));
-const ForgetPassword = lazy(() => import("../src/Component/ForgetPassword"));
-const Verification = lazy(() => import("../src/Component/Verification"));
-const NewPassword = lazy(() => import("../src/Component/NewPassword"));
-const ChangedPassword = lazy(() => import("../src/Component/ChangedPassword"));
+import LogoLoader from "./Component/LogoLoader";
+const UserManagement = lazy(() => import("./pages/UserManagement"));
+const SalonManagement = lazy(() => import("./pages/SalonManagement"));
+const FreelanceManagement = lazy(() => import("./pages/FreelanceManagement"));
+const ServiceTypeMan = lazy(() => import("./pages/ServiceTypeMan"));
+const CouponManagement = lazy(() => import("./pages/CouponManagement"));
+const AppointmentMan = lazy(() => import("./pages/AppointmentMan"));
+const SalesPerson = lazy(() => import("./pages/SalesPerson"));
+const ADSManagement = lazy(() => import("./pages/ADSMangement"));
+const PaymentMan = lazy(() => import("./pages/PaymentMan"));
+const Notification = lazy(() => import("./pages/Notification"));
+const Setting = lazy(() => import("./pages/Settings"));
+const Layout = lazy(() => import("../src/pages/Layout"));
+const DashBoard = lazy(() => import("../src/pages/Dashboard"));
+const Login = lazy(() => import("../src/Component/authentication/Login"));
+const Authentication = lazy(() => import("../src/Component/authentication/Authentication"));
+const ForgetPassword = lazy(() => import("../src/Component/authentication/ForgetPassword"));
+const Verification = lazy(() => import("../src/Component/authentication/Verification"));
+const NewPassword = lazy(() => import("../src/Component/authentication/NewPassword"));
+const ChangedPassword = lazy(() => import("../src/Component/authentication/ChangedPassword"));
 const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) =>{
-  return authToken ? <Outlet /> : <Navigate to="/admin/login" />;
+  return authToken ? <Outlet /> : <Navigate to="/login" />;
 }
 
 const AppRoute = (props) => {
   const _routes = [
     {
       path: "",
-      element: <Suspense fallback={<div>loading...</div>}><ProtectedRoutes {...props} /></Suspense>,
+      element: <Suspense fallback={<LogoLoader />}><ProtectedRoutes {...props} /></Suspense>,
       children: [
         {
           path: "",
-          element: <Main />,
+          element: <Layout />,
           children: [
              { path: "dashboard", element: <DashBoard /> },
              { path: "user-management", element: <UserManagement /> },
@@ -52,8 +53,8 @@ const AppRoute = (props) => {
       ],
     },
     {
-      path: "/admin",
-      element: <Suspense fallback={<div>loading...</div>}><Admin /></Suspense> ,
+      path: "",
+      element: <Suspense fallback={<LogoLoader />}><Authentication /></Suspense> ,
       children: [
         { path: "login", element: <Login /> },
         { path: "forget-password", element: <ForgetPassword /> },

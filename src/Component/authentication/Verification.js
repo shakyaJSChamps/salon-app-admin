@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Dlogo from "../assets/image/DLogo.png";
-import OTPInput from "react-otp-input";
+import Dlogo from "../../assets/image/DLogo.png";
 
 function Verification() {
   const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -87,14 +86,14 @@ function Verification() {
       <Container className="p-0">
         <Row className=" m-0 p-0">
           <Col sm={8} className="p-0 mt-4">
-            <img className="d-logo" src={Dlogo} type="d-logo.png" />
+            <img className="d-logo" src={Dlogo} type="d-logo.png" alt="stylrax-logo" />
           </Col>
           <Col
             sm={4}
             className="p-0 d-flex justify-content-center align-items-center mt-4"
           >
             <h6 className="sign-account back-sign">
-              <Link to="/admin/login" className="link-style">
+              <Link to="/login" className="link-style">
                 Back to Sign In
               </Link>
             </h6>
@@ -128,7 +127,7 @@ function Verification() {
         {/* <h6 className="v-timer text-center mt-2 text-danger">00:30</h6> */}
         <div className="d-flex justify-content-center">
         <button className="forget_btn " type="button">
-        <Link className="continue-link link-style" to="/admin/new-password">
+        <Link className="continue-link link-style" to="/new-password">
           VERIFY
         </Link>
       </button>

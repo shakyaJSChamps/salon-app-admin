@@ -21,7 +21,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     dispatch(removeToken());
-    navigate("/admin/login");
+    navigate("/login");
     setAnchorElUser(null);
   };
 

@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import Paper from "@mui/material/Paper";
 import { Row, Col, Container } from "react-bootstrap";
-import image from "../assets/image/logo.png";
+import image from "../../assets/image/logo.png";
 import { Outlet } from "react-router-dom";
 
-function Admin() {
+function Authentication() {
   return (
     <div className="login-page overflow-hidden">
       <Container >
@@ -48,4 +48,4 @@ function Admin() {
     </div>
   );
 }
-export default Admin;
+export default Authentication;

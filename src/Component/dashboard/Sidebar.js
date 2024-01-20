@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FaChartPie } from "react-icons/fa";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { MdOutlineContentCut } from "react-icons/md";

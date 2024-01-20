@@ -1,5 +1,5 @@
 import React from "react";
-import Dlogo from "../assets/image/DLogo.png";
+import Dlogo from "../../assets/image/DLogo.png";
 import { Row, Col, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -34,8 +34,8 @@ function ForgetPassword() {
         await validationSchema.validate(values);
         console.log("Validation passed");
         resetForm();
-        console.log("Navigating to /admin/verification");
-        navigate("/admin/verification");
+        console.log("Navigating to /verification");
+        navigate("/verification");
       } catch (error) {
         console.error("Validation error:", error.errors);
       }
@@ -54,7 +54,7 @@ function ForgetPassword() {
             className="p-0 d-flex justify-content-center align-items-center mt-4"
           >
             <h6 className="sign-account back-sign">
-              <Link to="/admin/login" className="link-style">
+              <Link to="/login" className="link-style">
                 Back to Sign In
               </Link>
             </h6>
