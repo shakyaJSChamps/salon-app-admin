@@ -1,25 +1,14 @@
+input.input-otp{
+ height: 70px;
+ width: 70px !important;
+ border-radius: 4px;
+ text-align: center;
+ margin: 0.5em;
+ font-size: 18px;
+ border: 1px solid #ced4da;
+}
 .paper {
-  .otp-field {
-    width: 70px;
-    height: 70px;
-    font-size: 30px;
-    text-align: center;
-    border: 1px solid rgba(155, 173, 202, 1);
-    border-radius: 7px;
-    cursor: not-allowed;
-    pointer-events: none;
-    &:focus {
-      outline: none;
-    }
-    &:nth-child(1) {
-      cursor: pointer;
-      pointer-events: all;
-    }
-  }
-  .otp-box {
-    gap: 10px;
-  }
-  .resend-text {
+.resend-text {
     font-size: 12px;
     font-weight: 200;
     color: $color-grey;
@@ -29,19 +18,5 @@
     color: $color-red;
     text-align: center;
   }
-  // .v-timer{
-  //     text-align: center;
-  //     padding-right: 14px;
-  //     color:$color-red;
-  //     @include for-desktop{
-  //         padding-right: 58px
-  //     }
-  // }
-  // .v-btn{
-  //     margin-left: 60px;
-  //     width: 370px;
-  //     @include for-desktop{
-  //         margin-left: 32px;
-  //     }
-  // }
+ 
 }
