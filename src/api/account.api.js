@@ -6,3 +6,5 @@ import {
 
 export const doLogin = (payload) =>
   HTTP.Request(methods.POST, __endpoint_doLogin, payload);
+export const getCountries = (payload) =>
+  HTTP.Request(methods.GET, "https://restcountries.com/v2/all", payload);

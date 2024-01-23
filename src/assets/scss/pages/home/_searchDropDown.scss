@@ -16,11 +16,13 @@
         background-color: $color-light-grey;
         border-radius: 5px;
         color: $color-lgrey;
+        outline: none;
+        font-size: 18px;
       }
   
-      .search-bar { // Text color for the search bar
+      .search-bar {
         &::placeholder {
-          color: $color-lgrey; // Placeholder color
+          color: $color-lgrey; 
         }
         &:focus{
           border: none;
@@ -32,6 +34,8 @@
         height: 32px;
         background-color:$color-lgrey;
         margin-right: 5px;
+        outline: none;
+        font-size: 18px;
       }
     }
   }

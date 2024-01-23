@@ -59,7 +59,7 @@ const Layout = () => {
           <Sidebar toggleSidebar={toggleSidebar} />
         </div>
         <div
-          className={`content px-5 ${toggleSidebar ? "w-76" : "w-94"}`}
+          className={`content px-5  rounded ${toggleSidebar ? "w-76" : "w-94"}`}
           // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
         >
           <Suspense fallback={<div>loading ...</div>}>
