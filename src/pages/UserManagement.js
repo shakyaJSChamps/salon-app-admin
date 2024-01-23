@@ -1,26 +1,41 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
-import { AiOutlineUser } from "react-icons/ai";
-import SearchDropDown from "../Component/SearchDropDown";
+import Table from "../Component/Table";
+import { getCountries } from "../api/account.api";
+import Notify from "../utils/notify";
 
 const UserManagement = () => {
   const [countries, setCountries] = useState([]);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
-  const getCountries = async () => {
+  const handleEdit = (rowData) => {
+    console.log("Editing row:", rowData);
+
+    // Close the edit popup
+    setShowEditPopup(false);
+    setSelectedRow(null);
+  };
+
+  const handleRowClick = (row) => {
+    // Open the edit popup when a row is clicked
+    setShowEditPopup(true);
+    setSelectedRow(row);
+  };
+
+  const getCountrie = async () => {
     try {
-      const response = await axios.get("https://restcountries.com/v2/all");
+      const response = await getCountries()
       setCountries(response.data);
       console.log("Response ::", response.data);
     } catch (error) {
-      console.log(error);
+      Notify.error(error.message);
     }
   };
 
   useEffect(() => {
-    getCountries();
+    getCountrie();
   }, []);
-  // console.log("prop");
+
   const columns = [
     {
       name: "Country Name",
@@ -85,7 +100,10 @@ const UserManagement = () => {
       cell: (row) => (
         <button
           className="btn btn-primary"
-          onClick={() => alert(row.alpha2Code)}
+          onClick={() => {
+            setSelectedRow(row);
+            setShowEditPopup(true);
+          }}
         >
           Edit
         </button>
@@ -93,30 +111,16 @@ const UserManagement = () => {
     },
   ];
 
-  const CustomTitle = () => (
-    <div className="d-flex align-items-center justify-content-between">
-      <div className="d-flex align-items-center">
-        <AiOutlineUser size={20} style={{ marginRight: 10 }} />
-        User Management
-      </div>
-      <div className="d-flex align-items-center">
-        <SearchDropDown />
-      </div>
-    </div>
-  );
-
   return (
-    <div className="mt-5">
-      <DataTable
-        title={<CustomTitle />}
-        columns={columns}
-        data={countries}
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="450px"
-        highlightOnHover
-      />
-    </div>
+    <Table
+      countries={countries}
+      columns={columns}
+      handleRowClick={handleRowClick}
+      showEditPopup={showEditPopup}
+      setShowEditPopup={setShowEditPopup}
+      handleEdit={handleEdit}
+      selectedRow={selectedRow}
+    />
   );
 };
 
