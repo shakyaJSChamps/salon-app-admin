@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Table from "../Component/Table";
 import { getCountries } from "../api/account.api";
 import Notify from "../utils/notify";
+import { AiOutlineUser } from "react-icons/ai";
 
 const UserManagement = () => {
   const [countries, setCountries] = useState([]);
@@ -113,6 +114,7 @@ const UserManagement = () => {
 
   return (
     <Table
+      icon={<AiOutlineUser />} title={"User Management"}
       countries={countries}
       columns={columns}
       handleRowClick={handleRowClick}
