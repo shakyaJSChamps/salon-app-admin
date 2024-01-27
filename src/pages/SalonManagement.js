@@ -3,10 +3,11 @@ import Table from "../Component/Table";
 import { getCountries } from "../api/account.api";
 import Notify from "../utils/notify";
 import { MdOutlineContentCut } from "react-icons/md";
-import { useNavigate } from "react-router";
-import  { serviceData} from "../Component/Saloon/Data";
+import { useNavigate} from "react-router";
+import  {personalDetails,dataEntries} from "../Component/Saloon/Data";
+import SaloonDetails from "../Component/Saloon/SaloonDetails";
 
-import SaloonServices from "../Component/Saloon/SaloonServices";
+
 const SalonManagement = () => {
   const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
@@ -24,8 +25,9 @@ const SalonManagement = () => {
   const handleRowClick = (row) => {
     // Open the edit popup when a row is clicked
     // setShowEditPopup(true);
-     navigate("/salon-management/details");
-    setSelectedRow(row);
+      navigate("/salon-management/details");
+      setSelectedRow(row);
+    // })
   };
   const handleLinkClick = (e) =>{
     e.stopPropagation();
@@ -125,8 +127,10 @@ const SalonManagement = () => {
 
   return (
     <>
-    
-    <Table
+      {selectedRow ? (
+        <SaloonDetails personalDetails={personalDetails} dataEntries={dataEntries} />
+      ) : (
+     <Table
       icon={<MdOutlineContentCut />}
       title={"Salon Management"}
       countries={countries}
@@ -137,11 +141,10 @@ const SalonManagement = () => {
       handleEdit={handleEdit}
       selectedRow={selectedRow}
       handleLinkClick={handleLinkClick}
-        handleButtonClick={handleButtonClick}
-    />
-         
-     
-      {selectedRow && <SaloonServices data={serviceData} />}
+      handleButtonClick={handleButtonClick}
+    /> 
+      )}
+      
 </>
   );
 };

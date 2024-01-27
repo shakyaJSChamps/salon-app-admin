@@ -1,11 +1,9 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
-
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
 const SaloonDetails = lazy(() => import("./Component/Saloon/SaloonDetails")); 
-//const SaloonServices = lazy(() => import("./Component/Saloon/SaloonServices"));
 const FreelanceManagement = lazy(() => import("./pages/FreelanceManagement"));
 const ServiceTypeMan = lazy(() => import("./pages/ServiceTypeMan"));
 const CouponManagement = lazy(() => import("./pages/CouponManagement"));
@@ -42,13 +40,11 @@ const AppRoute = (props) => {
              { path: "dashboard", element: <DashBoard /> },
              { path: "user-management", element: <UserManagement /> },
              { 
-              path: "salon-management", 
+               path: "salon-management", element: <SalonManagement /> , 
               children: [
-                { path: "", element: <SalonManagement /> },
-                 {path:"details", 
-                 element: <SaloonDetails /> },
-                
-              ],
+                {path:"details", 
+                 element: <SaloonDetails/>},
+               ],
             },
              { path: "freelance-management", element: <FreelanceManagement /> },
              { path: "service-type-management", element: <ServiceTypeMan /> },

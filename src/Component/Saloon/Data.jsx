@@ -79,6 +79,6 @@ import hair from "../../assets/image/hair.png";
     { label: 'IFSC CODE:', value: salonData.ifscCode },
     { label: 'ACCOUNT HOLDER NAME:', value: salonData.accountHolderName },
   ];
-  const SaloonData = { serviceData, personalDetails, salonData, dataEntries };
+  // const SaloonData = { serviceData, personalDetails, salonData, dataEntries };
 
-  export default SaloonData;
+  // export default SaloonData;

@@ -7,39 +7,39 @@ const SaloonServices = (props) => {
       <Paper className="services-details">
         <h4 className="services">Services</h4>
         <hr />
-        {props.data.map((item) => (
-          <p className="service-box" key={item.id}>
+        {props.data.map((service,index) => (
+          <p className="service-box" key={index}>
             <Row>
               <Col lg={2}>
                 <img
-                  src={item.imageSrc}
-                  alt={item.title}
+                  src={service.imageSrc}
+                  alt={service.title}
                   className="service-image"
                 />
               </Col>
               <Col lg={2}>
-                <h4 className="title">{item.title}</h4>
-                <p className="para">{item.para}</p>
+                <h4 className="title">{service.title}</h4>
+                <p className="para">{service.para}</p>
               </Col>
               <Col lg={4}>
-                <h4 className="paraOne">{item.para1}</h4>
+                <h4 className="paraOne">{service.para1}</h4>
               </Col>
               <Col lg={2} className='btn'>
                 <p
-                  className={item.button === "ACTIVE" ? "active" : "inactive"}>
-                  {item.button}
+                  className={service.button === "ACTIVE" ? "active" : "inactive"}>
+                  {service.button}
                 </p>
               </Col>
               <Col lg={2}>
                 <h4 className="price">
-                  {item.rs}
+                  {service.rs}
                   <br />
-                  <span>{item.tax}</span>
+                  <span>{service.tax}</span>
                 </h4>
               </Col>
             </Row>
           </p>
-        ))}
+        ))} 
         <hr />
       </Paper>
     </Col>
