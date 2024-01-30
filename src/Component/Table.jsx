@@ -7,7 +7,7 @@ const Table = (props) => {
  
 
   return (
-    <div className="mt-5 main-table ">
+    <div className="mt-5 main-table rounded ">
       <DataTable
         title={<CustomTitle icon={props.icon} title={props.title} />}
         columns={props.columns}

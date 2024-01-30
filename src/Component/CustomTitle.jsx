@@ -2,11 +2,11 @@ import React from "react";
 import SearchDropDown from "../Component/SearchDropDown";
 
 const CustomTitle = (props) => {
-    const iconStyles = {
-        size: 20,
-        marginRight: 10,
-        ...(props.icon && props.icon.props.style),
-      };
+  const iconStyles = {
+    size: 20,
+    marginRight: 10,
+    ...(props.icon && props.icon.props.style),
+  };
 
   return (
     <div className="d-flex align-items-center justify-content-between">
@@ -15,7 +15,10 @@ const CustomTitle = (props) => {
         {props.title}
       </div>
       <div className="d-flex align-items-center">
-        <SearchDropDown />
+        <SearchDropDown
+        // value={props.searchText}
+        //   onChange={props.handleSearchChange}
+        />
       </div>
     </div>
   );
