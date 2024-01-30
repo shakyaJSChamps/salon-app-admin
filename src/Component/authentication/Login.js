@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
-import { doLogin } from "../../api/account.api";
+import { doLogin, getFeature } from "../../api/account.api";
 import { storeToken } from "../../features/authInfo";
 import { useDispatch } from "react-redux";
 import Notify from "../../utils/notify";
@@ -26,6 +26,8 @@ const App = () => {
       const res = await doLogin({ email, password });
       const { authToken: token, userInfo } = res.data.data;
       dispatch(storeToken({ token, userInfo }));
+      const features = await getFeature();
+      console.log("Feature ::>", features);
       navigate("/dashboard");
       setSubmitting(false);
     } catch (error) {

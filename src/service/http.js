@@ -14,8 +14,7 @@ axios.interceptors.request.use(function (config) {
     }
 
     if(isRequireToken(config.url)){
-        config.headers["Authorization"]= `${session.get('token')}`; 
-       
+        config.headers["Authorization"]= `Bearer ${session.get('token')}`;     
     } 
     return config;
 
