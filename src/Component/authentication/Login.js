@@ -9,6 +9,8 @@ import Loader from "../Loader";
 import { Col, Container, Row } from "react-bootstrap";
 import logo from "../../assets/image/DLogo.png";
 import {LoginSchema} from "../../utils/schema";
+import { setFeature} from "../../features/featuresSlice";
+
 
 const initialValues = {
   email: "",
@@ -27,9 +29,13 @@ const App = () => {
       const { authToken: token, userInfo } = res.data.data;
       dispatch(storeToken({ token, userInfo }));
       const features = await getFeature();
+     
       console.log("Feature ::>", features);
-      navigate("/dashboard");
+      dispatch(setFeature(features.data.data))
+     console.log(features.data)
+     navigate("/dashboard");
       setSubmitting(false);
+      
     } catch (error) {
       Notify.error(error.message);
     }

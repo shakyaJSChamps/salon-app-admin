@@ -11,9 +11,11 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
-
+import { useSelector} from "react-redux";
 const Sidebar=(props)=> {
-  const menus = [
+  const storedFeature = useSelector(state=>state.feature.value);
+  console.log("Feature2", storedFeature);
+const menus = [
     {
       icon: <FaChartPie />,
       slug: "/dashboard",
@@ -75,21 +77,24 @@ const Sidebar=(props)=> {
       label: "Setting",
     },
   ];
+  
   return (
     <ul className="sidebar list-unstyled">
-      {menus.map((item, i) => {
-        return (
+       {menus.map((item, i) => {
+      const matchingFeature = storedFeature.find(feature => feature.name === item.label);
+        return matchingFeature ?(
           <li key={i}>
             <NavLink to={item.slug} className="text-decoration-none text-dark " exact>
             <div className="side-nav-item">
               <span className="side-nav-icon m-auto " >{item.icon}</span>
-              {props.toggleSidebar && (
-                <span className="side-nav-label m-auto ps-2 ">{item.label}</span>
+             {props.toggleSidebar && ( 
+             <span className="side-nav-label m-auto ps-2 ">{item.label}</span>
               )}
             </div>
             </NavLink>
+              
           </li>
-        );
+        ):null;
       })}
     </ul>
   );
