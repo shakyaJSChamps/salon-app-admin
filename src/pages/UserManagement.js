@@ -9,7 +9,7 @@ import { selectSearchTerm, setCountries, selectCountriesData } from "../features
 const UserManagement = () => {
 
  const searchText = useSelector(selectSearchTerm);
-  console.log('Search text:', searchText);
+  // console.log('Search text:', searchText);
 
    const dispatch = useDispatch();
   const countries = useSelector(selectCountriesData);
@@ -19,7 +19,7 @@ const UserManagement = () => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleEdit = (rowData) => {
-    console.log("Editing row:", rowData);
+    // console.log("Editing row:", rowData);
 
     // Close the edit popup
     setShowEditPopup(false);
@@ -42,10 +42,10 @@ const UserManagement = () => {
     // Dispatch the setCountries action to update the countries state
     dispatch(setCountries(filteredCountries));
 
-    console.log("Response ::", response.data);
+    // console.log("Response ::", response.data);
 
 
-    console.log("Response ::", response.data);
+    // console.log("Response ::", response.data);
     } catch (error) {
       Notify.error(error.message);
     }

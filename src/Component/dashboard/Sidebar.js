@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FaChartPie } from "react-icons/fa";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
@@ -18,26 +18,25 @@ import Notify from "../../utils/notify";
 import SidebarLoader from "./sidebarloader/SidebarLoader";
 
 const Sidebar = (props) => {
-  const [loading, setLoading] = useState(true);
   const authToken = useSelector((state) => state.authInfo.token);
   const feature = useSelector((state) => state.feature.value);
   const dispatch = useDispatch();
-
-  const getFeatureList = async () => {
+  
+  const getFeatureList = useCallback(async () => {
     try {
       const features = await getFeature();
       dispatch(setFeature(features.data.data));
-      setLoading(false);
     } catch (error) {
+      console.error("Error ::>",error);
       Notify.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (authToken && feature.length === 0) {
       getFeatureList();
     }
-  }, [feature]);
+  }, [getFeatureList, authToken, feature]);
 
 
   const menus = {
@@ -56,10 +55,10 @@ const Sidebar = (props) => {
   };
   return (
     <>
-      {loading ? (
+      {feature.length === 0 ? (
         <SidebarLoader />
       ) : (
-        <ul className="sidebar list-unstyled">
+        <ul className="sidebar list-unstyled px-2">
           {feature.map((item, i) => {
             return (
               <li key={i}>
