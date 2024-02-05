@@ -26,8 +26,6 @@ const App = () => {
       const res = await doLogin({ email, password });
       const { authToken: token, userInfo } = res.data.data;
       dispatch(storeToken({ token, userInfo }));
-      const features = await getFeature();
-      console.log("Feature ::>", features);
       navigate("/dashboard");
       setSubmitting(false);
     } catch (error) {
