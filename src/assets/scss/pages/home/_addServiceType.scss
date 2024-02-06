@@ -1,13 +1,5 @@
 .add-service-paper {
 //   height: 80vh;
-  .add-service-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid $color-Dodger-Blue;
-    background-color: $color-light-grey;
-    outline:$color-Dodger-Blue ;
-  }
   .file-upload-input {
     display: none;
   }
@@ -20,14 +12,6 @@
     outline:$color-Dodger-Blue ;
     cursor: pointer;
     text-align: center;
-  }
-  .add-service-type-textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid $color-Dodger-Blue;
-    background-color: $color-light-grey;
-    outline:$color-Dodger-Blue ;
   }
   .add-service-btn {
     width: 200px;

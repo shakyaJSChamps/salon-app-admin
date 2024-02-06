@@ -34,13 +34,13 @@ const AddServiceType = () => {
       <form className="d-flex flex-column align-items-center">
         <div className=" d-flex flex-column align-items-start mb-1">
           <label className="fw-bold">Name</label>
-          <input placeholder="Hair" className="add-service-input" />
+          <input placeholder="Hair" className="form-control input" />
         </div>
 
         <div className=" d-flex flex-column align-items-start mb-2">
           <label className="fw-bold">Description</label>
           <textarea
-            className="add-service-type-textarea"
+            className="form-control input"
             rows="6"
             cols="25"
           ></textarea>
