@@ -3,14 +3,23 @@ import Table from "../Component/Table";
 import { getCountries } from "../api/account.api";
 import Notify from "../utils/notify";
 import { AiOutlineUser } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { selectSearchTerm, setCountries, selectCountriesData } from "../features/countriesInfo";
 
 const UserManagement = () => {
-  const [countries, setCountries] = useState([]);
+
+ const searchText = useSelector(selectSearchTerm);
+  // console.log('Search text:', searchText);
+
+   const dispatch = useDispatch();
+  const countries = useSelector(selectCountriesData);
+
+  // const [countries, setCountries] = useState([]);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleEdit = (rowData) => {
-    console.log("Editing row:", rowData);
+    // console.log("Editing row:", rowData);
 
     // Close the edit popup
     setShowEditPopup(false);
@@ -26,8 +35,17 @@ const UserManagement = () => {
   const getCountrie = async () => {
     try {
       const response = await getCountries()
-      setCountries(response.data);
-      console.log("Response ::", response.data);
+      const filteredCountries = response.data.filter((country) =>
+      country.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    // Dispatch the setCountries action to update the countries state
+    dispatch(setCountries(filteredCountries));
+
+    // console.log("Response ::", response.data);
+
+
+    // console.log("Response ::", response.data);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -35,7 +53,7 @@ const UserManagement = () => {
 
   useEffect(() => {
     getCountrie();
-  }, []);
+  },  [searchText]);
 
   const columns = [
     {

@@ -19,8 +19,13 @@
     margin-left: 10px;
     background-color: $color-black;
     color: $color-white;
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline;
   }
 }
 

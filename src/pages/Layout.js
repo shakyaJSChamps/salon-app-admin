@@ -5,12 +5,20 @@ import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../Component/dashboard/Sidebar";
 import Dlogo from "../assets/image/DLogo.png";
 import Profile from "./Profile";
+import { useSelector } from "react-redux";
+import LogoLoader from "../Component/LogoLoader";
 
 // const screenHeight = window.innerHeight;
 // const mainAreaHeight = screenHeight - 60;
 const Layout = () => {
   const [toggleSidebar, setToggleSidebar] = useState(true);
   const [mainAreaHeight, setMainAreaHeight] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const feature = useSelector((state) => state.feature.value);
+  useEffect(() => {
+    feature.length > 0 && setLoading(false);
+  }, [feature]);
 
   useEffect(() => {
     const updateMainAreaHeight = () => {
@@ -62,9 +70,13 @@ const Layout = () => {
           className={`content px-5  rounded ${toggleSidebar ? "w-76" : "w-94"}`}
           // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
         >
-          <Suspense fallback={<div>loading ...</div>}>
-            <Outlet />
-          </Suspense>
+          {loading ? (
+            <LogoLoader />
+          ) : (
+            <Suspense fallback={<div>loading ...</div>}>
+              <Outlet />
+            </Suspense>
+          )}
         </div>
       </div>
     </>

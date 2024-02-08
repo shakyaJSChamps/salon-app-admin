@@ -1,0 +1,25 @@
+.add-service-paper {
+//   height: 80vh;
+  .file-upload-input {
+    display: none;
+  }
+  .custom-file-upload-input {
+    width: 100%;
+    padding: 40px;
+    border-radius: 10px;
+    border: 1px dashed $color-Dodger-Blue;
+    background-color: $color-light-grey;
+    outline:$color-Dodger-Blue ;
+    cursor: pointer;
+    text-align: center;
+  }
+  .add-service-btn {
+    width: 200px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    background-color: $color-black;
+    color: $color-white;
+    text-transform: uppercase;
+  }
+}
