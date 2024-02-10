@@ -1,0 +1,19 @@
+.ads-add-paper{
+    background-color: aqua;
+   .submit-ads-btn{
+        background-color: $color-black;
+        color: $color-white;
+        width: 200px;
+        height: 45px;
+        border: none;
+        border-radius: 10px;
+        text-transform: uppercase;
+    }
+    .upload-icon{
+        position: relative;
+        left: 85%;
+        margin-bottom: -80px;
+        margin-top: -35px;
+        color: $color-black;
+    }
+}

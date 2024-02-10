@@ -5,13 +5,13 @@ import { MdOutlineConfirmationNumber } from "react-icons/md";
 
 const NewCoupon = () => {
   return (
-    <Row className="coupon mt-4 p-0">
-    <Paper className="coupon-details">
-       <div className="d-flex pt-2 ps-1 newcoupon"> 
+    <Row className="coupon p-0">
+    <Paper className="coupon-details px-3 pb-3">
+       <div className="d-flex pt-2 align-items-center"> 
         <MdOutlineConfirmationNumber className="coupon-icon"/>
-        <p className="coupon-headline  mb-0"> Create New Coupon</p>
+        <p className=" fw-bold mb-0 ps-1"> Create New Coupon</p>
          </div>
-        
+        <hr/>
         <div className='coupon-form'>
         <form >
           <label className='pt-2'>
@@ -26,7 +26,10 @@ const NewCoupon = () => {
 
           <label>
             Coupon Description<br/>
-            <textarea type="text" name="description" className="coupon-textarea"/>
+            <textarea type="text" name="description" className="coupon-textarea"
+             rows="2"
+             cols="21"
+            />
           </label>
 
           <label>

@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { MdOutlineConfirmationNumber } from "react-icons/md";
+import { MdOutlineContactMail } from "react-icons/md";
 import { Paper } from "@mui/material";
 import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-
-const CouponDetails = (props) => {
+import PlayCircleOutlineSharpIcon from "@mui/icons-material/PlayCircleOutlineSharp";
+const ServiceADS = (props) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 3;
   const handleChangePage = (newPage) => {
@@ -15,42 +15,42 @@ const CouponDetails = (props) => {
 
   const paginatedData = props.data || [];
   const totalRows = paginatedData.length;
-  
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, totalRows);
   const slicedData = paginatedData.slice(startIndex, endIndex);
   const columns = [
     {
-      name: <strong>COUPONS</strong>,
-      cell: (row) => (
-        <div className="mt-1 mb-2 position-relative">
-          <Paper className ="about-coupons-details ps-2" elevation={8}>
-            <div className="align-ite-center-start">
-            <div className='border-text'><p className='vertical-text'>{row.discount}</p></div>
-        <div className="fw-bold"> {row.title}</div>
-         <div className="coupon-saving">   {row.saving}</div>
-       <div className="about-coupon-details mt-2">  {row.details}</div>
-       </div>
-          </Paper>
-      
+      name: <strong>NAME</strong>,
+      cell: (row, index) => (
+        <div className="mt-1 mb-2 position-relative image-title">
+          {row.title}
+          <img src={row.image} alt="Audio Image" className="audio-image" />
+          {index > 0 && index % 2 === 1 && (
+            <PlayCircleOutlineSharpIcon
+              className="play-icon"
+              style={{ height: "40px", width: "40px" }}
+            />
+          )}
         </div>
       ),
     },
     {},
     {
-      name: <strong>DISCOUNT</strong>,
-      cell: (row) => <div className="add-coupon-discount">{row.discount}</div>,
+      name: <strong>CITY</strong>,
+      cell: (row) => <div className="ads-city">{row.city}</div>,
     },
     {
       name: <strong>DURATION</strong>,
       cell: (row) => (
-        <div className="mt-4  add-coupon-duration">
+        <div className="mt-4  ads-duration">
           {row.start}
           <br />
           {row.startDate}
           <br />
 
-          <p className="add-coupon-expire">
+          <p className="expire-text">
             {row.expire}
             <br />
             {row.expireDate}
@@ -70,11 +70,11 @@ const CouponDetails = (props) => {
     },
   ];
   return (
-    <Paper className="coupon-service-paper px-3 pb-3" elevation={3}>
+    <Paper className="ads-service-paper px-3 pb-3" elevation={3}>
       <div className="d-flex align-items-center justify-content-between pt-2">
         <div className="d-flex align-items-center">
-          <MdOutlineConfirmationNumber className="coupon-icon"/>
-          <p className=" ps-1 fw-bold  mb-0">Coupon</p>
+          <MdOutlineContactMail />
+          <p className=" ps-1 fw-bold  mb-0">Advertisement</p>
         </div>
         <div className="d-flex align-items-center">
           <div className="search-box d-flex me-5">
@@ -104,12 +104,12 @@ const CouponDetails = (props) => {
             Previous
           </button>
           <button
-            className={`show-page-no me-1 ${page === page ? "active-page" : ""}`}>
+            className={`show-page-no me-1 ${page === page ? "active" : ""}`}>
             {page}
           </button>
 
           <button
-            className={`show-page-no me-1 ${page === "" ? "active-page" : ""}`} >
+            className={`show-page-no me-1 ${page === "" ? "active" : ""}`} >
             {page + 1}
           </button>
           <button
@@ -124,4 +124,4 @@ const CouponDetails = (props) => {
   );
 };
 
-export default CouponDetails;
+export default ServiceADS;
