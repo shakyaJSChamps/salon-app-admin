@@ -11,6 +11,7 @@ function MyVerticallyCenteredModal({ show, onHide, rowData }) {
       onHide={onHide}
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      size="sm"
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className={styles.title}>

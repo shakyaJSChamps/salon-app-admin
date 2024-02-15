@@ -7,10 +7,10 @@ const ServiceTypeMan = () => {
   return (
     <Container>
       <Row>
-        <Col md={4} className="mt-5 ">
+        <Col md={4} className="mt-3">
           <AddServiceType />
         </Col>
-        <Col md={8} className="mt-5">
+        <Col md={8} className="mt-3">
           <ServiceType />
         </Col>
       </Row>

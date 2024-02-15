@@ -4,14 +4,17 @@ import { getCountries } from "../api/account.api";
 import Notify from "../utils/notify";
 import { AiOutlineUser } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
-import { selectSearchTerm, setCountries, selectCountriesData } from "../features/countriesInfo";
+import {
+  selectSearchTerm,
+  setCountries,
+  selectCountriesData,
+} from "../features/countriesInfo";
 
 const UserManagement = () => {
-
- const searchText = useSelector(selectSearchTerm);
+  const searchText = useSelector(selectSearchTerm);
   // console.log('Search text:', searchText);
 
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const countries = useSelector(selectCountriesData);
 
   // const [countries, setCountries] = useState([]);
@@ -27,25 +30,24 @@ const UserManagement = () => {
   };
 
   const handleRowClick = (row) => {
-    // Open the edit popup when a row is clicked
     setShowEditPopup(true);
     setSelectedRow(row);
   };
+  
 
   const getCountrie = async () => {
     try {
-      const response = await getCountries()
+      const response = await getCountries();
       const filteredCountries = response.data.filter((country) =>
-      country.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+        country.name.toLowerCase().includes(searchText.toLowerCase())
+      );
 
-    // Dispatch the setCountries action to update the countries state
-    dispatch(setCountries(filteredCountries));
+      // Dispatch the setCountries action to update the countries state
+      dispatch(setCountries(filteredCountries));
 
-    // console.log("Response ::", response.data);
+      // console.log("Response ::", response.data);
 
-
-    // console.log("Response ::", response.data);
+      // console.log("Response ::", response.data);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -53,13 +55,19 @@ const UserManagement = () => {
 
   useEffect(() => {
     getCountrie();
-  },  [searchText]);
+  }, [searchText]);
 
   const columns = [
     {
       name: "Country Name",
       selector: (row) => row.name,
       sortable: true,
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          <div>{row.name}</div>
+          <div>{row.name ? "s@gmail.com" : "" }</div> 
+        </div>
+      ),
     },
     {
       name: "Active",
@@ -79,12 +87,14 @@ const UserManagement = () => {
       //   ),
     },
     {
-      name: "Country Native Name",
-      selector: (row) => row.nativeName,
+      name: "Mobile Num",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "9826559328" : ""}</div>,
+      sortable: true,
     },
     {
-      name: "Country Captial",
-      selector: (row) => row.capital,
+      name: "Location",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "Kushinagar" : ""}</div>,
+      sortable: true,
     },
     {
       name: "Appointment",
@@ -92,7 +102,7 @@ const UserManagement = () => {
         <div>
           <span
             className={`appointment ${
-              row.capital ? "appointment-completed" : "appointment-canceled"
+              row.name ? "appointment-completed" : "appointment-canceled"
             }`}
           >
             Completed
@@ -100,7 +110,7 @@ const UserManagement = () => {
           <br />
           <span
             className={`appointment ${
-              !row.capital ? "appointment-canceled" : "appointment-canceled"
+              !row.name ? "appointment-canceled" : "appointment-canceled"
             }`}
           >
             Canceled
@@ -109,30 +119,16 @@ const UserManagement = () => {
       ),
     },
     {
-      name: "Country Flag",
-      selector: (row) => (
-        <img width={50} height={50} src={row.flag} alt="icon" />
-      ),
-    },
-    {
-      name: "Action",
-      cell: (row) => (
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            setSelectedRow(row);
-            setShowEditPopup(true);
-          }}
-        >
-          Edit
-        </button>
-      ),
+      name: "Joined On",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "12/02/2024" : ""}</div>,
+      sortable: true,
     },
   ];
 
   return (
     <Table
-      icon={<AiOutlineUser />} title={"User Management"}
+      icon={<AiOutlineUser />}
+      title={"User Management"}
       countries={countries}
       columns={columns}
       handleRowClick={handleRowClick}

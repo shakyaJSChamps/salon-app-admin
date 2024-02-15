@@ -2,19 +2,20 @@ import { Paper } from "@mui/material";
 import { MdOutlineContentPaste } from "react-icons/md";
 import React, { useRef, useState } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
+import FileUploader from "../file-uploder/FileUploder";
 
 const AddServiceType = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const fileInputRef = useRef(null);
+  // const fileInputRef = useRef(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectedFile(file);
+  // };
 
-  const handleFileUploadClick = () => {
-    fileInputRef.current.click();
-  };
+  // const handleFileUploadClick = () => {
+  //   fileInputRef.current.click();
+  // };
 
   const handleSave = () => {
     if (selectedFile) {
@@ -45,7 +46,7 @@ const AddServiceType = () => {
             cols="25"
           ></textarea>
         </div>
-        <div className=" d-flex flex-column align-items-start mb-2">
+        {/* <div className=" d-flex flex-column align-items-start mb-2">
           <label className="fw-bold ">File Uploader</label>
           <div
             className="custom-file-upload-input"
@@ -62,7 +63,8 @@ const AddServiceType = () => {
             onChange={handleFileChange}
             className="file-upload-input"
           />
-        </div>
+        </div> */}
+        <FileUploader />
         <div className="d-flex justify-content-center">
           <button className="add-service-btn mt-2" onClick={handleSave}>
             Save

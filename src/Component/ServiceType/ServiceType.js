@@ -33,7 +33,7 @@ const ServiceType = () => {
   const getServiceTypes = async () => {
     try {
       const response = await getServiceType();
-      // console.log("Response ::", response);
+      console.log("Response ::", response);
       const responseData = response.data.data;
       // console.log("Response :::>", responseData);
       dispatch(setServiceType(responseData));
@@ -108,7 +108,7 @@ const ServiceType = () => {
   // });
 
   return (
-    <Paper className="service-type-paper px-3 pb-3 rounded h-100" elevation={3}>
+    <Paper className="add-service-paper px-3 pb-3 rounded h-100" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">Add Service Type</p>

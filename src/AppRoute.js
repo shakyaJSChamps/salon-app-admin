@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
+const CmsSetting = lazy (() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
 const SaloonDetails = lazy(() => import("./Component/Saloon/SaloonDetails"));
@@ -67,6 +68,7 @@ const AppRoute = (props) => {
             { path: "payment-management", element: <PaymentMan /> },
             { path: "notifications", element: <Notification /> },
             { path: "setting", element: <Setting /> },
+            { path: "setting/cms-setting", element: <CmsSetting /> },
           ],
         },
       ],

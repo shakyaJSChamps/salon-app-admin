@@ -1,60 +1,56 @@
 import React, { useEffect, useState } from "react";
 import Table from "../Component/Table";
-import { getCountries } from "../api/account.api";
+import { useSelector, useDispatch } from "react-redux"; 
+import { fetchSaloonTypes } from "../features/saloonTypeSlice"; 
 import Notify from "../utils/notify";
 import { MdOutlineContentCut } from "react-icons/md";
 import { useNavigate} from "react-router";
 import  {personalDetails,dataEntries} from "../Component/Saloon/Data";
 import SaloonDetails from "../Component/Saloon/SaloonDetails";
 
-
 const SalonManagement = () => {
+  const dispatch = useDispatch(); // Initializing useDispatch hook
+
+  useEffect(() => {
+    // dispatch(fetchSaloonTypes()); // Dispatching the fetchSaloonTypes async thunk to fetch the saloon types data
+  }, [dispatch]); // Ensuring the useEffect hook runs only once when the component mounts
+
   const navigate = useNavigate();
-  const [countries, setCountries] = useState([]);
-  // const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  // Accessing the saloon types data from the Redux store using the useSelector hook
+  const countries = useSelector((state) => state.saloonTypes.data);
+  
+  console.log("Countries:", countries);
   const handleEdit = (rowData) => {
     console.log("Editing row:", rowData);
-
-    // Close the edit popup
-    // setShowEditPopup(false);
     setSelectedRow(null);
   };
 
   const handleRowClick = (row) => {
-    // Open the edit popup when a row is clicked
-    // setShowEditPopup(true);
-      navigate("/salon-management/details");
-      setSelectedRow(row);
-    // })
-  };
-  const handleLinkClick = (e) =>{
-    e.stopPropagation();
-  }
-  const handleButtonClick = (e) =>{
-    e.stopPropagation();
-  }
-
-  const getCountrie = async () => {
-    try {
-      const response = await getCountries();
-      setCountries(response.data);
-      console.log("Response ::", response.data);
-    } catch (error) {
-      Notify.error(error.message);
-    }
+    navigate("/salon-management/details");
+    setSelectedRow(row);
   };
 
-  useEffect(() => {
-    getCountrie();
-  }, []);
+  const handleLinkClick = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation();
+  };
 
   const columns = [
     {
       name: "Country Name",
       selector: (row) => row.name,
       sortable: true,
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          <div>{row.name}</div>
+          <div>{row.name ? "s@gmail.com" : "" }</div> 
+        </div>
+      ),
     },
     {
       name: "Active",
@@ -74,12 +70,14 @@ const SalonManagement = () => {
       //   ),
     },
     {
-      name: "Country Native Name",
-      selector: (row) => row.nativeName,
+      name: "Mobile Num",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "9826559328" : ""}</div>,
+      sortable: true,
     },
     {
-      name: "Country Captial",
-      selector: (row) => row.capital,
+      name: "Location",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "Kushinagar" : ""}</div>,
+      sortable: true,
     },
     {
       name: "Appointment",
@@ -87,7 +85,7 @@ const SalonManagement = () => {
         <div>
           <span
             className={`appointment ${
-              row.capital ? "appointment-completed" : "appointment-canceled"
+              row.name ? "appointment-completed" : "appointment-canceled"
             }`}
           >
             Completed
@@ -95,7 +93,7 @@ const SalonManagement = () => {
           <br />
           <span
             className={`appointment ${
-              !row.capital ? "appointment-canceled" : "appointment-canceled"
+              !row.name ? "appointment-canceled" : "appointment-canceled"
             }`}
           >
             Canceled
@@ -104,24 +102,9 @@ const SalonManagement = () => {
       ),
     },
     {
-      name: "Country Flag",
-      selector: (row) => (
-        <img width={50} height={50} src={row.flag} alt="icon" />
-      ),
-    },
-    {
-      name: "Action",
-      cell: (row) => (
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            setSelectedRow(row);
-            // setShowEditPopup(true);
-          }}
-        >
-          Edit
-        </button>
-      ),
+      name: "Joined On",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "12/02/2024" : ""}</div>,
+      sortable: true,
     },
   ];
 
@@ -130,22 +113,19 @@ const SalonManagement = () => {
       {selectedRow ? (
         <SaloonDetails personalDetails={personalDetails} dataEntries={dataEntries} />
       ) : (
-     <Table
-      icon={<MdOutlineContentCut />}
-      title={"Salon Management"}
-      countries={countries}
-      columns={columns}
-      handleRowClick={handleRowClick}
-      // showEditPopup={showEditPopup}
-      // setShowEditPopup={setShowEditPopup}
-      handleEdit={handleEdit}
-      selectedRow={selectedRow}
-      handleLinkClick={handleLinkClick}
-      handleButtonClick={handleButtonClick}
-    /> 
+        <Table
+          icon={<MdOutlineContentCut />}
+          title={"Salon Management"}
+          countries={countries}
+          columns={columns}
+          handleRowClick={handleRowClick}
+          handleEdit={handleEdit}
+          selectedRow={selectedRow}
+          handleLinkClick={handleLinkClick}
+          handleButtonClick={handleButtonClick}
+        /> 
       )}
-      
-</>
+    </>
   );
 };
 
