@@ -13,7 +13,6 @@ const CmsSetting = () => {
     { label: "Terms & Condition", value: "" },
     { label: "CMS Setting", value: "option1", route: "/setting/cms-setting" },
     { label: "Setting", value: "option2", route: "/setting" },
-    { label: "Option 3", value: "option3", route: "/option3" },
   ];
 
   const handleChange = (event) => {
