@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Table from "../Component/Table";
-import { getCountries } from "../api/account.api";
-import Notify from "../utils/notify";
 import { AiOutlineUser } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectSearchTerm,
-  setCountries,
-  selectCountriesData,
-} from "../features/countriesInfo";
-
+import { fetchUser, selectUserData } from "../features/userInfoSlice";
+import { selectSearchTerm } from "../features/countriesInfo"; 
+import DummyProfile from "../assets/image/dummy-profile.jpg";
 const UserManagement = () => {
-  const searchText = useSelector(selectSearchTerm);
-  // console.log('Search text:', searchText);
-
   const dispatch = useDispatch();
-  const countries = useSelector(selectCountriesData);
+  const userData = useSelector(selectUserData);
+  const searchText = useSelector(selectSearchTerm); 
 
-  // const [countries, setCountries] = useState([]);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleEdit = (rowData) => {
-    // console.log("Editing row:", rowData);
-
-    // Close the edit popup
     setShowEditPopup(false);
     setSelectedRow(null);
   };
@@ -33,67 +22,67 @@ const UserManagement = () => {
     setShowEditPopup(true);
     setSelectedRow(row);
   };
-  
-
-  const getCountrie = async () => {
-    try {
-      const response = await getCountries();
-      const filteredCountries = response.data.filter((country) =>
-        country.name.toLowerCase().includes(searchText.toLowerCase())
-      );
-
-      // Dispatch the setCountries action to update the countries state
-      dispatch(setCountries(filteredCountries));
-
-      // console.log("Response ::", response.data);
-
-      // console.log("Response ::", response.data);
-    } catch (error) {
-      Notify.error(error.message);
-    }
-  };
 
   useEffect(() => {
-    getCountrie();
-  }, [searchText]);
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  const filteredUserData = userData.filter(
+    (user) =>
+      user.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const columns = [
     {
-      name: "Country Name",
+      name: "Name",
       selector: (row) => row.name,
       sortable: true,
+      minWidth: "250px",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          <div>{row.name}</div>
-          <div>{row.name ? "s@gmail.com" : "" }</div> 
+        <div onClick={() => handleRowClick(row)}  className="d-flex ">
+          <div>
+            <img
+              src={row.profileImageUrl ? row.profileImageUrl : DummyProfile }
+              alt="Profile"
+              style={{ width: 35, height: 35, borderRadius: "50%" }}
+            />
+          </div>
+          <div>
+            <div className="ps-2">{`${row.firstName} ${row.lastName}`}</div>
+            <div className="ps-2">{row.email}</div>
+          </div>
         </div>
       ),
     },
     {
       name: "Active",
-      cell: (row, index) => (
+      cell: (row) => (
         <span
           className={`rounded-pill ${
-            index % 2 === 0 ? "blocked-pill" : "active-pill"
+            row.active ? "active-pill" : "blocked-pill"
           }`}
         >
-          {index % 2 === 0 ? "Blocked" : "Active"}
+          {row.active ? "Active" : "Blocked"}
         </span>
       ),
-      //  row.capital ? (
-      //     <span className="rounded-pill active-pill"> Active</span>
-      //   ) : (
-      //     <span className="rounded-pill blocked-pill"> Blocked</span>
-      //   ),
     },
+
     {
       name: "Mobile Num",
-      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "9826559328" : ""}</div>,
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>
+      ),
       sortable: true,
     },
     {
       name: "Location",
-      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "Kushinagar" : ""}</div>,
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          {row.address}
+        </div>
+      ),
       sortable: true,
     },
     {
@@ -110,7 +99,7 @@ const UserManagement = () => {
           <br />
           <span
             className={`appointment ${
-              !row.name ? "appointment-canceled" : "appointment-canceled"
+              row.name ? "appointment-canceled" : "appointment-canceled"
             }`}
           >
             Canceled
@@ -120,16 +109,20 @@ const UserManagement = () => {
     },
     {
       name: "Joined On",
-      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.name ? "12/02/2024" : ""}</div>,
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          {new Date(row.createdAt).toLocaleDateString()}
+        </div>
+      ),
       sortable: true,
-    },
+    }
   ];
 
   return (
     <Table
       icon={<AiOutlineUser />}
       title={"User Management"}
-      countries={countries}
+      countries={filteredUserData}
       columns={columns}
       handleRowClick={handleRowClick}
       showEditPopup={showEditPopup}
