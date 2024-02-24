@@ -3,8 +3,12 @@ import Modal from 'react-bootstrap/Modal';
 import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from '../ServiceType/EditServiceForm';
 import styles from "./Modal.module.css";
+import PopUp from '../PopUp';
 
 function MyVerticallyCenteredModal({ show, onHide, rowData }) {
+  const editServiceFormData = rowData.editServiceFormData; // Assuming editServiceFormData is the data for EditServiceForm
+  const popUpData = rowData.popUpData; // Assuming popUpData is the data for PopUp
+
   return (
     <Modal
       show={show}
@@ -19,10 +23,13 @@ function MyVerticallyCenteredModal({ show, onHide, rowData }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditServiceForm rowData={rowData} />
+        <EditServiceForm data={editServiceFormData} />
+        <PopUp data={popUpData} />
       </Modal.Body>
     </Modal>
   );
 }
 
 export default MyVerticallyCenteredModal;
+
+

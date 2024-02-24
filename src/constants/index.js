@@ -10,3 +10,22 @@ export const methods = {
     DELETE: "DELETE"
 }
 
+export function isValidImageUrl(url) {
+    // Supported image extensions
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+
+    // Check if the URL ends with a valid image extension
+    const extension = url.split('.').pop().toLowerCase();
+    if (imageExtensions.includes(extension)) {
+        return true;
+    }
+
+    // Check if the URL contains a data URI for an image
+    if (url.startsWith('data:image')) {
+        return true;
+    }
+
+    // Not a valid image URL
+    return false;
+}
+

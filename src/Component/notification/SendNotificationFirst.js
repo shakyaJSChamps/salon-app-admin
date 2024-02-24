@@ -35,7 +35,7 @@ const SendNotificationFirst = () => {
           />
         </div>
         <div className="d-flex justify-content-center">
-        <button type="submit" className="button mt-4">
+        <button type="submit" className="button mt-3">
          Send
         </button>
       </div>

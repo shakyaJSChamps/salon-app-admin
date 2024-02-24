@@ -39,7 +39,7 @@ const App = () => {
   return (
     <>
       <Container className="p-0">
-        <Row className="m-0 p-0">
+        <Row className="m-0 p-0 px-3">
           <Col sm={8} className="p-0 mt-4 ">
             <p className="">
               Welcome to{" "}
@@ -70,8 +70,8 @@ const App = () => {
         {(props) => (
           <div className="main-form ">
             <Form className="d-flex flex-column">
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
+              <div className="form-group px-3 mt-2">
+                <label htmlFor="email" className="fw-bold">Email</label>
                 <Field
                   type="email"
                   name="email"
@@ -90,15 +90,15 @@ const App = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="password" className="mt-3 ">
+              <div className="form-group px-3 mt-3">
+                <label htmlFor="password" className="mt-3  fw-bold">
                   Password
                 </label>
                 <Field
                   type="password"
                   name="password"
                   placeholder="Enter password"
-                  className={`form-control input ${
+                  className={`mt-2 form-control input ${
                     props.touched.password && props.errors.password
                       ? "is-invalid"
                       : ""
@@ -110,12 +110,12 @@ const App = () => {
                   className="invalid-feedback"
                 />
               </div>
-              <Link to={"/forget-password"} className="ms-auto link">
+              <Link to={"/forget-password"} className="ms-auto link me-3 mt-4">
                 Forget Password
               </Link>
               <button
                 type="submit"
-                className="button mb-3 ms-auto"
+                className="button  ms-auto mt-4 me-3"
                 disabled={props.isSubmitting}
               >
                 {props.isSubmitting ? <Loader /> : "Submit"}

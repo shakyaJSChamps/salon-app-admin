@@ -15,7 +15,7 @@ function Authentication() {
             sm={12}
             className="p-0 d-flex justify-content-center align-items-center  "
           >
-            <Paper className="paper px-3 " elevation={3}>
+            <Paper className="paper px-3 pt-3 pb-5 " elevation={3}>
               <Suspense fallback={<div>loading ...</div>}>
                 <Outlet />
               </Suspense>
@@ -34,7 +34,7 @@ function Authentication() {
               <div className="stylrax">
                 <img src={image} alt="logo.png" />
               </div>
-              <div className="second-para">
+              <div className="second-para ps-5">
                 <p>
                   The Best barbers & Salon in this
                   <br />

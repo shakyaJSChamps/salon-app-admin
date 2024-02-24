@@ -22,10 +22,10 @@
     url("https://ik.imagekit.io/wavizkushinagar/adm-stylrax/bg-img.e9175ea200e50d178ed1_w3WonUNrz.webp?updatedAt=1705678751663");
   background-size: cover;
   background-attachment: fixed;
- 
+
   .paper {
     width: 75%;
-    @include smallPhone{
+    @include smallPhone {
       width: 100%;
     }
     border-radius: 40px !important;
@@ -56,12 +56,12 @@
         }
         .email-input {
           width: 100%;
-          padding: 10px;
+          padding: 15px;
           border-radius: 10px;
           border: 1px solid $color-Dodger-Blue;
           background-color: $color-light-grey;
         }
-        .password-input{
+        .password-input {
           width: 100%;
           padding: 10px;
           border-radius: 10px;
@@ -72,7 +72,7 @@
           font-size: 15px !important;
           color: $color-Blue-Smoke;
           text-decoration-line: none;
-      font-weight: 400;
+          font-weight: 400;
         }
       }
     }
@@ -82,9 +82,9 @@
       color: $color-white;
       font-weight: 600;
       letter-spacing: 1;
-      font-size: 80px;
+      font-size: 70px;
       text-align: center;
-      line-height: 105px;
+      line-height: 50px;
       @include for-desktop {
         font-size: 50px;
       }
@@ -99,6 +99,11 @@
     }
     .stylrax {
       margin-top: -15px;
+      text-align: center;
+      img {
+        width: 500px;
+        height: auto;
+      }
       @include for-desktop {
         text-align: center;
       }
