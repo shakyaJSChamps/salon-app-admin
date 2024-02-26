@@ -44,7 +44,7 @@ const UserManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      minWidth: "250px",
+      width: "250px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div>

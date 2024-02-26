@@ -65,7 +65,6 @@ const Sidebar = (props) => {
                 <NavLink
                   to={item.name.toLowerCase().replace(/\s+/g, "-")}
                   className="text-decoration-none text-dark "
-                  exact
                 >
                   <div className="side-nav-item">
                     <span className="side-nav-icon m-auto ">

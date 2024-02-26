@@ -16,7 +16,6 @@ export const authInfo = createSlice({
       Session.set("token", action.payload.token);
     },
     removeToken: (state)=>{
-
       Session.remove("token");
       state.token = "";
     }

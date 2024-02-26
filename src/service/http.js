@@ -2,7 +2,8 @@ import axios from 'axios';
 import session from "./session";
 import {PUBLIC_URLS} from '../constants/public-endpoint';
 import Notify from '../utils/notify';
-
+import { removeToken } from '../features/authInfo'; // Import the removeToken action from your authSlice
+import store from '../app/store'; // Import your Redux store
 //TODO: handle public endpoints, multiple-part request, json request
 
 /*Setting up interceptors with axios*/
@@ -25,6 +26,7 @@ axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {   
+    
     // Do something with response data 
     // 200 OR 20*
     // SUCESS: if request by PUT/POST/DELETE
@@ -34,8 +36,13 @@ axios.interceptors.response.use(function (response) {
     return response;
 
 }, function (error) {
+
+    console.log('Error ::>', error);
     if (!error.response && error.message === 'Network Error') {
         return Promise.reject("Couldn't connect to server. Please try again later.");
+    }else if (error.response && error.response.status === 401) { // Assuming 401 is the unauthorized status
+        // Dispatch removeToken action if response status is 401
+        store.dispatch(removeToken());
     }else if(error.response && error.response.data){
         return Promise.reject(error.response.data);
     }else{

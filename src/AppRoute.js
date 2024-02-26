@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
+import Login from "../src/Component/authentication/Login";
 const SendNotification = lazy(() => import("./Component/notification/SendNotification"));
 const CmsSetting = lazy (() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
@@ -17,7 +18,6 @@ const Notification = lazy(() => import("./pages/Notification"));
 const Setting = lazy(() => import("./pages/Settings"));
 const Layout = lazy(() => import("../src/pages/Layout"));
 const DashBoard = lazy(() => import("../src/pages/Dashboard"));
-const Login = lazy(() => import("../src/Component/authentication/Login"));
 const Authentication = lazy(() =>
   import("../src/Component/authentication/Authentication")
 );
@@ -78,9 +78,7 @@ const AppRoute = (props) => {
     {
       path: "",
       element: (
-        <Suspense fallback={<LogoLoader />}>
           <Authentication />
-        </Suspense>
       ),
       children: [
         { path: "login", element: <Login /> },
