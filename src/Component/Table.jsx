@@ -1,5 +1,4 @@
 import React from "react";
-import PopUp from "./PopUp";
 import DataTable from "react-data-table-component";
 import CustomTitle from "./CustomTitle";
 
@@ -18,14 +17,6 @@ const Table = (props) => {
         highlightOnHover
         onRowClicked={props.handleRowClick}
       />
-      {props.showEditPopup && (
-        <PopUp
-          show={true}
-          handleClose={() => props.setShowEditPopup(false)}
-          handleEdit={props.handleEdit}
-          rowData={props.selectedRow}
-        />
-      )}
     </div>
   );
 };

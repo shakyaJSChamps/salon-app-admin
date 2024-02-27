@@ -1,3 +1,4 @@
+// ServiceType.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineContentPaste } from "react-icons/md";
@@ -15,11 +16,11 @@ import MyVerticallyCenteredModal from "../modal/ModalPop";
 import EditServiceForm from "./EditServiceForm";
 
 const ServiceType = () => {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [showForm, setShowForm] = useState(null); 
   const [selectedRow, setSelectedRow] = useState(null);
   const dispatch = useDispatch();
   const serviceTypes = useSelector(selectServiceTypeData);
-  // console.log("Redux State:", serviceTypes);
 
   const handleDelete = (row) => {
     console.log("Delete clicked for:", row);
@@ -27,17 +28,15 @@ const ServiceType = () => {
 
   const handleEdit = (row) => {
     setSelectedRow(row);
-    setModalShow(true); 
+    setShowForm("service"); 
+    setModalShow(true);
   };
 
   const getServiceTypes = async () => {
     try {
       const response = await getServiceType();
-      console.log("Response ::", response);
       const responseData = response.data.data;
-      // console.log("Response :::>", responseData);
       dispatch(setServiceType(responseData));
-      // console.log("Response :::>", responseData);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -68,23 +67,6 @@ const ServiceType = () => {
       sortable: true,
       cell: (row) => (row.createdDate ? "date" : "Date Not Found"),
     },
-    // {
-    //   name: "Image",
-    //   sortable: true,
-    //   cell: (row) => (
-    //     <img
-    //       src={row.imageUrl}
-    //       alt={`Image of ${row.name}`}
-    //       width={50}
-    //       height={50}
-    //     />
-    //   ),
-    // },
-    // {
-    //   name: "Active",
-    //   sortable: true,
-    //   cell: (row) => (row.active ? "Yes" : "No"),
-    // },
     {
       name: "",
       cell: (row) => (
@@ -102,11 +84,6 @@ const ServiceType = () => {
     },
   ];
 
-  // console.log("DataTable Component:", {
-  //   columns,
-  //   data: serviceTypes,
-  // });
-
   return (
     <Paper className="add-service-paper px-3 pb-3 rounded h-100" elevation={3}>
       <div className="d-flex align-items-center pt-2">
@@ -120,17 +97,19 @@ const ServiceType = () => {
         <span>No Data</span>
       )}
 
-      {modalShow &&
-        selectedRow && ( // Show modal only if modalShow is true and selectedRow is not null
-          <MyVerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            rowData={selectedRow}
-          >
-            {/* Pass rowData to EditServiceForm component */}
-            <EditServiceForm rowData={selectedRow} />
-          </MyVerticallyCenteredModal>
-        )}
+      {modalShow && selectedRow && (
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => {
+            setModalShow(false);
+            setShowForm(null);
+          }}
+          rowData={selectedRow}
+          showForm={showForm} 
+        >
+          {showForm === "service" && <EditServiceForm rowData={selectedRow} />}
+        </MyVerticallyCenteredModal>
+      )}
     </Paper>
   );
 };

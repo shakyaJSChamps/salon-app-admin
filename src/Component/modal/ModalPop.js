@@ -1,14 +1,10 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
 import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from '../ServiceType/EditServiceForm';
 import styles from "./Modal.module.css";
-import PopUp from '../PopUp';
+import { Modal } from "react-bootstrap";
+import UserPopUp from "../userManagement/UserPopUp";
 
-function MyVerticallyCenteredModal({ show, onHide, rowData }) {
-  const editServiceFormData = rowData.editServiceFormData; // Assuming editServiceFormData is the data for EditServiceForm
-  const popUpData = rowData.popUpData; // Assuming popUpData is the data for PopUp
-
+function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) { 
   return (
     <Modal
       show={show}
@@ -17,19 +13,19 @@ function MyVerticallyCenteredModal({ show, onHide, rowData }) {
       centered
       size="sm"
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" className={styles.title}>
-          <MdOutlineContentPaste /> Edit Service Type
-        </Modal.Title>
-      </Modal.Header>
+         {showForm === "service" && ( 
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter" className={styles.title}>
+            <MdOutlineContentPaste /> Edit Service Type
+          </Modal.Title>
+        </Modal.Header>
+      )}
       <Modal.Body>
-        <EditServiceForm data={editServiceFormData} />
-        <PopUp data={popUpData} />
+        {showForm === "service" && <EditServiceForm rowData={rowData} />}
+        {showForm === "user" && <UserPopUp rowData={rowData}/>}
       </Modal.Body>
     </Modal>
   );
 }
 
 export default MyVerticallyCenteredModal;
-
-

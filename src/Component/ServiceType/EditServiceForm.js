@@ -48,7 +48,7 @@ const EditServiceForm = ({ rowData }) => {
         <label className="fw-bold">Description</label>
         <textarea
           className="form-control input"
-          rows="6"
+          rows="4"
           cols="25"
           value={description}
           onChange={(e) => setDescription(e.target.value)}

@@ -7,7 +7,8 @@ import { selectSearchTerm } from "../features/countriesInfo";
 import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
-import PopUp from "../Component/PopUp";
+// import PopUp from "../assets/image/dummy-profile.jpg";
+import UserPopUp from "../Component/userManagement/UserPopUp";
 
 const UserManagement = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,7 @@ const UserManagement = () => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleEdit = (rowData) => {
-    setModalShow(false);
-    setSelectedRow(null);
+    // handle edit logic
   };
 
   const handleRowClick = (row) => {
@@ -44,7 +44,7 @@ const UserManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width: "250px",
+      width: "300px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div>
@@ -138,29 +138,24 @@ const UserManagement = () => {
 
   return (
     <>
-      {modalShow &&
-        selectedRow && ( 
-          <MyVerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            rowData={selectedRow}
-          >
-            {/* Pass rowData to EditServiceForm component */}
-            <PopUp rowData={selectedRow} />
-          </MyVerticallyCenteredModal>
-        )}
-      <Table
-        icon={<AiOutlineUser />}
-        title={"User Management"}
-        countries={filteredUserData}
-        columns={columns}
-        handleRowClick={handleRowClick}
-        // showEditPopup={showEditPopup}
-        // setShowEditPopup={setShowEditPopup}
-        handleEdit={handleEdit}
-        selectedRow={selectedRow}
+    {modalShow && selectedRow && (
+      <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        rowData={selectedRow}
+        showForm={"user"}
       />
-    </>
+    )}
+    <Table
+      icon={<AiOutlineUser />}
+      title={"User Management"}
+      countries={filteredUserData}
+      columns={columns}
+      handleRowClick={handleRowClick}
+      handleEdit={handleEdit}
+      selectedRow={selectedRow}
+    />
+  </>
   );
 };
 

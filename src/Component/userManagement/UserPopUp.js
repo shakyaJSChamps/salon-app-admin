@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { isValidImageUrl } from "../constants";
-import Profile from "../assets/image/dummy-profile.jpg";
+import { isValidImageUrl } from "../../constants";
+import Profile from "../../assets/image/dummy-profile.jpg";
 
-const PopUp = ({ show, handleClose, handleEdit, rowData }) => {
+const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
   const [editedData, setEditedData] = useState({ ...rowData });
   const [isBlocked, setIsBlocked] = useState(false);
 
@@ -39,13 +39,13 @@ const PopUp = ({ show, handleClose, handleEdit, rowData }) => {
           <img
             src={rowData.profileImageUrl}
             alt="Profile"
-            style={{ width: 35, height: 35, borderRadius: "50%" }}
+            style={{ width: 100, height: 100,  borderRadius:"5px", borderColor:"#7f8080"}}
           />
         ) : (
           <img
             src={Profile}
             alt="Profile"
-            style={{ width: 45, height: 35, borderRadius: "50%" }}
+            style={{ width: 100, height: 100,  borderRadius:"5px", borderColor:"#7f8080" }}
           />
         )}
       </div>
@@ -70,7 +70,7 @@ const PopUp = ({ show, handleClose, handleEdit, rowData }) => {
           Total <br /> Completed Appointments:
         </p>
         {/* <p className="data-detail">{editedData.totalCompletedAppointments}</p> */}
-        <p className="data-detail ps-2"> 7777777</p>
+        <p className="data-detail ps-2 pt-3"> 7777777</p>
       </div>
 
       <div className="d-flex align-items-evenly mb-2 ">
@@ -91,7 +91,7 @@ const PopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="d-flex justify-content-center ">
-        <button onClick={handleToggleBlock} className="popup-btn">
+        <button onClick={handleToggleBlock} className="button">
           {isBlocked ? "Unblock" : "Block"}
         </button>
       </div>
@@ -99,4 +99,4 @@ const PopUp = ({ show, handleClose, handleEdit, rowData }) => {
   );
 };
 
-export default PopUp;
+export default UserPopUp;
