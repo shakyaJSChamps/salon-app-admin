@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { doLogin, getFeature } from "../../api/account.api";
 import { storeToken } from "../../features/authInfo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import Notify from "../../utils/notify";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../Loader";
@@ -21,12 +21,19 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       console.log(values);
       const { email, password } = values;
       const res = await doLogin({ email, password });
-      const { authToken: token, userInfo } = res.data.data;
+      // console.log("response ::>", res);
+      // const { authToken: token,  } = res.data.data;
+      const token = res.data.data.authToken;
+      const userInfo = {
+        email : res.data.data.email,
+        role : res.data.data.role,
+      }
       dispatch(storeToken({ token, userInfo }));
       navigate("/dashboard");
       setSubmitting(false);

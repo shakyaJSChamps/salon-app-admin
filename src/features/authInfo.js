@@ -4,6 +4,8 @@ export const authInfo = createSlice({
   name: 'token',
   initialState: {
     token: Session.get('token') || "",
+    // userInfo: {},
+    userInfo:Session.get('userInfo') || ""
   },
   reducers: {
     storeToken: (state, action) => {
@@ -13,16 +15,22 @@ export const authInfo = createSlice({
       // immutable state based off those changes.
       // Also, no return statement is required from these functions.
       state.token = action.payload.token;
+      state.userInfo = JSON.stringify(action.payload.userInfo);
       Session.set("token", action.payload.token);
+      Session.set("userInfo", JSON.stringify(action.payload.userInfo));
+      console.log("UserInfo stored:", action.payload.userInfo);
     },
     removeToken: (state)=>{
       Session.remove("token");
       state.token = "";
+      state.userInfo = {};
+      Session.remove("userInfo");
+      console.log("UserInfo removed");
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { storeToken, removeToken } = authInfo.actions
+export const { storeToken, removeToken } = authInfo.actions;
 
-export default authInfo.reducer
+export default authInfo.reducer;
