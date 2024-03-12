@@ -15,7 +15,7 @@ export const doLogin = (payload) =>
 export const getCountries = (payload) =>
   HTTP.Request(methods.GET, "https://restcountries.com/v2/all", payload);
 export const getUser = (payload) =>
-  HTTP.Request(methods.GET,`${__endpoint_getUser}/consumers?page=1&size=20`, payload);
+  HTTP.Request(methods.GET,`${__endpoint_getUser}${payload}`);
 export const getFeature = () =>
   HTTP.Request(methods.GET, __endpoint_getFeature);
 export const getServiceType = () =>

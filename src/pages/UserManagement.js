@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
-import Table from "../Component/Table";
 import { AiOutlineUser } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUser, selectUserData } from "../features/userInfoSlice";
+import { setData, selectUserData } from "../features/userInfoSlice";
 import { selectSearchTerm } from "../features/countriesInfo";
 import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
-// import PopUp from "../assets/image/dummy-profile.jpg";
-import UserPopUp from "../Component/userManagement/UserPopUp";
+import Notify from "../utils/notify";
+import { getUser } from "../api/account.api";
+import DataTable from "react-data-table-component";
+import CustomTitle from "../Component/CustomTitle";
 
 const UserManagement = () => {
+  const title = "User Management";
+  const icon = <AiOutlineUser />;
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
   const searchText = useSelector(selectSearchTerm);
-
-  // const [showEditPopup, setShowEditPopup] = useState(false);
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [perPage, setPerPage] = useState(20);
+  const [totalRows, setTotalRows] = useState(0);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   const handleEdit = (rowData) => {
     // handle edit logic
@@ -28,9 +32,38 @@ const UserManagement = () => {
     setSelectedRow(row);
   };
 
+  const handlePageChange = page => {
+    getUsers(page);
+  };
+
+  // const handlePerPageChange = (newPerPage, page) => {
+  //   setPerPage(newPerPage);
+  //   setCurrentPage(page);
+  //   // getUsers(page, newPerPage);
+  // };
+
+  const getUsers = async (page) => {
+    try {
+      const response = await getUser(`/consumers?page=${page}&per_page=${perPage}&delay=1`);
+      console.log("API Response:", response);
+      const userData = response.data.data.items;
+      dispatch(setData(userData));
+      setTotalRows(response.data.data.total);
+      return userData;
+    } catch (error) {
+      Notify.error(error.message);
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
+    getUsers(1);
+  }, []);
+
+  // useEffect(() => {
+  //   // if (perPage && currentPage) {
+  //     getUsers(currentPage, perPage);
+  //   // }
+  // }, [searchText]);
 
   const filteredUserData = userData.filter(
     (user) =>
@@ -38,7 +71,8 @@ const UserManagement = () => {
       user.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
       user.email.toLowerCase().includes(searchText.toLowerCase())
   );
-
+  // const paginatedUserData = filteredUserData.slice(0, perPage);
+  
   const columns = [
     {
       name: "Name",
@@ -47,7 +81,7 @@ const UserManagement = () => {
       width: "300px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
-          <div>
+          <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) &&
             isValidImageUrl(row.profileImageUrl) ? (
               <img
@@ -136,26 +170,53 @@ const UserManagement = () => {
     },
   ];
 
+  const customStyles = {
+    headCells: {
+      style: {
+        fontSize: "16px",
+        textTransform: "uppercase",
+      },
+    },
+    rows: {
+      style: {
+        fontSize: "16px",
+        color: "#6F6B7D",
+        fontFamily: "Poppins",
+      },
+    },
+  };
+
   return (
     <>
-    {modalShow && selectedRow && (
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        rowData={selectedRow}
-        showForm={"user"}
-      />
-    )}
-    <Table
-      icon={<AiOutlineUser />}
-      title={"User Management"}
-      countries={filteredUserData}
-      columns={columns}
-      handleRowClick={handleRowClick}
-      handleEdit={handleEdit}
-      selectedRow={selectedRow}
-    />
-  </>
+      {modalShow && selectedRow && (
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          rowData={selectedRow}
+          showForm={"user"}
+        />
+      )}
+      <div className="mt-5 main-table rounded ">
+        <DataTable
+          title={<CustomTitle icon={icon} title={title} />}
+          columns={columns}
+          data={filteredUserData}
+          pagination
+          paginationPerPage={perPage}
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangePage={handlePageChange}
+          // onChangeRowsPerPage={handlePerPageChange}
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+          highlightOnHover
+          handleRowClick={handleRowClick}
+          handleEdit={handleEdit}
+          selectedRow={selectedRow}
+          customStyles={customStyles}
+        />
+      </div>
+    </>
   );
 };
 

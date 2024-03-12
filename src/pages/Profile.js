@@ -11,7 +11,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../features/authInfo";
-import { fetchUser, selectUserData } from "../features/userInfoSlice";
+// import { fetchUser, selectUserData } from "../features/userInfoSlice";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -24,9 +24,9 @@ const Profile = () => {
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchUser());
+  // }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(removeToken());
