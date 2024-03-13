@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
-import { setData, selectUserData } from "../features/userInfoSlice";
 import { selectSearchTerm } from "../features/countriesInfo";
 import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
@@ -14,13 +13,13 @@ import CustomTitle from "../Component/CustomTitle";
 const UserManagement = () => {
   const title = "User Management";
   const icon = <AiOutlineUser />;
-  const dispatch = useDispatch();
-  const userData = useSelector(selectUserData);
   const searchText = useSelector(selectSearchTerm);
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [perPage, setPerPage] = useState(20);
+  const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
+  const [userData, setUserData ] = useState([]);
+  const [page, setPage ] = useState(1);
   // const [currentPage, setCurrentPage] = useState(1);
 
   const handleEdit = (rowData) => {
@@ -33,32 +32,29 @@ const UserManagement = () => {
   };
 
   const handlePageChange = page => {
-    getUsers(page);
+    setPage(page);
   };
 
-  // const handlePerPageChange = (newPerPage, page) => {
-  //   setPerPage(newPerPage);
-  //   setCurrentPage(page);
-  //   // getUsers(page, newPerPage);
-  // };
+  const handlePerPageChange = (newPerPage, page) => {
+    setPerPage(newPerPage);
+    setPage(page);
+  };
 
-  const getUsers = async (page) => {
+  const getUsers = async () => {
     try {
-      const response = await getUser(`/consumers?page=${page}&per_page=${perPage}&delay=1`);
-      console.log("API Response:", response);
+      const response = await getUser(`/consumers?page=${page}&size=${perPage}&delay=1`);
       const userData = response.data.data.items;
-      dispatch(setData(userData));
+      setUserData(userData);
       setTotalRows(response.data.data.total);
-      return userData;
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
   useEffect(() => {
-    getUsers(1);
-  }, []);
-
+    getUsers();
+  }, [perPage, page]);
+  
   // useEffect(() => {
   //   // if (perPage && currentPage) {
   //     getUsers(currentPage, perPage);
@@ -103,8 +99,11 @@ const UserManagement = () => {
             )}
           </div>
           <div>
-            <div className="ps-2">{`${row.firstName} ${row.lastName}`}</div>
-            <div className="ps-2">{row.email}</div>
+            <div className="ps-2"style={{fontWeight:"500"}}>{`${row.firstName} ${row.lastName}`}</div>
+            <div className="ps-2"
+            style={{fontSize:"13px"}}
+            >{row.email}
+            </div>
           </div>
         </div>
       ),
@@ -198,15 +197,17 @@ const UserManagement = () => {
       )}
       <div className="mt-5 main-table rounded ">
         <DataTable
+
           title={<CustomTitle icon={icon} title={title} />}
           columns={columns}
           data={filteredUserData}
           pagination
           paginationPerPage={perPage}
+          paginationRowsPerPageOptions={[10,25,50]}
           paginationServer
           paginationTotalRows={totalRows}
           onChangePage={handlePageChange}
-          // onChangeRowsPerPage={handlePerPageChange}
+          onChangeRowsPerPage={handlePerPageChange}
           fixedHeader
           fixedHeaderScrollHeight="450px"
           highlightOnHover
