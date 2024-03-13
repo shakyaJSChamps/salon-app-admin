@@ -71,7 +71,8 @@ const Sidebar = (props) => {
                       {menus[item.name.replace(/\s+/g, "")]}
                     </span>
                     {props.toggleSidebar && (
-                      <span className="side-nav-label m-auto ps-2 ">
+                      <span className="side-nav-label m-auto ps-2"
+                      style={{display:"flex", flexDirection:"column",justifyContent:"center"}}>
                         {item.name}
                       </span>
                     )}
