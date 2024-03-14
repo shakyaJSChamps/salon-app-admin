@@ -67,7 +67,7 @@ const Layout = () => {
           <Sidebar toggleSidebar={toggleSidebar} />
         </div>
         <div
-          className={`content px-5  rounded ${toggleSidebar ? "w-76" : "w-94"}`}
+          className={`content px-5 py-3  rounded ${toggleSidebar ? "w-76" : "w-94"} h-100`}
           // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
         >
           {loading ? (

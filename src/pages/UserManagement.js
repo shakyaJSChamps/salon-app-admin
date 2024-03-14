@@ -195,7 +195,7 @@ const UserManagement = () => {
           showForm={"user"}
         />
       )}
-      <div className="mt-5 main-table rounded ">
+      <div className="main-table rounded ">
         <DataTable
 
           title={<CustomTitle icon={icon} title={title} />}
