@@ -3,7 +3,8 @@ import { Outlet } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
 import Sidebar from "../Component/dashboard/Sidebar";
-import Dlogo from "../assets/image/DLogo.png";
+// import Dlogo from "../assets/image/DLogo.png";
+import Logo from "../assets/image/logo-stylex.png"
 import Profile from "./Profile";
 import { useSelector } from "react-redux";
 import LogoLoader from "../Component/LogoLoader";
@@ -41,7 +42,8 @@ const Layout = () => {
       <div className="nav d-flex w-100  justify-content-between">
         <div className="logo-sec  w-24 d-flex justify-content-center align-items-center">
           <div className="logo ps-1">
-            <img src={Dlogo} alt="dlogo.png" />
+            {/* <img src={Dlogo} alt="dlogo.png" /> */}
+            <img src={Logo} alt="logo"/>
           </div>
           <div className="ms-4 burger-menu ps-5 ">
             <span

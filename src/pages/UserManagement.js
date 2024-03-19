@@ -9,6 +9,7 @@ import Notify from "../utils/notify";
 import { getUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
+import TableLoader from "../Component/common-component/TableLoader";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -20,6 +21,7 @@ const UserManagement = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [userData, setUserData ] = useState([]);
   const [page, setPage ] = useState(1);
+  const [loading, setLoading] = useState(false);
   // const [currentPage, setCurrentPage] = useState(1);
 
   const handleEdit = (rowData) => {
@@ -42,13 +44,17 @@ const UserManagement = () => {
 
   const getUsers = async () => {
     try {
+      setLoading(true); 
       const response = await getUser(`/consumers?page=${page}&size=${perPage}&delay=1`);
       const userData = response.data.data.items;
       setUserData(userData);
       setTotalRows(response.data.data.total);
+       setLoading(false); 
     } catch (error) {
       Notify.error(error.message);
     }
+    
+    
   };
 
   useEffect(() => {
@@ -196,6 +202,7 @@ const UserManagement = () => {
         />
       )}
       <div className="main-table rounded ">
+        
         <DataTable
 
           title={<CustomTitle icon={icon} title={title} />}
@@ -212,9 +219,13 @@ const UserManagement = () => {
           fixedHeaderScrollHeight="450px"
           highlightOnHover
           handleRowClick={handleRowClick}
+          progressPending={loading}
+          progressComponent={<TableLoader />} 
           handleEdit={handleEdit}
           selectedRow={selectedRow}
           customStyles={customStyles}
+          
+          
         />
       </div>
     </>
