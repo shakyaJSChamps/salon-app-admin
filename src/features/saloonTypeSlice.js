@@ -1,18 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getSaloon } from '../api/account.api';
+import { getSalon } from '../api/account.api';
 
-export const fetchSaloonTypes = createAsyncThunk(
-  'saloonTypes/fetchSaloonTypes',
+export const fetchSalonTypes = createAsyncThunk(
+  'salonTypes/fetchSalonTypes',
   async () => {
-    const response = await getSaloon();
+    const response = await getSalon();
     console.log("Respo :: ::>", response);
     return response.data;
   }
   );
   // console.log("respose data ::::>", response.data);
 
-const saloonTypesSlice = createSlice({
-  name: 'saloonTypes',
+const salonTypesSlice = createSlice({
+  name: 'salonTypes',
   initialState: {
     data: [],
     status: 'idle',
@@ -21,18 +21,18 @@ const saloonTypesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSaloonTypes.pending, (state) => {
+      .addCase(fetchSalonTypes.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchSaloonTypes.fulfilled, (state, action) => {
+      .addCase(fetchSalonTypes.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data = action.payload;
       })
-      .addCase(fetchSaloonTypes.rejected, (state, action) => {
+      .addCase(fetchSalonTypes.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
   },
 });
 
-export default saloonTypesSlice.reducer;
+export default salonTypesSlice.reducer;

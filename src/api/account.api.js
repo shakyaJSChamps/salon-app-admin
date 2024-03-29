@@ -5,7 +5,7 @@ import {
   __endpoint_getFeature,
   __endpoint_getServiceType,
   __endpoint_putServiceType,
-  __endpoint_getSaloon,
+  __endpoint_getSalon,
   __endpoint_getUser
 
 } from "../constants/endpoints";
@@ -24,6 +24,6 @@ export const putServiceType = (payload, id) => {
   console.log(" id ::>", id);
   HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
 };
-export const getSaloon = () =>
-  HTTP.Request(methods.GET, __endpoint_getSaloon);
+export const getSalon = (payload) =>
+  HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 

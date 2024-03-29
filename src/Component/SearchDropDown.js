@@ -13,8 +13,8 @@ const SearchDropDown = ({ value, onChange }) => {
 
   const data = [
     { text: "Category", value: "1" },
-    { text: "option2", value: "2" },
-    { text: "option3", value: "3" },
+    { text: "email", value: "2" },
+    { text: "mobile num", value: "3" },
   ];
 
   return (
