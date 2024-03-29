@@ -52,12 +52,16 @@ const UserManagement = () => {
   };
   const getSearchText = (prop) => {
     setSearchText(prop);
+    setPage(1); 
   };
 
   const getUsers = async () => {
-    const REQ_URL = option
-      ? `/consumers?page=${page}&size=${perPage}&${option}=${searchText}`
-      : `/consumers?page=${page}&size=${perPage}`;
+    let REQ_URL = `/consumers?page=${page}&size=${perPage}`;
+    if (option === 'mobile number') {
+      REQ_URL += `&phoneNumber=${searchText}`;
+    } else if (option) {
+      REQ_URL += `&${option}=${searchText}`;
+    }
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
@@ -69,6 +73,7 @@ const UserManagement = () => {
       Notify.error(error.message);
     }
   };
+  
 
   useEffect(() => {
     getUsers();
