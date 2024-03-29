@@ -14,15 +14,21 @@ import TableLoader from "../Component/common-component/TableLoader";
 const UserManagement = () => {
   const title = "User Management";
   const icon = <AiOutlineUser />;
-  const searchText = useSelector(selectSearchTerm);
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
-  const [userData, setUserData ] = useState([]);
-  const [page, setPage ] = useState(1);
+  const [userData, setUserData] = useState([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [option, setOption] = useState("");
+  const [searchText, setSearchText] = useState("");
   // const [currentPage, setCurrentPage] = useState(1);
+
+  // const handleInputChange = (event) => {
+  //   const { value } = event.target;
+  //   setSearchText(value);
+  // };
 
   const handleEdit = (rowData) => {
     // handle edit logic
@@ -33,7 +39,7 @@ const UserManagement = () => {
     setSelectedRow(row);
   };
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     setPage(page);
   };
 
@@ -41,40 +47,33 @@ const UserManagement = () => {
     setPerPage(newPerPage);
     setPage(page);
   };
+  const onOptionChange = (prop) => {
+    setOption(prop);
+  };
+  const getSearchText = (prop) => {
+    setSearchText(prop);
+  };
 
   const getUsers = async () => {
+    const REQ_URL = option
+      ? `/consumers?page=${page}&size=${perPage}&${option}=${searchText}`
+      : `/consumers?page=${page}&size=${perPage}`;
     try {
-      setLoading(true); 
-      const response = await getUser(`/consumers?page=${page}&size=${perPage}&delay=1`);
+      setLoading(true);
+      const response = await getUser(REQ_URL);
       const userData = response.data.data.items;
       setUserData(userData);
       setTotalRows(response.data.data.total);
-       setLoading(false); 
+      setLoading(false);
     } catch (error) {
       Notify.error(error.message);
     }
-    
-    
   };
 
   useEffect(() => {
     getUsers();
-  }, [perPage, page]);
-  
-  // useEffect(() => {
-  //   // if (perPage && currentPage) {
-  //     getUsers(currentPage, perPage);
-  //   // }
-  // }, [searchText]);
+  }, [perPage, page, searchText, option]);
 
-  const filteredUserData = userData.filter(
-    (user) =>
-      user.firstName.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.lastName.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchText.toLowerCase())
-  );
-  // const paginatedUserData = filteredUserData.slice(0, perPage);
-  
   const columns = [
     {
       name: "Name",
@@ -105,10 +104,12 @@ const UserManagement = () => {
             )}
           </div>
           <div>
-            <div className="ps-2"style={{fontWeight:"500"}}>{`${row.firstName} ${row.lastName}`}</div>
-            <div className="ps-2"
-            style={{fontSize:"13px"}}
-            >{row.email}
+            <div
+              className="ps-2"
+              style={{ fontWeight: "500" }}
+            >{`${row.firstName} ${row.lastName}`}</div>
+            <div className="ps-2" style={{ fontSize: "13px" }}>
+              {row.email}
             </div>
           </div>
         </div>
@@ -202,15 +203,20 @@ const UserManagement = () => {
         />
       )}
       <div className="main-table rounded ">
-        
         <DataTable
-
-          title={<CustomTitle icon={icon} title={title} />}
+          title={
+            <CustomTitle
+              icon={icon}
+              title={title}
+              onOptionChange={onOptionChange}
+              getSearchText={getSearchText}
+            />
+          }
           columns={columns}
-          data={filteredUserData}
+          data={userData}
           pagination
           paginationPerPage={perPage}
-          paginationRowsPerPageOptions={[10,25,50]}
+          paginationRowsPerPageOptions={[10, 25, 50]}
           paginationServer
           paginationTotalRows={totalRows}
           onChangePage={handlePageChange}
@@ -220,12 +226,10 @@ const UserManagement = () => {
           highlightOnHover
           handleRowClick={handleRowClick}
           progressPending={loading}
-          progressComponent={<TableLoader />} 
+          progressComponent={<TableLoader />}
           handleEdit={handleEdit}
           selectedRow={selectedRow}
           customStyles={customStyles}
-          
-          
         />
       </div>
     </>

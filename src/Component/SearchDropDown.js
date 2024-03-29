@@ -1,31 +1,39 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectSearchTerm, setSearchTerm } from "../features/countriesInfo";
+import React, { useEffect, useState } from "react";
 
-const SearchDropDown = ({ value, onChange }) => {
+const SearchDropDown = (props) => {
+  const [search, setSearch] = useState("");
 
-  const searchText = useSelector(selectSearchTerm);
-  const dispatch = useDispatch();
 
   const handleSearchChange = (e) => {
-    dispatch(setSearchTerm(e.target.value));
+    setSearch(e.target.value);
   };
 
+  useEffect(() => {
+    if (search) {
+      props.getSearchText(search);
+    }
+  
+    return () => {
+      
+    }
+  }, [search])
+  
+
   const data = [
-    { text: "Category", value: "1" },
-    { text: "email", value: "2" },
-    { text: "mobile num", value: "3" },
+    { text: "Category", value: "" },
+    { text: "email", value: "email" },
+    { text: "mobile num", value: "phone_number" },
   ];
 
   return (
     <div className="dropdown-container">
       <div className="search-container">
         <input type="text" placeholder="Search" className="search-bar ps-3" 
-           value={searchText}
+           value={search}
            onChange={handleSearchChange}
         />
         <div className="vertical-line"></div>
-        <select value={value} onChange={onChange} className="dropdown ps-2">
+        <select value={props.value} onChange={(e)=>props.onOptionChange(e.target.value)} className="dropdown ps-2">
         {data.map((item) => (
           <option key={item.value} value={item.value}>
             {item.text}
