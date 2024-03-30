@@ -78,6 +78,7 @@ const UserManagement = () => {
   useEffect(() => {
     getUsers();
   }, [perPage, page, searchText, option]);
+  
 
   const columns = [
     {
