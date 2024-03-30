@@ -19,6 +19,11 @@ const SearchDropDown = (props) => {
     return () => clearTimeout(debounceTimer);
   }, [search]);
 
+  const handleOptionChange = (selectedOption) => {
+    props.onOptionChange(selectedOption);
+    setSearch(""); // Search bar ko khali kardo
+  };
+
   const data = [
     { text: "Category", value: "" },
     { text: "email", value: "email" },
@@ -38,7 +43,7 @@ const SearchDropDown = (props) => {
         <div className="vertical-line"></div>
         <select
           value={props.value}
-          onChange={(e) => props.onOptionChange(e.target.value)}
+          onChange={(e) => handleOptionChange(e.target.value)} // Modified to call handleOptionChange
           className="dropdown ps-2"
         >
           {data.map((item) => (
