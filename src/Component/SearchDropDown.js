@@ -1,8 +1,9 @@
-import { options } from "dropzone";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const SearchDropDown = (props) => {
   const [search, setSearch] = useState("");
+  const [categorySelected, setCategorySelected] = useState(false); 
+  const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -15,13 +16,18 @@ const SearchDropDown = (props) => {
       props.getSearchText(search);
     }, delay);
 
-    
     return () => clearTimeout(debounceTimer);
   }, [search]);
 
   const handleOptionChange = (selectedOption) => {
     props.onOptionChange(selectedOption);
-    setSearch(""); // Search bar ko khali kardo
+    setSearch("");
+    setCategorySelected(selectedOption !== "");
+    if (selectedOption !== "") { 
+      if (searchInputRef.current) {
+        searchInputRef.current.focus();
+      }
+    }
   };
 
   const data = [
@@ -34,16 +40,18 @@ const SearchDropDown = (props) => {
     <div className="dropdown-container">
       <div className="search-container">
         <input
+          ref={searchInputRef}
           type="text"
           placeholder="Search"
           className="search-bar ps-3"
           value={search}
           onChange={handleSearchChange}
+          onClick={() => { if (!categorySelected) alert("Please select a category"); }}
         />
         <div className="vertical-line"></div>
         <select
           value={props.value}
-          onChange={(e) => handleOptionChange(e.target.value)} // Modified to call handleOptionChange
+          onChange={(e) => handleOptionChange(e.target.value)}
           className="dropdown ps-2"
         >
           {data.map((item) => (
