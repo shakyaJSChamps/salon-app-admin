@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
+import { IoSearch } from "react-icons/io5";
 
 const SearchDropDown = (props) => {
   const [search, setSearch] = useState("");
-  const [categorySelected, setCategorySelected] = useState(false); 
+  const [categorySelected, setCategorySelected] = useState(false);
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
@@ -23,7 +24,7 @@ const SearchDropDown = (props) => {
     props.onOptionChange(selectedOption);
     setSearch("");
     setCategorySelected(selectedOption !== "");
-    if (selectedOption !== "") { 
+    if (selectedOption !== "") {
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
@@ -31,28 +32,33 @@ const SearchDropDown = (props) => {
   };
 
   const data = [
-    { text: "Category", value: "" },
-    { text: "email", value: "email" },
-    { text: "mobile num", value: "phone_number" },
+    { text: "Email", value: "email" },
+    { text: "Mobile Number", value: "phone_number" },
   ];
+
+  const handleSearchClick = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    if (
+      !categorySelected &&
+      props.value === "email" &&
+      search.trim().toLowerCase() === "email"
+    ) {
+      return;
+    }
+
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
 
   return (
     <div className="dropdown-container">
       <div className="search-container">
-        <input
-          ref={searchInputRef}
-          type="text"
-          placeholder="Search"
-          className="search-bar ps-3"
-          value={search}
-          onChange={handleSearchChange}
-          onClick={() => { if (!categorySelected) alert("Please select a category"); }}
-        />
-        <div className="vertical-line"></div>
         <select
           value={props.value}
           onChange={(e) => handleOptionChange(e.target.value)}
           className="dropdown ps-2"
+          defaultValue="email"
         >
           {data.map((item) => (
             <option key={item.value} value={item.value}>
@@ -60,6 +66,29 @@ const SearchDropDown = (props) => {
             </option>
           ))}
         </select>
+
+        <div className="vertical-line"></div>
+        <form onSubmit={(e) => handleSearchClick(e)}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Search"
+            className="search-bar ps-3"
+            value={search}
+            onChange={handleSearchChange}
+            onMouseDown={(e) => {
+              e.preventDefault();
+            }}
+          />
+
+          <button
+            className="pe-3"
+            type="submit"
+            style={{ color: "#a59c9c", cursor: "pointer", border: "none" }}
+          >
+            <IoSearch />
+          </button>
+        </form>
       </div>
     </div>
   );
