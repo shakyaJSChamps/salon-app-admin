@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { putServiceType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 
 const EditServiceForm = ({ rowData }) => {
-  const [name, setName] = useState(rowData?.name || "");
-  const [description, setDescription] = useState(rowData?.description || "");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (rowData) {
+      setName(rowData.name || "");
+      setDescription(rowData.description || "");
+    }
+  }, [rowData]);
 
   const handleSave = async (event) => {
     event.preventDefault();
     try {
-      console.log("Calling API with parameters:", rowData?.id, {
-        name,
-        description,
-      });
-      const response = await putServiceType(null, rowData?.id);
+      const updatedData = {
+        name: name,
+        description: description
+      };
+  
+      console.log("Calling API with parameters:", rowData?.id, updatedData);
+      const response = await putServiceType(updatedData, rowData?.id);
       console.log("API response:", response);
-      // Notify user of successful update
-      Notify.success("Service type updated successfully.");
+  
+      // Show success message with updated data
+      Notify.success(`Service type updated successfully: ${updatedData.name}, ${updatedData.description}`);
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
@@ -50,7 +60,7 @@ const EditServiceForm = ({ rowData }) => {
           className="form-control input"
           rows="4"
           cols="25"
-          value={description}
+          value={description} 
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
