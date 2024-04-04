@@ -47,13 +47,23 @@ const UserManagement = () => {
     setPerPage(newPerPage);
     setPage(page);
   };
+
+  // const onOptionChange = (prop) => {
+  //   setOption(prop);
+  // };
+
   const onOptionChange = (prop) => {
-    setOption(prop);
+    if (prop === "email" || prop === "phone_number") {
+      setOption(prop);
+    } else {
+      Notify.error("Invalid option selected");
+    }
   };
 
-   const getSearchText = (prop) => {
+
+  const getSearchText = (prop) => {
     setSearchText(prop);
-    setPage(1); 
+    setPage(1);
   };
 
   const getUsers = async () => {
@@ -76,13 +86,13 @@ const UserManagement = () => {
       Notify.error(error.message);
     }
   };
-  
-  
+
+
 
   useEffect(() => {
     getUsers();
   }, [perPage, page, searchText, option]);
-  
+
 
   const columns = [
     {
@@ -94,7 +104,7 @@ const UserManagement = () => {
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) &&
-            isValidImageUrl(row.profileImageUrl) ? (
+              isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -130,9 +140,8 @@ const UserManagement = () => {
       name: "Active",
       cell: (row) => (
         <span
-          className={`rounded-pill ${
-            row.active ? "active-pill" : "blocked-pill"
-          }`}
+          className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
+            }`}
         >
           {row.active ? "Active" : "Blocked"}
         </span>
