@@ -60,7 +60,9 @@ const UserManagement = () => {
     let REQ_URL = `/consumers?page=${page}&size=${perPage}`;
     if (option === 'mobile number') {
       REQ_URL += `&phoneNumber=${searchText}`;
-    } else if (option) {
+    } else if (option === 'email' || !option) { // Check if option is 'email' or not selected
+      REQ_URL += `&email=${searchText}`; // Use 'email' as default option if not selected
+    } else {
       REQ_URL += `&${option}=${searchText}`;
     }
     try {
@@ -74,6 +76,7 @@ const UserManagement = () => {
       Notify.error(error.message);
     }
   };
+  
   
 
   useEffect(() => {
