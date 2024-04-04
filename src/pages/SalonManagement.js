@@ -52,59 +52,62 @@ const SaloonManagement = () => {
     (saloon) =>
       saloon.name.toLowerCase().includes(searchText.toLowerCase()) ||
       saloon.city.toLowerCase().includes(searchText.toLowerCase()) ||
-      saloon.email.toLowerCase().includes(searchText.toLowerCase())
+      saloon.email.toLowerCase().includes(searchText.toLowerCase()) ||
+      saloon.companyName.toLowerCase().includes(searchText.toLowerCase()) ||
+      saloon.serviceType.toLowerCase().includes(searchText.toLowerCase())
     // Add more filters as per your saloon data structure
   );
 
   const columns = [
     {
-      name: "Name",
-      selector: (row) => row.name,
-      sortable: true,
+      name: "Main Gate Image",
+      selector: (row) => row.mainGateImageUrl,
+      sortable: false,
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)} className="d-flex ">
-          <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.mainGateImageUrl) ? (
-              <img
-                src={row.mainGateImageUrl}
-                alt="Profile"
-                style={{ width: 35, height: 35, borderRadius: "50%" }}
-              />
-            ) : (
-              <img
-                src={SaloonProfile}
-                alt="Profile"
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-              />
-            )}
-          </div>
-          <div>
-            <div className="ps-2" style={{ fontWeight: "500" }}>
-              {row.name}
-            </div>
-            <div className="ps-2" style={{ fontSize: "13px" }}>
-              {row.email}
-            </div>
-          </div>
+        <div onClick={() => handleRowClick(row)}>
+          {isValidImageUrl(row.mainGateImageUrl) ? (
+            <img
+              src={row.mainGateImageUrl}
+              alt="Main Gate"
+              style={{ width: 50, height: 50 }}
+            />
+          ) : (
+            <img
+              src={SaloonProfile}
+              alt="Default"
+              style={{ width: 50, height: 50 }}
+            />
+          )}
         </div>
       ),
     },
     {
-      
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Company Name",
+      selector: (row) => row.companyName,
+      sortable: true,
+    },
+    {
+      name: "Service Type",
+      selector: (row) => row.serviceType,
+      sortable: true,
+    },
+    {
       name: "City",
+      selector: (row) => row.city,
+      sortable: true,
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>{row.city}</div>
       ),
-      sortable: true,
     },
-    // Add more columns as per your requirement
+    
+    // Add more data field according to your requirement
   ];
-
+   
   const customStyles = {
     headCells: {
       style: {
@@ -146,3 +149,4 @@ const SaloonManagement = () => {
 };
 
 export default SaloonManagement;
+

@@ -50,7 +50,8 @@ const UserManagement = () => {
   const onOptionChange = (prop) => {
     setOption(prop);
   };
-  const getSearchText = (prop) => {
+
+   const getSearchText = (prop) => {
     setSearchText(prop);
     setPage(1); 
   };

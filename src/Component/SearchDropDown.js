@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 const SearchDropDown = (props) => {
   const [search, setSearch] = useState("");
-  const [categorySelected, setCategorySelected] = useState(false); 
+  const [categorySelected, setCategorySelected] = useState(false);
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
@@ -10,20 +10,20 @@ const SearchDropDown = (props) => {
   };
 
   useEffect(() => {
-    const delay = 500;
-
-    const debounceTimer = setTimeout(() => {
-      props.getSearchText(search);
-    }, delay);
-
-    return () => clearTimeout(debounceTimer);
+    if (search) {
+      const delay = 500;
+      const debounceTimer = setTimeout(() => {
+        props.getSearchText(search);
+      }, delay);
+      return () => clearTimeout(debounceTimer);
+    }
   }, [search]);
 
   const handleOptionChange = (selectedOption) => {
     props.onOptionChange(selectedOption);
     setSearch("");
     setCategorySelected(selectedOption !== "");
-    if (selectedOption !== "") { 
+    if (selectedOption !== "") {
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
