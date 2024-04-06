@@ -1,4 +1,3 @@
-// ServiceType.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineContentPaste } from "react-icons/md";
@@ -46,6 +45,14 @@ const ServiceType = () => {
     getServiceTypes();
   }, [dispatch]);
 
+  const updateServiceTypes = async () => {
+    try {
+      await getServiceTypes();
+    } catch (error) {
+      Notify.error(error.message);
+    }
+  };
+
   const columns = [
     {
       name: "Name",
@@ -55,17 +62,17 @@ const ServiceType = () => {
     {
       name: "Description",
       sortable: true,
-      cell: (row) => (row.description ? "Description" : "Descrption Not Found"),
+      cell: (row) => (row.description ? row.description : "Description Not Found"),
     },
     {
       name: "Created By",
       sortable: true,
-      cell: (row) => (row.created ? "Created" : "Created Not Found"),
+      cell: (row) => (row.created ? row.created : "Created Not Found"),
     },
     {
       name: "Created Date",
       sortable: true,
-      cell: (row) => (row.createdDate ? "date" : "Date Not Found"),
+      cell: (row) => (row.createdDate ? row.createdDate : "Date Not Found"),
     },
     {
       name: "",
@@ -103,11 +110,13 @@ const ServiceType = () => {
           onHide={() => {
             setModalShow(false);
             setShowForm(null);
+            setSelectedRow(null); // Reset selected row
+            updateServiceTypes(); // Call API to update data
           }}
           rowData={selectedRow}
           showForm={showForm} 
         >
-          {showForm === "service" && <EditServiceForm rowData={selectedRow} />}
+          {showForm === "service" && <EditServiceForm rowData={selectedRow} onUpdate={updateServiceTypes} onHide={() => setModalShow(false)} />}
         </MyVerticallyCenteredModal>
       )}
     </Paper>

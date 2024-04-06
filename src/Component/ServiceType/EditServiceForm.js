@@ -3,7 +3,7 @@ import { putServiceType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 
-const EditServiceForm = ({ rowData }) => {
+const EditServiceForm = ({ rowData, onHide }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -21,23 +21,33 @@ const EditServiceForm = ({ rowData }) => {
         name: name,
         description: description
       };
-  
+
       console.log("Calling API with parameters:", rowData?.id, updatedData);
       const response = await putServiceType(updatedData, rowData?.id);
       console.log("API response:", response);
-  
+
       // Show success message with updated data
       Notify.success(`Service type updated successfully: ${updatedData.name}, ${updatedData.description}`);
+
+      // After successful update, close the modal
+      onHide(); // Hide the modal after saving
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Call handleSave function when the form is submitted
-    handleSave(event);
+    await handleSave(event);
+  };
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeDescription = (e) => {
+    setDescription(e.target.value);
   };
 
   return (
@@ -50,7 +60,7 @@ const EditServiceForm = ({ rowData }) => {
         <input
           className="form-control input"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChangeName}
         />
       </div>
 
@@ -60,8 +70,8 @@ const EditServiceForm = ({ rowData }) => {
           className="form-control input"
           rows="4"
           cols="25"
-          value={description} 
-          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          onChange={handleChangeDescription}
         ></textarea>
       </div>
       <FileUploader />
