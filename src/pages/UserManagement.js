@@ -6,7 +6,7 @@ import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import Notify from "../utils/notify";
-import { getUser } from "../api/account.api";
+import { getUser, updateUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
@@ -25,10 +25,10 @@ const UserManagement = () => {
   const [searchText, setSearchText] = useState("");
   // const [currentPage, setCurrentPage] = useState(1);
 
-  // const handleInputChange = (event) => {
-  //   const { value } = event.target;
-  //   setSearchText(value);
-  // };
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    setSearchText(value);
+  };
 
   const handleEdit = (rowData) => {
     // handle edit logic
@@ -37,6 +37,7 @@ const UserManagement = () => {
   const handleRowClick = (row) => {
     setModalShow(true);
     setSelectedRow(row);
+    console.log(row)
   };
 
   const handlePageChange = (page) => {
@@ -87,12 +88,9 @@ const UserManagement = () => {
     }
   };
 
-
-
   useEffect(() => {
     getUsers();
   }, [perPage, page, searchText, option]);
-
 
   const columns = [
     {
@@ -147,6 +145,17 @@ const UserManagement = () => {
         </span>
       ),
     },
+
+    // {
+    //   name: "Active",
+    //   cell: (row) => (
+    //     <span
+    //       className={`badge ${row.isBlocked ? "bg-danger" : "bg-success"}`}
+    //     >
+    //       {row.isBlocked ? "Blocked" : "Active"}
+    //     </span>
+    //   ),
+    // },
 
     {
       name: "Mobile Num",

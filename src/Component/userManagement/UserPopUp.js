@@ -1,10 +1,37 @@
 import { useEffect, useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
+import { updateUser } from "../../api/account.api";
+
+
 
 const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
+  let { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address } = rowData;
   const [editedData, setEditedData] = useState({ ...rowData });
   const [isBlocked, setIsBlocked] = useState(false);
+
+
+  // const handleToggleBlock = async (id) => {
+  //   try {
+  //     const updateData = {
+  //       field: "Block",
+  //       value: !isBlocked
+  //   }
+  //     const updatedUser = await updateUser(updateData, id)
+  //     setIsBlocked(!isBlocked);
+  //     onUpdateSuccess(); // Call the callback function to notify parent component
+  //   } catch (error) {
+  //     console.error("Error toggling block:", error);
+  //   }
+  // };
+
+  
+  if (typeof lastName === "undefined") {
+    lastName = " ";
+  }
+  if (typeof middleName === "undefined") {
+    middleName = " ";
+  }
 
   useEffect(() => {
     if (rowData) {
@@ -19,8 +46,9 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
   };
 
   const handleToggleBlock = () => {
-    setIsBlocked((prevIsBlocked) => !prevIsBlocked);
+    setIsBlocked((!isBlocked));
   };
+
 
   const handleSubmit = () => {
     handleEdit(editedData);
@@ -34,10 +62,10 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center">
-        {isValidImageUrl(rowData.profileImageUrl) &&
-        isValidImageUrl(rowData.profileImageUrl) ? (
+        {isValidImageUrl(profileImageUrl) &&
+          isValidImageUrl(profileImageUrl) ? (
           <img
-            src={rowData.profileImageUrl}
+            src={profileImageUrl}
             alt="Profile"
             style={{
               width: 100,
@@ -59,14 +87,14 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
           />
         )}
       </div>
-      <h4 className="text-center mt-2">{`${rowData.firstName} ${rowData.lastName}`}</h4>
+      <h4 className="text-center mt-2">{`${firstName} ${middleName} ${lastName}`}</h4>
       <div className=" row d-flex  justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Email id </p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2">{rowData.email}</p>
+          <p className="ps-2">{email}</p>
         </div>
       </div>
 
@@ -76,17 +104,17 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2"> {rowData.phoneNumber} </p>
+          <p className="ps-2"> {phoneNumber} </p>
         </div>
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
         <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">Address</p>
+          <p className="small fw-bold">City</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2">{rowData.address}</p>
+          <p className="ps-2">{address}</p>
         </div>
       </div>
 
@@ -96,8 +124,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="data-detail ps-2 "> 7777777</p>
-          {/* <p className="data-detail">{editedData.totalCompletedAppointments}</p> */}
+          <p className="data-detail ps-2 ">{completed}</p>
         </div>
       </div>
 
@@ -108,7 +135,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
         </div>
         <div className="col-6">
           <p className="data-detail ps-2">
-            {editedData.totalCanceledAppointments}
+            {cancelled}
           </p>
         </div>
       </div>
@@ -120,7 +147,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
         </div>
         <div className="col-6">
           <p className="ps-2">
-            {new Date(rowData.createdAt).toLocaleDateString()}
+            {new Date(createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>
@@ -135,3 +162,5 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
 };
 
 export default UserPopUp;
+
+
