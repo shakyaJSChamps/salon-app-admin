@@ -6,54 +6,45 @@ import { updateUser } from "../../api/account.api";
 
 
 const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
-  let { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address, scheduled,id } = rowData;
-  const [editedData, setEditedData] = useState({ ...rowData });
-  const [isBlocked, setIsBlocked] = useState(false);
+  let { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address, scheduled, id, active } = rowData;
+  // const [editedData, setEditedData] = useState({ ...rowData });
+  // const [isBlocked, setIsBlocked] = useState(false);
 
+  const handleToggleBlock = async () => {
+    try {
+      const data = {
+        field: "active",
+          value: !active
+      }
+      const update = updateUser(data, id);
+      console.log(update);
+    }
+    catch(error) {
+      console.log("Tamez se chal jao" ,  error)
+    }
+  };
 
-  // const handleToggleBlock = async (id) => {
-  //   try {
-  //     const updateData = {
-  //       field: "Block",
-  //       value: !isBlocked
+  // useEffect(() => {
+  //   if (rowData) {
+  //     setEditedData({ ...rowData });
+  //     setIsBlocked(rowData.isBlocked || false);
   //   }
-  //     const updatedUser = await updateUser(updateData, id)
-  //     setIsBlocked(!isBlocked);
-  //     onUpdateSuccess(); // Call the callback function to notify parent component
-  //   } catch (error) {
-  //     console.error("Error toggling block:", error);
-  //   }
+  // }, [rowData]);
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditedData((prevData) => ({ ...prevData, [name]: value }));
+  // };
+
+  // const handleToggleBlock = () => {
+  //   setIsBlocked((!isBlocked));
   // };
 
 
-  if (typeof lastName === "undefined") {
-    lastName = " ";
-  }
-  if (typeof middleName === "undefined") {
-    middleName = " ";
-  }
-
-  useEffect(() => {
-    if (rowData) {
-      setEditedData({ ...rowData });
-      setIsBlocked(rowData.isBlocked || false);
-    }
-  }, [rowData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleToggleBlock = () => {
-    setIsBlocked((!isBlocked));
-  };
-
-
-  const handleSubmit = () => {
-    handleEdit(editedData);
-    handleClose();
-  };
+  // const handleSubmit = () => {
+  //   handleEdit(editedData);
+  //   handleClose();
+  // };
 
   if (!rowData || !rowData.profileImageUrl) {
     return <div>Loading...</div>;
@@ -205,7 +196,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
 
       <div className="d-flex justify-content-center ">
         <button onClick={handleToggleBlock} className="button">
-          {isBlocked ? "Unblock" : "Block"}
+          {active ? "Block" : "Unblock"}
         </button>
       </div>
     </>
