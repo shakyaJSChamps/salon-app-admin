@@ -14,6 +14,7 @@ import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import MyVerticallyCenteredModal from "../modal/ModalPop";
 import EditServiceForm from "./EditServiceForm";
+import FDate from "../controls/FDate";
 
 const ServiceType = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -58,14 +59,14 @@ const ServiceType = () => {
       cell: (row) => (row.description ? "Description" : "Descrption Not Found"),
     },
     {
-      name: "Created By",
+      name: "Status",
       sortable: true,
-      cell: (row) => (row.created ? "Created" : "Created Not Found"),
+      cell: (row) => (row.active ? "Active" : "Inactive"),
     },
     {
       name: "Created Date",
       sortable: true,
-      cell: (row) => (row.createdDate ? "date" : "Date Not Found"),
+      cell: (row) => <FDate date={row.createAt} formatStr="dd/MM/yyyy"/>,
     },
     {
       name: "",
