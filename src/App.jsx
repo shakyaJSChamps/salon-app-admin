@@ -10,11 +10,8 @@ function App() {
   const authToken = useSelector((state) => state.authInfo.token);
   const location = useLocation();
 
-  //If user is already logged in redirect to dashboard
-  if (authToken && location.pathname === "/login") {
-    return <Navigate to={"/user-management"} />;
-  }else if(authToken && location.pathname === "/"){
-    return <Navigate to={"/user-management"} />;
+  if (authToken && location.pathname === "/account/login") {
+    return <Navigate to={"/dashboard"} />;
   }
 
   return (

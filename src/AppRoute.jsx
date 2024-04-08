@@ -3,7 +3,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
 const SendNotification = lazy(() => import("./Component/notification/SendNotification"));
-const CmsSetting = lazy (() => import("./Component/setting/CmsSetting"));
+const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
 const SaloonDetails = lazy(() => import("./Component/Saloon/SaloonDetails"));
@@ -36,50 +36,15 @@ const ChangedPassword = lazy(() =>
 const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) => {
-  return authToken ? <Outlet /> : <Navigate to="/login" />;
+  return authToken ?
+    <Layout /> : <Navigate to="/account/login" />;
 };
 
 const AppRoute = (props) => {
   const _routes = [
     {
-      path: "",
-      element: (
-        <Suspense fallback={<LogoLoader />}>
-          <ProtectedRoutes {...props} />
-        </Suspense>
-      ),
-      children: [
-        {
-          path: "",
-          element: <Layout />,
-          children: [
-            { path: "dashboard", element: <DashBoard /> },
-            { path: "user-management", element: <UserManagement /> },
-            {
-              path: "salon-management",
-              element: <SalonManagement />,
-              children: [{ path: "details", element: <SaloonDetails /> }],
-            },
-            { path: "freelance-management", element: <FreelanceManagement /> },
-            { path: "service-type-management", element: <ServiceTypeMan /> },
-            { path: "coupon-management", element: <CouponManagement /> },
-            { path: "appointment-management", element: <AppointmentMan /> },
-            { path: "sales-person", element: <SalesPerson /> },
-            { path: "ads-management", element: <ADSManagement /> },
-            { path: "payment-management", element: <PaymentMan /> },
-            { path: "notifications", element: <Notification /> },
-            { path: "setting", element: <Setting /> },
-            { path: "setting/cms-setting", element: <CmsSetting /> },
-            { path: "send-notification", element: <SendNotification /> },
-          ],
-        },
-      ],
-    },
-    {
-      path: "",
-      element: (
-          <Authentication />
-      ),
+      path: "account",
+      element: <Authentication />,
       children: [
         { path: "login", element: <Login /> },
         { path: "forget-password", element: <ForgetPassword /> },
@@ -87,6 +52,31 @@ const AppRoute = (props) => {
         { path: "new-password", element: <NewPassword /> },
         { path: "changed-password", element: <ChangedPassword /> },
       ],
+    },
+    { path: "", exact: true, element: <Navigate to="/dashboard" /> },
+    {
+      path: "", element: <ProtectedRoutes {...props} />,
+      children: [
+        { path: "dashboard", element: <DashBoard /> },
+        { path: "dashboard", element: <DashBoard /> },
+        { path: "user-management", element: <UserManagement /> },
+        {
+          path: "salon-management",
+          element: <SalonManagement />,
+          children: [{ path: "details", element: <SaloonDetails /> }],
+        },
+        { path: "freelance-management", element: <FreelanceManagement /> },
+        { path: "service-type-management", element: <ServiceTypeMan /> },
+        { path: "coupon-management", element: <CouponManagement /> },
+        { path: "appointment-management", element: <AppointmentMan /> },
+        { path: "sales-person", element: <SalesPerson /> },
+        { path: "ads-management", element: <ADSManagement /> },
+        { path: "payment-management", element: <PaymentMan /> },
+        { path: "notifications", element: <Notification /> },
+        { path: "setting", element: <Setting /> },
+        { path: "setting/cms-setting", element: <CmsSetting /> },
+        { path: "send-notification", element: <SendNotification /> },
+      ]
     },
     { path: "*", element: <Error /> },
   ];
