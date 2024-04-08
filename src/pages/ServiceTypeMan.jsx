@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import AddServiceType from "../Component/ServiceType/AddServiceType";
 import ServiceType from "../Component/ServiceType/ServiceType";
 import { Row, Col, Container } from "react-bootstrap";
 
-const ServiceTypeMan = () => {
+const ServiceTypeMan = (props) => {
+  const [serviceAdded, setServiceAdded] = useState(false);
   return (
     <Container>
       <Row>
         <Col md={4} className="mt-3">
-          <AddServiceType />
+          <AddServiceType setServiceAdded={setServiceAdded} />
         </Col>
         <Col md={8} className="mt-3">
-          <ServiceType />
+          <ServiceType serviceAdded={serviceAdded} setServiceAdded={setServiceAdded}/>
         </Col>
       </Row>
     </Container>

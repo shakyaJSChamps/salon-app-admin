@@ -7,7 +7,8 @@ import {
   __endpoint_putServiceType,
   __endpoint_getSalon,
   __endpoint_getUser,
-  __endpoint_updateUser
+  __endpoint_updateUser,
+  __endpoint_addServiceType
 
 } from "../constants/endpoints";
 
@@ -32,3 +33,6 @@ export const updateUser = (payload , id) =>{
 console.log("This is id" , id);
   HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
 }
+export const addServiceType = (payload) =>
+  HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
+

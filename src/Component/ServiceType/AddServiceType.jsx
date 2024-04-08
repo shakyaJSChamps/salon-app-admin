@@ -1,27 +1,35 @@
 import { Paper } from "@mui/material";
 import { MdOutlineContentPaste } from "react-icons/md";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { IoMdCloudUpload } from "react-icons/io";
 import FileUploader from "../file-uploder/FileUploder";
+import { addServiceType } from "../../api/account.api";
+import Notify from "../../utils/notify";
 
-const AddServiceType = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  // const fileInputRef = useRef(null);
+const AddServiceType = (props) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setSelectedFile(file);
-  // };
+  const handleSave = async (event) => {
+    event.preventDefault();
 
-  // const handleFileUploadClick = () => {
-  //   fileInputRef.current.click();
-  // };
+    try {
+      const requestData = {
+        name: name,
+        description: description,
+      };
+      // Call your addServiceType API function
+      const response = await addServiceType(requestData);
+      // Show success message
+      Notify.success(response.data.message);
+      props.setServiceAdded(true);
 
-  const handleSave = () => {
-    if (selectedFile) {
-      console.log("Selected File:", selectedFile);
-    } else {
-      console.error("No file selected.");
+      // Optionally, you can clear the input fields after successful save
+      setName("");
+      setDescription("");
+    } catch (error) {
+      console.error("API error:", error);
+      Notify.error(error.message);
     }
   };
 
@@ -29,44 +37,38 @@ const AddServiceType = () => {
     <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
-        <p className=" ps-1 fw-bold  mb-0">Add Service Type</p>
+        <p className="ps-1 fw-bold mb-0">Add Service Type</p>
       </div>
       <hr />
-      <form className="d-flex flex-column align-items-center">
-        <div className=" d-flex flex-column align-items-start mb-1">
+      <form
+        className="d-flex flex-column align-items-center"
+        onSubmit={handleSave}
+      >
+        <div className="d-flex flex-column align-items-start mb-1">
           <label className="fw-bold">Name</label>
-          <input placeholder="Hair" className="form-control input" />
+          <input
+            placeholder="Hair"
+            className="form-control input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
 
-        <div className=" d-flex flex-column align-items-start mb-2">
+        <div className="d-flex flex-column align-items-start mb-2">
           <label className="fw-bold">Description</label>
           <textarea
             className="form-control input"
             rows="6"
             cols="25"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
-        {/* <div className=" d-flex flex-column align-items-start mb-2">
-          <label className="fw-bold ">File Uploader</label>
-          <div
-            className="custom-file-upload-input"
-            onClick={handleFileUploadClick}
-          >
-            <div className="file-icon">
-              <IoMdCloudUpload />
-            </div>
-            Drags file to upload
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            onChange={handleFileChange}
-            className="file-upload-input"
-          />
-        </div> */}
+
         <FileUploader />
+
         <div className="d-flex justify-content-center">
-          <button className="add-service-btn mt-2" onClick={handleSave}>
+          <button type="submit" className="add-service-btn mt-2">
             Save
           </button>
         </div>

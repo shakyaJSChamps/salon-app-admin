@@ -1,25 +1,16 @@
+// ServiceType.js
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineContentPaste } from "react-icons/md";
 import { getServiceType } from "../../api/account.api";
-import {
-  setServiceType,
-  selectServiceTypeData,
-} from "../../features/serviceTypeSlice";
 import Notify from "../../utils/notify";
 import { Paper } from "@mui/material";
 import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import MyVerticallyCenteredModal from "../modal/ModalPop";
-import EditServiceForm from "./EditServiceForm";
+import FDate from "../controls/FDate";
 
-const ServiceType = () => {
-  const [modalShow, setModalShow] = useState(false);
-  const [showForm, setShowForm] = useState(null); 
-  const [selectedRow, setSelectedRow] = useState(null);
-  const dispatch = useDispatch();
-  const serviceTypes = useSelector(selectServiceTypeData);
+const ServiceType = (props) => {
+  const [services, setServices] = useState([]);
 
   const handleDelete = (row) => {
     console.log("Delete clicked for:", row);
@@ -27,7 +18,7 @@ const ServiceType = () => {
 
   const handleEdit = (row) => {
     setSelectedRow(row);
-    setShowForm("service"); 
+    setShowForm("service");
     setModalShow(true);
   };
 
@@ -35,7 +26,7 @@ const ServiceType = () => {
     try {
       const response = await getServiceType();
       const responseData = response.data.data;
-      dispatch(setServiceType(responseData));
+      setServices(responseData);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -43,15 +34,14 @@ const ServiceType = () => {
 
   useEffect(() => {
     getServiceTypes();
-  }, [dispatch]);
+  }, []);
 
-  const updateServiceTypes = async () => {
-    try {
-      await getServiceTypes();
-    } catch (error) {
-      Notify.error(error.message);
+  useEffect(() => {
+    if (props.serviceAdded) {
+      getServiceTypes();
+      props.setServiceAdded(false);
     }
-  };
+  }, [props.serviceAdded]);
 
   const columns = [
     {
@@ -62,17 +52,17 @@ const ServiceType = () => {
     {
       name: "Description",
       sortable: true,
-      cell: (row) => (row.description ? row.description : "Description Not Found"),
+      cell: (row) => (row.description ? "Description" : "Descrption Not Found"),
     },
     {
-      name: "Created By",
+      name: "Status",
       sortable: true,
-      cell: (row) => (row.created ? row.created : "Created Not Found"),
+      cell: (row) => (row.active ? "Active" : "Inactive"),
     },
     {
       name: "Created Date",
       sortable: true,
-      cell: (row) => (row.createdDate ? row.createdDate : "Date Not Found"),
+      cell: (row) => <FDate date={row.createAt} formatStr="dd/MM/yyyy" />,
     },
     {
       name: "",
@@ -98,26 +88,10 @@ const ServiceType = () => {
         <p className="ps-1 fw-bold mb-0">Add Service Type</p>
       </div>
       <hr />
-      {serviceTypes.length >= 0 ? (
-        <DataTable data={[...serviceTypes]} columns={columns} />
+      {services.length >= 0 ? (
+        <DataTable data={[...services]} columns={columns} />
       ) : (
         <span>No Data</span>
-      )}
-
-      {modalShow && selectedRow && (
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => {
-            setModalShow(false);
-            setShowForm(null);
-            setSelectedRow(null); // Reset selected row
-            updateServiceTypes(); // Call API to update data
-          }}
-          rowData={selectedRow}
-          showForm={showForm} 
-        >
-          {showForm === "service" && <EditServiceForm rowData={selectedRow} onUpdate={updateServiceTypes} onHide={() => setModalShow(false)} />}
-        </MyVerticallyCenteredModal>
       )}
     </Paper>
   );
