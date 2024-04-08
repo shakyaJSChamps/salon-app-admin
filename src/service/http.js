@@ -62,8 +62,7 @@ export default class HTTP {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
-                
+   
             };
             axios(request)
                 .then(response => resolve(response))

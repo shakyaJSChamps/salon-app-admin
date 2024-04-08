@@ -1,4 +1,3 @@
-// ServiceType.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MdOutlineContentPaste } from "react-icons/md";
@@ -14,7 +13,6 @@ import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import MyVerticallyCenteredModal from "../modal/ModalPop";
 import EditServiceForm from "./EditServiceForm";
-import FDate from "../controls/FDate";
 
 const ServiceType = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -47,6 +45,14 @@ const ServiceType = () => {
     getServiceTypes();
   }, [dispatch]);
 
+  const updateServiceTypes = async () => {
+    try {
+      await getServiceTypes();
+    } catch (error) {
+      Notify.error(error.message);
+    }
+  };
+
   const columns = [
     {
       name: "Name",
@@ -56,17 +62,17 @@ const ServiceType = () => {
     {
       name: "Description",
       sortable: true,
-      cell: (row) => (row.description ? "Description" : "Descrption Not Found"),
+      cell: (row) => (row.description ? row.description : "Description Not Found"),
     },
     {
-      name: "Status",
+      name: "Created By",
       sortable: true,
-      cell: (row) => (row.active ? "Active" : "Inactive"),
+      cell: (row) => (row.created ? row.created : "Created Not Found"),
     },
     {
       name: "Created Date",
       sortable: true,
-      cell: (row) => <FDate date={row.createAt} formatStr="dd/MM/yyyy"/>,
+      cell: (row) => (row.createdDate ? row.createdDate : "Date Not Found"),
     },
     {
       name: "",
@@ -104,11 +110,13 @@ const ServiceType = () => {
           onHide={() => {
             setModalShow(false);
             setShowForm(null);
+            setSelectedRow(null); // Reset selected row
+            updateServiceTypes(); // Call API to update data
           }}
           rowData={selectedRow}
           showForm={showForm} 
         >
-          {showForm === "service" && <EditServiceForm rowData={selectedRow} />}
+          {showForm === "service" && <EditServiceForm rowData={selectedRow} onUpdate={updateServiceTypes} onHide={() => setModalShow(false)} />}
         </MyVerticallyCenteredModal>
       )}
     </Paper>

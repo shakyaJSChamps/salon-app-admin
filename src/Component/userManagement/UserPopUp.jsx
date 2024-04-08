@@ -1,31 +1,49 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
+import { updateUser } from "../../api/account.api";
 
 const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
-  const [editedData, setEditedData] = useState({ ...rowData });
-  const [isBlocked, setIsBlocked] = useState(false);
+  const { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address, scheduled, id, active } = rowData;
+  // const [editedData, setEditedData] = useState({ ...rowData });
+  // const [isBlocked, setIsBlocked] = useState(false);
 
-  useEffect(() => {
-    if (rowData) {
-      setEditedData({ ...rowData });
-      setIsBlocked(rowData.isBlocked || false);
+  
+  const handleToggleBlock = async () => {
+    try {
+      const data = {
+        field: "active",
+          value: !active
+      }
+      const update = await updateUser(data, id);
+      console.log(update);
     }
-  }, [rowData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedData((prevData) => ({ ...prevData, [name]: value }));
+    catch(error) {
+      console.log("Error" ,  error)
+    }
   };
 
-  const handleToggleBlock = () => {
-    setIsBlocked((prevIsBlocked) => !prevIsBlocked);
-  };
+  // useEffect(() => {
+  //   if (rowData) {
+  //     setEditedData({ ...rowData });
+  //     setIsBlocked(rowData.isBlocked || false);
+  //   }
+  // }, [rowData]);
 
-  const handleSubmit = () => {
-    handleEdit(editedData);
-    handleClose();
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditedData((prevData) => ({ ...prevData, [name]: value }));
+  // };
+
+  // const handleToggleBlock = () => {
+  //   setIsBlocked((!isBlocked));
+  // };
+
+
+  // const handleSubmit = () => {
+  //   handleEdit(editedData);
+  //   handleClose();
+  // };
 
   if (!rowData || !rowData.profileImageUrl) {
     return <div>Loading...</div>;
@@ -34,10 +52,10 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center">
-        {isValidImageUrl(rowData.profileImageUrl) &&
-        isValidImageUrl(rowData.profileImageUrl) ? (
+        {isValidImageUrl(profileImageUrl) &&
+          isValidImageUrl(profileImageUrl) ? (
           <img
-            src={rowData.profileImageUrl}
+            src={profileImageUrl}
             alt="Profile"
             style={{
               width: 100,
@@ -59,75 +77,126 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
           />
         )}
       </div>
-      <h4 className="text-center mt-2">{`${rowData.firstName} ${rowData.lastName}`}</h4>
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2">
+
+      <div className=" mt-2 row d-flex  justify-content-between align-items-evenly ">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">First Name </p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{firstName}</p>
+        </div>
+      </div>
+
+      <div className=" row d-flex  justify-content-between align-items-evenly">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Middle Name </p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{middleName}</p>
+        </div>
+      </div>
+
+      <div className=" row d-flex  justify-content-between align-items-evenly">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Last Name </p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{lastName}</p>
+        </div>
+      </div>
+
+      <div className=" row d-flex  justify-content-between align-items-evenly">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Id </p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{id}</p>
+        </div>
+      </div>
+
+
+      <div className=" row d-flex  justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Email id </p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2">{rowData.email}</p>
+          <p className="ps-2">{email}</p>
         </div>
       </div>
 
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+      <div className=" row d-flex  justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Mobile Number</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2"> {rowData.phoneNumber} </p>
+          <p className="ps-2"> {phoneNumber} </p>
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Address</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2">{rowData.address}</p>
+          <p className="ps-2">{address}</p>
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Pending Appointments</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{scheduled}</p>
+        </div>
+      </div>
+
+      <div className="row d-flex justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Total Completed Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="data-detail ps-2 "> 7777777</p>
-          {/* <p className="data-detail">{editedData.totalCompletedAppointments}</p> */}
+          <p className="data-detail ps-2 ">{completed}</p>
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Total Canceled Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
           <p className="data-detail ps-2">
-            {editedData.totalCanceledAppointments}
+            {cancelled}
           </p>
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Joining Date</p>
           <span>:</span>
         </div>
         <div className="col-6">
           <p className="ps-2">
-            {new Date(rowData.createdAt).toLocaleDateString()}
+            {new Date(createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>
 
       <div className="d-flex justify-content-center ">
         <button onClick={handleToggleBlock} className="button">
-          {isBlocked ? "Unblock" : "Block"}
+          {active ? "Block" : "Unblock"}
+          {/* {isBlocked ? "Unblock" : "Block"} */}
         </button>
       </div>
     </>
@@ -135,3 +204,5 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
 };
 
 export default UserPopUp;
+
+

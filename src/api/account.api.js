@@ -6,7 +6,8 @@ import {
   __endpoint_getServiceType,
   __endpoint_putServiceType,
   __endpoint_getSalon,
-  __endpoint_getUser
+  __endpoint_getUser,
+  __endpoint_updateUser
 
 } from "../constants/endpoints";
 
@@ -15,7 +16,7 @@ export const doLogin = (payload) =>
 export const getCountries = (payload) =>
   HTTP.Request(methods.GET, "https://restcountries.com/v2/all", payload);
 export const getUser = (payload) =>
-  HTTP.Request(methods.GET,`${__endpoint_getUser}${payload}`);
+  HTTP.Request(methods.GET, `${__endpoint_getUser}${payload}`);
 export const getFeature = () =>
   HTTP.Request(methods.GET, __endpoint_getFeature);
 export const getServiceType = () =>
@@ -27,3 +28,7 @@ export const putServiceType = (payload, id) => {
 export const getSalon = (payload) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 
+export const updateUser = (payload , id) =>{
+console.log("This is id" , id);
+  HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
+}
