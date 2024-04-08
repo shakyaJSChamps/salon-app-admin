@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 
 
 
-const SalonPopUp = ({ show, handleClose, handleEdit, rowData }) => {
+const SalonPopUp = ({ rowData }) => {
     const { email, mainGateImageUrl, id, name, gstNumber, companyName, address, city, pincode, serviceType, state } = rowData;
 
     // if (!rowData || !rowData.profileImageUrl) {

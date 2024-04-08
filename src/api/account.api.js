@@ -30,5 +30,5 @@ export const getSalon = (payload) =>
 
 export const updateUser = (payload , id) =>{
 console.log("This is id" , id);
-HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
+  HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
 }

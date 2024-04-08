@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { updateUser } from "../../api/account.api";
 
-
-
 const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
-  let { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address, scheduled, id, active } = rowData;
+  const { firstName, middleName, lastName, email, phoneNumber, profileImageUrl, createdAt, cancelled, completed, address, scheduled, id, active } = rowData;
   // const [editedData, setEditedData] = useState({ ...rowData });
   // const [isBlocked, setIsBlocked] = useState(false);
 
+  
   const handleToggleBlock = async () => {
     try {
       const data = {
         field: "active",
           value: !active
       }
-      const update = updateUser(data, id);
+      const update = await updateUser(data, id);
       console.log(update);
     }
     catch(error) {
-      console.log("Tamez se chal jao" ,  error)
+      console.log("Error" ,  error)
     }
   };
 
@@ -197,6 +196,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       <div className="d-flex justify-content-center ">
         <button onClick={handleToggleBlock} className="button">
           {active ? "Block" : "Unblock"}
+          {/* {isBlocked ? "Unblock" : "Block"} */}
         </button>
       </div>
     </>

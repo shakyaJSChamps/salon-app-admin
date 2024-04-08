@@ -11,6 +11,8 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 
+
+
 const UserManagement = () => {
   const title = "User Management";
   const icon = <AiOutlineUser />;
