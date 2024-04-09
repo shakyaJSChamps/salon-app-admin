@@ -7,5 +7,5 @@ export const __endpoint_getServiceType = endpoint + "admin/services/categories";
 export const __endpoint_putServiceType = endpoint + "admin/services/categories";
 export const __endpoint_getSalon = endpoint + "admin/salons";
 export const __endpoint_getUser = endpoint + "admin/users";
-export const __endpoint_updateUser = (id) => endpoint + `admin/users/consumers/${id}`;
+export const __endpoint_updateUser =  endpoint + "admin/users/consumers";
 

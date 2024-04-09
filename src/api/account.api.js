@@ -28,16 +28,5 @@ export const putServiceType = (payload, id) => {
 export const getSalon = (payload) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 
-  export const updateUser = async (field, value, id) => {
-    console.log("Updating user with id:", id, "Field:", field, "Value:", value);
-    const requestUrl = __endpoint_updateUser(id);
-    console.log("Making PATCH request to:", requestUrl);
-    try {
-      const response = await HTTP.Request(methods.PATCH, requestUrl, { field, value });
-      console.log("updateUser API response:", response);
-      return response;
-    } catch (error) {
-      console.error("Error updating user:", error);
-      throw error;
-    }
-  };
+export const updateUser = (payload, id) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_updateUser}/${id}`, payload);

@@ -5,43 +5,24 @@ import { updateUser } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import Loader from "../Loader";
 
-const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
-  const [editedData, setEditedData] = useState({ ...rowData });
-  const [isBlocked, setIsBlocked] = useState(false);
+const UserPopUp = ({ rowData }) => {
+  const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (rowData) {
-      setEditedData({ ...rowData });
-      setIsBlocked(rowData.isBlocked || false);
-    }
-  }, [rowData]);
   
   const handleToggleBlock = async () => {
     setIsLoading(true); // Set isLoading to true before the API call
-    setIsBlocked((prevIsBlocked) => !prevIsBlocked);
-    const field = "active";
-    const value = isBlocked ? "false" : "true"; 
-    console.log("Field:", field, "Value:", value);
-    console.log("RowData ID:", rowData.id); 
-    
-    // Log the API call
-    console.log("Calling updateUser API...");
-    
+    const payload = {
+      "field":"active",
+      "value": active ? "false" : "true"
+  }
     try {
-      const response = await updateUser(field, value, rowData.id);
-      console.log("updateUser API response:", response);
-  
-      // Notify user based on block status
-      if (isBlocked) {
-        Notify.success("User unblocked successfully");
-      } else {
-        Notify.success("User blocked successfully");
-      }
+      const response = await updateUser(payload, rowData.id);
+      Notify.success(response.data.message);
+      setActive(preValue => !preValue);
+      setIsLoading(false);
     } catch (error) {
       Notify.error(error.message);
-    } finally {
-      setIsLoading(false); // Set isLoading back to false after the API call
+      setIsLoading(false);
     }
   };
   
@@ -123,7 +104,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
         </div>
         <div className="col-6">
           <p className="data-detail ps-2">
-            {editedData.totalCanceledAppointments}
+            {rowData.cancelled}
           </p>
         </div>
       </div>
@@ -145,7 +126,7 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
           {isLoading ? (
             <Loader />
           ) : (
-            isBlocked ? "Unblock" : "Block"
+            active ?  "Block" : "Unblock"
           )}
         </button>
       </div>
