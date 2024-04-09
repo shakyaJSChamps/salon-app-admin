@@ -63,7 +63,6 @@ const UserManagement = () => {
     }
   };
 
-
   const getSearchText = (prop) => {
     setSearchText(prop);
     setPage(1);
@@ -71,9 +70,10 @@ const UserManagement = () => {
 
   const getUsers = async () => {
     let REQ_URL = `/consumers?page=${page}&size=${perPage}`;
-    if (option === 'mobile number') {
+    if (option === "mobile number") {
       REQ_URL += `&phoneNumber=${searchText}`;
-    } else if (option === 'email' || !option) { // Check if option is 'email' or not selected
+    } else if (option === "email" || !option) {
+      // Check if option is 'email' or not selected
       REQ_URL += `&email=${searchText}`; // Use 'email' as default option if not selected
     } else {
       REQ_URL += `&${option}=${searchText}`;
@@ -83,6 +83,7 @@ const UserManagement = () => {
       const response = await getUser(REQ_URL);
       const userData = response.data.data.items;
       setUserData(userData);
+      console.log("   >", userData);
       setTotalRows(response.data.data.total);
       setLoading(false);
     } catch (error) {
@@ -104,7 +105,7 @@ const UserManagement = () => {
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) &&
-              isValidImageUrl(row.profileImageUrl) ? (
+            isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -139,12 +140,15 @@ const UserManagement = () => {
     {
       name: "Active",
       cell: (row) => (
-        <span
-          className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
+        <div onClick={() => handleRowClick(row)}>
+          <span
+            className={`rounded-pill ${
+              row.active ? "active-pill" : "blocked-pill"
             }`}
-        >
-          {row.active ? "Active" : "Blocked"}
-        </span>
+          >
+            {row.active ? "Active" : "Blocked"}
+          </span>
+        </div>
       ),
     },
 
@@ -218,8 +222,10 @@ const UserManagement = () => {
         fontSize: "16px",
         color: "#6F6B7D",
         fontFamily: "Poppins",
+        cursor:"pointer",
       },
     },
+    
   };
 
   return (
@@ -254,7 +260,7 @@ const UserManagement = () => {
           fixedHeader
           fixedHeaderScrollHeight="450px"
           highlightOnHover
-          handleRowClick={handleRowClick}
+          onRowClicked={(row) => handleRowClick(row)}
           progressPending={loading}
           progressComponent={<TableLoader />}
           handleEdit={handleEdit}

@@ -45,9 +45,9 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
   //   handleClose();
   // };
 
-  if (!rowData || !rowData.profileImageUrl) {
-    return <div>Loading...</div>;
-  }
+  // if (!rowData || !rowData.profileImageUrl) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <>

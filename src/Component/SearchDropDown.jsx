@@ -1,107 +1,10 @@
-// import React, { useEffect, useState, useRef } from "react";
-// import { IoSearch } from "react-icons/io5";
-
-// const SearchDropDown = (props) => {
-//   const [search, setSearch] = useState("");
-//   const [categorySelected, setCategorySelected] = useState(false);
-//   const searchInputRef = useRef(null);
-
-//   const handleSearchChange = (e) => {
-//     setSearch(e.target.value);
-//   };
-
-//   useEffect(() => {
-//     if (search) {
-//       const delay = 500;
-//       const debounceTimer = setTimeout(() => {
-//         props.getSearchText(search);
-//       }, delay);
-//       return () => clearTimeout(debounceTimer);
-//     }
-//   }, [search]);
-
-//   const handleOptionChange = (selectedOption) => {
-//     props.onOptionChange(selectedOption);
-//     setSearch("");
-//     setCategorySelected(selectedOption !== "");
-//     if (selectedOption !== "") {
-//       if (searchInputRef.current) {
-//         searchInputRef.current.focus();
-//       }
-//     }
-//   };
-
-//   const data = [
-//     { text: "Email", value: "email" },
-//     { text: "Mobile Number", value: "phone_number" },
-//   ];
-
-//   const handleSearchClick = (e) => {
-//     e.preventDefault(); // Prevent default form submission behavior
-//     if (
-//       !categorySelected &&
-//       props.value === "email" &&
-//       search.trim().toLowerCase() === "email"
-//     ) {
-//       return;
-//     }
-
-//     if (searchInputRef.current) {
-//       searchInputRef.current.focus();
-//     }
-//   };
-
-//   return (
-//     <div className="dropdown-container">
-//       <div className="search-container">
-//         <select
-//           value={props.value}
-//           onChange={(e) => handleOptionChange(e.target.value)}
-//           className="dropdown ps-2"
-//           defaultValue="email"
-//         >
-//           {data.map((item) => (
-//             <option key={item.value} value={item.value}>
-//               {item.text}
-//             </option>
-//           ))}
-//         </select>
-
-//         <div className="vertical-line"></div>
-//         <form onSubmit={(e) => handleSearchClick(e)}>
-//           <input
-//             ref={searchInputRef}
-//             type="text"
-//             placeholder="Search"
-//             className="search-bar ps-3"
-//             value={search}
-//             onChange={handleSearchChange}
-//             onMouseDown={(e) => {
-//               e.preventDefault();
-//             }}
-//           />
-
-//           <button
-//             className="pe-3"
-//             type="submit"
-//             style={{ color: "#a59c9c", cursor: "pointer", border: "none" }}
-//           >
-//             <IoSearch />
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SearchDropDown;
-
 import React, { useEffect, useState, useRef } from "react";
 import { IoSearch } from "react-icons/io5";
 
 const SearchDropDown = (props) => {
   const [search, setSearch] = useState("");
   const [categorySelected, setCategorySelected] = useState(false);
+  const [searchIconClicked, setSearchIconClicked] = useState(false);
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
@@ -109,46 +12,37 @@ const SearchDropDown = (props) => {
   };
 
   useEffect(() => {
-    if (search) {
-      const delay = 500;
-      const debounceTimer = setTimeout(() => {
-        props.getSearchText(search);
-      }, delay);
-      return () => clearTimeout(debounceTimer);
+    if (searchIconClicked && search.trim() !== "") {
+      props.getSearchText(search);
+      setSearch(""); // Clear the search input
     }
-  }, [search]);
+  }, [searchIconClicked]);
 
   const handleOptionChange = (selectedOption) => {
-    props.onOptionChange(selectedOption);
-    setSearch("");
-    setCategorySelected(selectedOption !== "");
-    if (selectedOption !== "") {
-      if (searchInputRef.current) {
-        searchInputRef.current.focus();
-      }
+    if (selectedOption !== props.value) {
+      setSearch("");
+      setCategorySelected(selectedOption !== "");
     }
   };
 
   const data = [
     { text: "Email", value: "email" },
     { text: "Mobile Number", value: "phone_number" },
-    { text: "City", value: "city" },
-    { text: "Name", value: "name" },
   ];
 
   const handleSearchClick = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    if (
-      !categorySelected &&
-      props.value === "email" &&
-      search.trim().toLowerCase() === "email"
-    ) {
-      return;
+    e.preventDefault();
+    // Always set searchIconClicked to true when the search icon is clicked
+    setSearchIconClicked(true);
+    // If there is a search query and the selected option is "Mobile Number"
+    if (props.value === "phone_number" && search.trim() !== "") {
+      // Trigger the search with the current search query
+      props.getSearchText(search);
+      // Clear the search input
+      setSearch("");
     }
-
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
+    // Update the state to show the search results
+    setShowResults(true);
   };
 
   return (
@@ -168,7 +62,7 @@ const SearchDropDown = (props) => {
         </select>
 
         <div className="vertical-line"></div>
-        <form onSubmit={(e) => handleSearchClick(e)}>
+        <form>
           <input
             ref={searchInputRef}
             type="text"
@@ -176,15 +70,24 @@ const SearchDropDown = (props) => {
             className="search-bar ps-3"
             value={search}
             onChange={handleSearchChange}
-            onMouseDown={(e) => {
-              e.preventDefault();
+            style={{
+              cursor:
+                searchIconClicked || props.value === "phone_number"
+                  ? "text"
+                  : "pointer",
             }}
           />
 
           <button
             className="pe-3"
-            type="submit"
-            style={{ color: "#a59c9c", cursor: "pointer", border: "none" }}
+            type="button"
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: "#a59c9c",
+            }}
+            onClick={(e) => handleSearchClick(e)}
           >
             <IoSearch />
           </button>
