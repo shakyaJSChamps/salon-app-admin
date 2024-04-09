@@ -10,6 +10,7 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
+import EditsalonManagement from "../Component/userManagement/EditsalonManagement";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -116,7 +117,7 @@ const SaloonManagement = () => {
       ),
     },
     {
-  
+
       name: "Company Name",
       selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.companyName}</p>,
       sortable: true,
@@ -152,42 +153,38 @@ const SaloonManagement = () => {
 
   return (
     <>
-    { modalShow && selectedRow && (
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        rowData={selectedRow}
-        showForm={"salon"}
-      />
-    )}
-<div className="main-table rounded ">
-  <DataTable
-    title=
-    {<CustomTitle
-      icon={icon}
-      title={title}
-      onOptionChange={onOptionChange}
-      getSearchText={getSearchText}
-       />
-    }
-    columns={columns}
-    data={filteredSaloonsData}
-    pagination
-    paginationPerPage={perPage}
-    paginationRowsPerPageOptions={[10, 25, 50]}
-    paginationServer
-    paginationTotalRows={totalRows}
-    onChangePage={handlePageChange}
-    onChangeRowsPerPage={handlePerPageChange}
-    fixedHeader
-    fixedHeaderScrollHeight="450px"
-    highlightOnHover
-    progressPending={loading}
-    progressComponent={<TableLoader />}
-    customStyles={customStyles}
-  />
-</div>
-</>
+      {selectedRow ? 
+        <EditsalonManagement />
+     :
+      <div className="main-table rounded ">
+        <DataTable
+          title=
+          {<CustomTitle
+            icon={icon}
+            title={title}
+            onOptionChange={onOptionChange}
+            getSearchText={getSearchText}
+          />
+          }
+          columns={columns}
+          data={filteredSaloonsData}
+          pagination
+          paginationPerPage={perPage}
+          paginationRowsPerPageOptions={[10, 25, 50]}
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangePage={handlePageChange}
+          onChangeRowsPerPage={handlePerPageChange}
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+          highlightOnHover
+          progressPending={loading}
+          progressComponent={<TableLoader />}
+          customStyles={customStyles}
+        />
+      </div>
+}
+    </>
   );
 };
 

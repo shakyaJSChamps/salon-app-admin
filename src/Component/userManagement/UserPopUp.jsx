@@ -79,8 +79,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className=" mt-2 row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">First Name </p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">First Name </p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -89,8 +89,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Middle Name </p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold ">Middle Name </p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -99,8 +99,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className=" row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4" >Last Name </p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold" >Last Name </p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -109,8 +109,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className=" row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Id </p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Id </p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -120,8 +120,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
 
 
       <div className=" row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Email id </p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Email id </p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -130,8 +130,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className=" row d-flex  justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Mobile Number</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Mobile Number</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -140,8 +140,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Address</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Address</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -150,8 +150,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Pending Appointments</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Pending Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -160,8 +160,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Total Completed Appointments</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Total Completed Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -170,8 +170,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Total Canceled Appointments</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Total Canceled Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -182,8 +182,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly">
-      <div className="col-6 d-flex justify-content-end">
-        <p className="small fw-bold mx-4">User Type</p>
+      <div className="col-6 d-flex justify-content-between">
+        <p className="small fw-bold">User Type</p>
         <span>:</span>
       </div>
       <div className="col-6">
@@ -194,8 +194,8 @@ const UserPopUp = ({ show, handleClose, handleEdit, rowData }) => {
     </div >
 
       <div className="row d-flex justify-content-between align-items-evenly">
-        <div className="col-6 d-flex justify-content-end">
-          <p className="small fw-bold mx-4">Joining Date</p>
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Joining Date</p>
           <span>:</span>
         </div>
         <div className="col-6">
