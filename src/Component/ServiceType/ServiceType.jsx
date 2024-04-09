@@ -1,7 +1,6 @@
-// ServiceType.js
 import React, { useEffect, useState } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
-import { getServiceType } from "../../api/account.api";
+import { getServiceType, deleteServiceType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import { Paper } from "@mui/material";
 import DataTable from "react-data-table-component";
@@ -11,30 +10,41 @@ import FDate from "../controls/FDate";
 
 const ServiceType = (props) => {
   const [services, setServices] = useState([]);
+  const [initialFetch, setInitialFetch] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
-  const handleDelete = (row) => {
-    console.log("Delete clicked for:", row);
+  const handleDelete = async (row) => {
+    try {
+      await deleteServiceType(row.id);
+      Notify.success("Service type deleted successfully");
+
+      setServices(prevServices => prevServices.filter(service => service.id !== row.id));
+    } catch (error) {
+      Notify.error(error.message);
+    }
   };
 
   const handleEdit = (row) => {
-    setSelectedRow(row);
-    setShowForm("service");
-    setModalShow(true);
+    props.onEdit(row);
   };
 
   const getServiceTypes = async () => {
     try {
       const response = await getServiceType();
       const responseData = response.data.data;
+
       setServices(responseData);
+      setInitialFetch(true);
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
   useEffect(() => {
-    getServiceTypes();
-  }, []);
+    if (!initialFetch) {
+      getServiceTypes();
+    }
+  }, [initialFetch]);
 
   useEffect(() => {
     if (props.serviceAdded) {
@@ -52,7 +62,7 @@ const ServiceType = (props) => {
     {
       name: "Description",
       sortable: true,
-      cell: (row) => (row.description ? "Description" : "Descrption Not Found"),
+      cell: (row) => (row.description ? row.description : "Description Not Found"),
     },
     {
       name: "Status",
@@ -85,7 +95,7 @@ const ServiceType = (props) => {
     <Paper className="add-service-paper px-3 pb-3 rounded h-100" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
-        <p className="ps-1 fw-bold mb-0">Add Service Type</p>
+        <p className="ps-1 fw-bold mb-0">Service Type</p>
       </div>
       <hr />
       {services.length >= 0 ? (

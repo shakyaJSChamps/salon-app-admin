@@ -8,7 +8,8 @@ import {
   __endpoint_getSalon,
   __endpoint_getUser,
   __endpoint_updateUser,
-  __endpoint_addServiceType
+  __endpoint_addServiceType,
+  __endpoint_deleteServiceType
 
 } from "../constants/endpoints";
 
@@ -35,4 +36,8 @@ console.log("This is id" , id);
 }
 export const addServiceType = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
+
+  export const deleteServiceType = (payload, id) => {
+    HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`, payload);
+  };
 
