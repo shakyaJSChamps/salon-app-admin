@@ -13,13 +13,14 @@ function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
       onHide={onHide}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      size={showForm === "service" ? "sm" : "md"}
-    >
+      dialogClassName={styles.customModal}
+      >
       {showForm === "service" && (
         <Modal.Header closeButton>
           <Modal.Title
             id="contained-modal-title-vcenter"
             className={styles.title}
+
           >
             <MdOutlineContentPaste /> Edit Service Type
           </Modal.Title>
@@ -27,8 +28,8 @@ function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
       )}
       <Modal.Body>
         {showForm === "service" && <EditServiceForm rowData={rowData} onHide={onHide} />}
-        {showForm === "user" && <UserPopUp rowData={rowData}/>}
-        {showForm === "salon" && <SalonPopUp rowData={rowData} />}
+        {showForm === "user" && <UserPopUp rowData={rowData} />}
+        {showForm === "salon" && <SalonPopUp rowData={rowData}/>}
       </Modal.Body>
     </Modal>
   );
