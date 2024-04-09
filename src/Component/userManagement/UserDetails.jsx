@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { updateUser } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import Loader from "../Loader";
 
-const UserPopUp = ({ rowData }) => {
+const UserDetails = ({ rowData }) => {
   const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -134,4 +134,4 @@ const UserPopUp = ({ rowData }) => {
   );
 };
 
-export default UserPopUp;
+export default UserDetails;
