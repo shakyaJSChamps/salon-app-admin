@@ -10,6 +10,7 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
+import EditsalonManagement from "../Component/userManagement/EditsalonManagement";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -83,7 +84,7 @@ const SaloonManagement = () => {
       selector: (row) => row.name,
       sortable: true,
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)} className="d-flex ">
+        <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.mainGateImageUrl) ? (
               <img
@@ -104,7 +105,7 @@ const SaloonManagement = () => {
               />
             )}
           </div>
-          <div>
+          <div className="cursor-pointer">
             <div className="ps-2" style={{ fontWeight: "500" }}>
               {row.name}
             </div>
@@ -116,20 +117,19 @@ const SaloonManagement = () => {
       ),
     },
     {
+
       name: "Company Name",
-      selector: (row) => row.companyName,
+      selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.companyName}</p>,
       sortable: true,
     },
     {
       name: "Service Type",
-      selector: (row) => row.serviceType,
+      selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
       sortable: true,
     },
     {
       name: "City",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.city}</div>
-      ),
+      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.city}</p>,
       sortable: true,
     },
     // Add more columns as per your requirement
@@ -153,42 +153,38 @@ const SaloonManagement = () => {
 
   return (
     <>
-    { modalShow && selectedRow && (
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        rowData={selectedRow}
-        showForm={"salon"}
-      />
-    )}
-<div className="main-table rounded ">
-  <DataTable
-    title=
-    {<CustomTitle
-      icon={icon}
-      title={title}
-      options={["Name", "City"]}
-      onOptionChange={onOptionChange}
-      getSearchText={getSearchText} />
-    }
-    columns={columns}
-    data={filteredSaloonsData}
-    pagination
-    paginationPerPage={perPage}
-    paginationRowsPerPageOptions={[10, 25, 50]}
-    paginationServer
-    paginationTotalRows={totalRows}
-    onChangePage={handlePageChange}
-    onChangeRowsPerPage={handlePerPageChange}
-    fixedHeader
-    fixedHeaderScrollHeight="450px"
-    highlightOnHover
-    progressPending={loading}
-    progressComponent={<TableLoader />}
-    customStyles={customStyles}
-  />
-</div>
-</>
+      {selectedRow ? 
+        <EditsalonManagement />
+     :
+      <div className="main-table rounded ">
+        <DataTable
+          title=
+          {<CustomTitle
+            icon={icon}
+            title={title}
+            onOptionChange={onOptionChange}
+            getSearchText={getSearchText}
+          />
+          }
+          columns={columns}
+          data={filteredSaloonsData}
+          pagination
+          paginationPerPage={perPage}
+          paginationRowsPerPageOptions={[10, 25, 50]}
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangePage={handlePageChange}
+          onChangeRowsPerPage={handlePerPageChange}
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+          highlightOnHover
+          progressPending={loading}
+          progressComponent={<TableLoader />}
+          customStyles={customStyles}
+        />
+      </div>
+}
+    </>
   );
 };
 

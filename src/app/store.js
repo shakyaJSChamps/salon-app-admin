@@ -3,7 +3,6 @@ import authInfoReducer from "../features/authInfo";
 import countriesReducer from "../features/countriesInfo";
 import featureReducer from "../features/feature";
 import saloonTypesReducer from "../features/saloonTypeSlice";
-import userReducer from "../features/userInfoSlice";
 
 export default configureStore({
   reducer: {
@@ -11,6 +10,5 @@ export default configureStore({
     countries: countriesReducer,
     feature: featureReducer,
     saloonTypes: saloonTypesReducer,
-    user: userReducer,
   },
 });

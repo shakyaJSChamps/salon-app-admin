@@ -30,10 +30,8 @@ export const putServiceType = (payload, id) => {
 export const getSalon = (payload) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 
-export const updateUser = (payload , id) =>{
-console.log("This is id" , id);
-  HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
-}
+export const updateUser = (payload, id) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_updateUser}/${id}`, payload);
 export const addServiceType = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
 
