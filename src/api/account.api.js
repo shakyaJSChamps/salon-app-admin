@@ -32,3 +32,6 @@ export const updateUser = (payload , id) =>{
 console.log("This is id" , id);
   HTTP.Request(methods.PATCH, __endpoint_updateUser(id),  payload);
 }
+
+export const fileUploader = (payload) =>
+HTTP.Request(methods.GET, __endpoint_fileUploader, payload);

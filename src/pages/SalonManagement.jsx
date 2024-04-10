@@ -10,7 +10,7 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
-import EditsalonManagement from "../Component/userManagement/EditsalonManagement";
+import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -27,7 +27,7 @@ const SaloonManagement = () => {
   const [selectedRow, setSelectedRow] = useState(null);
 
   const handleRowClick = (row) => {
-    setModalShow(true);
+    // setModalShow(true);
     setSelectedRow(row);
     console.log(row)
   };

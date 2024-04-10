@@ -11,3 +11,5 @@ export const __endpoint_updateUser = ()=> {
    // return `${endpoint}admin/users/consumers/${id}`;
 }
 
+export const __endpoint_fileUploader = endpoint + "b2b/file/presignedUrl";
+
