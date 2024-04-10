@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
-import { selectSearchTerm } from "../features/countriesInfo";
 import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
 import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import Notify from "../utils/notify";
-import { getUser, updateUser } from "../api/account.api";
+import { getUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
@@ -23,23 +21,11 @@ const UserManagement = () => {
   const [userData, setUserData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [option, setOption] = useState("");
-  const [searchText, setSearchText] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  const handleInputChange = (event) => {
-    const { value } = event.target;
-    setSearchText(value);
-  };
-
-  const handleEdit = (rowData) => {
-    // handle edit logic
-  };
+  const [option, setOption] = useState("email");
 
   const handleRowClick = (row) => {
     setModalShow(true);
     setSelectedRow(row);
-    console.log(row)
   };
 
   const handlePageChange = (page) => {
@@ -51,33 +37,8 @@ const UserManagement = () => {
     setPage(page);
   };
 
-  // const onOptionChange = (prop) => {
-  //   setOption(prop);
-  // };
-
-  const onOptionChange = (prop) => {
-    if (prop === "email" || prop === "phone_number") {
-      setOption(prop);
-    } else {
-      Notify.error("Invalid option selected");
-    }
-  };
-
-
-  const getSearchText = (prop) => {
-    setSearchText(prop);
-    setPage(1);
-  };
-
-  const getUsers = async () => {
-    let REQ_URL = `/consumers?page=${page}&size=${perPage}`;
-    if (option === 'mobile number') {
-      REQ_URL += `&phoneNumber=${searchText}`;
-    } else if (option === 'email' || !option) { // Check if option is 'email' or not selected
-      REQ_URL += `&email=${searchText}`; // Use 'email' as default option if not selected
-    } else {
-      REQ_URL += `&${option}=${searchText}`;
-    }
+  const getUsers = async (searchText = "") => {
+    let REQ_URL = `/consumers?page=${page}&size=${perPage}&${option}=${searchText}`;
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
@@ -92,7 +53,11 @@ const UserManagement = () => {
 
   useEffect(() => {
     getUsers();
-  }, [perPage, page, searchText, option]);
+  }, [perPage, page]);
+
+  const searchByText =(searchText)=>{
+    getUsers(searchText);
+  }
 
   const columns = [
     {
@@ -104,7 +69,7 @@ const UserManagement = () => {
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) &&
-              isValidImageUrl(row.profileImageUrl) ? (
+            isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -139,26 +104,17 @@ const UserManagement = () => {
     {
       name: "Active",
       cell: (row) => (
-        <span
-          className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
+        <div onClick={() => handleRowClick(row)}>
+          <span
+            className={`rounded-pill ${
+              row.active ? "active-pill" : "blocked-pill"
             }`}
-        >
-          {row.active ? "Active" : "Blocked"}
-        </span>
+          >
+            {row.active ? "Active" : "Blocked"}
+          </span>
+        </div>
       ),
     },
-
-    // {
-    //   name: "Active",
-    //   cell: (row) => (
-    //     <span
-    //       className={`badge ${row.isBlocked ? "bg-danger" : "bg-success"}`}
-    //     >
-    //       {row.isBlocked ? "Blocked" : "Active"}
-    //     </span>
-    //   ),
-    // },
-
     {
       name: "Mobile Num",
       cell: (row) => (
@@ -173,28 +129,6 @@ const UserManagement = () => {
       ),
       sortable: true,
     },
-    // {
-    //   name: "Appointment",
-    //   cell: (row) => (
-    //     <div>
-    //       <span
-    //         className={`appointment ${
-    //           row.name ? "appointment-completed" : "appointment-canceled"
-    //         }`}
-    //       >
-    //         Completed
-    //       </span>
-    //       <br />
-    //       <span
-    //         className={`appointment ${
-    //           row.name ? "appointment-canceled" : "appointment-canceled"
-    //         }`}
-    //       >
-    //         Canceled
-    //       </span>
-    //     </div>
-    //   ),
-    // },
     {
       name: "Joined On",
       cell: (row) => (
@@ -218,8 +152,10 @@ const UserManagement = () => {
         fontSize: "16px",
         color: "#6F6B7D",
         fontFamily: "Poppins",
+        cursor:"pointer",
       },
     },
+    
   };
 
   return (
@@ -238,8 +174,8 @@ const UserManagement = () => {
             <CustomTitle
               icon={icon}
               title={title}
-              onOptionChange={onOptionChange}
-              getSearchText={getSearchText}
+              setOption={setOption}
+              searchByText={searchByText}
             />
           }
           columns={columns}
@@ -254,10 +190,9 @@ const UserManagement = () => {
           fixedHeader
           fixedHeaderScrollHeight="450px"
           highlightOnHover
-          handleRowClick={handleRowClick}
+          onRowClicked={(row) => handleRowClick(row)}
           progressPending={loading}
           progressComponent={<TableLoader />}
-          handleEdit={handleEdit}
           selectedRow={selectedRow}
           customStyles={customStyles}
         />
