@@ -36,8 +36,7 @@ const ChangedPassword = lazy(() =>
 const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) => {
-  return authToken ?
-    <Layout /> : <Navigate to="/account/login" />;
+  return authToken ? <Layout /> : <Navigate to="/account/login" />;
 };
 
 const AppRoute = (props) => {
@@ -53,19 +52,19 @@ const AppRoute = (props) => {
         { path: "changed-password", element: <ChangedPassword /> },
       ],
     },
-    { path: "", exact: true, element: <Navigate to="/dashboard" /> },
+    { path: "", exact: true, element: <Navigate to="/user-management" /> },
     {
-      path: "", element: <ProtectedRoutes {...props} />,
+      path: "",
+      element: <ProtectedRoutes {...props} />,
       children: [
-        { path: "dashboard", element: <DashBoard /> },
-        { path: "dashboard", element: <DashBoard /> },
+        // { path: "dashboard", element: <DashBoard /> },
         { path: "user-management", element: <UserManagement /> },
         {
           path: "salon-management",
           element: <SalonManagement />,
           children: [{ path: "details", element: <SaloonDetails /> }],
         },
-        { path: "freelance-management", element: <FreelanceManagement /> },
+        // { path: "freelance-management", element: <FreelanceManagement /> },
         { path: "service-type-management", element: <ServiceTypeMan /> },
         { path: "coupon-management", element: <CouponManagement /> },
         { path: "appointment-management", element: <AppointmentMan /> },
@@ -76,7 +75,7 @@ const AppRoute = (props) => {
         { path: "setting", element: <Setting /> },
         { path: "setting/cms-setting", element: <CmsSetting /> },
         { path: "send-notification", element: <SendNotification /> },
-      ]
+      ],
     },
     { path: "*", element: <Error /> },
   ];

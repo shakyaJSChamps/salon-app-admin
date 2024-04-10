@@ -30,7 +30,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     dispatch(removeToken());
-    navigate("/login");
+    navigate("/account/login");
     setAnchorElUser(null);
   };
 
