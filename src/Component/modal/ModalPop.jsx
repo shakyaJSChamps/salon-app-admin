@@ -4,7 +4,7 @@ import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
 import styles from "./Modal.module.css";
-import SalonPopUp from "../salonManagement/SalonPopUp";
+import SalonImgPopup from "../salonManagement/SalonImgPopup";
 
 function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
   return (
@@ -29,7 +29,7 @@ function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
       <Modal.Body>
         {showForm === "service" && <EditServiceForm rowData={rowData} onHide={onHide} />}
         {showForm === "user" && <UserDetails rowData={rowData}/>}
-        {showForm === "salon" && <SalonPopUp rowData={rowData} />}
+        {showForm === "salon" && <SalonImgPopup rowData={rowData} />}
       </Modal.Body>
     </Modal>
   );
