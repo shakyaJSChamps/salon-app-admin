@@ -7,21 +7,26 @@ import { Row, Col, Container } from "react-bootstrap";
 const ServiceTypeMan = (props) => {
   const [serviceAdded, setServiceAdded] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+
 
   const handleEdit = (rowData) => {
     setSelectedRowData(rowData);
+    setIsEditMode(true);
   };
 
   return (
     <Container>
       <Row>
-        <Col md={4} className="mt-3">
+        <Col md={4}>
           <AddServiceType
             setServiceAdded={setServiceAdded}
             selectedRowData={selectedRowData}
+            isEditMode={isEditMode}
+            setIsEditMode={setIsEditMode}
           />
         </Col>
-        <Col md={8} className="mt-3">
+        <Col md={8}>
           <ServiceType
             serviceAdded={serviceAdded}
             setServiceAdded={setServiceAdded}
