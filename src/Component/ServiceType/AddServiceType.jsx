@@ -1,5 +1,8 @@
+// AddServiceType.js
+
 import React, { useState, useEffect } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
+import { CiCirclePlus } from "react-icons/ci";
 import { Paper } from "@mui/material";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
@@ -9,95 +12,87 @@ const AddServiceType = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
-  const [services, setServices] = useState([]); // Define the services state
 
   useEffect(() => {
-    if (props.selectedRowData) {
-      setName(props.selectedRowData.name || "");
-      setDescription(props.selectedRowData.description || "");
-      setIsEditMode(true);
+    if (isEditMode) {
+      setName(props.selectedRowData.name);
+      setDescription(props.selectedRowData.description);
     } else {
       setName("");
       setDescription("");
-      setIsEditMode(false);
+      props.setIsEditMode(false);
     }
-  }, [props.selectedRowData]);
+  }, [isEditMode]);
 
   useEffect(() => {
-    localStorage.setItem("editedServiceData", JSON.stringify({ name, description }));
-  }, [name, description]);
-
-  useEffect(() => {
-    const editedData = JSON.parse(localStorage.getItem("editedServiceData"));
-    if (editedData) {
-      setName(editedData.name);
-      setDescription(editedData.description);
+    if (props.isEditMode) {
+      setIsEditMode(true);
     }
-  }, []);
+  }, [props]);
 
-  const handleSave = async (event) => {
+  const addService = async (event) => {
     event.preventDefault();
-  
+    console.log("Add service ::>");
     try {
       const requestData = {
         name: name,
         description: description,
       };
-  
-      let response;
-  
-      if (isEditMode) {
-        response = await putServiceType(requestData, props.selectedRowData.id);
-      } else {
-        response = await addServiceType(requestData);
-      }
-  
-      console.log("API response:", response);
-  
-      if (response && response.data && response.data.message) {
-        Notify.success(response.data.message);
-        props.setServiceAdded(true);
-  
-        // Update the services state immediately with the edited data
-        if (isEditMode) {
-          setServices(prevServices =>
-            prevServices.map(service =>
-              service.id === props.selectedRowData.id
-                ? { ...service, name: name, description: description }
-                : service
-            )
-          );
-        } else {
-          // If it's a new entry, append it to the existing services
-          setServices(prevServices => [...prevServices, response.data.service]);
-        }
-  
-        setName("");
-        setDescription("");
-        setIsEditMode(false);
-      }
+      const response = await addServiceType(requestData);
+      console.log("Reponse ::>", response);
+      Notify.success(response.message);
+      props.setServiceAdded(true);
+
+      // Clear the form
+      setName("");
+      setDescription("");
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
     }
   };
-  
+  const editService = async (event) => {
+    event.preventDefault();
+    console.log("edit service ::>");
+    try {
+      const requestData = {
+        name: name,
+        description: description,
+        active: true,
+      };
+      const response = await putServiceType(
+        requestData,
+        props.selectedRowData.id
+      );
+      console.log("Response ::>", response);
+      Notify.success(response.message);
+      props.setServiceAdded(true);
+      // Clear the form
+      setName("");
+      setDescription("");
+    } catch (error) {
+      console.error("API error:", error);
+      Notify.error(error.message);
+    }
+  };
 
   return (
     <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
-        <p className="ps-1 fw-bold mb-0">{isEditMode ? 'Edit' : 'Add'} Service Type</p>
+        <p className="ps-1 fw-bold mb-0">
+          {isEditMode ? "Edit" : "Add"} Service Type
+        </p>
+        {isEditMode && <CiCirclePlus onClick={()=> setIsEditMode(false)} className="cursor-pointer ms-auto"/>}
       </div>
       <hr />
       <form
         className="d-flex flex-column align-items-center"
-        onSubmit={handleSave}
+        onSubmit={isEditMode ? editService : addService}
       >
         <div className="d-flex flex-column align-items-start mb-1">
           <label className="fw-bold">Name</label>
           <input
-            placeholder="Hair"
             className="form-control input"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -117,8 +112,14 @@ const AddServiceType = (props) => {
         <FileUploader />
 
         <div className="d-flex justify-content-center">
-          <button type="submit" className="add-service-btn mt-2">
-            {isEditMode ? 'Update' : 'Save'}
+          <button
+            type="submit"
+            className={`add-service-btn mt-2 ${
+              name.length < 2 && description.length < 2 ? "disable" : ""
+            }`}
+            disabled={name.length < 2 && description.length < 2}
+          >
+            {isEditMode ? "Update" : "Save"}
           </button>
         </div>
       </form>

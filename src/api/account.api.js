@@ -24,7 +24,6 @@ export const getFeature = () =>
 export const getServiceType = () =>
   HTTP.Request(methods.GET, __endpoint_getServiceType);
 export const putServiceType = (payload, id) => {
-  console.log(" id ::>", id);
   HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
 };
 export const getSalon = (payload) =>
@@ -34,8 +33,8 @@ export const updateUser = (payload, id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_updateUser}/${id}`, payload);
 export const addServiceType = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
-
-  export const deleteServiceType = (payload, id) => {
-    HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`, payload);
+  
+  export const deleteServiceType = (id) => {
+    HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`);
   };
 

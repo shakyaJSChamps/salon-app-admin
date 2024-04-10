@@ -1,3 +1,5 @@
+// ServiceType.js
+
 import React, { useEffect, useState } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
 import { getServiceType, deleteServiceType } from "../../api/account.api";
@@ -32,19 +34,21 @@ const ServiceType = (props) => {
     try {
       const response = await getServiceType();
       const responseData = response.data.data;
-
       setServices(responseData);
-      setInitialFetch(true);
+      props.setServiceAdded(false);
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
   useEffect(() => {
-    if (!initialFetch) {
+      getServiceTypes();
+  }, []);
+  useEffect(() => {
+    if (props.serviceAdded) {
       getServiceTypes();
     }
-  }, [initialFetch]);
+  }, [props.serviceAdded]);
 
   useEffect(() => {
     if (props.serviceAdded) {
