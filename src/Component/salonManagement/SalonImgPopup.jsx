@@ -1,6 +1,6 @@
 import React from "react";
 
-function salonImagePopup({ open, onClose, children }) {
+function SalonImgPopup({ open, onClose, children }) {
     if (!open) return null;
 
     return (
@@ -20,4 +20,4 @@ function salonImagePopup({ open, onClose, children }) {
     );
 }
 
-export default salonImagePopup;
+export default SalonImgPopup;
