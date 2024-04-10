@@ -4,7 +4,6 @@ import countriesReducer from "../features/countriesInfo";
 import serviceTypeReducer from "../features/serviceTypeSlice";
 import featureReducer from "../features/feature";
 import saloonTypesReducer from "../features/saloonTypeSlice";
-import userReducer from "../features/userInfoSlice";
 
 export default configureStore({
   reducer: {
@@ -13,6 +12,5 @@ export default configureStore({
     feature: featureReducer,
     serviceType: serviceTypeReducer,
     saloonTypes: saloonTypesReducer,
-    user: userReducer,
   },
 });
