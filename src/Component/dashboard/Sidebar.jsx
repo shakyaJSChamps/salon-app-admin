@@ -25,9 +25,12 @@ const Sidebar = (props) => {
   const getFeatureList = useCallback(async () => {
     try {
       const features = await getFeature();
-      dispatch(setFeature(features.data.data));
+      const filteredFeatures = features.data.data.filter(
+        (item) => item.name !== "Freelance Management"
+      );
+      dispatch(setFeature(filteredFeatures));
     } catch (error) {
-      console.error("Error ::>",error);
+      console.error("Error ::>", error);
       Notify.error(error.message);
     }
   }, [dispatch]);

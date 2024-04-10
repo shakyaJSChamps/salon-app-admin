@@ -2,15 +2,14 @@ import React from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { doLogin, getFeature } from "../../api/account.api";
 import { storeToken } from "../../features/authInfo";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Notify from "../../utils/notify";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../Loader";
 import { Col, Container, Row } from "react-bootstrap";
 import logo from "../../assets/image/DLogo.png";
-import {LoginSchema} from "../../utils/schema";
-import { setFeature} from "../../features/featuresSlice";
-
+import { LoginSchema } from "../../utils/schema";
+import { setFeature } from "../../features/featuresSlice";
 
 const initialValues = {
   email: "",
@@ -21,25 +20,24 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       console.log(values);
       const { email, password } = values;
       const res = await doLogin({ email, password });
-      // console.log("response ::>", res);
+      console.log("response ::>", res);
       // const { authToken: token,  } = res.data.data;
       const token = res.data.data.authToken;
       const userInfo = {
-        email : res.data.data.email,
-        role : res.data.data.role,
-      }
+        email: res.data.data.email,
+        role: res.data.data.role,
+      };
       dispatch(storeToken({ token, userInfo }));
-      navigate("/dashboard");
+      navigate("/user-management");
       setSubmitting(false);
-      
     } catch (error) {
-      Notify.error(error.message);
+      const message = "Please enter correct password";
+      Notify.error(message);
     }
   };
 
@@ -78,7 +76,9 @@ const App = () => {
           <div className="main-form ">
             <Form className="d-flex flex-column">
               <div className="form-group px-3 mt-2">
-                <label htmlFor="email" className="fw-bold">Email</label>
+                <label htmlFor="email" className="fw-bold">
+                  Email
+                </label>
                 <Field
                   type="email"
                   name="email"
@@ -108,7 +108,7 @@ const App = () => {
                   className={`mt-2 form-control input ${
                     props.touched.password && props.errors.password
                       ? "is-invalid"
-                      : ""
+                      : "Password is wrong"
                   }`}
                 />
                 <ErrorMessage
