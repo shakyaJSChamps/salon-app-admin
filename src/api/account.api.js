@@ -7,7 +7,9 @@ import {
   __endpoint_putServiceType,
   __endpoint_getSalon,
   __endpoint_getUser,
-  __endpoint_updateUser
+  __endpoint_updateUser,
+  __endpoint_addServiceType,
+  __endpoint_deleteServiceType
 
 } from "../constants/endpoints";
 
@@ -30,3 +32,10 @@ export const getSalon = (payload) =>
 
 export const updateUser = (payload, id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_updateUser}/${id}`, payload);
+export const addServiceType = (payload) =>
+  HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
+
+  export const deleteServiceType = (payload, id) => {
+    HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`, payload);
+  };
+

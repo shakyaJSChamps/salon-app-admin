@@ -4,7 +4,7 @@ import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
 import styles from "./Modal.module.css";
-import SalonPopUp from "../salonManagement/SalonPopUp.jsx";
+import SalonPopUp from "../salonManagement/SalonPopUp";
 
 function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
   return (

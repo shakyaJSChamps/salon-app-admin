@@ -1,73 +1,124 @@
-import { Paper } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
-import React, { useRef, useState } from "react";
-import { IoMdCloudUpload } from "react-icons/io";
+import { Paper } from "@mui/material";
+import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
+import { addServiceType, putServiceType } from "../../api/account.api";
 
-const AddServiceType = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  // const fileInputRef = useRef(null);
+const AddServiceType = (props) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [services, setServices] = useState([]); // Define the services state
 
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setSelectedFile(file);
-  // };
-
-  // const handleFileUploadClick = () => {
-  //   fileInputRef.current.click();
-  // };
-
-  const handleSave = () => {
-    if (selectedFile) {
-      console.log("Selected File:", selectedFile);
+  useEffect(() => {
+    if (props.selectedRowData) {
+      setName(props.selectedRowData.name || "");
+      setDescription(props.selectedRowData.description || "");
+      setIsEditMode(true);
     } else {
-      console.error("No file selected.");
+      setName("");
+      setDescription("");
+      setIsEditMode(false);
+    }
+  }, [props.selectedRowData]);
+
+  useEffect(() => {
+    localStorage.setItem("editedServiceData", JSON.stringify({ name, description }));
+  }, [name, description]);
+
+  useEffect(() => {
+    const editedData = JSON.parse(localStorage.getItem("editedServiceData"));
+    if (editedData) {
+      setName(editedData.name);
+      setDescription(editedData.description);
+    }
+  }, []);
+
+  const handleSave = async (event) => {
+    event.preventDefault();
+  
+    try {
+      const requestData = {
+        name: name,
+        description: description,
+      };
+  
+      let response;
+  
+      if (isEditMode) {
+        response = await putServiceType(requestData, props.selectedRowData.id);
+      } else {
+        response = await addServiceType(requestData);
+      }
+  
+      console.log("API response:", response);
+  
+      if (response && response.data && response.data.message) {
+        Notify.success(response.data.message);
+        props.setServiceAdded(true);
+  
+        // Update the services state immediately with the edited data
+        if (isEditMode) {
+          setServices(prevServices =>
+            prevServices.map(service =>
+              service.id === props.selectedRowData.id
+                ? { ...service, name: name, description: description }
+                : service
+            )
+          );
+        } else {
+          // If it's a new entry, append it to the existing services
+          setServices(prevServices => [...prevServices, response.data.service]);
+        }
+  
+        setName("");
+        setDescription("");
+        setIsEditMode(false);
+      }
+    } catch (error) {
+      console.error("API error:", error);
+      Notify.error(error.message);
     }
   };
+  
 
   return (
     <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
-        <p className=" ps-1 fw-bold  mb-0">Add Service Type</p>
+        <p className="ps-1 fw-bold mb-0">{isEditMode ? 'Edit' : 'Add'} Service Type</p>
       </div>
       <hr />
-      <form className="d-flex flex-column align-items-center">
-        <div className=" d-flex flex-column align-items-start mb-1">
+      <form
+        className="d-flex flex-column align-items-center"
+        onSubmit={handleSave}
+      >
+        <div className="d-flex flex-column align-items-start mb-1">
           <label className="fw-bold">Name</label>
-          <input placeholder="Hair" className="form-control input" />
+          <input
+            placeholder="Hair"
+            className="form-control input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
 
-        <div className=" d-flex flex-column align-items-start mb-2">
+        <div className="d-flex flex-column align-items-start mb-2">
           <label className="fw-bold">Description</label>
           <textarea
             className="form-control input"
             rows="6"
             cols="25"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div>
-        {/* <div className=" d-flex flex-column align-items-start mb-2">
-          <label className="fw-bold ">File Uploader</label>
-          <div
-            className="custom-file-upload-input"
-            onClick={handleFileUploadClick}
-          >
-            <div className="file-icon">
-              <IoMdCloudUpload />
-            </div>
-            Drags file to upload
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            onChange={handleFileChange}
-            className="file-upload-input"
-          />
-        </div> */}
         <FileUploader />
+
         <div className="d-flex justify-content-center">
-          <button className="add-service-btn mt-2" onClick={handleSave}>
-            Save
+          <button type="submit" className="add-service-btn mt-2">
+            {isEditMode ? 'Update' : 'Save'}
           </button>
         </div>
       </form>

@@ -3,7 +3,7 @@ import { putServiceType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 
-const EditServiceForm = ({ rowData, onHide }) => {
+const EditServiceForm = ({ rowData }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -21,33 +21,23 @@ const EditServiceForm = ({ rowData, onHide }) => {
         name: name,
         description: description
       };
-
+  
       console.log("Calling API with parameters:", rowData?.id, updatedData);
       const response = await putServiceType(updatedData, rowData?.id);
       console.log("API response:", response);
-
+  
       // Show success message with updated data
       Notify.success(`Service type updated successfully: ${updatedData.name}, ${updatedData.description}`);
-
-      // After successful update, close the modal
-      onHide(); // Hide the modal after saving
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    await handleSave(event);
-  };
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleChangeDescription = (e) => {
-    setDescription(e.target.value);
+    // Call handleSave function when the form is submitted
+    handleSave(event);
   };
 
   return (
@@ -60,7 +50,7 @@ const EditServiceForm = ({ rowData, onHide }) => {
         <input
           className="form-control input"
           value={name}
-          onChange={handleChangeName}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -70,8 +60,8 @@ const EditServiceForm = ({ rowData, onHide }) => {
           className="form-control input"
           rows="4"
           cols="25"
-          value={description}
-          onChange={handleChangeDescription}
+          value={description} 
+          onChange={(e) => setDescription(e.target.value)}
         ></textarea>
       </div>
       <FileUploader />
