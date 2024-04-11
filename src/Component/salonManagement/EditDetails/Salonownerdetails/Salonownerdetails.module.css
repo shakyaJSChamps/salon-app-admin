@@ -1,4 +1,4 @@
-.Btn{
+.Btn {
     background-color: white;
     padding: 0px 20px;
     border-radius: 20px;
@@ -10,33 +10,74 @@
     border: 1.3px solid #858585;
 }
 
-.uploadIcon{
+.mainDiv {
+    gap: 10px;
+}
+
+.uploadIcon {
     margin-left: -10px;
     height: 30px;
- }
+}
 
- .aadhar{
-    display: flex;
- }
+.aadhar{
+    gap: 8px;
+}
 
- .back{
-    margin-left: -42px;
- }
+.aadharBack{
+    gap: 8px;
+}
 
- .btn{
+.panCard{
+    gap: 8px;
+}
+
+
+.btn {
     padding: 3px 20px;
     background-color: #000;
     color: #fff;
     border: 2px solid #909090;
     border-radius: 12px;
     margin-top: 10px;
+    font-size: 11px;
 }
 
-.label{
+.label {
     font-weight: 500;
+    color: black;
 }
 
-.input{
+.dob {
+    margin-left: 22px;
+    font-weight: 500;
+    color: black;
+}
+
+.gender {
+    margin-left: 55px;
+    font-weight: 500;
+    color: black;
+}
+
+.front{
+    font-weight: 500;
+    color: black;
+}
+
+.back{
+    font-weight: 500;
+    color: black;
+    margin-left: 46px;
+}
+
+.pan{
+    font-weight: 500;
+    color: black;
+    margin-left: 68px;
+}
+
+.input {
     border: 2px solid grey;
     outline: none;
 }
+

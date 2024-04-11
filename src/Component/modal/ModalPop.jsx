@@ -29,7 +29,6 @@ function MyVerticallyCenteredModal({ show, onHide, rowData, showForm }) {
       <Modal.Body>
         {showForm === "service" && <EditServiceForm rowData={rowData} onHide={onHide} />}
         {showForm === "user" && <UserDetails rowData={rowData}/>}
-        {showForm === "salon" && <SalonImgPopup rowData={rowData} />}
       </Modal.Body>
     </Modal>
   );

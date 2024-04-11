@@ -1,17 +1,17 @@
 import React from 'react'
 import { GrFormUpload } from "react-icons/gr";
-import { fileUploader } from "../../../../api/account.api";
+// import { fileUploader } from "../../../../api/account.api";
 import { useState, useEffect, useRef } from 'react';
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import styles from "../Salonownerdetails/Salonownerdetails.module.css";
 
 
 function SalonOwnerDetails() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [url, setUrl] = useState("");
-  console.log("url:::>", url);
-  const [fileName, setFileName] = useState("");
-  useEffect(() => { }, []);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  // const [url, setUrl] = useState("");
+  // console.log("url:::>", url);
+  // const [fileName, setFileName] = useState("");
+  // useEffect(() => { }, []);
   const fileInputRef = useRef(null);
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -42,67 +42,80 @@ function SalonOwnerDetails() {
       Notify.error("Error uploading file:", error);
     }
   };
+
+
   return (
     <>
-      <h4>Salon Owner Details</h4>
+      <div className='d-flex justify-content-between align-items-center'>
+        <h4>Salon Owner Details</h4>
+
+        <div className='d-flex justify-content-start align-items-center mb-3'>
+          <button type='submit' className={styles.btn}>Edit</button>
+          <button type='submit' className={styles.btn}>Save</button>
+        </div>
+      </div>
+
       <Formik
       // onSubmit={onSubmit}
       >
         <Form>
-          <label className={styles.label}> First Name</label><br />
-          <Field
-            type='text'
-            placeholder='Jhon'
-            name='firstName'
-            className={`${styles.input} px-1 rounded`}
-          /><br />
+          <div className={`${styles.mainDiv} d-flex justify-content-start align-items-center`}>
+            <label className={styles.label}> First Name</label><br />
+            <Field
+              type='text'
+              placeholder='Jhon'
+              name='firstName'
+              className={`${styles.input} px-1 rounded`}
+            /><br />
 
-          {/* <ErrorMessage name="firstName" className={styles.formError} component="div" /> */}
+            {/* <ErrorMessage name="firstName" className={styles.formError} component="div" /> */}
 
-          <label className={`${styles.label} mt-2`}> Middle Name</label><br />
-          <Field
-            type='text'
-            placeholder='Jhon'
-            name='middleName'
-            className={`${styles.input} px-1 rounded`}
-          /><br />
+            <label className={`${styles.label}`}> Middle Name</label><br />
+            <Field
+              type='text'
+              placeholder='Jhon'
+              name='middleName'
+              className={`${styles.input} px-1 rounded`}
+            /><br />
 
-          {/* <ErrorMessage name="middleName" className={styles.formError} component="div" /> */}
+            {/* <ErrorMessage name="middleName" className={styles.formError} component="div" /> */}
 
 
-          <label className={`${styles.label} mt-2`}> Last Name</label><br />
-          <Field
-            type='text'
-            placeholder='Jhon'
-            name='lastName'
-            className={`${styles.input} px-1 rounded`}
-          /><br />
+            <label className={`${styles.label}`}> Last Name</label><br />
+            <Field
+              type='text'
+              placeholder='Jhon'
+              name='lastName'
+              className={`${styles.input} px-1 rounded`}
+            /><br />
 
-          {/* <ErrorMessage name="lastName" className={styles.formError} component="div" /> */}
+            {/* <ErrorMessage name="lastName" className={styles.formError} component="div" /> */}
+          </div>
 
-          <label className={`${styles.label} mt-2`} > Email ID</label><br />
-          <Field
-            type='email'
-            placeholder='Jhon'
-            name='email'
-            className={`${styles.input} px-1 rounded`}
-          /><br />
+          <div className={`${styles.mainDiv} d-flex justify-content-start align-items-center mt-3`}>
+            <label className={`${styles.label} `} > Email ID</label><br />
+            <Field
+              type='email'
+              placeholder='Jhon'
+              name='email'
+              className={`${styles.input} px-1 rounded`}
+            /><br />
 
-          {/* <ErrorMessage name="email" className={styles.formError} component="div" /> */}
+            {/* <ErrorMessage name="email" className={styles.formError} component="div" /> */}
 
-          <label className={`${styles.label} mt-2`}> Date of Birth</label><br />
-          <Field
-            type='date'
-            placeholder='Jhon'
-            name='dob'
-            className={`${styles.input} px-1 rounded`}
-          /><br />
+            <label className={`${styles.dob}`}> Date of Birth</label><br />
+            <Field
+              type='date'
+              placeholder='Jhon'
+              name='dob'
+              className={`${styles.input} px-1 rounded`}
+            /><br />
 
-          {/* <ErrorMessage name="dob" className={styles.formError} component="div" /> */}
+            {/* <ErrorMessage name="dob" className={styles.formError} component="div" /> */}
 
-          <label className={`${styles.label} mt-2`}>
-            Gender
-            <br />
+            <label className={`${styles.gender}`}>
+              Gender
+            </label><br />
             <Field
               as="select"
               name="gender"
@@ -115,12 +128,14 @@ function SalonOwnerDetails() {
             </Field><br />
 
             {/* <ErrorMessage name="gender" className={styles.formError} component="div" /> */}
-          </label><br />
 
-          <div className={styles.aadhar}>
-            <label className={`${styles.front} mt-2 fw-bold`}>
-              <span>Aadhar Front</span>
-              <br />
+          </div>
+
+          <div className={`${styles.mainDiv} d-flex justify-content-start align-items-center mt-3 mb-3`}>
+            <div className={`${styles.aadhar} d-flex justify-content-center align-items-center`}>
+              <label className={`${styles.front}`}>
+                <span>Aadhar Front</span>
+              </label><br />
               <button
                 className={`${styles.Btn} align-items-center-start`}
                 onClick={handleUploadIconClick}
@@ -138,10 +153,33 @@ function SalonOwnerDetails() {
                 <GrFormUpload className={styles.uploadIcon} />
                 Upload
               </button>
-            </label><br />
+            </div>
 
-            <label className={`${styles.back} mt-2 fw-bold`}>
-              Aadhar Back<br />
+            <div className={`${styles.aadharBack} d-flex justify-content-center align-items-center`} >
+              <label className={`${styles.back}`}>
+                Aadhar Back</label><br />
+                <button
+                  className={`${styles.Btn} align-items-center-start`}
+                  onClick={handleUploadIconClick}
+                  type="button"
+                >
+                  <input
+                    type="file"
+                    name="aadhar-back"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <br />
+                  <GrFormUpload className={styles.uploadIcon} />
+                  Upload
+                </button>
+            </div>
+
+            <div className={`${styles.panCard} d-flex justify-content-center align-items-center`} >
+            <label className={`${styles.pan}`}>
+              Pan Card
+              </label><br />
               <button
                 className={`${styles.Btn} align-items-center-start`}
                 onClick={handleUploadIconClick}
@@ -149,7 +187,7 @@ function SalonOwnerDetails() {
               >
                 <input
                   type="file"
-                  name="aadhar-back"
+                  name="image"
                   ref={fileInputRef}
                   style={{ display: "none" }}
                   onChange={handleFileChange}
@@ -158,34 +196,11 @@ function SalonOwnerDetails() {
                 <GrFormUpload className={styles.uploadIcon} />
                 Upload
               </button>
-            </label>
-
+              </div>
+            
           </div>
-
-          <label className={`${styles.lab} mt-2 fw-bold`}>
-            Pan Card
-            <button
-              className={`${styles.Btn} align-items-center-start`}
-              onClick={handleUploadIconClick}
-              type="button"
-            >
-              <input
-                type="file"
-                name="image"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
-              <br />
-              <GrFormUpload className={styles.uploadIcon} />
-              Upload
-            </button>
-          </label><br />
-
-          <button type='submit' className={styles.btn}>Edit</button>
-          <button type='submit' className={styles.btn}>Save</button>
         </Form>
-      </Formik>
+      </Formik >
     </>
   )
 }
