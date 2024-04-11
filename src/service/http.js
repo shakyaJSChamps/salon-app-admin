@@ -36,11 +36,9 @@ axios.interceptors.response.use(function (response) {
     return response;
 
 }, function (error) {
-
-    console.log('Error ::>', error);
     if (!error.response && error.message === 'Network Error') {
         return Promise.reject("Couldn't connect to server. Please try again later.");
-    }else if (error.response && error.response.status === 401) { // Assuming 401 is the unauthorized status
+    }else if (error.response && error.response.data.status === 401) { // Assuming 401 is the unauthorized status
         // Dispatch removeToken action if response status is 401
         store.dispatch(removeToken());
     }else if(error.response && error.response.data){
@@ -67,10 +65,8 @@ export default class HTTP {
             axios(request)
                 .then(response => resolve(response))
                 .catch(error => {
-                    if (error.errors) {
-                        Notify.error(error.errors[0]);
-                    } else {
-                        Notify.error(error);
+                    if (error.message) {
+                        Notify.error(error.message);
                     }
                     reject(error)
                 }
