@@ -1,12 +1,12 @@
-// AddServiceType.js
-
 import React, { useState, useEffect } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
-import { CiCirclePlus } from "react-icons/ci";
+import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 import { addServiceType, putServiceType } from "../../api/account.api";
+
+
 
 const AddServiceType = (props) => {
   const [name, setName] = useState("");
@@ -14,21 +14,16 @@ const AddServiceType = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
-    if (isEditMode) {
+    if (props.isEditMode) {
+      setIsEditMode(true);
       setName(props.selectedRowData.name);
       setDescription(props.selectedRowData.description);
     } else {
+      setIsEditMode(false);
       setName("");
       setDescription("");
-      props.setIsEditMode(false);
     }
-  }, [isEditMode]);
-
-  useEffect(() => {
-    if (props.isEditMode) {
-      setIsEditMode(true);
-    }
-  }, [props]);
+  }, [props.isEditMode, props.selectedRowData]);
 
   const addService = async (event) => {
     event.preventDefault();
@@ -39,8 +34,7 @@ const AddServiceType = (props) => {
         description: description,
       };
       const response = await addServiceType(requestData);
-      console.log("Reponse ::>", response);
-      Notify.success(response.message);
+      Notify.success(response.data.message);
       props.setServiceAdded(true);
 
       // Clear the form
@@ -51,6 +45,7 @@ const AddServiceType = (props) => {
       Notify.error(error.message);
     }
   };
+
   const editService = async (event) => {
     event.preventDefault();
     console.log("edit service ::>");
@@ -65,7 +60,7 @@ const AddServiceType = (props) => {
         props.selectedRowData.id
       );
       console.log("Response ::>", response);
-      Notify.success(response.message);
+      Notify.success(response.data.message);
       props.setServiceAdded(true);
       // Clear the form
       setName("");
@@ -77,13 +72,14 @@ const AddServiceType = (props) => {
   };
 
   return (
+
     <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">
           {isEditMode ? "Edit" : "Add"} Service Type
         </p>
-        {isEditMode && <CiCirclePlus onClick={()=> setIsEditMode(false)} className="cursor-pointer ms-auto"/>}
+        {isEditMode && <BiPlusCircle onClick={() => setIsEditMode(false)} className="cursor-pointer ms-auto" />}
       </div>
       <hr />
       <form
@@ -103,7 +99,7 @@ const AddServiceType = (props) => {
           <label className="fw-bold">Description</label>
           <textarea
             className="form-control input"
-            rows="6"
+            rows="3"
             cols="25"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -115,9 +111,9 @@ const AddServiceType = (props) => {
           <button
             type="submit"
             className={`add-service-btn mt-2 ${
-              name.length < 2 && description.length < 2 ? "disable" : ""
+              name.length < 2 && description?.length < 2 ? "disable" : ""
             }`}
-            disabled={name.length < 2 && description.length < 2}
+            disabled={name.length < 2 && description?.length < 2}
           >
             {isEditMode ? "Update" : "Save"}
           </button>

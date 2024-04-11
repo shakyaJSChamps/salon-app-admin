@@ -96,14 +96,14 @@ const ServiceType = (props) => {
   ];
 
   return (
-    <Paper className="add-service-paper px-3 pb-3 rounded h-100" elevation={3}>
+    <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">Service Type</p>
       </div>
       <hr />
       {services.length >= 0 ? (
-        <DataTable data={[...services]} columns={columns} />
+        <DataTable data={[...services]} columns={columns} pagination />
       ) : (
         <span>No Data</span>
       )}
