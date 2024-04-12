@@ -9,8 +9,6 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 
-
-
 const UserManagement = () => {
   const title = "User Management";
   const icon = <AiOutlineUser />;
@@ -22,6 +20,7 @@ const UserManagement = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
+  const [updatedRowData, setUpdatedRowData] = useState(false);
 
   const handleRowClick = (row) => {
     setModalShow(true);
@@ -46,6 +45,7 @@ const UserManagement = () => {
       setUserData(userData);
       setTotalRows(response.data.data.total);
       setLoading(false);
+      setUpdatedRowData(false);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -55,9 +55,13 @@ const UserManagement = () => {
     getUsers();
   }, [perPage, page]);
 
-  const searchByText =(searchText)=>{
+  useEffect(() => {
+    updatedRowData && getUsers();
+  }, [updatedRowData]);
+
+  const searchByText = (searchText) => {
     getUsers(searchText);
-  }
+  };
 
   const columns = [
     {
@@ -152,10 +156,9 @@ const UserManagement = () => {
         fontSize: "16px",
         color: "#6F6B7D",
         fontFamily: "Poppins",
-        cursor:"pointer",
+        cursor: "pointer",
       },
     },
-    
   };
 
   return (
@@ -165,6 +168,7 @@ const UserManagement = () => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           rowData={selectedRow}
+          setUpdatedRowData={setUpdatedRowData}
           showForm={"user"}
         />
       )}
