@@ -38,7 +38,6 @@ function MyVerticallyCenteredModal({
         {showForm === "user" && (
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
-        {showForm === "salon" && <SalonImgPopup rowData={rowData} />}
       </Modal.Body>
     </Modal>
   );

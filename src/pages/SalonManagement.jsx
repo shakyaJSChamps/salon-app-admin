@@ -9,7 +9,7 @@ import { getSalon } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
-import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
+// import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 
 const SaloonManagement = () => {
