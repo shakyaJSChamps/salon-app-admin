@@ -48,15 +48,25 @@
 }
 
 .dob {
-    margin-left: 22px;
     font-weight: 500;
     color: black;
 }
 
+.inputDob{
+    width: 62%;
+    border: 2px solid grey;
+    outline: none;
+}
+
 .gender {
-    margin-left: 55px;
     font-weight: 500;
     color: black;
+}
+
+.inputGender{
+    width: 62%;
+    border: 2px solid grey;
+    outline: none;
 }
 
 .front{
@@ -67,13 +77,11 @@
 .back{
     font-weight: 500;
     color: black;
-    margin-left: 46px;
 }
 
 .pan{
     font-weight: 500;
     color: black;
-    margin-left: 68px;
 }
 
 .input {
