@@ -5,27 +5,27 @@ import { updateUser } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import Loader from "../Loader";
 
-const UserDetails = ({ rowData }) => {
+const UserDetails = ({ rowData, setUpdatedRowData }) => {
   const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const handleToggleBlock = async () => {
-    setIsLoading(true); // Set isLoading to true before the API call
+    setIsLoading(true);
     const payload = {
-      "field":"active",
-      "value": active ? "false" : "true"
-  }
+      field: "active",
+      value: active ? "false" : "true",
+    };
     try {
       const response = await updateUser(payload, rowData.id);
       Notify.success(response.data.message);
-      setActive(preValue => !preValue);
       setIsLoading(false);
+      setActive((prevActive) => !prevActive);
+      setUpdatedRowData(true);
     } catch (error) {
       Notify.error(error.message);
       setIsLoading(false);
     }
   };
-  
 
   return (
     <>
@@ -103,9 +103,7 @@ const UserDetails = ({ rowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="data-detail ps-2">
-            {rowData.cancelled}
-          </p>
+          <p className="data-detail ps-2">{rowData.cancelled}</p>
         </div>
       </div>
 
@@ -122,12 +120,12 @@ const UserDetails = ({ rowData }) => {
       </div>
 
       <div className="d-flex justify-content-center ">
-        <button onClick={handleToggleBlock} className="button" disabled={isLoading}>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            active ?  "Block" : "Unblock"
-          )}
+        <button
+          onClick={handleToggleBlock}
+          className="button"
+          disabled={isLoading}
+        >
+          {isLoading ? <Loader /> : active ? "Block" : "Unblock"}
         </button>
       </div>
     </>
