@@ -22,10 +22,9 @@ export const getUser = (payload) =>
 export const getFeature = () =>
   HTTP.Request(methods.GET, __endpoint_getFeature);
 export const getServiceType = () =>
-  HTTP.Request(methods.GET, __endpoint_getServiceType);
-export const putServiceType = (payload, id) => {
-  HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
-};
+    HTTP.Request(methods.GET, __endpoint_getServiceType);
+export const putServiceType = (payload, id) => 
+   HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
 export const getSalon = (payload) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 
@@ -34,7 +33,10 @@ export const updateUser = (payload, id) =>
 export const addServiceType = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
   
-  export const deleteServiceType = (id) => {
+  export const deleteServiceType = (id) => 
     HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`);
-  };
 
+
+  export const fileUploader = () =>{
+    return Promise.resolve()
+  }
