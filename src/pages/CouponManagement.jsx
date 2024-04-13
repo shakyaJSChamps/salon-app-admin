@@ -7,11 +7,11 @@ const CouponManagement = () => {
   return (
     <Container>
     <Row>
-    <Col md={4} className='mt-5'>
+    <Col md={4}>
       <NewCoupon />
     </Col>
-    <Col md={8} className='mt-5'>
-      <CouponDetails data={repeatedCouponData}/>
+    <Col md={8} >
+      <CouponDetails data={repeatedCouponData} />
     </Col>
   </Row>
   </Container>

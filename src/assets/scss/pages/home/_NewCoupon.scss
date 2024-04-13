@@ -13,26 +13,6 @@
                 border: 2px solid #D9D9D9;
                 border-radius: 8px;
                 }
-            input{
-                border: 2px solid #D9D9D9;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border-radius: 8px;
-                padding: 5px 10px 5px 30px;
-               }
-           }
-           .coupon-btn{
-            padding-top: 8px;
-            button{
-                background-color: $color-black;
-                color: $color-white;
-                width: 200px;
-                height: 40px;
-                border: none;
-                border-radius: 10px;
-                text-transform: uppercase;
-            }
            }
         }
     }
