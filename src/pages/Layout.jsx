@@ -70,7 +70,7 @@ const Layout = () => {
         </div>
         <div
           className={`content px-5 py-3  rounded ${toggleSidebar ? "w-76" : "w-94"} h-100`}
-          // style={{ width: `${toggleSidebar ? "76%" : "94%"}` }}
+          style={{ width: `${toggleSidebar ? "76%" : "94%"}`, overflowY: 'auto' }}
         >
           {loading ? (
             <LogoLoader />
