@@ -3,6 +3,8 @@ import { Field, Formik, Form, ErrorMessage } from "formik"
 import styles from "../Bankdetails/Bankdetails.module.css";
 import { GrFormUpload } from "react-icons/gr";
 import { Grid } from '@mui/material';
+import InputText from '../../../common-component/Inputtext/InputText';
+import FileUploader from '../../../common-component/Fileuploader/FileUploader';
 
 
 
@@ -23,85 +25,23 @@ function BankDetails() {
                 <Form>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                            <div>
-                                <label className={styles.lab}> Account Number</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='85651248769654'
-                                    name='accNum'
-                                    className={`${styles.inputs} rounded px-1`}
-                                /><br />
-
-                                {/* <ErrorMessage name="accNum" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Account Number" name="accountNumber" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={styles.lab}> Account Holder Name</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='accName'
-                                    className={`${styles.inputs} rounded px-1`}
-                                />
-                                <br />
-
-                                {/* <ErrorMessage name="accName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Account Holder Name" name="accountHolderName" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={styles.lab}> Bank Name</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='bankName'
-                                    className={`${styles.inputs} rounded px-1`}
-                                /><br />
-
-                                {/* <ErrorMessage name="bankName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Bank Name" name="bankName" />
                         </Grid>
 
-
                         <Grid item xs={4}>
-                            <div>
-                                <label className={styles.labs}> IFSC Code</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='ifscCode'
-                                    className={`${styles.inputs} rounded px-1`}
-                                /><br />
-                                {/* <ErrorMessage name="ifscCode" className={styles.formError} component="div" /> */}
-                            </div>
+                        <InputText label="IfSC Code" name="ifscCode"/>
                         </Grid>
 
-
                         <Grid item xs={4}>
-                            <div className={`${styles.gap}  mb-3`}>
-                                <label className={styles.lab}>
-                                    Passbook/Cancel cheque
-                                </label><br />
-                                <button
-                                    className={`${styles.Btn} align-items-center-start`}
-                                    // onClick={handleUploadIconClick}
-                                    type="button"
-                                >
-                                    <input
-                                        type="file"
-                                        name="passbook"
-                                        // ref={fileInputRef}
-                                        style={{ display: "none" }}
-                                    // onChange={handleFileChange}
-                                    />
-                                    <br />
-                                    <GrFormUpload className={styles.uploadIcon} />
-                                    Upload
-                                </button>
-                            </div>
+                       <FileUploader label="Cancel cheque/Passbook" name="passBook"/>
                         </Grid>
                     </Grid>
                 </Form>

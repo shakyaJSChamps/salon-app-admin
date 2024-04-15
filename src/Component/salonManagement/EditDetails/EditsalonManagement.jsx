@@ -8,9 +8,9 @@ import SalonTime from './Salontime/SalonTime.jsx';
 
 function EditsalonManagement() {
   return (
-    <div>
+    <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4' , borderRadius: '5px'}}>
       <Row>
-        <Col md={12}>
+        <Col md={12} className='mb-3'>
           <SalonDetails />
         </Col>
         <hr/>
@@ -24,7 +24,7 @@ function EditsalonManagement() {
       </Row>
 
       <Row>
-        <Col md={12}>
+        <Col md={12} className='mb-3'>
           <BankDetails/>
         </Col>
         <hr/>
@@ -45,9 +45,6 @@ function EditsalonManagement() {
       </Row>
 
     </div>
-
-
-
   )
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import styles from "../Salontime/Salontime.module.css";
 import { Grid } from '@mui/material';
+import InputText from '../../../common-component/Inputtext/InputText';
 
 
 function SalonTime() {
@@ -21,47 +22,16 @@ function SalonTime() {
                 <Form>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                            <div >
-                                <label className={`${styles.label} fw-bold`}> Day</label><br />
-                                <Field
-                                    type='textarea'
-                                    placeholder='Monday'
-                                    name='salonName'
-                                    className={`${styles.input} px-2 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="salonName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Day" name="day"/>
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.label} fw-bold`}> Opening Time</label><br />
-                                <Field
-                                    type='email'
-                                    placeholder='10:00 AM'
-                                    name='email'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="email" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Opening Time" name="openingTime" type="time"/>
                         </Grid>
 
-                        <Grid item xs={4} className='mb-3'>
-                            <div>
-                                <label className={`${styles.label} fw-bold`}> Closing Time</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='11:20 PM'
-                                    name='gstNumber'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="gstNumber" className={styles.formError} component="div" /> */}
-                            </div>
+                        <Grid item xs={4}>
+                            <InputText label="Closing Time" name="closingTime" type="time"/>
                         </Grid>
-
 
                     </Grid>
                 </Form >

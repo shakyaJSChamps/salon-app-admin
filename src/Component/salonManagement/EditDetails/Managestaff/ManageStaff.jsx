@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid } from '@mui/material';
 import styles from "../Managestaff/Managestaff.module.css";
 import { Form, Formik, Field, ErrorMessage } from "formik"
+import InputText from '../../../common-component/Inputtext/InputText';
 
 
 function ManageStaff() {
@@ -22,71 +23,23 @@ function ManageStaff() {
                 <Form>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                            <div>
-                                <label className={styles.label}>Name</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='firstName'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="firstName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Name" name="name" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.label}`}>Mobile Number</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='middleName'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="middleName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Mobile Number" name="mobileNumber" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.label}`}>Category</label><br />
-                                <Field
-                                    type='text'
-                                    placeholder='Jhon'
-                                    name='lastName'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-                                {/* <ErrorMessage name="lastName" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Category" name="category" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.label}`} > Email ID</label><br />
-                                <Field
-                                    type='email'
-                                    placeholder='Jhon'
-                                    name='email'
-                                    className={`${styles.input} px-1 rounded`}
-                                /><br />
-
-                                {/* <ErrorMessage name="email" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Email ID" name="email" />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.dob}`}> Date of Birth</label><br />
-                                <Field
-                                    type='date'
-                                    placeholder='Jhon'
-                                    name='dob'
-                                    className={`${styles.inputDob} px-1 rounded`}
-                                /><br />
-                                {/* <ErrorMessage name="dob" className={styles.formError} component="div" /> */}
-                            </div>
+                            <InputText label="Date Of Birth" name="Dob" type="date"/>
                         </Grid>
 
                         <Grid item xs={4}>
@@ -97,7 +50,7 @@ function ManageStaff() {
                                 <Field
                                     as="select"
                                     name="gender"
-                                    className={`${styles.inputGender} px-1 rounded`}
+                                    className={`${styles.inputGender} px-1 rounded form-control input`}
                                 >
                                     <option value="">select</option>
                                     <option value="male">Male</option>
