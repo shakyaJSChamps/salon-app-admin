@@ -1,47 +1,29 @@
 import React from "react";
 import { Row } from "react-bootstrap";
 import { Paper } from "@mui/material";
+import { Form, Formik } from 'formik'
 import { MdOutlineConfirmationNumber } from "react-icons/md";
+import InputText from '../common-component/Inputtext/InputText';
 
 const NewCoupon = () => {
   return (
     // <Row className="coupon ">
-      <Paper className="coupon-service-paper px-3 mb-3 h-100">
-        <div className="d-flex align-items-center ">
-          <MdOutlineConfirmationNumber  />
-          <p className="ps-1 fw-bold mb-0 "> Create New Coupon</p>
-        </div>
-        <hr className="mt-4" />
-        <div className="coupon-form">
-          <form>
-            {/* <label className=''>
-            Coupon Name<br/>
-            <input type="text" name="coupon name"  className='form-control input' />
-          </label> */}
-            <div className="d-flex flex-column align-items-start">
-              <label className="fw-bold">coupon Name</label>
-              <input className="form-control input" />
+    <Paper className="coupon-service-paper px-3 mb-3 h-100">
+      <div className="d-flex align-items-center ">
+        <MdOutlineConfirmationNumber />
+        <p className="ps-1 fw-bold mb-0 "> Create New Coupon</p>
+      </div>
+      <hr className="mt-4" />
+      <div className="coupon-form">
+        <Formik>
+          <Form>
+            <div className="d-flex flex-column ">
+              <InputText label="Coupon Name" type="text" name="coupon name" />
             </div>
-            {/* <label>
-            Coupon Sub Name
-            <input type="text" name="coupon sub name" className='form-control input' />
-          </label> */}
-            <div className="d-flex flex-column align-items-start ">
-              <label className="fw-bold">Coupon Sub Name</label>
-              <input className="form-control input" />
+            <div className="d-flex flex-column ">
+              <InputText label="Coupon Sub Name" type="text" name="coupon sub name" />
             </div>
-            {/* <label>
-              Coupon Description
-              <br />
-              <textarea
-                type="text"
-                name="description"
-                className="form-control input"
-                rows="2"
-                cols="21"
-              />
-            </label> */}
-            <div className="d-flex flex-column align-items-start">
+            <div className="d-flex flex-column ">
               <label className="fw-bold"> Coupon Description</label>
               <textarea
                 className="form-control input"
@@ -49,52 +31,27 @@ const NewCoupon = () => {
                 cols="25"
               ></textarea>
             </div>
-            {/* <label>
-              Coupon Discount
-              <input
-                type="text"
-                name="coupon discount"
-                className="form-control input"
-              />
-            </label> */}
-            <div className="d-flex flex-column align-items-start">
-              <label className="fw-bold">Coupon Discount</label>
-              <input className="form-control input" />
+            <div className="d-flex flex-column ">
+              <InputText label= "Coupon Discount" type="text" name="coupon discount" />
             </div>
-            {/* <label>
-              Start Date
-              <br />
-              <input
-                type="text"
-                name="start"
-                placeholder="07/07/43"
-                className="form-control input"
-              />
-            </label> */}
-            <div className="d-flex flex-column align-items-start ">
-              <label className="fw-bold">Start Date</label>
-              <input
-                className="form-control input"
+            <div className="d-flex flex-column ">
+              <InputText
+                label= "Start Date"
                 type="text"
                 name="start"
                 placeholder="07/07/43"
               />
             </div>
-
-            {/* <label>
-              End Date <br />
-              <input type="text" name="end" className="form-control input" />
-            </label> */}
-            <div className="d-flex flex-column align-items-start ">
-              <label className="fw-bold">End Date</label>
-              <input className="form-control input" />
+            <div className="d-flex flex-column  ">
+              <InputText label="End Date" type="text" name="end" />
             </div>
             <div className="d-flex justify-content-center coupon-btn">
               <button className=" button pt-1 ">ADD COUPON</button>
             </div>
-          </form>
-        </div>
-      </Paper>
+          </Form>
+        </Formik>
+      </div>
+    </Paper>
     // </Row>
   );
 };
