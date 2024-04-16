@@ -1,37 +1,3 @@
-.Btn {
-    background-color: white;
-    padding: 0px 20px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 57px;
-    margin-top: 6px;
-    border: 1.3px solid #858585;
-}
-
-.mainDiv {
-    gap: 10px;
-}
-
-.uploadIcon {
-    margin-left: -10px;
-    height: 30px;
-}
-
-.aadhar{
-    gap: 8px;
-}
-
-.aadharBack{
-    gap: 8px;
-}
-
-.panCard{
-    gap: 8px;
-}
-
-
 .btn {
     padding: 3px 20px;
     background-color: #000;
@@ -42,42 +8,17 @@
     font-size: 11px;
 }
 
-.label {
-    font-weight: 500;
-    color: black;
-}
-
-.dob {
-    margin-left: 22px;
-    font-weight: 500;
-    color: black;
-}
-
 .gender {
-    margin-left: 55px;
     font-weight: 500;
     color: black;
 }
 
-.front{
-    font-weight: 500;
-    color: black;
-}
-
-.back{
-    font-weight: 500;
-    color: black;
-    margin-left: 46px;
-}
-
-.pan{
-    font-weight: 500;
-    color: black;
-    margin-left: 68px;
-}
-
-.input {
-    border: 2px solid grey;
+.inputGender {
+    border-radius: 5px;
     outline: none;
+    border: 1px solid #858585;
+    margin-bottom: 3px;
+    width: 100%;
+    height: 40px;
+    /* padding-inline-start: 10px; */
 }
-

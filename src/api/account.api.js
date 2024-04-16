@@ -9,7 +9,8 @@ import {
   __endpoint_getUser,
   __endpoint_updateUser,
   __endpoint_addServiceType,
-  __endpoint_deleteServiceType
+  __endpoint_deleteServiceType,
+  __endpoint_salonDetails
 
 } from "../constants/endpoints";
 
@@ -36,7 +37,9 @@ export const addServiceType = (payload) =>
   export const deleteServiceType = (id) => 
     HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`);
 
-
   export const fileUploader = () =>{
     return Promise.resolve()
   }
+
+  export const salonDetails = (payload, id) =>
+  HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload , id);

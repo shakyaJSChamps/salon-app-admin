@@ -5,6 +5,8 @@ import { Paper } from "@mui/material";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 import { addServiceType, putServiceType } from "../../api/account.api";
+import { Form, Formik } from "formik";
+import InputText from "../common-component/Inputtext/InputText";
 
 const AddServiceType = (props) => {
   const [name, setName] = useState("");
@@ -90,13 +92,16 @@ const AddServiceType = (props) => {
         )}
       </div>
       <hr />
-      <form
-        className="d-flex flex-column align-items-center"
+      <Formik>
+      <Form
+        className="d-flex flex-column "
         onSubmit={isEditMode ? editService : addService}
       >
-        <div className="d-flex flex-column align-items-start mb-4">
-          <label className="fw-bold pt-2">Name</label>
-          <input
+        <div className="d-flex flex-column  mb-4">
+          {/* <label className="fw-bold pt-2">Name</label> */}
+          <InputText
+          type="text"
+          label= "Name"
             className="form-control input mt-2"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -126,7 +131,8 @@ const AddServiceType = (props) => {
             {isEditMode ? "Update" : "Save"}
           </button>
         </div>
-      </form>
+      </Form>
+      </Formik>
     </Paper>
   );
 };

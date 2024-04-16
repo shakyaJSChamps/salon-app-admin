@@ -1,5 +1,9 @@
+.img{
+    height: 150px;
+    width: 150px;
+}
 
-.btn {
+.btn{
     padding: 3px 20px;
     background-color: #000;
     color: #fff;
@@ -7,8 +11,4 @@
     border-radius: 12px;
     margin-top: 10px;
     font-size: 11px;
-}
-
-.label{
-    font-weight: 500;
 }

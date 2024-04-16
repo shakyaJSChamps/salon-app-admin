@@ -1,94 +1,66 @@
 import React from 'react'
-import { Field, Formik, Form, ErrorMessage } from "formik"
+import { Formik, Form, ErrorMessage } from "formik"
 import styles from "../Bankdetails/Bankdetails.module.css";
-import { GrFormUpload } from "react-icons/gr";
+import { useState } from 'react'
+import { Grid } from '@mui/material';
+import InputText from '../../../common-component/Inputtext/InputText';
+import FileUploader from '../../../common-component/Fileuploader/FileUploader';
 
 
 
-function BankDetails() {
+function BankDetails({ bankDetails }) {
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleSaveClick = () => {
+        setIsEditing(false);
+    };
     return (
-        <div>
+        <>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4 className={styles.color}>Bank Details</h4>
-                <div className='d-flex justify-content-center align-items-center'>
-                    <button type='submit' className={styles.btn}>Edit</button>
-                    <button type='submit' className={styles.btn}>Save</button>
+                <div className="d-flex justify-content-start align-items-center mb-3">
+                    {!isEditing && (
+                        <button type="button" className={styles.btn} onClick={handleEditClick}>
+                            Edit
+                        </button>
+                    )}
+                    {isEditing && (
+                        <button type="button" className={styles.btn} onClick={handleSaveClick}>
+                            Save
+                        </button>
+                    )}
                 </div>
             </div>
-            <Formik
-            // onSubmit={onSubmit}
-            >
-
+            <Formik>
                 <Form>
-                    <div className={`${styles.gap} d-flex`}>
-                        <label className={styles.lab}> Account Number</label><br />
-                        <Field
-                            type='text'
-                            placeholder='85651248769654'
-                            name='accNum'
-                            className={`${styles.inputs} rounded px-1`}
-                        /><br />
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <InputText label="Account Number" name="accountNumber" value={bankDetails.accountNumber} disabled={!isEditing} />
+                        </Grid>
 
-                        {/* <ErrorMessage name="accNum" className={styles.formError} component="div" /> */}
+                        <Grid item xs={4}>
+                            <InputText label="Account Holder Name" name="accountHolderName" value={bankDetails.accountHolderName} disabled={!isEditing} />
+                        </Grid>
 
-                        <label className={styles.lab}> Account Holder Name</label><br />
-                        <Field
-                            type='text'
-                            placeholder='Jhon'
-                            name='accName'
-                            className={`${styles.inputs} rounded px-1`}
-                        />
-                        <br />
+                        <Grid item xs={4}>
+                            <InputText label="Bank Name" name="bankName" value={bankDetails.bankName} disabled={!isEditing} />
+                        </Grid>
 
-                        {/* <ErrorMessage name="accName" className={styles.formError} component="div" /> */}
-                    </div>
+                        <Grid item xs={4}>
+                            <InputText label="IfSC Code" name="ifscCode" value={bankDetails.ifscCode} disabled={!isEditing} />
+                        </Grid>
 
-                    <div className={`${styles.gap} d-flex mt-3`}>
-                        <label className={styles.lab}> Bank Name</label><br />
-                        <Field
-                            type='text'
-                            placeholder='Jhon'
-                            name='bankName'
-                            className={`${styles.inputs} rounded px-1`}
-                        /><br />
-
-                        {/* <ErrorMessage name="bankName" className={styles.formError} component="div" /> */}
-
-                        <label className={styles.labs}> IFSC Code</label><br />
-                        <Field
-                            type='text'
-                            placeholder='Jhon'
-                            name='ifscCode'
-                            className={`${styles.inputs} rounded px-1`}
-                        /><br />
-                        {/* <ErrorMessage name="ifscCode" className={styles.formError} component="div" /> */}
-                    </div>
-
-                    <div className={`${styles.gap} d-flex justify-content-start align-items-center mt-3 mb-3`}>
-                        <label className={styles.lab}>
-                            Passbook/Cancel cheque
-                        </label><br />
-                        <button
-                            className={`${styles.Btn} align-items-center-start`}
-                            // onClick={handleUploadIconClick}
-                            type="button"
-                        >
-                            <input
-                                type="file"
-                                name="passbook"
-                                // ref={fileInputRef}
-                                style={{ display: "none" }}
-                            // onChange={handleFileChange}
-                            />
-                            <br />
-                            <GrFormUpload className={styles.uploadIcon} />
-                            Upload
-                        </button>
-                    </div>
-
+                        <Grid item xs={4}>
+                            <FileUploader label="Cancel cheque/Passbook" name="passBook" disabled={!isEditing}/>
+                        </Grid>
+                    </Grid>
                 </Form>
             </Formik>
-        </div >
+        </>
     )
 }
 

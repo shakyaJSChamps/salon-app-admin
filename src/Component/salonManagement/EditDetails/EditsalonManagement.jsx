@@ -3,35 +3,95 @@ import SalonDetails from './Salondetails/SalonDetails'
 import { Col, Row } from 'react-bootstrap';
 import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
 import BankDetails from './Bankdetails/BankDetails.jsx';
+import ManageStaff from './Managestaff/ManageStaff.jsx';
+import SalonTime from './Salontime/SalonTime.jsx';
+import { salonDetails } from '../../../api/account.api';
+import { useEffect, useState } from 'react'
+import SalonGallery from '../SalonGallery/SalonGallery.jsx';
+import Services from '../Services/Services.jsx';
 
-function EditsalonManagement() {
+
+function EditsalonManagement({ payload, id }) {
+  const [salonDetail, setSalonDetail] = useState([]);
+  const [bankDetails, setBankDetails] = useState([]);
+  const [bannerImages, setBannerImages] = useState([]);
+  const [gallaryImages, setGallaryImages] = useState([]);
+  const [workingHours, setWorkingHours] = useState([]);
+
+
+  useEffect(() => {
+    const fetchSalonDetailData = async () => {
+      try {
+        const data = await salonDetails(payload, id);
+        setSalonDetail(data?.data?.data?.salon);
+        setBankDetails(data?.data?.data?.bankDetail);
+        setBannerImages(data?.data?.data?.bannerImages);
+        setGallaryImages(data?.data?.data?.gallaryImages);
+        setWorkingHours(data?.data?.data?.workingHours);
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching salon details:', error);
+      }
+    };
+    fetchSalonDetailData();
+  }, [id]);
+
   return (
-    <div>
+    <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
-        <Col md={12}>
-          <SalonDetails />
+        <Col md={12} className='mb-3'>
+          <SalonDetails salonDetail={salonDetail} />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
-        <Col md={12}>
-          <SalonOwnerDetails/>
+        <Col md={12} className='mb-3'>
+          <SalonOwnerDetails />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
-        <Col md={12}>
-          <BankDetails/>
+        <Col md={12} className='mb-3'>
+          <Services />
         </Col>
-        <hr/>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} className='mb-3'>
+          <BankDetails bankDetails={bankDetails} />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} className='mb-3'>
+          <ManageStaff />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} className='mb-3'>
+          <SalonTime workingHours={workingHours} />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} >
+          <SalonGallery
+            salonDetail={salonDetail}
+            bannerImages={bannerImages}
+            gallaryImages={gallaryImages}
+          />
+        </Col>
+        <hr />
       </Row>
 
     </div>
-
-
-
   )
 }
 
