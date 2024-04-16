@@ -54,17 +54,10 @@ const ServiceType = (props) => {
       icon: "warning",
       width: "30%",
       showCancelButton: true,
-<<<<<<< Updated upstream
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-      customClass: "sweet-alert ",
-=======
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
       customClass: "custom-swal" // Add your custom CSS class here
->>>>>>> Stashed changes
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(row);
