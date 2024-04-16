@@ -1,5 +1,5 @@
 .add-service-paper {
-    height: 85vh;
+    // height:100vh;
   border: 3px solid $color-lgrey;
   .file-upload-input {
     display: none;
@@ -24,3 +24,15 @@
     text-transform: uppercase;
   }
 }
+
+.add-service-paper{
+  .rdt_TableBody{
+    overflow-y: scroll !important;
+    height: 54vh !important;
+  }
+}
+// .sweet-alert { 
+//   transition:2s;
+//   transform: scale(0.8);
+//   }
+
