@@ -25,11 +25,12 @@ const SaloonManagement = () => {
   const [page, setPage] = useState(1);
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [updatedRowData, setUpdatedRowData] = useState(false);
 
   const handleRowClick = (row) => {
     // setModalShow(true);
     setSelectedRow(row);
-    console.log(row)
+    // console.log(row)
   };
 
   const handlePageChange = (page) => {
@@ -154,7 +155,9 @@ const SaloonManagement = () => {
   return (
     <>
       {selectedRow ? 
-        <EditsalonManagement />
+        <EditsalonManagement
+        id = {selectedRow.id}
+        />
      :
       <div className="main-table rounded ">
         <DataTable

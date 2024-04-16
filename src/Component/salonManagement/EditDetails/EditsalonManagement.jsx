@@ -5,43 +5,63 @@ import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
 import BankDetails from './Bankdetails/BankDetails.jsx';
 import ManageStaff from './Managestaff/ManageStaff.jsx';
 import SalonTime from './Salontime/SalonTime.jsx';
+import { salonDetails } from '../../../api/account.api'; 
+import { useEffect, useState } from 'react'
 
-function EditsalonManagement() {
+
+function EditsalonManagement({ payload, id }) {
+  const [salonDetail, setSalonDetail] = useState([]);
+  const [bankDetails, setBankDetails] = useState([]); 
+
+  useEffect(() => {
+    const fetchSalonDetailData = async () => {
+      try {
+        const data = await salonDetails(payload, id); 
+        setSalonDetail(data?.data?.data?.salon); 
+        setBankDetails(data?.data?.data?.bankDetail);
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching salon details:', error);
+      }
+    };
+    fetchSalonDetailData();
+  }, [id]);
+
   return (
-    <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4' , borderRadius: '5px'}}>
+    <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
         <Col md={12} className='mb-3'>
-          <SalonDetails />
+          <SalonDetails salonDetail={salonDetail} />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
         <Col md={12} className='mb-3'>
-          <SalonOwnerDetails/>
+          <SalonOwnerDetails />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
         <Col md={12} className='mb-3'>
-          <BankDetails/>
+          <BankDetails bankDetails={bankDetails}/>
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
         <Col md={12} className='mb-3'>
-          <ManageStaff/>
+          <ManageStaff />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
         <Col md={12} className='mb-3'>
-          <SalonTime/>
+          <SalonTime />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
     </div>
