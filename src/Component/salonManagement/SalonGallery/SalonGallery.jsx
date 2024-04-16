@@ -7,7 +7,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
 
         <>
             <div className=' d-flex justify-content-between align-items-center'>
-                <h4>Add Services</h4>
+                <h4>Salon Gallary</h4>
 
                 <div className='d-flex justify-content-start align-items-center mb-3'>
                     <button type='submit' className={styles.btn}>Add</button>

@@ -8,7 +8,7 @@ function Services() {
         <Formik>
             <Form>
                 <div className=' d-flex justify-content-between align-items-center'>
-                    <h4>Add Services</h4>
+                    <h4>Services</h4>
 
                     <div className='d-flex justify-content-start align-items-center mb-3'>
                         <button type='submit' className={styles.btn}>Edit</button>
