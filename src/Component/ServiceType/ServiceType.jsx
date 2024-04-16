@@ -54,16 +54,17 @@ const ServiceType = (props) => {
       icon: "warning",
       width: "30%",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-      customClass: "sweet-alert ",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      customClass: "custom-swal" // Add your custom CSS class here
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(row);
       }
     });
   };
+  
 
   const handleDelete = async (row) => {
     try {
@@ -143,11 +144,19 @@ const ServiceType = (props) => {
         textTransform: "uppercase",
       },
     },
+    rows: {
+      style: {
+        fontSize: "16px",
+        height: "150px",
+        color: "#6F6B7D",
+        fontFamily: "Poppins",
+      },
+    },
   };
 
   return (
     <>
-      <Paper className="add-service-paper  pb-3 rounded h-100" elevation={3}>
+      <Paper className="add-service-paper  rounded pb-2" elevation={3}>
         {services.length >= 0 ? (
           <DataTable
             title={
@@ -158,8 +167,9 @@ const ServiceType = (props) => {
             }
             data={[...services]}
             columns={columns}
-            pagination
             customStyles={customStyles}
+            pagination
+            highlightOnHover
           />
         ) : (
           <span>No Data</span>

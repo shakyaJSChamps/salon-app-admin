@@ -1,5 +1,4 @@
 .add-service-paper {
-    // height:100vh;
   border: 3px solid $color-lgrey;
   .file-upload-input {
     display: none;
@@ -28,11 +27,41 @@
 .add-service-paper{
   .rdt_TableBody{
     overflow-y: scroll !important;
-    height: 54vh !important;
+    height: 62vh !important;
   }
 }
 // .sweet-alert { 
 //   transition:2s;
 //   transform: scale(0.8);
 //   }
+.custom-swal.swal2-show {
+  animation: slideIn 0.9s forwards;
+}
+
+.custom-swal.swal2-hide {
+  animation: slideOut 0.9s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
 
