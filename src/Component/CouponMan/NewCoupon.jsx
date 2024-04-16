@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Row } from "react-bootstrap";
 import { Paper } from "@mui/material";
 import { Form, Formik } from 'formik'
@@ -7,38 +7,53 @@ import InputText from '../common-component/Inputtext/InputText';
 
 const NewCoupon = () => {
   return (
-    <Row className="coupon p-0">
-      <Paper className="coupon-details px-3 pb-3">
-        <div className="d-flex pt-2 align-items-center">
-          <MdOutlineConfirmationNumber className="coupon-icon" />
-          <p className=" fw-bold mb-0 ps-1"> Create New Coupon</p>
-        </div>
-        <hr />
-        <div className='coupon-form'>
-          <Formik>
-            <Form >
-              <InputText type="text" name="couponName" label="Coupon Name" />
-              <InputText type="text" name="coupon sub name" label="Coupon sub Name" />
-              <label>
-                Coupon Description<br />
-                <textarea type="text" name="description" className=" form-control input"
-                  rows="1"
-                  cols="50"
-                />
-              </label>
-              <InputText type="text" name="couponDiscount" label="Coupon Discount" />
-              <InputText type="text" name="startDate" label="Start Date" />
-              <InputText type="text" name="endDate" label="End Date" />
-              <div className=" justify-content-center coupon-btn">
-                <button className="pt-1 pb-1">ADD COUPON</button>
-              </div>
-            </Form>
-          </Formik>
-        </div>
-      </Paper>
-
-    </Row>
+    // <Row className="coupon ">
+    <Paper className="coupon-service-paper px-3 mb-3 h-100">
+      <div className="d-flex align-items-center ">
+        <MdOutlineConfirmationNumber />
+        <p className="ps-1 fw-bold mb-0 "> Create New Coupon</p>
+      </div>
+      <hr className="mt-4" />
+      <div className="coupon-form">
+        <Formik>
+          <Form>
+            <div className="d-flex flex-column ">
+              <InputText label="Coupon Name" type="text" name="coupon name" />
+            </div>
+            <div className="d-flex flex-column ">
+              <InputText label="Coupon Sub Name" type="text" name="coupon sub name" />
+            </div>
+            <div className="d-flex flex-column ">
+              <label className="fw-bold"> Coupon Description</label>
+              <textarea
+                className="form-control input"
+                rows="3"
+                cols="25"
+              ></textarea>
+            </div>
+            <div className="d-flex flex-column ">
+              <InputText label= "Coupon Discount" type="text" name="coupon discount" />
+            </div>
+            <div className="d-flex flex-column ">
+              <InputText
+                label= "Start Date"
+                type="text"
+                name="start"
+                placeholder="07/07/43"
+              />
+            </div>
+            <div className="d-flex flex-column  ">
+              <InputText label="End Date" type="text" name="end" />
+            </div>
+            <div className="d-flex justify-content-center coupon-btn">
+              <button className=" button pt-1 ">ADD COUPON</button>
+            </div>
+          </Form>
+        </Formik>
+      </div>
+    </Paper>
+    // </Row>
   );
-}
+};
 
 export default NewCoupon;

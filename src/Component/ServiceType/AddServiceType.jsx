@@ -5,8 +5,8 @@ import { Paper } from "@mui/material";
 import Notify from "../../utils/notify";
 import FileUploader from "../file-uploder/FileUploder";
 import { addServiceType, putServiceType } from "../../api/account.api";
-
-
+import { Form, Formik } from "formik";
+import InputText from "../common-component/Inputtext/InputText";
 
 const AddServiceType = (props) => {
   const [name, setName] = useState("");
@@ -25,6 +25,11 @@ const AddServiceType = (props) => {
     }
   }, [props.isEditMode, props.selectedRowData]);
 
+  const clearForm = () => {
+    setName("");
+    setDescription("");
+  };
+
   const addService = async (event) => {
     event.preventDefault();
     console.log("Add service ::>");
@@ -38,8 +43,7 @@ const AddServiceType = (props) => {
       props.setServiceAdded(true);
 
       // Clear the form
-      setName("");
-      setDescription("");
+      clearForm();
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
@@ -63,8 +67,7 @@ const AddServiceType = (props) => {
       Notify.success(response.data.message);
       props.setServiceAdded(true);
       // Clear the form
-      setName("");
-      setDescription("");
+      clearForm();
     } catch (error) {
       console.error("API error:", error);
       Notify.error(error.message);
@@ -72,30 +75,40 @@ const AddServiceType = (props) => {
   };
 
   return (
-
-    <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
+    <Paper className="add-service-paper px-3 pb-3 rounded h-100" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">
           {isEditMode ? "Edit" : "Add"} Service Type
         </p>
-        {isEditMode && <BiPlusCircle onClick={() => setIsEditMode(false)} className="cursor-pointer ms-auto" />}
+        {isEditMode && (
+          <BiPlusCircle
+            onClick={() => {
+              setIsEditMode(false);
+              clearForm();
+            }}
+            className="cursor-pointer ms-auto"
+          />
+        )}
       </div>
       <hr />
-      <form
-        className="d-flex flex-column align-items-center"
+      <Formik>
+      <Form
+        className="d-flex flex-column "
         onSubmit={isEditMode ? editService : addService}
       >
-        <div className="d-flex flex-column align-items-start mb-1">
-          <label className="fw-bold">Name</label>
-          <input
-            className="form-control input"
+        <div className="d-flex flex-column  mb-4">
+          {/* <label className="fw-bold pt-2">Name</label> */}
+          <InputText
+          type="text"
+          label= "Name"
+            className="form-control input mt-2"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
 
-        <div className="d-flex flex-column align-items-start mb-2">
+        {/* <div className="d-flex flex-column align-items-start mb-2">
           <label className="fw-bold">Description</label>
           <textarea
             className="form-control input"
@@ -104,10 +117,10 @@ const AddServiceType = (props) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
-        </div>
+        </div> */}
         <FileUploader />
 
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center pt-4">
           <button
             type="submit"
             className={`add-service-btn mt-2 ${
@@ -118,7 +131,8 @@ const AddServiceType = (props) => {
             {isEditMode ? "Update" : "Save"}
           </button>
         </div>
-      </form>
+      </Form>
+      </Formik>
     </Paper>
   );
 };

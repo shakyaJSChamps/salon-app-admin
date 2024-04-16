@@ -5,6 +5,7 @@ import ellips from "../../assets/image/ellipse.webp";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AccountSettingSchema } from "../../utils/schema";
 import AccountDropDown from "./SettingDropDown";
+import InputText from "../common-component/Inputtext/InputText";
 
 const AccountSetting = () => {
   const [selectedValue, setSelectedValue] = useState("");
@@ -45,7 +46,7 @@ const AccountSetting = () => {
               <img src={ellips} alt="ellips-img" />
             </div>
             <div className=" d-flex justify-content-center alig-items-center mx-auto  w-50 flex-column mt-3">
-            <Field
+            <InputText
                 type="text"
                 name="username"
                 placeholder="Enter username"
@@ -60,10 +61,8 @@ const AccountSetting = () => {
               />
             </div>
             <div className="form-group  mx-auto  w-50">
-              <label htmlFor="email" className="fw-bold ps-3 mt-3">
-                Update Email
-              </label>
-              <Field
+              <InputText
+              label= "Update Email"
                 type="email"
                 name="email"
                 placeholder="Enter email"
@@ -79,10 +78,8 @@ const AccountSetting = () => {
               />
             </div>
             <div className="form-group mx-auto  w-50">
-              <label htmlFor="password" className="mt-3 ">
-                Password
-              </label>
-              <Field
+              <InputText
+              label= "Password"
                 type="password"
                 name="password"
                 placeholder="Enter password"
@@ -97,10 +94,8 @@ const AccountSetting = () => {
               />
             </div>
             <div className="form-group mb-3 mx-auto  w-50">
-              <label htmlFor="confirmPassword" className="fw-bold ps-3 mt-3">
-                Confirm Password
-              </label>
-              <Field
+              <InputText
+              label= "Confirm Password"
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
