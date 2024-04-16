@@ -6,7 +6,7 @@ import { MdOutlineConfirmationNumber } from "react-icons/md";
 const NewCoupon = () => {
   return (
     // <Row className="coupon ">
-      <Paper className="coupon-service-paper px-3 mb-3 h-100">
+      <Paper className="coupon-service-paper px-3 h-100">
         <div className="d-flex align-items-center ">
           <MdOutlineConfirmationNumber  />
           <p className="ps-1 fw-bold mb-0 "> Create New Coupon</p>
@@ -89,7 +89,7 @@ const NewCoupon = () => {
               <label className="fw-bold">End Date</label>
               <input className="form-control input" />
             </div>
-            <div className="d-flex justify-content-center coupon-btn">
+            <div className="d-flex justify-content-center coupon-btn mt-2">
               <button className=" button pt-1 ">ADD COUPON</button>
             </div>
           </form>
