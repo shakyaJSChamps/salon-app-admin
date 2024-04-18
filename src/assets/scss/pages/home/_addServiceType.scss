@@ -23,17 +23,6 @@
     text-transform: uppercase;
   }
 }
-
-.add-service-paper{
-  .rdt_TableBody{
-    overflow-y: scroll !important;
-    height: 62vh !important;
-  }
-}
-// .sweet-alert { 
-//   transition:2s;
-//   transform: scale(0.8);
-//   }
 .custom-swal.swal2-show {
   animation: slideIn 0.9s forwards;
 }
@@ -63,5 +52,3 @@
     opacity: 0;
   }
 }
-
-

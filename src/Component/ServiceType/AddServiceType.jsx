@@ -75,7 +75,7 @@ const AddServiceType = (props) => {
   };
 
   return (
-    <Paper className="add-service-paper px-3 pb-2 rounded" elevation={3}>
+    <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">
@@ -93,22 +93,22 @@ const AddServiceType = (props) => {
       </div>
       <hr />
       <Formik>
-      <Form
-        className="d-flex flex-column "
-        onSubmit={isEditMode ? editService : addService}
-      >
-        <div className="d-flex flex-column  mb-4">
-          {/* <label className="fw-bold pt-2">Name</label> */}
-          <InputText
-          type="text"
-          label= "Name"
-            className="form-control input mt-2"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+        <Form
+          className="d-flex flex-column "
+          onSubmit={isEditMode ? editService : addService}
+        >
+          <div className="d-flex flex-column  mb-2">
+            {/* <label className="fw-bold pt-2">Name</label> */}
+            <InputText
+              type="text"
+              label="Name"
+              className="form-control input mt-2"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-        {/* <div className="d-flex flex-column align-items-start mb-2">
+          {/* <div className="d-flex flex-column align-items-start mb-2">
           <label className="fw-bold">Description</label>
           <textarea
             className="form-control input"
@@ -118,20 +118,20 @@ const AddServiceType = (props) => {
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div> */}
-        <FileUploader />
+          <FileUploader />
 
-        <div className="d-flex justify-content-center pt-4">
-          <button
-            type="submit"
-            className={`add-service-btn mt-2 ${
-              name.length < 2 && description?.length < 2 ? "disable" : ""
-            }`}
-            disabled={name.length < 2 && description?.length < 2}
-          >
-            {isEditMode ? "Update" : "Save"}
-          </button>
-        </div>
-      </Form>
+          <div className="d-flex justify-content-center pt-4">
+            <button
+              type="submit"
+              className={`add-service-btn mt-1 ${
+                name.length < 2 && description?.length < 2 ? "disable" : ""
+              }`}
+              disabled={name.length < 2 && description?.length < 2}
+            >
+              {isEditMode ? "Update" : "Save"}
+            </button>
+          </div>
+        </Form>
       </Formik>
     </Paper>
   );
