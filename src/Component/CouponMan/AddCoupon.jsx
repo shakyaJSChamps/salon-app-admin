@@ -44,7 +44,7 @@ const AddCoupon = () => {
             <div className="d-flex flex-column  ">
               <InputText label="End Date" type="date" name="end" />
             </div>
-            <div className="d-flex justify-content-center coupon-btn">
+            <div className="d-flex justify-content-center coupon-btn mt-2">
               <button className=" button pt-1 ">ADD COUPON</button>
             </div>
           </Form>

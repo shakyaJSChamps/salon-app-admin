@@ -89,7 +89,7 @@ function SalonDetails({ salonDetail }) {
 
                         <Grid item xs={4}>
                             <InputText
-                                label="Salon State PinCode"
+                                label="Pincode"
                                 name="salonStatePincode"
                                 type="text"
                                 value={salonDetail.state}
@@ -99,7 +99,7 @@ function SalonDetails({ salonDetail }) {
                         <Grid item xs={4}>
                             <div>
                                 <label className={`${styles.label}`}>
-                                    Salon State
+                                    State
                                 </label><br />
                                 <Field
                                     as="select"
@@ -121,7 +121,7 @@ function SalonDetails({ salonDetail }) {
                         <Grid item xs={4}>
                             <div>
                                 <label className={`${styles.label}`}>
-                                    Service For
+                                    Service Type
                                 </label><br />
                                 <Field
                                     as="select"
@@ -132,7 +132,7 @@ function SalonDetails({ salonDetail }) {
                                     <option value="">{salonDetail.serviceType}</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Other">Both</option>
                                 </Field><br />
 
                                 {/* <ErrorMessage name="services" className={styles.formError} component="div" /> */}

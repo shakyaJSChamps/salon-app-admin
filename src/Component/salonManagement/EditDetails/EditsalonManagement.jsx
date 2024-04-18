@@ -5,20 +5,29 @@ import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
 import BankDetails from './Bankdetails/BankDetails.jsx';
 import ManageStaff from './Managestaff/ManageStaff.jsx';
 import SalonTime from './Salontime/SalonTime.jsx';
-import { salonDetails } from '../../../api/account.api'; 
+import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
+import SalonGallery from '../SalonGallery/SalonGallery.jsx';
+import Services from '../Services/Services.jsx';
 
 
 function EditsalonManagement({ payload, id }) {
   const [salonDetail, setSalonDetail] = useState([]);
-  const [bankDetails, setBankDetails] = useState([]); 
+  const [bankDetails, setBankDetails] = useState([]);
+  const [bannerImages, setBannerImages] = useState([]);
+  const [gallaryImages, setGallaryImages] = useState([]);
+  const [workingHours, setWorkingHours] = useState([]);
+
 
   useEffect(() => {
     const fetchSalonDetailData = async () => {
       try {
-        const data = await salonDetails(payload, id); 
-        setSalonDetail(data?.data?.data?.salon); 
+        const data = await salonDetails(payload, id);
+        setSalonDetail(data?.data?.data?.salon);
         setBankDetails(data?.data?.data?.bankDetail);
+        setBannerImages(data?.data?.data?.bannerImages);
+        setGallaryImages(data?.data?.data?.gallaryImages);
+        setWorkingHours(data?.data?.data?.workingHours);
         console.log(data)
       } catch (error) {
         console.error('Error fetching salon details:', error);
@@ -45,7 +54,14 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12} className='mb-3'>
-          <BankDetails bankDetails={bankDetails}/>
+          <Services />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} className='mb-3'>
+          <BankDetails bankDetails={bankDetails} />
         </Col>
         <hr />
       </Row>
@@ -59,7 +75,18 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12} className='mb-3'>
-          <SalonTime />
+          <SalonTime workingHours={workingHours} />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12} >
+          <SalonGallery
+            salonDetail={salonDetail}
+            bannerImages={bannerImages}
+            gallaryImages={gallaryImages}
+          />
         </Col>
         <hr />
       </Row>
