@@ -45,13 +45,12 @@ const SearchDropDown = (props) => {
             ref={searchInputRef}
             type="text"
             placeholder="Search"
-            className="search-bar ps-3"
+            className="search-bar"
             value={searchText}
             onChange={handleSearchChange}
           />
 
           <button
-            className="pe-3"
             type="button"
             style={{
               backgroundColor: "transparent",
