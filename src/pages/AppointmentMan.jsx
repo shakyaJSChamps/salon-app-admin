@@ -134,7 +134,7 @@ const AppointmentManagement = () => {
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
           {row.address}
-          <h6 style={{ fontSize: '10px', color: '#95552A' }}>AT HOME</h6>
+          <h6 style={{ fontSize: '10px', color: '#95552A' }}>5 Person</h6>
         </div>
       ),
       sortable: true,

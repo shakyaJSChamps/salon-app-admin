@@ -55,7 +55,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, bankDetails })
             <hr/>
 
             <div className=' d-flex justify-content-between align-items-center'>
-                <h5> CancelCheque/Passbook</h5>
+                <h5> Personal Attachments</h5>
 
                 <div className='d-flex justify-content-start align-items-center mb-3'>
                     <button type='submit' className={styles.btn}>Add</button>
