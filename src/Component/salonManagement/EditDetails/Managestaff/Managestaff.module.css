@@ -9,39 +9,6 @@
     font-size: 11px;
 }
 
-.label {
+.gender{
     font-weight: 500;
-    color: black;
 }
-
-.dob {
-    font-weight: 500;
-    color: black;
-}
-
-.inputDob{
-    width: 62%;
-    border: 2px solid grey;
-    outline: none;
-}
-
-.gender {
-    font-weight: 500;
-    color: black;
-}
-
-.inputGender{
-    width: 62%;
-    border: 2px solid grey;
-    outline: none;
-}
-
-.input {
-    border: 2px solid grey;
-    outline: none;
-}
-
-.manage{
-    color: black;
-}
-

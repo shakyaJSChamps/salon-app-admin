@@ -5,11 +5,11 @@ import InputText from '../../../common-component/Inputtext/InputText';
 import styles from '../Salontime/Salontime.module.css';
 
 function SalonTime({ workingHours }) {
-    // console.log(workingHours)
-    const [hoursData,setHoursData] = useState(workingHours);
+    console.log(workingHours)
+    const [hoursData,setHoursData] = useState("");
 
     const handleToggle = (index) => {
-        const updatedHoursData = [...hoursData];
+        const updatedHoursData = [...workingHours];
         updatedHoursData[index].isOpen = !updatedHoursData[index].isOpen;
         setHoursData(updatedHoursData);
     };
@@ -33,7 +33,7 @@ function SalonTime({ workingHours }) {
                         <div>No working hours available</div>
                     ) : (
                         workingHours.map((hour, index) => (
-                            <Grid container spacing={2} key={hour.id} className='mt-1'>
+                            <Grid container spacing={2} key={hour.id} className='mb-3'>
                                 <Grid item xs={3}>
                                     <InputText label="Day" name={`day_${index}`} type="text" value={hour.day} disabled className="form-control input" />
                                 </Grid>

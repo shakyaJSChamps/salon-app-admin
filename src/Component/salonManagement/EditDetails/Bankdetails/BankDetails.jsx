@@ -4,7 +4,7 @@ import styles from "../Bankdetails/Bankdetails.module.css";
 import { useState } from 'react'
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
-import FileUploader from '../../../common-component/Fileuploader/FileUploader';
+// import FileUploader from '../../../common-component/Fileuploader/FileUploader';
 
 
 
@@ -37,7 +37,7 @@ function BankDetails({ bankDetails }) {
             </div>
             <Formik>
                 <Form>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} className='mb-3'>
                         <Grid item xs={4}>
                             <InputText label="Account Number" name="accountNumber" value={bankDetails.accountNumber} disabled={!isEditing} />
                         </Grid>
@@ -52,10 +52,6 @@ function BankDetails({ bankDetails }) {
 
                         <Grid item xs={4}>
                             <InputText label="IfSC Code" name="ifscCode" value={bankDetails.ifscCode} disabled={!isEditing} />
-                        </Grid>
-
-                        <Grid item xs={4}>
-                            <FileUploader label="Cancel cheque/Passbook" name="passBook" disabled={!isEditing}/>
                         </Grid>
                     </Grid>
                 </Form>

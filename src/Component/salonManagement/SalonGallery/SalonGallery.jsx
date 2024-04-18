@@ -2,7 +2,8 @@ import React from 'react'
 import { Grid } from '@mui/material';
 import styles from './Salongallery.module.css';
 
-function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
+function SalonGallery({ salonDetail, bannerImages, gallaryImages, bankDetails }) {
+    let images = bankDetails.documentImageUrl;
     return (
 
         <>
@@ -51,8 +52,20 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     <img key={index} className={styles.img} src={image} alt={`Banner ${index}`} />
                 ))}
             </div>
+            <hr/>
 
+            <div className=' d-flex justify-content-between align-items-center'>
+                <h5> CancelCheque/Passbook</h5>
 
+                <div className='d-flex justify-content-start align-items-center mb-3'>
+                    <button type='submit' className={styles.btn}>Add</button>
+                    <button type='submit' className={styles.btn}>Remove</button>
+                </div>
+            </div>
+
+            <div className='d-flex flex-row flex-wrap mb-3'>
+                    <img className={styles.img} src={images} alt="Loading" />
+            </div>
         </>
 
 

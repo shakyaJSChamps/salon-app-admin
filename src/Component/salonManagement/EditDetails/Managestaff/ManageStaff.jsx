@@ -50,7 +50,7 @@ function ManageStaff() {
                                 <Field
                                     as="select"
                                     name="gender"
-                                    className={`${styles.inputGender} px-1 rounded form-control input`}
+                                    className={`${styles.inputGender} px-2 form-control input`}
                                 >
                                     <option value="">select</option>
                                     <option value="male">Male</option>
