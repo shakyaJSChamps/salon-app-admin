@@ -16,7 +16,7 @@ const CustomTitle = (props) => {
       </div>
       <div className="d-flex align-items-center">
         <SearchDropDown
-          {...props}
+        {...props}
         />
       </div>
     </div>
