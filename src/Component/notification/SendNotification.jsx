@@ -7,10 +7,10 @@ const SendNotification = () => {
   return (
     <Container >
         <Row>
-            <Col  md={4} className="mt-3">
+            <Col  md={4}>
                 <SendNotificationFirst />
             </Col>
-            <Col  md={8} className="mt-3">
+            <Col  md={8}>
               <SendNotificationSecond />
             </Col>
         </Row>
