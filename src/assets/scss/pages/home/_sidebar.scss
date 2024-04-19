@@ -19,18 +19,20 @@
     margin-left: 10px;
     background-color: $color-black;
     color: $color-white;
-
     // display: flex;
     // align-items: center;
-    
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline;
   }
 }
-
 .sidebar {
+  ul li {
+    list-style: none;
+    margin-left: 35px;
+  }
   > li {
     > .active {
       .side-nav-item {

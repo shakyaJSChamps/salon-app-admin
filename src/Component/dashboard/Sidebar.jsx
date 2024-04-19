@@ -21,13 +21,24 @@ const Sidebar = (props) => {
   const authToken = useSelector((state) => state.authInfo.token);
   const feature = useSelector((state) => state.feature.value);
   const dispatch = useDispatch();
-  
+
   const getFeatureList = useCallback(async () => {
     try {
       const features = await getFeature();
       const filteredFeatures = features.data.data.filter(
         (item) => item.name !== "Freelance Management"
       );
+
+      const notificationsIndex = filteredFeatures.findIndex(
+        (item) => item.name === "Notifications"
+      );
+
+      if (notificationsIndex !== -1) {
+        filteredFeatures[notificationsIndex].children =
+          notificationsSubmenu.children;
+      }
+
+      console.log("FilteredFeature::::> ", filteredFeatures);
       dispatch(setFeature(filteredFeatures));
     } catch (error) {
       console.error("Error ::>", error);
@@ -40,7 +51,6 @@ const Sidebar = (props) => {
       getFeatureList();
     }
   }, [getFeatureList, authToken, feature]);
-
 
   const menus = {
     Dashboard: <FaChartPie />,
@@ -56,37 +66,108 @@ const Sidebar = (props) => {
     Notifications: <IoMdNotifications />,
     Setting: <MdSettingsSuggest />,
   };
+
+  const notificationsSubmenu = {
+    // name: "Notifications",
+    // icon: <IoMdNotifications />,
+    children: [
+      {
+        name: "Send Notification",
+        path: "/send-notification",
+        icon: <IoMdNotifications />,
+      },
+      {
+        name: "Receive Notification",
+        path: "/receive-notification",
+        icon: <IoMdNotifications />,
+      },
+    ],
+  };
+
+  const renderMenuItem = (item, index) => {
+    if (item.children) {
+      return (
+        <li key={index}>
+          <div className="side-nav-item" onClick={() => toggleSubMenu(index)}>
+            <span className="side-nav-icon m-auto">
+              {menus[item.name.replace(/\s+/g, "")]}
+            </span>
+            {props.toggleSidebar && (
+              <span className="side-nav-label m-auto ps-2">{item.name}</span>
+            )}
+          </div>
+          {item.isOpen && (
+            <ul>
+              <div className="submenu-item">
+                {item.children.map((child, childIndex) => (
+                  <li key={childIndex}>
+                    <NavLink
+                      to={child.path}
+                      className="text-decoration-none text-dark "
+                    >
+                      <div className="side-nav-item">
+                        <span className="side-nav-icon m-auto">
+                          {child.icon}
+                        </span>
+                        {props.toggleSidebar && (
+                          <span className="side-nav-label m-auto ps-2">
+                            {child.name}
+                          </span>
+                        )}
+                      </div>
+                    </NavLink>
+                  </li>
+                ))}
+              </div>
+            </ul>
+          )}
+        </li>
+      );
+    } else {
+      return (
+        <li key={index}>
+          <NavLink
+            to={item.name.toLowerCase().replace(/\s+/g, "-")}
+            className="text-decoration-none text-dark "
+          >
+            <div className="side-nav-item">
+              <span className="side-nav-icon m-auto">
+                {menus[item.name.replace(/\s+/g, "")]}
+              </span>
+              {props.toggleSidebar && (
+                <span className="side-nav-label m-auto ps-2">{item.name}</span>
+              )}
+            </div>
+          </NavLink>
+        </li>
+      );
+    }
+  };
+
+  const toggleSubMenu = (index) => {
+    const updatedFeature = feature.map((item, i) => {
+      if (i === index) {
+        return {
+          ...item,
+          isOpen: !item.isOpen,
+        };
+      }
+      return item;
+    });
+    dispatch(setFeature(updatedFeature));
+  };
+
   return (
     <>
       {feature.length === 0 ? (
         <SidebarLoader />
       ) : (
         <ul className="sidebar list-unstyled px-2">
-          {feature.map((item, i) => {
-            return (
-              <li key={i}>
-                <NavLink
-                  to={item.name.toLowerCase().replace(/\s+/g, "-")}
-                  className="text-decoration-none text-dark "
-                >
-                  <div className="side-nav-item">
-                    <span className="side-nav-icon m-auto ">
-                      {menus[item.name.replace(/\s+/g, "")]}
-                    </span>
-                    {props.toggleSidebar && (
-                      <span className="side-nav-label m-auto ps-2"
-                      style={{display:"flex", flexDirection:"column",justifyContent:"center"}}>
-                        {item.name}
-                      </span>
-                    )}
-                  </div>
-                </NavLink>
-              </li>
-            );
-          })}
+          {feature.map((item, i) => renderMenuItem(item, i))}
         </ul>
       )}
     </>
   );
 };
+
 export default Sidebar;
