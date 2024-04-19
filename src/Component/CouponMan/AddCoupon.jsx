@@ -5,10 +5,9 @@ import { Form, Formik } from 'formik'
 import { MdOutlineConfirmationNumber } from "react-icons/md";
 import InputText from '../common-component/Inputtext/InputText';
 
-const NewCoupon = () => {
+const AddCoupon = () => {
   return (
-    // <Row className="coupon ">
-    <Paper className="coupon-service-paper px-3 mb-3 h-100">
+    <Paper className="coupon-service-paper px-3 mb-1 h-100">
       <div className="d-flex align-items-center ">
         <MdOutlineConfirmationNumber />
         <p className="ps-1 fw-bold mb-0 "> Create New Coupon</p>
@@ -37,23 +36,21 @@ const NewCoupon = () => {
             <div className="d-flex flex-column ">
               <InputText
                 label= "Start Date"
-                type="text"
+                type="date"
                 name="start"
-                placeholder="07/07/43"
               />
             </div>
             <div className="d-flex flex-column  ">
-              <InputText label="End Date" type="text" name="end" />
+              <InputText label="End Date" type="date" name="end" />
             </div>
-            <div className="d-flex justify-content-center coupon-btn mt-2">
+            <div className="d-flex justify-content-center coupon-btn mt-1">
               <button className=" button pt-1 ">ADD COUPON</button>
             </div>
           </Form>
         </Formik>
       </div>
     </Paper>
-    // </Row>
   );
 };
 
-export default NewCoupon;
+export default AddCoupon;

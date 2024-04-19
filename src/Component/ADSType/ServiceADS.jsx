@@ -6,9 +6,12 @@ import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import PlayCircleOutlineSharpIcon from "@mui/icons-material/PlayCircleOutlineSharp";
+import CustomTitle from "../CustomTitle";
+
 const ServiceADS = (props) => {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 3;
+  const rowsPerPage = 15;
+
   const handleChangePage = (newPage) => {
     setPage(newPage);
   };
@@ -69,57 +72,29 @@ const ServiceADS = (props) => {
       ),
     },
   ];
+
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: "125px",
+      },
+    },
+  };
   return (
-    <Paper className="ads-service-paper px-3 pb-3" elevation={3}>
-      <div className="d-flex align-items-center justify-content-between pt-2">
-        <div className="d-flex align-items-center">
-          <MdOutlineContactMail />
-          <p className=" ps-1 fw-bold  mb-0">Advertisement</p>
-        </div>
-        <div className="d-flex align-items-center">
-          <div className="search-box d-flex me-5">
-            <input
-              type="text"
-              placeholder="Search"
-              className="ps-2 search-details"
-            />
-
-            <button className="category-btn">Category</button>
-          </div>
-        </div>
-      </div>
-      <hr />
-
-      <DataTable columns={columns} data={slicedData} />
-      <hr />
-      <div className="d-flex align-items-center justify-content-between">
-        <div className="d-flex align-items-center">
-          <p className="ps-3">Showing {page} of 10 pages</p>
-        </div>
-        <div className="d-flex align-items-center me-5">
-          <button
-            className="me-1 btn-previous"
-            disabled={page === 1}
-            onClick={() => handleChangePage(page - 1)} >
-            Previous
-          </button>
-          <button
-            className={`show-page-no me-1 ${page === page ? "active" : ""}`}>
-            {page}
-          </button>
-
-          <button
-            className={`show-page-no me-1 ${page === "" ? "active" : ""}`} >
-            {page + 1}
-          </button>
-          <button
-            className="btn-previous"
-            disabled={endIndex >= paginatedData.length}
-            onClick={() => handleChangePage(page + 1)}>
-            Next
-          </button>
-        </div>
-      </div>
+    <Paper className="ads-service-paper px-3 h-100" elevation={3}>
+      <DataTable
+        title={
+          <CustomTitle
+            icon={<MdOutlineContactMail />}
+            title={"Advertisement"}
+          />
+        }
+        columns={columns}
+        data={slicedData}
+        pagination
+        highlightOnHover
+        customStyles={customStyles}
+      />
     </Paper>
   );
 };

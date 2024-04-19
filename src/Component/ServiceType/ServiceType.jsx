@@ -54,17 +54,16 @@ const ServiceType = (props) => {
       icon: "warning",
       width: "30%",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      customClass: "custom-swal" // Add your custom CSS class here
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "custom-swal", // Add your custom CSS class here
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(row);
       }
     });
   };
-  
 
   const handleDelete = async (row) => {
     try {
@@ -156,7 +155,7 @@ const ServiceType = (props) => {
 
   return (
     <>
-      <Paper className="add-service-paper  rounded pb-2" elevation={3}>
+      <Paper className="add-service-paper  rounded h-100" elevation={3}>
         {services.length >= 0 ? (
           <DataTable
             title={

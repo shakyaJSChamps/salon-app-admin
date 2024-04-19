@@ -80,7 +80,7 @@ const CouponDetails = (props) => {
     },
   };
   return (
-    <Paper className="coupon-service-paper px-3 " elevation={3}>
+    <Paper className="coupon-service-paper px-3 h-100 " elevation={3}>
       <DataTable
         title={
           <CustomTitle
