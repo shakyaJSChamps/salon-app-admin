@@ -57,9 +57,11 @@ function Services({ service }) {
                         serviceType: selectedService ? selectedService.type : ''
                     }
                 }
+
+                enableReinitialize
             >
                 <Form>
-                    <Grid container spacing={2} className='mb-2'>
+                    <Grid container spacing={2} className='mb-3'>
                         <Grid item xs={3}>
                             <label className={styles.bold}>Category Value</label>
                             <Field
@@ -68,7 +70,6 @@ function Services({ service }) {
                                 className={`${styles.inputSalon} px-2 form-control input`}
                                 disabled={!editMode}
                                 onChange={handleServiceChange}
-                                value={selectedService ? selectedService.serviceName : ''}
                             >
                                 <>
                                     {service.map((service, index) => (
@@ -86,7 +87,6 @@ function Services({ service }) {
                                 label="Duration"
                                 name="duration"
                                 type="text"
-                                value={selectedService ? selectedService.serviceDuration : ''}
                                 disabled={!editMode}
                             />
                         </Grid>
@@ -96,7 +96,6 @@ function Services({ service }) {
                                 label="Price"
                                 name="price"
                                 type="text"
-                                value={selectedService ? selectedService.servicePrice : ''}
                                 disabled={!editMode}
                             />
                         </Grid>
@@ -106,7 +105,6 @@ function Services({ service }) {
                                 label="Service Type"
                                 name="serviceType"
                                 type="text"
-                                value={selectedService ? selectedService.type : ''}
                                 disabled={!editMode}
                             />
                         </Grid>
