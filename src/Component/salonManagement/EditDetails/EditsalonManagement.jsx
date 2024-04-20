@@ -61,12 +61,12 @@ function EditsalonManagement({ payload, id }) {
         <hr />
       </Row>
 
-      <Row>
+      {/* <Row>
         <Col md={12}>
           <ManageStaff />
         </Col>
         <hr />
-      </Row>
+      </Row> */}
 
       <Row>
         <Col md={12}>
