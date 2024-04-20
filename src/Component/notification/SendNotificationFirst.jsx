@@ -4,7 +4,7 @@ import React from 'react';
 
 const SendNotificationFirst = () => {
   return (
-    <Paper className="send-Notifi-first-paper px-3 pb-3 rounded" elevation={3}>
+    <Paper className="send-Notifi-first-paper px-3 h-100 pb-1 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <IoMdNotifications />
         <p className="ps-1 fw-bold mb-0">Send Notification</p>
@@ -15,7 +15,7 @@ const SendNotificationFirst = () => {
           <label className="fw-bold">Notification Text</label>
           <textarea
             className="form-control input mt-3"
-            rows="10"
+            rows="9"
             cols="35"
           ></textarea>
         </div>
@@ -35,7 +35,7 @@ const SendNotificationFirst = () => {
           />
         </div>
         <div className="d-flex justify-content-center">
-        <button type="submit" className="button mt-3">
+        <button type="submit" className="button mt-2">
          Send
         </button>
       </div>

@@ -54,7 +54,7 @@ const SendNotificationSecond = () => {
 
 
   return (
-    <Paper className="add-service-paper px-3 pb-5 rounded" elevation={3}>
+    <Paper className="send-Notifi-first-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <IoMdNotifications />
         <p className="ps-1 fw-bold mb-0">Send Notification</p>
