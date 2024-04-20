@@ -27,7 +27,7 @@ const CmsSetting = () => {
   };
 
   return (
-    <Paper className="add-service-paper px-3 pb-3 mt-3 rounded" elevation={3}>
+    <Paper className="add-service-paper px-3 h-100  rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdSettingsSuggest />
         <p className="ps-1 fw-bold mb-0">CMS Setting</p>

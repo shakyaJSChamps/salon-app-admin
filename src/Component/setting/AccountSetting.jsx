@@ -21,7 +21,7 @@ const AccountSetting = () => {
   };
 
   return (
-    <Paper className="add-service-paper px-3 pb-3 rounded" elevation={3}>
+    <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdSettingsSuggest />
         <AccountDropDown
@@ -45,7 +45,7 @@ const AccountSetting = () => {
             <div className="account-form d-flex justify-content-center alig-items-center">
               <img src={ellips} alt="ellips-img" />
             </div>
-            <div className=" d-flex justify-content-center alig-items-center mx-auto  w-50 flex-column mt-3">
+            <div className=" d-flex justify-content-center alig-items-center mx-auto  mb-2 w-50 flex-column mt-3 ">
             <InputText
                 type="text"
                 name="username"
@@ -60,7 +60,7 @@ const AccountSetting = () => {
                 className="invalid-feedback"
               />
             </div>
-            <div className="form-group  mx-auto  w-50">
+            <div className="form-group  mx-auto mb-2 w-50">
               <InputText
               label= "Update Email"
                 type="email"
@@ -77,7 +77,7 @@ const AccountSetting = () => {
                 className="invalid-feedback"
               />
             </div>
-            <div className="form-group mx-auto  w-50">
+            <div className="form-group mx-auto mb-2  w-50">
               <InputText
               label= "Password"
                 type="password"
