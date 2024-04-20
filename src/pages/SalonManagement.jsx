@@ -26,6 +26,7 @@ const SaloonManagement = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [updatedRowData, setUpdatedRowData] = useState(false);
+  // const [searchOption, setSearchOption] = useState("name");
 
   const handleRowClick = (row) => {
     // setModalShow(true);
@@ -42,20 +43,18 @@ const SaloonManagement = () => {
     getSaloonsData(page, newPerPage);
   };
 
-  const onOptionChange = (prop) => {
-    if (prop === "city" || prop === "name") {
-      setOption(prop);
-    } else {
-      Notify.error("Invalid option selected");
-    }
-  };
-
+  // const onOptionChange = (prop) => {
+  //   if (prop === "city" || prop === "name") {
+  //     setOption(prop);
+  //   } else {
+  //     Notify.error("Invalid option selected");
+  //   }
+  // };
 
   const getSearchText = (prop) => {
     setSearchText(prop);
     setPage(1);
   };
-
 
   const getSaloonsData = async (page, perPage) => {
     try {
@@ -78,6 +77,7 @@ const SaloonManagement = () => {
       saloon.name.toLowerCase().includes(searchText.toLowerCase()) ||
       saloon.city.toLowerCase().includes(searchText.toLowerCase())
   );
+
 
   const columns = [
     {
@@ -154,44 +154,45 @@ const SaloonManagement = () => {
 
   return (
     <>
-      {selectedRow ? 
+      {selectedRow ?
         <EditsalonManagement
-        id = {selectedRow.id}
+          id={selectedRow.id}
         />
-     :
-      <div className="main-table rounded ">
-        <DataTable
-          title=
-          {<CustomTitle
-            icon={icon}
-            title={title}
-            onOptionChange={onOptionChange}
-            getSearchText={getSearchText}
+        :
+        <div className="main-table rounded ">
+          <DataTable
+            title=
+            {<CustomTitle
+              icon={icon}
+              title={title}
+              // onOptionChange={onOptionChange}
+              getSearchText={getSearchText}
+            />
+            }
+            columns={columns}
+            data={filteredSaloonsData}
+            pagination
+            paginationPerPage={perPage}
+            paginationRowsPerPageOptions={[10, 25, 50]}
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangePage={handlePageChange}
+            onChangeRowsPerPage={handlePerPageChange}
+            fixedHeader
+            fixedHeaderScrollHeight="450px"
+            highlightOnHover
+            progressPending={loading}
+            progressComponent={<TableLoader />}
+            customStyles={customStyles}
           />
-          }
-          columns={columns}
-          data={filteredSaloonsData}
-          pagination
-          paginationPerPage={perPage}
-          paginationRowsPerPageOptions={[10, 25, 50]}
-          paginationServer
-          paginationTotalRows={totalRows}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handlePerPageChange}
-          fixedHeader
-          fixedHeaderScrollHeight="450px"
-          highlightOnHover
-          progressPending={loading}
-          progressComponent={<TableLoader />}
-          customStyles={customStyles}
-        />
-      </div>
-}
+        </div>
+      }
     </>
   );
 };
 
 export default SaloonManagement;
+
 
 
 

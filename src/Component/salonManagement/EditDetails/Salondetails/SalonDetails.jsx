@@ -50,7 +50,7 @@ function SalonDetails({ salonDetail }) {
             >
                 <Form>
                     <Grid container spacing={2}>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <InputText
                                 label="Salon Name"
                                 name="salonName"
@@ -59,7 +59,7 @@ function SalonDetails({ salonDetail }) {
                                 disabled={!isEditing} />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
 
                             <InputText
                                 label="Email ID"
@@ -69,7 +69,7 @@ function SalonDetails({ salonDetail }) {
                                 disabled={!isEditing} />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <InputText
                                 label="Gst Number"
                                 name="gstNumber"
@@ -78,7 +78,7 @@ function SalonDetails({ salonDetail }) {
                                 disabled={!isEditing} />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <InputText
                                 label="Address"
                                 name="address"
@@ -87,7 +87,7 @@ function SalonDetails({ salonDetail }) {
                                 disabled={!isEditing} />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <InputText
                                 label="Pincode"
                                 name="salonStatePincode"
@@ -96,7 +96,28 @@ function SalonDetails({ salonDetail }) {
                                 disabled={!isEditing} />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
+                            <div>
+                                <label className={`${styles.label}`}>
+                                    Service Type
+                                </label><br />
+                                <Field
+                                    as="select"
+                                    name="services"
+                                    className={`${styles.inputService} px-2 form-control input`}
+                                    disabled={!isEditing}
+                                >
+                                    <option value="">{salonDetail.serviceType}</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Both</option>
+                                </Field><br />
+
+                                {/* <ErrorMessage name="services" className={styles.formError} component="div" /> */}
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={3}>
                             <div>
                                 <label className={`${styles.label}`}>
                                     State
@@ -104,7 +125,7 @@ function SalonDetails({ salonDetail }) {
                                 <Field
                                     as="select"
                                     name="state"
-                                    className={`${styles.inputSalon} px-1 rounded form-control input`}
+                                    className={`${styles.inputSalon} px-2 form-control input`}
                                     disabled={!isEditing}
 
                                 >
@@ -118,26 +139,7 @@ function SalonDetails({ salonDetail }) {
                             </div>
                         </Grid>
 
-                        <Grid item xs={4}>
-                            <div>
-                                <label className={`${styles.label}`}>
-                                    Service Type
-                                </label><br />
-                                <Field
-                                    as="select"
-                                    name="services"
-                                    className={`${styles.inputService} px-1 rounded form-control input`}
-                                    disabled={!isEditing}
-                                >
-                                    <option value="">{salonDetail.serviceType}</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Both</option>
-                                </Field><br />
 
-                                {/* <ErrorMessage name="services" className={styles.formError} component="div" /> */}
-                            </div>
-                        </Grid>
                     </Grid>
                 </Form >
             </Formik >

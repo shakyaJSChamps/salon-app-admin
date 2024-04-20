@@ -47,7 +47,7 @@ function SalonOwnerDetails() {
               <InputText label="Date of Birth" name="dob" type='date' />
             </Grid>
 
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <FileUploader label=" Aadhar Front" name="aadharFront" />
             </Grid>
 
@@ -56,8 +56,8 @@ function SalonOwnerDetails() {
             </Grid>
 
             <Grid item xs={4}>
-              <FileUploader label="Pan Card" name="panCard" />
-            </Grid>
+              <FileUploader label="Pan Card" name="panCard" /> 
+  </Grid>*/}
 
             <Grid item xs={4}>
               <div>
@@ -67,7 +67,7 @@ function SalonOwnerDetails() {
                 <Field
                   as="select"
                   name="gender"
-                  className={`${styles.inputGender} px-1 rounded form-control input`}
+                  className={`${styles.inputGender} px-2 form-control input`}
                 >
                   <option value="">select</option>
                   <option value="male">Male</option>
@@ -75,7 +75,7 @@ function SalonOwnerDetails() {
                   <option value="other">Other</option>
                 </Field><br />
 
-              {/* <ErrorMessage name="gender" className={styles.formError} component="div" /> */}
+                {/* <ErrorMessage name="gender" className={styles.formError} component="div" /> */}
               </div>
             </Grid>
           </Grid>

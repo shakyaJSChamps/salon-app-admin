@@ -17,6 +17,7 @@ function EditsalonManagement({ payload, id }) {
   const [bannerImages, setBannerImages] = useState([]);
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
+  const [service, setService] = useState([]);
 
 
   useEffect(() => {
@@ -28,6 +29,7 @@ function EditsalonManagement({ payload, id }) {
         setBannerImages(data?.data?.data?.bannerImages);
         setGallaryImages(data?.data?.data?.gallaryImages);
         setWorkingHours(data?.data?.data?.workingHours);
+        setService(data?.data?.data?.services);
         console.log(data)
       } catch (error) {
         console.error('Error fetching salon details:', error);
@@ -39,43 +41,43 @@ function EditsalonManagement({ payload, id }) {
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
-        <Col md={12} className='mb-3'>
+        <Col md={12} >
           <SalonDetails salonDetail={salonDetail} />
         </Col>
         <hr />
       </Row>
 
       <Row>
-        <Col md={12} className='mb-3'>
+        <Col md={12}>
           <SalonOwnerDetails />
         </Col>
         <hr />
       </Row>
 
       <Row>
-        <Col md={12} className='mb-3'>
-          <Services />
-        </Col>
-        <hr />
-      </Row>
-
-      <Row>
-        <Col md={12} className='mb-3'>
+        <Col md={12}>
           <BankDetails bankDetails={bankDetails} />
         </Col>
         <hr />
       </Row>
 
       <Row>
-        <Col md={12} className='mb-3'>
+        <Col md={12}>
           <ManageStaff />
         </Col>
         <hr />
       </Row>
 
       <Row>
-        <Col md={12} className='mb-3'>
+        <Col md={12}>
           <SalonTime workingHours={workingHours} />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12}>
+          <Services service={service} />
         </Col>
         <hr />
       </Row>
@@ -86,6 +88,7 @@ function EditsalonManagement({ payload, id }) {
             salonDetail={salonDetail}
             bannerImages={bannerImages}
             gallaryImages={gallaryImages}
+            bankDetails={bankDetails}
           />
         </Col>
         <hr />
