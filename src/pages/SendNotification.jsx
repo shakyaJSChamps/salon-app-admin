@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import SendNotificationFirst from './SendNotificationFirst'
-import SendNotificationSecond from './SendNotificationSecond'
+import SendNotificationFirst from '../Component/notification/SendNotificationFirst'
+import SendNotificationSecond from '../Component/notification/SendNotificationSecond'
 
 const SendNotification = () => {
   return (

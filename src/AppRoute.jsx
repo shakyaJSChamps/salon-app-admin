@@ -2,8 +2,6 @@ import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
-const SendNotification = lazy(() => import("./Component/notification/SendNotification"));
-const ReceiveNotification = lazy(() => import("./Component/notification/ReceiveNotification"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
@@ -19,6 +17,8 @@ const Notification = lazy(() => import("./pages/Notification"));
 const Setting = lazy(() => import("./pages/Settings"));
 const Layout = lazy(() => import("../src/pages/Layout"));
 const DashBoard = lazy(() => import("../src/pages/Dashboard"));
+const SendNotification = lazy(() => import("../src/pages/SendNotification"));
+const ReceiveNotification = lazy(() => import("../src/pages/ReceiveNotification"));
 const Authentication = lazy(() =>
   import("../src/Component/authentication/Authentication")
 );
@@ -75,8 +75,14 @@ const AppRoute = (props) => {
         { path: "notifications", element: <Notification /> },
         { path: "setting", element: <Setting /> },
         { path: "setting/cms-setting", element: <CmsSetting /> },
-        { path: "send-notification", element: <SendNotification /> },
-        { path: "receive-notification", element: <ReceiveNotification /> },
+        {
+          path: "",
+          element: <Notification />,
+          children: [
+            { path: "receive-notification", element: <ReceiveNotification /> },
+            { path: "send-notification", element: <SendNotification /> },
+          ],
+        },
       ],
     },
     { path: "*", element: <Error /> },
