@@ -18,7 +18,9 @@ function BankDetails({ bankDetails }) {
     const handleSaveClick = () => {
         setIsEditing(false);
     };
+    
     return (
+        
         <>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4 className={styles.color}>Bank Details</h4>
@@ -35,23 +37,44 @@ function BankDetails({ bankDetails }) {
                     )}
                 </div>
             </div>
-            <Formik>
+            <Formik
+                initialValues={
+                    {
+                        accountNumber: bankDetails.accountNumber || '',
+                        accountHolderName: bankDetails.accountHolderName || '',
+                        bankName: bankDetails.bankName || '',
+                        ifscCode: bankDetails.ifscCode || '',
+                    }
+                }
+                enableReinitialize
+            >
                 <Form>
                     <Grid container spacing={2} className='mb-3'>
                         <Grid item xs={4}>
-                            <InputText label="Account Number" name="accountNumber" value={bankDetails.accountNumber} disabled={!isEditing} />
+                            <InputText
+                                label="Account Number"
+                                name="accountNumber"
+                                disabled={!isEditing} />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <InputText label="Account Holder Name" name="accountHolderName" value={bankDetails.accountHolderName} disabled={!isEditing} />
+                            <InputText label="Account Holder Name"
+                                name="accountHolderName"
+                                disabled={!isEditing} />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <InputText label="Bank Name" name="bankName" value={bankDetails.bankName} disabled={!isEditing} />
+                            <InputText
+                                label="Bank Name"
+                                name="bankName"
+                                disabled={!isEditing} />
                         </Grid>
 
                         <Grid item xs={4}>
-                            <InputText label="IfSC Code" name="ifscCode" value={bankDetails.ifscCode} disabled={!isEditing} />
+                            <InputText
+                                label="IfSC Code"
+                                name="ifscCode"
+                                disabled={!isEditing} />
                         </Grid>
                     </Grid>
                 </Form>

@@ -12,12 +12,14 @@
      border: 2px solid grey;
      outline: none;
  }
- 
- .label{
-     /* font-weight: 500; */
-     color: Black;
- }
- 
- .dark{
-    color: black;
- }
+.day{
+    padding-top: 33px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.label{
+    position: relative;
+    top: 22px;
+    font-weight: 500;
+}

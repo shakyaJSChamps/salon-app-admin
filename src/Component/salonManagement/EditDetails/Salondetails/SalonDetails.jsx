@@ -5,10 +5,10 @@ import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 
 
-
 function SalonDetails({ salonDetail }) {
     const [isEditing, setIsEditing] = useState(false);
     // console.log("SalonDetails  ", salonDetail)
+
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -39,14 +39,16 @@ function SalonDetails({ salonDetail }) {
 
             <Formik
                 initialValues={{
-                    salonName: salonDetail.name,
-                    email: salonDetail.email,
-                    gstNumber: salonDetail.gstNumber,
-                    address: salonDetail.address,
-                    salonStatePincode: salonDetail.pincode,
-                    state: salonDetail.state,
-                    services: salonDetail.serviceType
+                    salonName: salonDetail.name || '',
+                    email: salonDetail.email || '',
+                    gstNumber: salonDetail.gstNumber || '',
+                    address: salonDetail.address || '',
+                    salonStatePincode: salonDetail.pincode || '',
+                    state: salonDetail.state || '',
+                    services: salonDetail.serviceType || ''
                 }}
+
+                enableReinitialize // This enables reinitialization when props change
             >
                 <Form>
                     <Grid container spacing={2}>
@@ -55,8 +57,8 @@ function SalonDetails({ salonDetail }) {
                                 label="Salon Name"
                                 name="salonName"
                                 type="text"
-                                value={salonDetail.name}
-                                disabled={!isEditing} />
+                                disabled={!isEditing}
+                            />
                         </Grid>
 
                         <Grid item xs={3}>
@@ -65,7 +67,6 @@ function SalonDetails({ salonDetail }) {
                                 label="Email ID"
                                 name="email"
                                 type="email"
-                                value={salonDetail.email}
                                 disabled={!isEditing} />
                         </Grid>
 
@@ -74,7 +75,6 @@ function SalonDetails({ salonDetail }) {
                                 label="Gst Number"
                                 name="gstNumber"
                                 type="text"
-                                value={salonDetail.gstNumber}
                                 disabled={!isEditing} />
                         </Grid>
 
@@ -83,7 +83,6 @@ function SalonDetails({ salonDetail }) {
                                 label="Address"
                                 name="address"
                                 type="text"
-                                value={salonDetail.address}
                                 disabled={!isEditing} />
                         </Grid>
 
@@ -92,7 +91,6 @@ function SalonDetails({ salonDetail }) {
                                 label="Pincode"
                                 name="salonStatePincode"
                                 type="text"
-                                value={salonDetail.state}
                                 disabled={!isEditing} />
                         </Grid>
 
@@ -107,13 +105,11 @@ function SalonDetails({ salonDetail }) {
                                     className={`${styles.inputService} px-2 form-control input`}
                                     disabled={!isEditing}
                                 >
-                                    <option value="">{salonDetail.serviceType}</option>
+                                    <option value="">select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Other">Both</option>
                                 </Field><br />
-
-                                {/* <ErrorMessage name="services" className={styles.formError} component="div" /> */}
                             </div>
                         </Grid>
 
@@ -129,17 +125,13 @@ function SalonDetails({ salonDetail }) {
                                     disabled={!isEditing}
 
                                 >
-                                    <option value="">{salonDetail.state}</option>
+                                    <option value="">select</option>
                                     <option value="uttar-pradesh">Uttar-Pradesh</option>
                                     <option value="madhya-pradesh">Madhya-Pradesh</option>
                                     <option value="andra-pradesh">Andra-Pradesh</option>
                                 </Field><br />
-
-                                {/* <ErrorMessage name="state" className={styles.formError} component="div" /> */}
                             </div>
                         </Grid>
-
-
                     </Grid>
                 </Form >
             </Formik >
