@@ -6,8 +6,9 @@ import { MdOutlineContentCut } from "react-icons/md";
 import { MdOutlineAccessibility } from "react-icons/md";
 import { MdOutlineContentPaste } from "react-icons/md";
 import { MdOutlineConfirmationNumber } from "react-icons/md";
-import { RiBarChartFill } from "react-icons/ri";
+import { RiBarChartFill, RiFolderReceivedLine } from "react-icons/ri";
 import { MdOutlineContactMail } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
@@ -26,7 +27,7 @@ const Sidebar = (props) => {
     try {
       const features = await getFeature();
       const filteredFeatures = features.data.data.filter(
-        (item) => item.name !== "Freelance Management"
+        (item) => item.name !== "Freelance Management" && item.name !== "Payment Management"
       );
 
       const notificationsIndex = filteredFeatures.findIndex(
@@ -68,18 +69,16 @@ const Sidebar = (props) => {
   };
 
   const notificationsSubmenu = {
-    // name: "Notifications",
-    // icon: <IoMdNotifications />,
     children: [
       {
         name: "Send Notification",
         path: "/send-notification",
-        icon: <IoMdNotifications />,
+        icon: <MdSend />,
       },
       {
         name: "Receive Notification",
         path: "/receive-notification",
-        icon: <IoMdNotifications />,
+        icon: <RiFolderReceivedLine />,
       },
     ],
   };
@@ -88,7 +87,7 @@ const Sidebar = (props) => {
     if (item.children) {
       return (
         <li key={index}>
-          <div className="side-nav-item" onClick={() => toggleSubMenu(index)}>
+          <div className={`side-nav-item ${item.name === 'Notifications' ? 'cursor-pointer' : ''}`} onClick={() => toggleSubMenu(index)}>
             <span className="side-nav-icon m-auto">
               {menus[item.name.replace(/\s+/g, "")]}
             </span>
@@ -143,6 +142,7 @@ const Sidebar = (props) => {
       );
     }
   };
+  
 
   const toggleSubMenu = (index) => {
     const updatedFeature = feature.map((item, i) => {

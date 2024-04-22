@@ -3,6 +3,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
 const SendNotification = lazy(() => import("./Component/notification/SendNotification"));
+const ReceiveNotification = lazy(() => import("./Component/notification/ReceiveNotification"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
@@ -75,6 +76,7 @@ const AppRoute = (props) => {
         { path: "setting", element: <Setting /> },
         { path: "setting/cms-setting", element: <CmsSetting /> },
         { path: "send-notification", element: <SendNotification /> },
+        { path: "receive-notification", element: <ReceiveNotification /> },
       ],
     },
     { path: "*", element: <Error /> },
