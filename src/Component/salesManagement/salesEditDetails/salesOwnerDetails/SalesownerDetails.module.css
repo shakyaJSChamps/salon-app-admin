@@ -1,0 +1,14 @@
+.btn {
+    padding: 3px 20px;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #909090;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.gender {
+    font-weight: 500;
+    color: black;
+}
