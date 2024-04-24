@@ -11,6 +11,7 @@ import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 // import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
+import { useNavigate} from "react-router-dom";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -20,18 +21,20 @@ const SaloonManagement = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [saloonsData, setSaloonsData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [option, setOption] = useState("");
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
-  const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [updatedRowData, setUpdatedRowData] = useState(false);
+  // const [updatedRowData, setUpdatedRowData] = useState(false);
   // const [searchOption, setSearchOption] = useState("name");
+  
+
+  const navigate = useNavigate()
+ 
 
   const handleRowClick = (row) => {
     // setModalShow(true);
-    setSelectedRow(row);
-    // console.log(row)
+    setSelectedRow(row); 
+    navigate(`userId ${selectedRow.id}`);
   };
 
   const handlePageChange = (page) => {

@@ -5,7 +5,7 @@ import InputText from '../../../common-component/Inputtext/InputText';
 import styles from '../Salontime/Salontime.module.css';
 
 function SalonTime({ workingHours }) {
-    console.log(workingHours)
+    // console.log(workingHours)
     const [hoursData, setHoursData] = useState("");
 
     const handleToggle = (index) => {
