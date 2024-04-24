@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchDropDown from "./SearchDropDown";
+import MyVerticallyCenteredModal from "./modal/ModalPop";
+import { useNavigate } from "react-router-dom";
 
 const Sales = () => {
+  const navigate =useNavigate();
+  const [showForm, setShowForm] = useState(false);
+
+  const handleAddSalesClick = () => {
+    setShowForm(true);
+    navigate("creates"); 
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
   return (
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="d-flex justify-content-start">
-        <SearchDropDown />
+    <div>
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="d-flex justify-content-start">
+          <SearchDropDown />
+        </div>
+        <button
+          type="button"
+          className="add-sales rounded-pill px-3 p-2"
+          onClick={handleAddSalesClick}
+        >
+          Add sales person
+        </button>
       </div>
-      <button type="submit" className="add-sales rounded-pill px-3">Add sales person</button>
+      <MyVerticallyCenteredModal
+        show={showForm}
+        onHide={handleCloseForm}
+        showForm="sales"
+      />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
 import styles from "./Modal.module.css";
-
+import SalesCreate from "../salesManagement/SalesCreate";
 
 function MyVerticallyCenteredModal({
   show,
@@ -19,7 +19,9 @@ function MyVerticallyCenteredModal({
       onHide={onHide}
       aria-labelledby="contained-modal-title-vcenter"
       centered
-      dialogClassName={styles.customModal}
+      dialogClassName={
+        showForm === "sales" ? `${styles.customModal} modal-xl` : styles.customModal
+      }
     >
       {showForm === "service" && (
         <Modal.Header closeButton>
@@ -38,6 +40,7 @@ function MyVerticallyCenteredModal({
         {showForm === "user" && (
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
+        {showForm === "sales" && <SalesCreate onClose={onHide} />}
       </Modal.Body>
     </Modal>
   );
