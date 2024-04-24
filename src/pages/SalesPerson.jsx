@@ -10,7 +10,7 @@ const SalesPerson = () => {
     // Generate dynamic fake data
     const generateFakeData = () => {
       const fakeData = [];
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= 30; i++) {
         fakeData.push({
           id: i,
           name: `Person ${i}`,

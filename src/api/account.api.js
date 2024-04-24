@@ -10,7 +10,10 @@ import {
   __endpoint_updateUser,
   __endpoint_addServiceType,
   __endpoint_deleteServiceType,
-  __endpoint_salonDetails
+  __endpoint_salonDetails,
+  __endpoint_updateBankDetails,
+  __endpoint_updateSalonService,
+  __endpoint_updateSalonDetails
 
 } from "../constants/endpoints";
 
@@ -23,23 +26,35 @@ export const getUser = (payload) =>
 export const getFeature = () =>
   HTTP.Request(methods.GET, __endpoint_getFeature);
 export const getServiceType = () =>
-    HTTP.Request(methods.GET, __endpoint_getServiceType);
-export const putServiceType = (payload, id) => 
-   HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
+  HTTP.Request(methods.GET, __endpoint_getServiceType);
+
+export const putServiceType = (payload, id) =>
+  HTTP.Request(methods.PUT, `${__endpoint_putServiceType}/${id}`, payload);
+
 export const getSalon = (payload) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalon}${payload}`);
 
 export const updateUser = (payload, id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_updateUser}/${id}`, payload);
+
 export const addServiceType = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addServiceType, payload);
-  
-  export const deleteServiceType = (id) => 
-    HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`);
 
-  export const fileUploader = () =>{
-    return Promise.resolve()
-  }
+export const deleteServiceType = (id) =>
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteServiceType}/${id}`);
 
-  export const salonDetails = (payload, id) =>
-  HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload , id);
+export const fileUploader = () => {
+  return Promise.resolve()
+}
+
+export const salonDetails = (payload, id) =>
+  HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload, id);
+
+export const updateBankDetails = (payload, id) =>
+  HTTP.Request(methods.PUT, __endpoint_updateBankDetails(id), payload, id);
+
+  export const updateSalonService = (payload, salonid,id) =>
+  HTTP.Request(methods.PUT, __endpoint_updateSalonService(salonid,id), payload, salonid,id);
+
+  export const updateSalonDetails = (payload, id) =>
+  HTTP.Request(methods.PUT, __endpoint_updateSalonDetails(id), payload, id);

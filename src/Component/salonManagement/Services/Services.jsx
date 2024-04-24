@@ -3,10 +3,13 @@ import { Grid } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 import styles from '../Services/Services.module.css';
 import InputText from '../../common-component/Inputtext/InputText';
+import { updateSalonService } from '../../../../src/api/account.api';
+import Notify from "../../../utils/notify";
 
-function Services({ service }) {
+function Services({ service, salonDetail }) {
     const [editMode, setEditMode] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
+
 
     // Set default selected service when component mounts
     useEffect(() => {
@@ -16,12 +19,7 @@ function Services({ service }) {
     }, [service]);
 
     const handleEditClick = () => {
-        setEditMode(true);
-    };
-
-    const handleSaveClick = () => {
-        setEditMode(false);
-        // Logic to save changes
+        setEditMode(!editMode);
     };
 
     const handleServiceChange = (event) => {
@@ -29,6 +27,21 @@ function Services({ service }) {
         const foundService = service.find(serv => serv.serviceName === selectedServiceName);
         setSelectedService(foundService);
     };
+
+    const editDetails = async (values, { setSubmitting }) => {
+        try {
+            const response = await updateSalonService(values, salonDetail.id, selectedService.id);
+            console.log("serviceDetails ::>", response);
+            Notify.success(response.data.message);
+            setEditMode(false); // Exit edit mode
+        } catch (error) {
+            console.error("API error:", error);
+            Notify.error(error.message);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
 
     return (
         <>
@@ -42,7 +55,7 @@ function Services({ service }) {
                         </button>
                     )}
                     {editMode && (
-                        <button type="button" className={styles.btn} onClick={handleSaveClick}>
+                        <button type="submit" className={styles.btn} form="serviceDetailsForm">
                             Save
                         </button>
                     )}
@@ -54,13 +67,14 @@ function Services({ service }) {
                         serviceName: selectedService ? selectedService.serviceName : '',
                         duration: selectedService ? selectedService.serviceDuration : '',
                         price: selectedService ? selectedService.servicePrice : '',
-                        serviceType: selectedService ? selectedService.type : ''
-                    }
+                        serviceType: selectedService ? selectedService.type : '',
+                        categoryId: selectedService ? selectedService.categoryId : ''                }
                 }
-
+                onSubmit={editDetails}
                 enableReinitialize
             >
-                <Form>
+                {({ handleChange, values, isSubmitting }) => (
+                <Form Form id="serviceDetailsForm">
                     <Grid container spacing={2} className='mb-3'>
                         <Grid item xs={3}>
                             <label className={styles.bold}>Category Value</label>
@@ -88,6 +102,8 @@ function Services({ service }) {
                                 name="duration"
                                 type="text"
                                 disabled={!editMode}
+                                onChange={handleChange}
+                                value={values.duration}
                             />
                         </Grid>
 
@@ -97,6 +113,8 @@ function Services({ service }) {
                                 name="price"
                                 type="text"
                                 disabled={!editMode}
+                                onChange={handleChange}
+                                value={values.price}
                             />
                         </Grid>
 
@@ -106,10 +124,13 @@ function Services({ service }) {
                                 name="serviceType"
                                 type="text"
                                 disabled={!editMode}
+                                onChange={handleChange}
+                                value={values.serviceType}
                             />
                         </Grid>
                     </Grid>
                 </Form>
+                )}
             </Formik>
         </>
     );
