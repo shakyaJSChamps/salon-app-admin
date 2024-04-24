@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
+const SalesWrapper = lazy(()=>import("./Component/container/SalesWrapper"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
@@ -18,7 +19,10 @@ const Setting = lazy(() => import("./pages/Settings"));
 const Layout = lazy(() => import("../src/pages/Layout"));
 const DashBoard = lazy(() => import("../src/pages/Dashboard"));
 const SendNotification = lazy(() => import("../src/pages/SendNotification"));
-const ReceiveNotification = lazy(() => import("../src/pages/ReceiveNotification"));
+const SalesCreate = lazy(() => import("../src/Component/salesManagement/SalesCreate"));
+const ReceiveNotification = lazy(() =>
+  import("../src/pages/ReceiveNotification")
+);
 const Authentication = lazy(() =>
   import("../src/Component/authentication/Authentication")
 );
@@ -58,7 +62,7 @@ const AppRoute = (props) => {
       path: "",
       element: <ProtectedRoutes {...props} />,
       children: [
-        // { path: "dashboard", element: <DashBoard /> },
+        // Existing routes
         { path: "user-management", element: <UserManagement /> },
         {
           path: "salon-management",
@@ -69,7 +73,6 @@ const AppRoute = (props) => {
         { path: "service-type-management", element: <ServiceTypeMan /> },
         { path: "coupon-management", element: <CouponManagement /> },
         { path: "appointment-management", element: <AppointmentMan /> },
-        { path: "sales-person", element: <SalesPerson /> },
         { path: "ads-management", element: <ADSManagement /> },
         { path: "payment-management", element: <PaymentMan /> },
         { path: "notifications", element: <Notification /> },
@@ -83,6 +86,15 @@ const AppRoute = (props) => {
             { path: "send-notification", element: <SendNotification /> },
           ],
         },
+        {
+          path: "sales-person",
+          element: <SalesWrapper />,
+          children: [
+            { path: "", element: <SalesPerson /> }, 
+            { path: "creates", element: <SalesCreate /> } 
+          ]
+        },
+        
       ],
     },
     { path: "*", element: <Error /> },

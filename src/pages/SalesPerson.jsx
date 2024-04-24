@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import Sales from "../Component/Sales";
 import Profile from "../assets/image/dummy-profile.jpg";
+import SalesDetails from "../Component/salesManagement/salesEditDetails/salesDetails/SaleDetail";
 
 const SalesPerson = () => {
   const [data, setData] = useState([]);
+  const [selectedSalesPerson, setSelectedSalesPerson] = useState(null);
 
   useEffect(() => {
     // Generate dynamic fake data
@@ -107,6 +109,14 @@ const SalesPerson = () => {
       },
     },
   };
+
+
+  const handleRowClick = (row) => {
+    setSelectedSalesPerson(row);
+  };
+
+  
+
   return (
     <>
       <h6>Sales Person</h6>
@@ -116,10 +126,27 @@ const SalesPerson = () => {
         data={data}
         pagination
         highlightOnHover
+        onRowClicked={handleRowClick}
         customStyles={customStyles}
       />
+      {selectedSalesPerson && (
+        <>
+          <pre>{JSON.stringify(selectedSalesPerson, null, 2)}</pre>
+          <SalesDetails
+            salesPersonName={selectedSalesPerson.name}
+            email={selectedSalesPerson.email}
+            phoneNumber={selectedSalesPerson.phoneNumber}
+            address={selectedSalesPerson.address}
+            gstNumber={selectedSalesPerson.gstNumber}
+            pincode={selectedSalesPerson.pincode}
+            serviceType={selectedSalesPerson.serviceType}
+            state={selectedSalesPerson.state}
+          />
+        </>
+      )}
     </>
   );
 };
 
 export default SalesPerson;
+
