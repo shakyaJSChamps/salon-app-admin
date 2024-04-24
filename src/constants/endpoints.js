@@ -17,3 +17,16 @@ export const __endpoint_salonDetails = (id) => {
     return `${endpoint}admin/salons/${id}`;
   };
 
+export const __endpoint_updateSalonDetails = (id) => {
+    return `${endpoint}admin/salons/${id}`;
+  };
+
+export const __endpoint_updateBankDetails = (id) => {
+    return `${endpoint}admin/salons/${id}/bank`;
+  };
+
+export const __endpoint_updateSalonService = (salonid, id) => {
+    return `${endpoint}admin/salons/${salonid}/service/${id}`;
+  };
+
+

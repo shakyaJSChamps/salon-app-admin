@@ -77,7 +77,7 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <Services service={service} />
+          <Services service={service} salonDetail={salonDetail} />
         </Col>
         <hr />
       </Row>
