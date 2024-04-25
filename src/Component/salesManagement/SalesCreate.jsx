@@ -1,19 +1,31 @@
-// SalesCreate.jsx
 import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import SalesDetails from "../salesManagement/salesEditDetails/salesDetails/SaleDetail";
 import SalesBankDetails from "../salesManagement/salesEditDetails/salesbankDetails/SalesBankDetails";
-import SalesOwnerDetails from "../salesManagement/salesEditDetails/salesOwnerDetails/SalesOwnerDetails";
-import SaleTime from "./salesEditDetails/SaleTime/SaleTime";
+import SalesGallery from "../salesManagement/SalesGallery/SalesGallery";
+import SalesButton from "./salesButton/salesButton";
 
-const SalesCreate = ({ salesPersonData }) => {
-  console.log("SalesPersonData ::", salesPersonData);
+const SalesCreate = ({ selectedSalesPerson }) => {
+  console.log("SalesPersonData ::", selectedSalesPerson);
   const [bankDetailsData, setBankDetailsData] = useState({
-    accountNumber: "1234567890",
-    accountHolderName: "John Doe",
-    bankName: "XYZ Bank",
-    ifscCode: "ABC123456",
+    accountNumber: "600000000",
+    accountHolderName: "RAKesh",
+    bankName: "RAKesh SBI",
+    ifscCode: "Rakesh12222",
+    address: "ALIGAN",
   });
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleSaveClick = () => {
+    // Logic to save the data
+    console.log("Data saved!");
+    setIsEditing(false); 
+  };
 
   return (
     <div
@@ -23,16 +35,16 @@ const SalesCreate = ({ salesPersonData }) => {
       <Container>
         <Row>
           <Col md={12}>
-            <SalesDetails
-              salesPersonName={salesPersonData?.name || ""}
-              email={salesPersonData?.email || ""}
-              phoneNumber={salesPersonData?.phoneNumber || ""}
-              address={salesPersonData?.address || ""}
-              gstNumber={salesPersonData?.gstNumber || ""}
-              pincode={salesPersonData?.pincode || ""}
-              serviceType={salesPersonData?.serviceType || ""}
-              state={salesPersonData?.state || ""}
+            <SalesButton
+              isEditing={isEditing}
+              handleEditClick={handleEditClick}
+              handleSaveClick={handleSaveClick}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <SalesDetails salesPersonData={selectedSalesPerson} />
           </Col>
         </Row>
         <hr />
@@ -44,15 +56,10 @@ const SalesCreate = ({ salesPersonData }) => {
         <hr />
         <Row>
           <Col md={12}>
-            <SalesOwnerDetails />
+            <SalesGallery
+              bankDetails={bankDetailsData}
+            />
           </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col md={12}>
-            <SaleTime />
-          </Col>
-          <hr />
         </Row>
       </Container>
     </div>

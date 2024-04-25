@@ -25,6 +25,10 @@ const SalesPerson = () => {
           createdAt: new Date().toISOString(),
           profileImageUrl: "https://example.com/profile.jpg",
           salesPersonId: randomSalesPersonId(), // Generate random Sales Person ID
+          countryCode: "+91",
+          middleName: "Kumar",
+          dob: "2004-01-09",
+          gender: "Male",
         });
       }
       return fakeData;
@@ -110,12 +114,9 @@ const SalesPerson = () => {
     },
   };
 
-
   const handleRowClick = (row) => {
     setSelectedSalesPerson(row);
   };
-
-  
 
   return (
     <>
@@ -133,14 +134,7 @@ const SalesPerson = () => {
         <>
           <pre>{JSON.stringify(selectedSalesPerson, null, 2)}</pre>
           <SalesDetails
-            salesPersonName={selectedSalesPerson.name}
-            email={selectedSalesPerson.email}
-            phoneNumber={selectedSalesPerson.phoneNumber}
-            address={selectedSalesPerson.address}
-            gstNumber={selectedSalesPerson.gstNumber}
-            pincode={selectedSalesPerson.pincode}
-            serviceType={selectedSalesPerson.serviceType}
-            state={selectedSalesPerson.state}
+            salesPersonData={selectedSalesPerson}
           />
         </>
       )}
@@ -149,4 +143,3 @@ const SalesPerson = () => {
 };
 
 export default SalesPerson;
-
