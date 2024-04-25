@@ -109,7 +109,7 @@ function SalonDetails({ salonDetail }) {
                                 <InputText
                                     label="Email ID"
                                     name="email"
-                                    type="email"
+                                    type="text"
                                     disabled={!isEditing}
                                     onChange={handleChange}
                                     value={values.email}
@@ -162,6 +162,7 @@ function SalonDetails({ salonDetail }) {
                                     <Field
                                         as="select"
                                         name="serviceType"
+                                        type="text"
                                         className={`${styles.inputService} px-2 form-control input`}
                                         disabled={!isEditing}
                                         onChange={handleChange}
@@ -185,6 +186,7 @@ function SalonDetails({ salonDetail }) {
                                     <Field
                                         as="select"
                                         name="state"
+                                        type="text"
                                         className={`${styles.inputSalon} px-2 form-control input`}
                                         disabled={!isEditing}
                                         onChange={handleChange}
