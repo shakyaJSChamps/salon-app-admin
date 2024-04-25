@@ -4,35 +4,16 @@ import { Grid } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
 import styles from "./Salesdetails.module.css";
 
-function SalesDetails({
-  salesPersonName,
+function SalesDetails({selectedSalesPerson,
+  createsaleperson,
   email,
   phoneNumber,
-  address,
-  gstNumber,
-  pincode,
-  serviceType,
-  state,
+  countryCode,
+  dob,
+  gender,
 }) {
-  console.log("SalesDetails props:", {
-    salesPersonName,
-    email,
-    phoneNumber,
-    address,
-    gstNumber,
-    pincode,
-    serviceType,
-    state,
-  });
+  console.log("selectedSalesPerson ::>", selectedSalesPerson);
   const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditing(false);
-  };
 
   return (
     <>
@@ -41,14 +22,12 @@ function SalesDetails({
       </div>
       <Formik
         initialValues={{
-          salesPersonName: salesPersonName || "",
+          createsaleperson: createsaleperson || "",
           email: email || "",
           phoneNumber: phoneNumber || "",
-          address: address || "",
-          gstNumber: gstNumber || "",
-          pincode: pincode || "",
-          serviceType: serviceType || "",
-          state: state || "",
+          countryCode: countryCode || "",
+          dob: dob || "",
+          gender: gender || "",
         }}
         enableReinitialize
         onSubmit={(values) => {
@@ -59,11 +38,11 @@ function SalesDetails({
           <Grid container spacing={2}>
             <Grid item xs={3}>
               <InputText
-                label="Sales Person Name"
-                name="salesPersonName"
+                label="Create Sales Person"
+                name="createsaleperson"
                 type="text"
-                disabled={!isEditing}
-                defaultValue={salesPersonName}
+                // disabled={!isEditing}
+                defaultValue={createsaleperson}
               />
             </Grid>
             <Grid item xs={3}>
@@ -71,7 +50,7 @@ function SalesDetails({
                 label="Email"
                 name="email"
                 type="email"
-                disabled={!isEditing}
+                // disabled={!isEditing}
                 defaultValue={email}
               />
             </Grid>
@@ -80,69 +59,42 @@ function SalesDetails({
                 label="Phone Number"
                 name="phoneNumber"
                 type="text"
-                disabled={!isEditing}
+                // disabled={!isEditing}
                 defaultValue={phoneNumber}
               />
             </Grid>
             <Grid item xs={3}>
               <InputText
-                label="Address"
-                name="address"
-                type="text"
-                disabled={!isEditing}
-                defaultValue={address}
+                label="Country Code"
+                name="countryCode"
+                type="number"
+                // disabled={!isEditing}
+                defaultValue={countryCode}
               />
             </Grid>
             <Grid item xs={3}>
               <InputText
-                label="GST Number"
-                name="gstNumber"
+                label="DOB"
+                name="dob"
                 type="text"
-                disabled={!isEditing}
-                defaultValue={gstNumber}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <InputText
-                label="Pincode"
-                name="pincode"
-                type="text"
-                disabled={!isEditing}
-                defaultValue={pincode}
+                // disabled={!isEditing}
+                defaultValue={dob}
               />
             </Grid>
             <Grid item xs={3}>
               <div>
-                <label className={`${styles.label}`}>Service Type</label>
+                <label className={`${styles.label}`}>Gender</label>
                 <br />
                 <Field
                   as="select"
-                  name="services"
-                  className={`${styles.inputService} px-2 form-control input`}
-                  disabled={!isEditing}
+                  name="gender"
+                  className={`${styles.inputgender} px-2 form-control input`}
+                  // disabled={!isEditing}
                 >
                   <option value="">select</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Both</option>
-                </Field>
-                <br />
-              </div>
-            </Grid>
-            <Grid item xs={3}>
-              <div>
-                <label className={`${styles.label}`}>State</label>
-                <br />
-                <Field
-                  as="select"
-                  name="state"
-                  className={`${styles.inputSalon} px-2 form-control input`}
-                  disabled={!isEditing}
-                >
-                  <option value="">Select</option>
-                  <option value="uttar-pradesh">Uttar Pradesh</option>
-                  <option value="madhya-pradesh">Madhya Pradesh</option>
-                  <option value="andra-pradesh">Andhra Pradesh</option>
                 </Field>
                 <br />
               </div>

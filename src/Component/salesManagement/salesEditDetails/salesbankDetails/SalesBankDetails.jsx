@@ -27,7 +27,7 @@ function BankDetails({ bankDetails }) {
           accountHolderName: bankDetails.accountHolderName || '',
           bankName: bankDetails.bankName || '',
           ifscCode: bankDetails.ifscCode || '',
-          newField: bankDetails.newField || '',
+          address: bankDetails.ALIGAN || '',
         }}
         enableReinitialize
       >
@@ -37,35 +37,35 @@ function BankDetails({ bankDetails }) {
               <InputText
                 label="Account Number"
                 name="accountNumber"
-                disabled={!isEditing}
+                // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="Account Holder Name"
                 name="accountHolderName"
-                disabled={!isEditing}
+                // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="Bank Name"
                 name="bankName"
-                disabled={!isEditing}
+                // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="IFSC Code"
                 name="ifscCode"
-                disabled={!isEditing}
+                // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
-                label="New Field"
-                name="newField"
-                disabled={!isEditing}
+                label="Address"
+                name="address"
+                // disabled={!isEditing}
               />
             </Grid>
           </Grid>

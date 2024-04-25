@@ -1,73 +1,56 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import styles from './SalesGallery.module.css';
+import React from "react";
+import FileUploader from "./../../file-uploder/FileUploder";
+import { Col, Container, Row } from "react-bootstrap";
+import styles from "./SalesGallery.module.css";
 
-function SalesGallery({ salonDetail, bannerImages, galleryImages, bankDetails }) {
-    let images = bankDetails?.documentImageUrl || '';
-    
-    return (
-        <>
-            <div className='d-flex justify-content-between align-items-center'>
-                <h4>Sales Gallery</h4>
+function SalesGallery() {
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="ps-2">Bank Documents</h5>
+          </div>
+          <div className={styles.customDropzone}>
+            <FileUploader />
+          </div>
+        </Col>
+        <Col>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="ps-2">Pan Card</h5>
+          </div>
+          <div className="fileupload ">
+            <FileUploader className={StyleSheet._customDropzone_8j3hy_1} />
+          </div>
+        </Col>
+      </Row>
 
-                <div className='d-flex justify-content-start align-items-center mb-3'>
-                    <button type='submit' className={styles.btn}>Add</button>
-                    <button type='submit' className={styles.btn}>Remove</button>
-                </div>
-            </div>
+      <Row>
+        <Col>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="ps-2 mt-3">Adhar Card Front</h5>
+          </div>
+          <div className="fileupload h-20">
+            <FileUploader className={StyleSheet._customDropzone_8j3hy_1} />
+          </div>
+        </Col>
+        <Col>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5 className="ps-2 mt-3">Adhar Card Back</h5>
+          </div>
+          <div className="fileupload h-20">
+            <FileUploader className={StyleSheet._customDropzone_8j3hy_1} />
+          </div>
+        </Col>
+      </Row>
+      <Row className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center align-items-center">
+          <h5 className="mt-3 text-center">Profile </h5>
+        </div>
 
-            <h5 className='mt-3'>Main Gate Image</h5>
-            <div>
-                <img className={styles.img} src={salonDetail?.mainGateImageUrl} alt="Main Gate" />
-            </div>
-            <hr />
-
-            <div className='d-flex justify-content-between align-items-center'>
-                <h5>Banner Images</h5>
-
-                <div className='d-flex justify-content-start align-items-center mb-3'>
-                    <button type='submit' className={styles.btn}>Add</button>
-                    <button type='submit' className={styles.btn}>Remove</button>
-                </div>
-            </div>
-
-            <div className='d-flex flex-row flex-wrap'>
-                {bannerImages.map((image, index) => (
-                    <img key={index} className={styles.img} src={image} alt={`Banner ${index}`} />
-                ))}
-            </div>
-            <hr />
-
-            <div className='d-flex justify-content-between align-items-center'>
-                <h5>Gallery Images</h5>
-
-                <div className='d-flex justify-content-start align-items-center mb-3'>
-                    <button type='submit' className={styles.btn}>Add</button>
-                    <button type='submit' className={styles.btn}>Remove</button>
-                </div>
-            </div>
-
-            <div className='d-flex flex-row flex-wrap mb-3'>
-                {galleryImages.map((image, index) => (
-                    <img key={index} className={styles.img} src={image} alt={`Gallery ${index}`} />
-                ))}
-            </div>
-            <hr />
-
-            <div className='d-flex justify-content-between align-items-center'>
-                <h5>Personal Attachments</h5>
-
-                <div className='d-flex justify-content-start align-items-center mb-3'>
-                    <button type='submit' className={styles.btn}>Add</button>
-                    <button type='submit' className={styles.btn}>Remove</button>
-                </div>
-            </div>
-
-            <div className='d-flex flex-row flex-wrap mb-3'>
-                <img className={styles.img} src={images} alt="Personal Attachments" />
-            </div>
-        </>
-    );
+        <FileUploader />
+      </Row>
+    </Container>
+  );
 }
-
 export default SalesGallery;
