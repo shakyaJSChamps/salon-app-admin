@@ -9,6 +9,7 @@ import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
+// import { useNavigate } from 'react-router-dom';
 
 
 function EditsalonManagement({ payload, id }) {
@@ -18,7 +19,6 @@ function EditsalonManagement({ payload, id }) {
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
-
 
   useEffect(() => {
     const fetchSalonDetailData = async () => {
@@ -30,7 +30,7 @@ function EditsalonManagement({ payload, id }) {
         setGallaryImages(data?.data?.data?.gallaryImages);
         setWorkingHours(data?.data?.data?.workingHours);
         setService(data?.data?.data?.services);
-        console.log(data)
+        console.log("All Salon Data -> ", data)
       } catch (error) {
         console.error('Error fetching salon details:', error);
       }

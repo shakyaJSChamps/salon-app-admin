@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import styles from '../Services/Services.module.css';
 import InputText from '../../common-component/Inputtext/InputText';
 import { updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
+import { serviceDetailsSchema } from "../../../utils/schema";
+
 
 function Services({ service, salonDetail }) {
     const [editMode, setEditMode] = useState(false);
@@ -30,17 +32,19 @@ function Services({ service, salonDetail }) {
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
+            values.serviceDuration *= 60;
             const response = await updateSalonService(values, salonDetail.id, selectedService.id);
             console.log("serviceDetails ::>", response);
             Notify.success(response.data.message);
             setEditMode(false); // Exit edit mode
         } catch (error) {
-            console.error("API error:", error);
+            // console.error("API error:", error);
             Notify.error(error.message);
         } finally {
             setSubmitting(false);
         }
     };
+
 
 
     return (
@@ -65,71 +69,80 @@ function Services({ service, salonDetail }) {
                 {
                     {
                         serviceName: selectedService ? selectedService.serviceName : '',
-                        duration: selectedService ? selectedService.serviceDuration : '',
-                        price: selectedService ? selectedService.servicePrice : '',
-                        serviceType: selectedService ? selectedService.type : '',
-                        categoryId: selectedService ? selectedService.categoryId : ''                }
+                        serviceDuration: selectedService ? selectedService.serviceDuration : '',
+                        servicePrice: selectedService ? selectedService.servicePrice : '',
+                        type: selectedService ? selectedService.type : '',
+                        categoryId: selectedService ? selectedService.categoryId : ''
+                    }
                 }
+                validationSchema={serviceDetailsSchema}
                 onSubmit={editDetails}
                 enableReinitialize
             >
                 {({ handleChange, values, isSubmitting }) => (
-                <Form Form id="serviceDetailsForm">
-                    <Grid container spacing={2} className='mb-3'>
-                        <Grid item xs={3}>
-                            <label className={styles.bold}>Category Value</label>
-                            <Field
-                                as="select"
-                                name="serviceName"
-                                className={`${styles.inputSalon} px-2 form-control input`}
-                                disabled={!editMode}
-                                onChange={handleServiceChange}
-                            >
-                                <>
-                                    {service.map((service, index) => (
-                                        <option key={index} value={service.serviceName}>
-                                            {service.serviceName}
-                                        </option>
-                                    ))}
-                                </>
+                    <Form Form id="serviceDetailsForm">
+                        <Grid container spacing={2} className='mb-3'>
+                            <Grid item xs={3}>
+                                <label className={styles.bold}>Category Name</label>
+                                <Field
+                                    as="select"
+                                    name="serviceName"
+                                    type="text"
+                                    className={`${styles.inputSalon} px-2 form-control input`}
+                                    disabled={!editMode}
+                                    onChange={handleServiceChange}
+                                >
+                                    <>
+                                        {service.map((service, index) => (
+                                            <option key={index} value={service.serviceName}>
+                                                {service.serviceName}
+                                            </option>
+                                        ))}
+                                    </>
 
-                            </Field>
-                        </Grid>
+                                </Field>
+                            </Grid>
 
-                        <Grid item xs={3}>
-                            <InputText
-                                label="Duration"
-                                name="duration"
-                                type="text"
-                                disabled={!editMode}
-                                onChange={handleChange}
-                                value={values.duration}
-                            />
-                        </Grid>
+                            <Grid item xs={3}>
+                                <InputText
+                                    label="Duration"
+                                    name="serviceDuration"
+                                    type="number"
+                                    disabled={!editMode}
+                                    onChange={handleChange}
+                                    value={values.serviceDuration}
+                                />
+                                <ErrorMessage name="serviceDuration" component="div" className={styles.error} />
 
-                        <Grid item xs={3}>
-                            <InputText
-                                label="Price"
-                                name="price"
-                                type="text"
-                                disabled={!editMode}
-                                onChange={handleChange}
-                                value={values.price}
-                            />
-                        </Grid>
+                            </Grid>
 
-                        <Grid item xs={3}>
-                            <InputText
-                                label="Service Type"
-                                name="serviceType"
-                                type="text"
-                                disabled={!editMode}
-                                onChange={handleChange}
-                                value={values.serviceType}
-                            />
+                            <Grid item xs={3}>
+                                <InputText
+                                    label="Price"
+                                    type="number"
+                                    name="servicePrice"
+                                    disabled={!editMode}
+                                    onChange={handleChange}
+                                    value={values.servicePrice}
+                                />
+                                <ErrorMessage name="servicePrice" component="div" className={styles.error} />
+
+                            </Grid>
+
+                            <Grid item xs={3}>
+                                <InputText
+                                    label="Service Type"
+                                    name="type"
+                                    type="text"
+                                    disabled={!editMode}
+                                    onChange={handleChange}
+                                    value={values.type}
+                                />
+                                <ErrorMessage name="type" component="div" className={styles.error} />
+
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Form>
+                    </Form>
                 )}
             </Formik>
         </>

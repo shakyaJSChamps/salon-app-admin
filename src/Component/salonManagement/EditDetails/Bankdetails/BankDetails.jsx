@@ -6,6 +6,7 @@ import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateBankDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
+import {bankDetailsSchema} from "../../../../utils/schema";
 
 function BankDetails({ bankDetails }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -53,6 +54,7 @@ function BankDetails({ bankDetails }) {
                     bankName: bankDetails.bankName || '',
                     ifscCode: bankDetails.ifscCode || '',
                 }}
+                validationSchema={bankDetailsSchema}
                 onSubmit={editDetails}
                 enableReinitialize
             >
@@ -67,6 +69,7 @@ function BankDetails({ bankDetails }) {
                                     onChange={handleChange}
                                     value={values.accountNumber}
                                 />
+                                <ErrorMessage name="accountNumber" component="div" className={styles.error} />
                             </Grid>
                             <Grid item xs={4}>
                                 <InputText
@@ -76,6 +79,7 @@ function BankDetails({ bankDetails }) {
                                     onChange={handleChange}
                                     value={values.accountHolderName}
                                 />
+                                <ErrorMessage name="accountHolderName" component="div" className={styles.error} />
                             </Grid>
                             <Grid item xs={4}>
                                 <InputText
@@ -85,6 +89,8 @@ function BankDetails({ bankDetails }) {
                                     onChange={handleChange}
                                     value={values.bankName}
                                 />
+                                <ErrorMessage name="bankName" component="div" className={styles.error} />
+
                             </Grid>
                             <Grid item xs={4}>
                                 <InputText
@@ -94,6 +100,7 @@ function BankDetails({ bankDetails }) {
                                     onChange={handleChange}
                                     value={values.ifscCode}
                                 />
+                                <ErrorMessage name="ifscCode" component="div" className={styles.error} />
                             </Grid>
                         </Grid>
                     </Form>

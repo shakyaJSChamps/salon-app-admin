@@ -47,18 +47,6 @@ function SalonOwnerDetails() {
               <InputText label="Date of Birth" name="dob" type='date' />
             </Grid>
 
-            {/* <Grid item xs={4}>
-              <FileUploader label=" Aadhar Front" name="aadharFront" />
-            </Grid>
-
-            <Grid item xs={4}>
-              <FileUploader label=" Aadhar Back" name="aadharBack" />
-            </Grid>
-
-            <Grid item xs={4}>
-              <FileUploader label="Pan Card" name="panCard" /> 
-  </Grid>*/}
-
             <Grid item xs={4}>
               <div>
                 <label className={`${styles.gender}`}>

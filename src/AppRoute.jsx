@@ -3,6 +3,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
 const SalesWrapper = lazy(()=>import("./Component/container/SalesWrapper"));
+import EditsalonManagement from "./Component/salonManagement/EditDetails/EditsalonManagement";
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
@@ -43,6 +44,7 @@ const Error = lazy(() => import("../src/Component/Error"));
 const ProtectedRoutes = ({ authToken }) => {
   return authToken ? <Layout /> : <Navigate to="/account/login" />;
 };
+ 
 
 const AppRoute = (props) => {
   const _routes = [
@@ -67,7 +69,10 @@ const AppRoute = (props) => {
         {
           path: "salon-management",
           element: <SalonManagement />,
-          children: [{ path: "details", element: <SaloonDetails /> }],
+          children: [{ path: "details", element: <SaloonDetails /> },
+          { path: "userId/:userId", element: <EditsalonManagement/> }
+          ],
+
         },
         // { path: "freelance-management", element: <FreelanceManagement /> },
         { path: "service-type-management", element: <ServiceTypeMan /> },
