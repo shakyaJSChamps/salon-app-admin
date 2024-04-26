@@ -61,6 +61,13 @@ function EditsalonManagement({ payload, id }) {
         <hr />
       </Row>
 
+      <Row>
+        <Col md={12}>
+          <Services service={service} salonDetail={salonDetail} />
+        </Col>
+        <hr />
+      </Row>
+
       {/* <Row>
         <Col md={12}>
           <ManageStaff />
@@ -71,13 +78,6 @@ function EditsalonManagement({ payload, id }) {
       <Row>
         <Col md={12}>
           <SalonTime workingHours={workingHours} />
-        </Col>
-        <hr />
-      </Row>
-
-      <Row>
-        <Col md={12}>
-          <Services service={service} salonDetail={salonDetail} />
         </Col>
         <hr />
       </Row>
