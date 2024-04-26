@@ -11,7 +11,7 @@ import { serviceDetailsSchema } from "../../../utils/schema";
 function Services({ service, salonDetail }) {
     const [editMode, setEditMode] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
-
+    const [serviceDurationInMinutes, setServiceDurationInMinutes] = useState(null);
 
     // Set default selected service when component mounts
     useEffect(() => {
@@ -19,6 +19,12 @@ function Services({ service, salonDetail }) {
             setSelectedService(service[0]);
         }
     }, [service]);
+
+    useEffect(() => {
+        if (selectedService) {
+            setServiceDurationInMinutes(selectedService.serviceDuration / 60);
+        }
+    }, [selectedService]);
 
     const handleEditClick = () => {
         setEditMode(!editMode);
@@ -32,7 +38,7 @@ function Services({ service, salonDetail }) {
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
-            values.serviceDuration *= 60;
+            values.serviceDuration = values.serviceDuration * 60;
             const response = await updateSalonService(values, salonDetail.id, selectedService.id);
             console.log("serviceDetails ::>", response);
             Notify.success(response.data.message);
@@ -44,8 +50,6 @@ function Services({ service, salonDetail }) {
             setSubmitting(false);
         }
     };
-
-
 
     return (
         <>
@@ -69,7 +73,7 @@ function Services({ service, salonDetail }) {
                 {
                     {
                         serviceName: selectedService ? selectedService.serviceName : '',
-                        serviceDuration: selectedService ? selectedService.serviceDuration : '',
+                        serviceDuration: selectedService ? serviceDurationInMinutes : '',
                         servicePrice: selectedService ? selectedService.servicePrice : '',
                         type: selectedService ? selectedService.type : '',
                         categoryId: selectedService ? selectedService.categoryId : ''

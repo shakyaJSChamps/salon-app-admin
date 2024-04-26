@@ -1,8 +1,8 @@
-.bold{
+.bold {
     font-weight: 500;
 }
 
-.btn{
+.btn {
     padding: 3px 20px;
     background-color: #000;
     color: #fff;
@@ -12,7 +12,14 @@
     font-size: 11px;
 }
 
-.error{
+.error {
     color: red;
     font-size: 15px;
 }
+
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }

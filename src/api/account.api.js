@@ -51,7 +51,7 @@ export const salonDetails = (payload, id) =>
   HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload, id);
 
 export const updateBankDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateBankDetails(id), payload, id);
+  HTTP.Request(methods.PUT, __endpoint_updateBankDetails(id), payload);
 
   export const updateSalonService = (payload, salonid,id) =>
   HTTP.Request(methods.PUT, __endpoint_updateSalonService(salonid,id), payload, salonid,id);

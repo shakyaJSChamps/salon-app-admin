@@ -15,10 +15,11 @@ function BankDetails({ bankDetails }) {
         setIsEditing(!isEditing);
     };
 
+    console.log(bankDetails.salonId)
+
     const editDetails = async (values, { setSubmitting }) => {
         try {
             const response = await updateBankDetails(values, bankDetails.salonId);
-            console.log(bankDetails.id)
             console.log("bankDetails ::>", response);
             Notify.success(response.data.message);
             setIsEditing(false); // Exit edit mode
