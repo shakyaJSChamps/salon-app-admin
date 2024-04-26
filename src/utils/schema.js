@@ -61,9 +61,15 @@ export const salonDetailsSchema = Yup.object().shape({
 });
 
 export const serviceDetailsSchema = Yup.object().shape({
+  // serviceDuration: Yup.string()
+  //   .required('Duration is required')
+  //   .matches(/^[a-zA-Z0-9\s]+$/, 'Duration must consist only of letters, digits, and spaces'),
+  // servicePrice: Yup.string()
+  //   .required('Price is required')
+  //   .matches(/^\d+$/, 'Price must contain only digits'),
   serviceDuration: Yup.string()
     .required('Duration is required')
-    .matches(/^[a-zA-Z0-9\s]+$/, 'Duration must consist only of letters, digits, and spaces'),
+    .matches(/^\d+$/, 'Duration must contain only digits'),
   servicePrice: Yup.string()
     .required('Price is required')
     .matches(/^\d+$/, 'Price must contain only digits'),

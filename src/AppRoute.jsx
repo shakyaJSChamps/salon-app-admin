@@ -70,7 +70,7 @@ const AppRoute = (props) => {
           path: "salon-management",
           element: <SalonManagement />,
           children: [{ path: "details", element: <SaloonDetails /> },
-          { path: "userId/:userId", element: <EditsalonManagement/> }
+          { path: ":userId", element: <EditsalonManagement/> }
           ],
 
         },

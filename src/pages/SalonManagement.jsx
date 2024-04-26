@@ -34,7 +34,7 @@ const SaloonManagement = () => {
   const handleRowClick = (row) => {
     // setModalShow(true);
     setSelectedRow(row); 
-    navigate(`/salon-management/userId/${row.id}`);
+    navigate(`/salon-management/${row.id}`);
   };
 
   const handlePageChange = (page) => {
