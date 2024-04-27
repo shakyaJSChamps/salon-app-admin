@@ -5,14 +5,13 @@ import SalesBankDetails from "../salesManagement/salesEditDetails/salesbankDetai
 import SalesGallery from "../salesManagement/SalesGallery/SalesGallery";
 import SalesButton from "./salesButton/salesButton";
 
-const SalesCreate = ({ selectedSalesPerson }) => {
-  console.log("SalesPersonData ::", selectedSalesPerson);
+const SalesCreate = () => {
   const [bankDetailsData, setBankDetailsData] = useState({
-    accountNumber: "600000000",
-    accountHolderName: "RAKesh",
-    bankName: "RAKesh SBI",
-    ifscCode: "Rakesh12222",
-    address: "ALIGAN",
+    accountNumber: "",
+    accountHolderName: "",
+    bankName: "",
+    ifscCode: "",
+    address: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -44,7 +43,7 @@ const SalesCreate = ({ selectedSalesPerson }) => {
         </Row>
         <Row>
           <Col md={12}>
-            <SalesDetails salesPersonData={selectedSalesPerson} />
+            <SalesDetails  />
           </Col>
         </Row>
         <hr />
