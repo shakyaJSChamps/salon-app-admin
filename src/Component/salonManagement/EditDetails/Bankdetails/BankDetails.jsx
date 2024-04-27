@@ -8,6 +8,7 @@ import { updateBankDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import {bankDetailsSchema} from "../../../../utils/schema";
 
+
 function BankDetails({ bankDetails }) {
     const [isEditing, setIsEditing] = useState(false);
 
@@ -20,7 +21,7 @@ function BankDetails({ bankDetails }) {
     const editDetails = async (values, { setSubmitting }) => {
         try {
             const response = await updateBankDetails(values, bankDetails.salonId);
-            console.log("bankDetails ::>", response);
+            console.log("bankDetails ->", response);
             Notify.success(response.data.message);
             setIsEditing(false); // Exit edit mode
         } catch (error) {

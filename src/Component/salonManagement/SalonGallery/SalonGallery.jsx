@@ -52,7 +52,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, bankDetails })
                     <img key={index} className={styles.img} src={image} alt={`Banner ${index}`} />
                 ))}
             </div>
-            <hr/>
+            <hr />
 
             <div className=' d-flex justify-content-between align-items-center'>
                 <h5> Personal Attachments</h5>
@@ -64,11 +64,13 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, bankDetails })
             </div>
 
             <div className='d-flex flex-row flex-wrap mb-3'>
-                    <img className={styles.img} src={images} alt="Loading" />
+                <img
+                    className={styles.img}
+                    src={images}
+                    alt="Loading"
+                />
             </div>
         </>
-
-
     )
 }
 
