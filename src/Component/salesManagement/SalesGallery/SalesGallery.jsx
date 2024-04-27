@@ -44,11 +44,12 @@ function SalesGallery() {
         </Col>
       </Row>
       <Row className="d-flex justify-content-center align-items-center">
-        <div className="d-flex justify-content-center align-items-center">
-          <h5 className="mt-3 text-center">Profile </h5>
+        <div className="d-flex justify-content-between align-items-center">
+          <h5 className="ps-2 mt-3">Profile </h5>
         </div>
-
-        <FileUploader />
+        <div className="fileupload h-20">
+          <FileUploader className={StyleSheet._customDropzone_8j3hy_1} />
+        </div>
       </Row>
     </Container>
   );

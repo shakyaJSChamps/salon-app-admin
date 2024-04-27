@@ -97,7 +97,7 @@ const AddServiceType = (props) => {
           className="d-flex flex-column "
           onSubmit={isEditMode ? editService : addService}
         >
-          <div className="d-flex flex-column  mb-2">
+          <div className="d-flex flex-column mt-2 mb-2">
             {/* <label className="fw-bold pt-2">Name</label> */}
             <InputText
               type="text"
@@ -118,9 +118,11 @@ const AddServiceType = (props) => {
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
         </div> */}
-          <FileUploader />
+          <div className="mt-4">
+            <FileUploader />
+          </div>
 
-          <div className="d-flex justify-content-center pt-4">
+          <div className="d-flex justify-content-center mt-5">
             <button
               type="submit"
               className={`add-service-btn mt-1 ${
