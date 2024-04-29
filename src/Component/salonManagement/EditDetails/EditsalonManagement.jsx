@@ -3,7 +3,7 @@ import SalonDetails from './Salondetails/SalonDetails'
 import { Col, Row } from 'react-bootstrap';
 import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
 import BankDetails from './Bankdetails/BankDetails.jsx';
-import ManageStaff from './Managestaff/ManageStaff.jsx';
+// import ManageStaff from './Managestaff/ManageStaff.jsx';
 import SalonTime from './Salontime/SalonTime.jsx';
 import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
@@ -19,6 +19,7 @@ function EditsalonManagement({ payload, id }) {
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
+  const [salonOwner, setSalonOwner] = useState([]);
 
   useEffect(() => {
     const fetchSalonDetailData = async () => {
@@ -30,7 +31,8 @@ function EditsalonManagement({ payload, id }) {
         setGallaryImages(data?.data?.data?.gallaryImages);
         setWorkingHours(data?.data?.data?.workingHours);
         setService(data?.data?.data?.services);
-        console.log("All Salon Data -> ", data)
+        setSalonOwner(data?.data?.data?.salonOwner);
+        console.log("All Salon Data -> ", data);
       } catch (error) {
         console.error('Error fetching salon details:', error);
       }
@@ -49,7 +51,7 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <SalonOwnerDetails />
+          <SalonOwnerDetails salonOwner={salonOwner}/>
         </Col>
         <hr />
       </Row>
@@ -89,6 +91,7 @@ function EditsalonManagement({ payload, id }) {
             bannerImages={bannerImages}
             gallaryImages={gallaryImages}
             bankDetails={bankDetails}
+            // setFieldValue={handleSetFieldValue}
           />
         </Col>
         <hr />

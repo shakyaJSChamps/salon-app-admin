@@ -10,7 +10,7 @@ export const __endpoint_deleteServiceType = endpoint + "admin/services/categorie
 export const __endpoint_getSalon = endpoint + "admin/salons";
 export const __endpoint_getUser = endpoint + "admin/users";
 export const __endpoint_updateUser =  endpoint + "admin/users/consumers";
-export const __endpoint_fileUploader = endpoint + "b2b/file/presignedUrl";
+export const __endpoint_fileUploader = endpoint + "admin/file/presignedUrl";
 // export const __endpoint_salonDetails = endpoint + "admin/salons";
 
 export const __endpoint_salonDetails = (id) => {
@@ -21,6 +21,10 @@ export const __endpoint_updateSalonDetails = (id) => {
     return `${endpoint}admin/salons/${id}`;
   };
 
+export const __endpoint_updateSalonOwner = (id) => {
+    return `${endpoint}admin/salons/profile/${id}`;
+  };
+
 export const __endpoint_updateBankDetails = (id) => {
     return `${endpoint}admin/salons/${id}/bank`;
   };
@@ -28,5 +32,7 @@ export const __endpoint_updateBankDetails = (id) => {
 export const __endpoint_updateSalonService = (salonid, id) => {
     return `${endpoint}admin/salons/${salonid}/service/${id}`;
   };
+
+export const __endpoint_fileUploaders = endpoint + "admin/file/presignedUrl";
 
 
