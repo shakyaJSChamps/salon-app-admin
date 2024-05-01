@@ -20,7 +20,7 @@ const Setting = lazy(() => import("./pages/Settings"));
 const Layout = lazy(() => import("../src/pages/Layout"));
 const DashBoard = lazy(() => import("../src/pages/Dashboard"));
 const SendNotification = lazy(() => import("../src/pages/SendNotification"));
-const SalesCreate = lazy(() => import("../src/Component/salesManagement/SalesCreate"));
+const SalesCreate = lazy(() => import("../src/Component/salesManagement/Salescreate/SalesCreate"));
 const ReceiveNotification = lazy(() =>
   import("../src/pages/ReceiveNotification")
 );

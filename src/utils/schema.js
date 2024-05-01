@@ -44,6 +44,7 @@ export const salonDetailsSchema = Yup.object().shape({
   companyName: Yup.string()
     .required('Company Name is required')
     .min(3, 'Company Name must be at least 3 characters long')
+    .max(30, 'Company Name must be at least 30 characters long')
     .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   gstNumber: Yup.string()
@@ -61,12 +62,6 @@ export const salonDetailsSchema = Yup.object().shape({
 });
 
 export const serviceDetailsSchema = Yup.object().shape({
-  // serviceDuration: Yup.string()
-  //   .required('Duration is required')
-  //   .matches(/^[a-zA-Z0-9\s]+$/, 'Duration must consist only of letters, digits, and spaces'),
-  // servicePrice: Yup.string()
-  //   .required('Price is required')
-  //   .matches(/^\d+$/, 'Price must contain only digits'),
   serviceDuration: Yup.string()
     .required('Duration is required')
     .matches(/^\d+$/, 'Duration must contain only digits'),
@@ -79,4 +74,83 @@ export const serviceDetailsSchema = Yup.object().shape({
     .matches(/^[^\d\s]{4,}$/, 'Service Type must contain only letters and be at least four characters long')
 });
 
+export const salonOwnerDetailsSchema = Yup.object().shape({
+  address: Yup.string().required('Address is required'),
+  dateOfBirth: Yup.date().required('Date of Birth is required'),
+  firstName: Yup.string().required('First Name is required'),
+  gender: Yup.string().required('Gender is required'),
+  lastName: Yup.string().required('Last Name is required'),
+  middleName: Yup.string().required('Middle Name is required'),
+})
+
+
+export const salesDetailsSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .matches(/^\d+$/, 'Phone number must contain only digits')
+    .max(10, 'Phone number cannot exceed 10 digits')
+    .required('Phone number is required'),
+  countryCode: Yup.string()
+    .matches(/^\d+$/, 'Country code must contain only digits')
+    .min(1, 'Country code must be at least 1 digit')
+    .max(3, 'Country code cannot exceed 3 digits') // Adjust max length according to your requirement
+    .required('Country code is required'),
+  firstName: Yup.string()
+    .required('First Name is required')
+    .min(3, 'First Name must be at least 3 characters long')
+    .max(30, 'First Name must be at least 30 characters long')
+    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+  middleName: Yup.string()
+    .required('Middle Name is required')
+    .min(3, 'Middle Name must be at least 3 characters long')
+    .max(30, 'Middle Name must be at least 30 characters long')
+    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+  lastName: Yup.string()
+    .required('Last Name is required')
+    .min(3, 'Last Name must be at least 3 characters long')
+    .max(30, 'Last Name must be at least 30 characters long')
+    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+  dob: Yup.date().required('Date of Birth is required'),
+  gender: Yup.string().required('Gender is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  accountNumber: Yup.string()
+    .required("Account Number is required")
+    .matches(/^[0-9]+$/, 'Account Number must contain only digits')
+    .min(11, "Account Number must be at least 11 digits")
+    .max(16, "Account Number must not exceed 16 digits"),
+  accountHolderName: Yup.string()
+    .required('Account Holder Name is required')
+    .matches(/^[A-Z\s]+$/, 'Account Holder Name must be in capital letters.')
+    .min(3, 'Account Holder Name must have at least 3 letters.')
+    .max(30, 'Account Holder Name must have at most 30 letters.'),
+  bankName: Yup.string()
+    .required('Bank Name is required')
+    .matches(/^[a-zA-Z\s]+$/, 'Bank Name must contain only letters and spaces')
+    .min(3, 'Bank Name must be at least 3 characters long')
+    .max(50, 'Bank Name must not exceed 50 characters'),
+  ifscCode: Yup.string()
+    .required("IFSC Code is required")
+    .matches(/^[A-Z0-9]+$/, 'IFSC Code must contain only uppercase alphabets and digits')
+    .min(11, "IFSC Code must be at least 11 characters"),
+  address: Yup.string().required('Address is required'),
+  bankdocumentImageUrl: Yup.string()
+    .url('Bank document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Bank document image is required'),
+  panCardImageUrl: Yup.string()
+    .url('Pancard document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Pancard document image is required'),
+  aadharFrontImageUrl: Yup.string()
+    .url('Aadhar Front document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Front document image is required'),
+  aadharBackImageUrl: Yup.string()
+    .url('Aadhar Back document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Back document image is required'),
+  profileImageUrl: Yup.string()
+    .url('Profile document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Profile document image is required'),
+})
 

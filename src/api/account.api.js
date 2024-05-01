@@ -15,7 +15,9 @@ import {
   __endpoint_updateSalonService,
   __endpoint_updateSalonDetails,
   __endpoint_fileUploaders,
-  __endpoint_updateSalonOwner
+  __endpoint_updateSalonOwner,
+  __endpoint_getSales,
+  __endpoint_addSalesDetails
 
 } from "../constants/endpoints";
 
@@ -66,3 +68,9 @@ export const updateBankDetails = (payload, id) =>
 
   export const updateSalonOwner = (payload, id) =>
   HTTP.Request(methods.PUT, __endpoint_updateSalonOwner(id), payload);
+
+  export const getSales = (payload) =>
+  HTTP.Request(methods.GET, __endpoint_getSales,payload);
+
+  export const addSalesDetails = (payload) =>
+  HTTP.Request(methods.POST, __endpoint_addSalesDetails, payload);

@@ -114,7 +114,7 @@ function SalonGallery({ salonDetail, bannerImages=[], gallaryImages, bankDetails
                         <img key={index} className={styles.img} src={image} alt={`Banner ${index}`} />
                     ))}
 
-                    {gallaryUrl && <img src={gallaryUrl} className={styles.img} alt="Preview" />}
+                    {/* {gallaryUrl && <img src={gallaryUrl} className={styles.img} />} */}
                 </div>
                 <hr />
             </div>

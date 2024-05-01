@@ -9,8 +9,6 @@ import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
-// import { useNavigate } from 'react-router-dom';
-
 
 function EditsalonManagement({ payload, id }) {
   const [salonDetail, setSalonDetail] = useState([]);

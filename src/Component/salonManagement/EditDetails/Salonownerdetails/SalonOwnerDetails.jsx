@@ -1,16 +1,17 @@
 import React from 'react'
 import { useState } from 'react';
-import { Form, Formik, Field } from "formik";
+import { Form, Formik, Field, ErrorMessage } from "formik";
 import styles from "../Salonownerdetails/Salonownerdetails.module.css";
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateSalonOwner } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
+import { salonOwnerDetailsSchema } from '../../../../utils/schema';
 
 
 
 function SalonOwnerDetails({ salonOwner }) {
-  console.log(salonOwner)
+  // console.log(salonOwner)
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -59,89 +60,96 @@ function SalonOwnerDetails({ salonOwner }) {
           lastName: salonOwner.lastName || '',
           middleName: salonOwner.middleName || '',
         }}
-        // validationSchema={salonOwnerSchema}
+        validationSchema={salonOwnerDetailsSchema}
         onSubmit={updateSalon}
         enableReinitialize
       >
-         {({ handleChange, values, isSubmitting }) => (
-        <Form id="salonOwner">
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <InputText
-                label="First Name"
-                name="firstName"
-                disabled={!isEditing}
-                onChange={handleChange}
-                value={values.firstName}
-              />
-              {/* <ErrorMessage name="accountNumber" component="div" className={styles.error} /> */}
-            </Grid>
-
-            <Grid item xs={4}>
-              <InputText
-                label="Middle Name"
-                name="middleName"
-                disabled={!isEditing}
-                onChange={handleChange}
-                value={values.middleName}
-              />
-            </Grid>
-
-            <Grid item xs={4}>
-              <InputText
-                label="Last Name"
-                name="lastName"
-                disabled={!isEditing}
-                onChange={handleChange}
-                value={values.lastName}
-              />
-            </Grid>
-
-            <Grid item xs={4}>
-              <InputText
-                label="Address"
-                name="address"
-                disabled={!isEditing}
-                onChange={handleChange}
-                value={values.address}
-              />
-            </Grid>
-
-            <Grid item xs={4}>
-              <InputText
-                label="Date of Birth"
-                name="dateOfBirth"
-                disabled={!isEditing}
-                onChange={handleChange}
-                value={values.dateOfBirth}
-              />
-            </Grid>
-
-            <Grid item xs={4}>
-              <div>
-                <label className={`${styles.gender}`}>
-                  Gender
-                </label><br />
-                <Field
-                  as="select"
-                  name="gender"
-                  className={`${styles.inputGender} px-2 form-control input`}
+        {({ handleChange, values, isSubmitting }) => (
+          <Form id="salonOwner">
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <InputText
+                  label="First Name"
+                  name="firstName"
                   disabled={!isEditing}
                   onChange={handleChange}
-                  value={values.gender}
-                >
-                  <option value="">{values.gender}</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </Field><br />
+                  value={values.firstName}
+                />
+                <ErrorMessage name="firstName" component="div" className={styles.error} />
+              </Grid>
 
-                {/* <ErrorMessage name="gender" className={styles.formError} component="div" /> */}
-              </div>
+              <Grid item xs={4}>
+                <InputText
+                  label="Middle Name"
+                  name="middleName"
+                  disabled={!isEditing}
+                  onChange={handleChange}
+                  value={values.middleName}
+                />
+                <ErrorMessage name="middleName" component="div" className={styles.error} />
+
+              </Grid>
+
+              <Grid item xs={4}>
+                <InputText
+                  label="Last Name"
+                  name="lastName"
+                  disabled={!isEditing}
+                  onChange={handleChange}
+                  value={values.lastName}
+                />
+                <ErrorMessage name="lastName" component="div" className={styles.error} />
+
+              </Grid>
+
+              <Grid item xs={4}>
+                <InputText
+                  label="Address"
+                  name="address"
+                  disabled={!isEditing}
+                  onChange={handleChange}
+                  value={values.address}
+                />
+                <ErrorMessage name="address" component="div" className={styles.error} />
+              </Grid>
+
+              <Grid item xs={4}>
+                <InputText
+                  label="Date of Birth"
+                  name="dateOfBirth"
+                  type="date"
+                  disabled={!isEditing}
+                  onChange={handleChange}
+                  value={values.dateOfBirth}
+                />
+                <ErrorMessage name="dateOfBirth" component="div" className={styles.error} />
+              </Grid>
+
+              <Grid item xs={4}>
+                <div>
+                  <label className={`${styles.gender}`}>
+                    Gender
+                  </label><br />
+                  <Field
+                    as="select"
+                    name="gender"
+                    className={`${styles.inputGender} px-2 form-control input`}
+                    disabled={!isEditing}
+                    onChange={handleChange}
+                    value={values.gender}
+                  >
+                    <option value="">{values.gender}</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </Field><br />
+
+                  <ErrorMessage name="gender" component="div" className={styles.error}/>
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
-        </Form>
-          )}
+          </Form>
+        )}
       </Formik >
     </>
   )

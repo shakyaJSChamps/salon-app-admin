@@ -36,3 +36,9 @@ export const __endpoint_updateSalonService = (salonid, id) => {
 export const __endpoint_fileUploaders = endpoint + "admin/file/presignedUrl";
 
 
+export const __endpoint_getSales = endpoint + "admin/sales/user";
+
+export const __endpoint_addSalesDetails = endpoint + "admin/sales/user";
+
+
+
