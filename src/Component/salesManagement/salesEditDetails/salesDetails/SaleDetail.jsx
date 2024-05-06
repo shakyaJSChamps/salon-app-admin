@@ -73,13 +73,7 @@ function SalesDetails({selectedSalesPerson,
               />
             </Grid>
             <Grid item xs={3}>
-              <InputText
-                label="DOB"
-                name="dob"
-                type="text"
-                // disabled={!isEditing}
-                defaultValue={dob}
-              />
+              <InputText label="Date of Birth" name="dob" type='date' />
             </Grid>
             <Grid item xs={3}>
               <div>
