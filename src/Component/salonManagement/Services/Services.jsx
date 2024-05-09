@@ -3,149 +3,163 @@ import { Grid } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import styles from '../Services/Services.module.css';
 import InputText from '../../common-component/Inputtext/InputText';
-import { updateSalonService } from '../../../../src/api/account.api';
+import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
-import { serviceDetailsSchema } from "../../../utils/schema";
+import AddService from './Addservice/AddService.jsx';
 
 
 function Services({ service, salonDetail }) {
-    const [editMode, setEditMode] = useState(false);
-    const [selectedService, setSelectedService] = useState(null);
-    const [serviceDurationInMinutes, setServiceDurationInMinutes] = useState(null);
-
-    // Set default selected service when component mounts
-    useEffect(() => {
-        if (service.length > 0) {
-            setSelectedService(service[0]);
-        }
-    }, [service]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [services, setServices] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        if (selectedService) {
-            setServiceDurationInMinutes(selectedService.serviceDuration / 60);
+        const getServiceTypes = async () => {
+            try {
+                const response = await getServiceType();
+                const responseData = response.data.data;
+                setServices(responseData);
+            } catch (error) {
+                Notify.error(error.message);
+            }
         }
-    }, [selectedService]);
+        getServiceTypes()
+    }, []);
 
     const handleEditClick = () => {
-        setEditMode(!editMode);
+        setIsEditing(!isEditing);
     };
 
-    const handleServiceChange = (event) => {
-        const selectedServiceName = event.target.value;
-        const foundService = service.find(serv => serv.serviceName === selectedServiceName);
-        setSelectedService(foundService);
-    };
-
-    const editDetails = async (values, { setSubmitting }) => {
+    const editDetails = async (values, index) => {
         try {
-            values.serviceDuration = values.serviceDuration * 60;
-            const response = await updateSalonService(values, salonDetail.id, selectedService.id);
-            console.log("serviceDetails ::>", response);
-            Notify.success(response.data.message);
-            setEditMode(false); // Exit edit mode
+            const response = await updateSalonService(values[index], salonDetail.id, values[index].id);
+            Notify.success(response.data.message); // Display success notification
         } catch (error) {
-            // console.error("API error:", error);
-            Notify.error(error.message);
-        } finally {
-            setSubmitting(false);
+            Notify.error(error.message); // Handle API errors
         }
     };
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <h4>Services</h4>
-
-                <div className="d-flex justify-content-start align-items-center mb-3">
-                    {!editMode && (
+            <div className='d-flex justify-content-between align-items-center'>
+                <h4 className={styles.color}>Services</h4>
+                <div className="d-flex justify-content-start align-items-center mb-3 gap-1">
+                    {!isEditing && (
                         <button type="button" className={styles.btn} onClick={handleEditClick}>
                             Edit
                         </button>
                     )}
-                    {editMode && (
-                        <button type="submit" className={styles.btn} form="serviceDetailsForm">
-                            Save
-                        </button>
-                    )}
+
+                    <button type="button" className={styles.btn} onClick={handleOpen}>
+                        Add
+                    </button>
                 </div>
             </div>
-            <Formik initialValues=
-                {
-                    {
-                        serviceName: selectedService ? selectedService.serviceName : '',
-                        serviceDuration: selectedService ? serviceDurationInMinutes : '',
-                        servicePrice: selectedService ? selectedService.servicePrice : '',
-                        type: selectedService ? selectedService.type : '',
-                        categoryId: selectedService ? selectedService.categoryId : ''
-                    }
-                }
-                validationSchema={serviceDetailsSchema}
-                onSubmit={editDetails}
+
+            <AddService open={open} handleClose={handleClose} /> {/* Render AddSales component */}
+
+            <Formik
+                initialValues={{
+                    services: service.map((serviceItem) => ({
+                        id: serviceItem.id,
+                        categoryId: serviceItem.categoryId || '',
+                        serviceName: serviceItem.serviceName || '',
+                        serviceDuration: serviceItem.serviceDuration || '',
+                        servicePrice: serviceItem.servicePrice || '',
+                        type: serviceItem.type || ''
+                    }))
+                }}
                 enableReinitialize
+                onSubmit={() => { }}
             >
-                {({ handleChange, values, isSubmitting }) => (
-                    <Form Form id="serviceDetailsForm">
-                        <Grid container spacing={2} className='mb-3'>
-                            <Grid item xs={3}>
-                                <label className={styles.bold}>Category Name</label>
-                                <Field
-                                    as="select"
-                                    name="serviceName"
-                                    type="text"
-                                    className={`${styles.inputSalon} px-2 form-control input`}
-                                    disabled={!editMode}
-                                    onChange={handleServiceChange}
-                                >
-                                    <>
-                                        {service.map((service, index) => (
-                                            <option key={index} value={service.serviceName}>
-                                                {service.serviceName}
+                {({ handleChange, values }) => (
+                    <Form id="service" >
+                        {values.services.map((serviceItem, index) => (
+                            <Grid container spacing={2} className='mb-3' key={index}>
+                                <Grid item xs={2}>
+                                    <InputText
+                                        as="select"
+                                        label="Category"
+                                        name={`services[${index}].categoryId`}
+                                        type="text"
+                                        disabled={!isEditing}
+                                        onChange={(e) => handleChange({
+                                            target: {
+                                                name: `services[${index}].categoryId`,
+                                                value: parseInt(e.target.value) // Convert to number
+                                            }
+                                        })}
+                                        value={serviceItem.categoryId}
+                                        className="form-control input"
+                                    >
+                                        {services.map((category, idx) => (
+                                            <option key={idx} value={parseInt(category.id)}> {/* Convert to number */}
+                                                {category.name}
                                             </option>
                                         ))}
-                                    </>
+                                    </InputText>
 
-                                </Field>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <InputText
+                                        label="Service name"
+                                        type="text"
+                                        name={`services[${index}].serviceName`}
+                                        disabled={!isEditing}
+                                        onChange={handleChange}
+                                        value={serviceItem.serviceName}
+                                    />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <InputText
+                                        label="Duration in Minutes"
+                                        type="number"
+                                        name={`services[${index}].serviceDuration`}
+                                        disabled={!isEditing}
+                                        onChange={handleChange}
+                                        value={serviceItem.serviceDuration}
+                                    />
+                                    <ErrorMessage name={`services[${index}].serviceDuration`} component="div" className={styles.error} />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <InputText
+                                        label="Price"
+                                        type="number"
+                                        name={`services[${index}].servicePrice`}
+                                        disabled={!isEditing}
+                                        onChange={handleChange}
+                                        value={serviceItem.servicePrice}
+                                    />
+                                    <ErrorMessage name={`services[${index}].servicePrice`} component="div" className={styles.error} />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <InputText
+                                        as="select"
+                                        label="Service Type"
+                                        name={`services[${index}].type`}
+                                        type="text"
+                                        disabled={!isEditing}
+                                        onChange={handleChange}
+                                        value={serviceItem.type}
+                                        className="form-control input"
+                                    >
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Both">Both</option>
+                                    </InputText>
+                                    <ErrorMessage name={`services[${index}].type`} component="div" className={styles.error} />
+                                </Grid>
+                                {isEditing && (
+                                    <Grid item xs={2}>
+                                        <button type="button" onClick={() => { editDetails(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>
+                                            Save
+                                        </button>
+                                    </Grid>
+                                )}
                             </Grid>
-
-                            <Grid item xs={3}>
-                                <InputText
-                                    label="Duration"
-                                    name="serviceDuration"
-                                    type="number"
-                                    disabled={!editMode}
-                                    onChange={handleChange}
-                                    value={values.serviceDuration}
-                                />
-                                <ErrorMessage name="serviceDuration" component="div" className={styles.error} />
-
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <InputText
-                                    label="Price"
-                                    type="number"
-                                    name="servicePrice"
-                                    disabled={!editMode}
-                                    onChange={handleChange}
-                                    value={values.servicePrice}
-                                />
-                                <ErrorMessage name="servicePrice" component="div" className={styles.error} />
-
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <InputText
-                                    label="Service Type"
-                                    name="type"
-                                    type="text"
-                                    disabled={!editMode}
-                                    onChange={handleChange}
-                                    value={values.type}
-                                />
-                                <ErrorMessage name="type" component="div" className={styles.error} />
-
-                            </Grid>
-                        </Grid>
+                        ))}
                     </Form>
                 )}
             </Formik>
@@ -154,3 +168,4 @@ function Services({ service, salonDetail }) {
 }
 
 export default Services;
+

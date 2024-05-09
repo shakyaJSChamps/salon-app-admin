@@ -37,6 +37,7 @@ function SalesCreate() {
         aadharFrontImageUrl: values.aadharFrontImageUrl,
         aadharBackImageUrl: values.aadharBackImageUrl,
         profileImageUrl: values.profileImageUrl,
+        upiId: values.upiId
       }
 
       const res = await addSalesDetails(salesData)
@@ -85,11 +86,11 @@ function SalesCreate() {
             aadharFrontImageUrl: "",
             aadharBackImageUrl: "",
             profileImageUrl: "",
+            upiId: ""
           }
         }
         onSubmit={addSales}
         validationSchema={salesDetailsSchema}
-      // enableReinitialize
       >
         {({ setFieldValue }) => (
           <Form id="salesDetails">
@@ -159,8 +160,9 @@ function SalesCreate() {
                 <InputText
                   label="DOB"
                   name="dob"
-                  type="text"
+                  type="date"
                   disabled={!isEditing}
+                  max={new Date().toISOString().split("T")[0]}
                 />
                 <ErrorMessage name="dob" component="div" className={styles.error} />
               </Grid>
@@ -220,6 +222,7 @@ function SalesCreate() {
                 />
                 <ErrorMessage name="bankName" component="div" className={styles.error} />
               </Grid>
+
               <Grid item xs={4}>
                 <InputText
                   label="IFSC Code"
@@ -228,6 +231,16 @@ function SalesCreate() {
                   type="text"
                 />
                 <ErrorMessage name="ifscCode" component="div" className={styles.error} />
+              </Grid>
+
+              <Grid item xs={4}>
+                <InputText
+                  label="UPI Id"
+                  name="upiId"
+                  disabled={!isEditing}
+                  type="text"
+                />
+                <ErrorMessage name="upiId" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
@@ -246,27 +259,27 @@ function SalesCreate() {
             <h4>Personal Attachments</h4>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <SalesImageUploader name="bankdocumentImageUrl" label="Passbook/Cancelcheque" onFileSelect={(e) => handleOnFileSelect(e, "bankdocumentImageUrl", setFieldValue)} />
+                <SalesImageUploader disabled={!isEditing} name="bankdocumentImageUrl" buttonName="Upload" label="Passbook/Cancelcheque" onFileSelect={(e) => handleOnFileSelect(e, "bankdocumentImageUrl", setFieldValue)} />
                 <ErrorMessage name="bankdocumentImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader name="panCardImageUrl" label="Pancard" onFileSelect={(e) => handleOnFileSelect(e, "panCardImageUrl", setFieldValue)} />
+                <SalesImageUploader disabled={!isEditing} name="panCardImageUrl" buttonName="Upload" label="Pancard" onFileSelect={(e) => handleOnFileSelect(e, "panCardImageUrl", setFieldValue)} />
                 <ErrorMessage name="panCardImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader name="aadharFrontImageUrl" label="Aadhar Front" onFileSelect={(e) => handleOnFileSelect(e, "aadharFrontImageUrl", setFieldValue)} />
+                <SalesImageUploader disabled={!isEditing} name="aadharFrontImageUrl" buttonName="Upload" label="Aadhar Front" onFileSelect={(e) => handleOnFileSelect(e, "aadharFrontImageUrl", setFieldValue)} />
                 <ErrorMessage name="aadharFrontImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader name="aadharBackImageUrl" label="Aadhar Back" onFileSelect={(e) => handleOnFileSelect(e, "aadharBackImageUrl", setFieldValue)} />
+                <SalesImageUploader disabled={!isEditing} name="aadharBackImageUrl" buttonName="Upload" label="Aadhar Back" onFileSelect={(e) => handleOnFileSelect(e, "aadharBackImageUrl", setFieldValue)} />
                 <ErrorMessage name="aadharBackImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader name="profileImageUrl" label="Profile Image" onFileSelect={(e) => handleOnFileSelect(e, "profileImageUrl", setFieldValue)} />
+                <SalesImageUploader disabled={!isEditing} name="profileImageUrl" buttonName="Upload" label="Profile Image" onFileSelect={(e) => handleOnFileSelect(e, "profileImageUrl", setFieldValue)} />
                 <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
               </Grid>
             </Grid>

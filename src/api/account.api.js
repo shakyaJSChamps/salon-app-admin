@@ -17,7 +17,11 @@ import {
   __endpoint_fileUploaders,
   __endpoint_updateSalonOwner,
   __endpoint_getSales,
-  __endpoint_addSalesDetails
+  __endpoint_addSalesDetails,
+  __endpoint_salesDetails,
+  __endpoint_updateSaleDetails,
+  __endpoint_updateSalonTime,
+  __endpoint_updateImage
 
 } from "../constants/endpoints";
 
@@ -54,6 +58,9 @@ export const fileUploader = () => {
 export const salonDetails = (payload, id) =>
   HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload, id);
 
+export const salesDetail = (payload, id) =>
+  HTTP.Request(methods.GET, __endpoint_salesDetails(id), payload, id);
+
 export const updateBankDetails = (payload, id) =>
   HTTP.Request(methods.PUT, __endpoint_updateBankDetails(id), payload);
 
@@ -62,6 +69,9 @@ export const updateBankDetails = (payload, id) =>
 
   export const updateSalonDetails = (payload, id) =>
   HTTP.Request(methods.PUT, __endpoint_updateSalonDetails(id), payload, id);
+
+  export const updateSaleDetails = (payload, id) =>
+  HTTP.Request(methods.PUT, __endpoint_updateSaleDetails(id), payload, id);
 
   export const fileUploaders = (payload) => 
   HTTP.Request(methods.GET, __endpoint_fileUploaders, payload);
@@ -74,3 +84,9 @@ export const updateBankDetails = (payload, id) =>
 
   export const addSalesDetails = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addSalesDetails, payload);
+
+  export const updateSalonTime = (payload, id) =>
+    HTTP.Request(methods.PUT, __endpoint_updateSalonTime(id), payload, id);
+
+  export const updateImage = (payload,id) =>
+    HTTP.Request(methods.POST, __endpoint_updateImage(id), payload);

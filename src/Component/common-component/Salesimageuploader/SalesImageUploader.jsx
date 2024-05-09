@@ -1,31 +1,37 @@
 import { useState } from "react";
-export default function SalesImageUploader({ label, onFileSelect, name, ...rest }) {
+export default function SalesImageUploader({ label, onFileSelect, name, buttonName , ...rest }) {
 
     const [file, setFile] = useState("");
-
+    const [imagePreview, setImagePreview] = useState(null);
+    // Handle file select
     const handleOnClick = (e) => {
         e.preventDefault();
         const input = document.querySelector(`input[name=${name}]`);
         input.click();
     }
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setFile(file);
-        onFileSelect(file)
+    const handleFileSelect = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImagePreview(URL.createObjectURL(file)); // Set image preview
+            onFileSelect(file); // Call parent function to handle file select
+        }
     };
+
 
     return (
         <div className='d-flex flex-column mb-1 '>
             <label htmlFor={rest.name} className="" style={{ fontWeight: 500 }}>{label}</label>
+            {imagePreview && <img src={imagePreview} alt="Selected" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />}
             <div>
                 <button type="button" onClick={handleOnClick} className="form-control input">
-                    Upload
+                    {buttonName}
                 </button>
-                <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileChange} />
+                <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileSelect} />
                 <small className="p-2">{file?.name}</small>
             </div>
         </div>
     )
 }
+
 

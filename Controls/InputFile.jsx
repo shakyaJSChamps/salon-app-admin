@@ -2,7 +2,7 @@
 // import style from './controls.module.css'
 import { useState } from "react";
 // import { ErrorMessage } from "formik";
-export default function InputFile({ onFileSelect, name, ...rest }) {
+export default function InputFile({buttonName, onFileSelect, name, ...rest }) {
 
     const [file, setFile] = useState("");
 
@@ -31,7 +31,7 @@ export default function InputFile({ onFileSelect, name, ...rest }) {
                         marginTop: '10px',
                         fontSize: '11px'}}
                             >
-                            Add
+                            {buttonName}
                 </button>
             <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileChange} />
         </div>

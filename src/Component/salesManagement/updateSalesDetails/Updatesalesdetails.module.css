@@ -1,5 +1,4 @@
-
-.btn {
+.button {
     padding: 3px 20px;
     background-color: #000;
     color: #fff;
@@ -9,15 +8,14 @@
     font-size: 11px;
 }
 
-.label{
-    font-weight: 500;
+.mainDiv{
+    background-color: white;
+    padding: 30px;
+    border: 3px solid #eae4e4;
+    border-radius: 5px;
 }
 
 .error{
     color: red;
     font-size: 15px;
-}
-
-.highlight {
-    border: 2px solid #007bff; /* You can change the color as per your preference */
 }

@@ -6,6 +6,7 @@ import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
 import Sales from "../Component/Sales";
+import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 
 
 const SalesPerson = () => {
@@ -112,34 +113,28 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
+ 
+
     {
       name: "City",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.address}</div>
-      ),
-      sortable: true,
-    },
-
-    {
-      name: "SALES PERSON ID",
-      cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
-          {row.userId}
+          {row.address}
         </div>
       ),
       sortable: true,
     },
 
     {
-      name: "Joined on",
+      name: "UPI Id",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
-          {row.dob}
+          {row.upiId}
         </div>
       ),
       sortable: true,
     },
-    
+
 
   ];
 
@@ -162,37 +157,45 @@ const SalesPerson = () => {
 
   return (
     <>
-      <div className="main-table rounded ">
-        <DataTable
-          // title={
-          //   <CustomTitle
-          //     icon={icon}
-          //     title={title}
-          //     setOption={setOption}
-          //     searchByText={searchByText}
-          //   />
-          // }
+      {
+        selectedRow ?
+          <UpdateSalesDetails 
+          id = {selectedRow.userId}
+          />
+          :
+          <div className="main-table rounded ">
+            <DataTable
+              // title={
+              //   <CustomTitle
+              //     icon={icon}
+              //     title={title}
+              //     setOption={setOption}
+              //     searchByText={searchByText}
+              //   />
+              // }
 
-          title={<Sales />}
-          columns={columns}
-          data={salesData}
-          pagination
-          paginationPerPage={perPage}
-          paginationRowsPerPageOptions={[10, 25, 50]}
-          paginationServer
-          paginationTotalRows={totalRows}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handlePerPageChange}
-          fixedHeader
-          fixedHeaderScrollHeight="450px"
-          highlightOnHover
-          onRowClicked={(row) => handleRowClick(row)}
-          progressPending={loading}
-          progressComponent={<TableLoader />}
-          selectedRow={selectedRow}
-          customStyles={customStyles}
-        />
-      </div>
+              title={<Sales />}
+              columns={columns}
+              data={salesData}
+              pagination
+              paginationPerPage={perPage}
+              paginationRowsPerPageOptions={[10, 25, 50]}
+              paginationServer
+              paginationTotalRows={totalRows}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handlePerPageChange}
+              fixedHeader
+              fixedHeaderScrollHeight="450px"
+              highlightOnHover
+              onRowClicked={(row) => handleRowClick(row)}
+              progressPending={loading}
+              progressComponent={<TableLoader />}
+              selectedRow={selectedRow}
+              customStyles={customStyles}
+            />
+          </div>
+      }
+
     </>
   );
 };

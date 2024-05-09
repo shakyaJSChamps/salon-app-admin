@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
 
-function EditsalonManagement({ payload, id }) {
+function EditsalonManagement({ payload, id ,onServicesChange}) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
@@ -47,12 +47,12 @@ function EditsalonManagement({ payload, id }) {
         <hr />
       </Row>
 
-      <Row>
+      {/* <Row>
         <Col md={12}>
           <SalonOwnerDetails salonOwner={salonOwner}/>
         </Col>
         <hr />
-      </Row>
+      </Row> */}
 
       <Row>
         <Col md={12}>
@@ -63,7 +63,9 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <Services service={service} salonDetail={salonDetail} />
+          <Services service={service} 
+          salonDetail={salonDetail} 
+          />
         </Col>
         <hr />
       </Row>
@@ -77,7 +79,7 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <SalonTime workingHours={workingHours} />
+          <SalonTime workingHours={workingHours} salonDetail={salonDetail}/>
         </Col>
         <hr />
       </Row>
@@ -88,8 +90,6 @@ function EditsalonManagement({ payload, id }) {
             salonDetail={salonDetail}
             bannerImages={bannerImages}
             gallaryImages={gallaryImages}
-            bankDetails={bankDetails}
-            // setFieldValue={handleSetFieldValue}
           />
         </Col>
         <hr />

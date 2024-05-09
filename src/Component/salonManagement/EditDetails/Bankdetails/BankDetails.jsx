@@ -6,7 +6,9 @@ import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateBankDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
-import {bankDetailsSchema} from "../../../../utils/schema";
+import { bankDetailsSchema } from "../../../../utils/schema";
+import SalesImageUploader from '../../../common-component/Salesimageuploader/SalesImageUploader';
+import { handleOnFileSelect } from "../../../common-component/Imageuploader/ImageUploader.jsx";
 
 
 function BankDetails({ bankDetails }) {
@@ -18,7 +20,7 @@ function BankDetails({ bankDetails }) {
 
     console.log(bankDetails.salonId)
 
-    const editDetails = async (values, { setSubmitting }) => {
+    const editDetails = async (values) => {
         try {
             const response = await updateBankDetails(values, bankDetails.salonId);
             console.log("bankDetails ->", response);
@@ -27,9 +29,7 @@ function BankDetails({ bankDetails }) {
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
-        } finally {
-            setSubmitting(false);
-        }
+        } 
     };
 
     return (
@@ -55,15 +55,16 @@ function BankDetails({ bankDetails }) {
                     accountHolderName: bankDetails.accountHolderName || '',
                     bankName: bankDetails.bankName || '',
                     ifscCode: bankDetails.ifscCode || '',
+                    documentImageUrl: bankDetails.documentImageUrl || '',
                 }}
                 validationSchema={bankDetailsSchema}
                 onSubmit={editDetails}
                 enableReinitialize
             >
-                {({ handleChange, values, isSubmitting }) => (
+                {({ handleChange, values, setFieldValue}) => (
                     <Form id="bankDetailsForm">
                         <Grid container spacing={2} className='mb-3'>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <InputText
                                     label="Account Number"
                                     name="accountNumber"
@@ -73,7 +74,7 @@ function BankDetails({ bankDetails }) {
                                 />
                                 <ErrorMessage name="accountNumber" component="div" className={styles.error} />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <InputText
                                     label="Account Holder Name"
                                     name="accountHolderName"
@@ -83,7 +84,7 @@ function BankDetails({ bankDetails }) {
                                 />
                                 <ErrorMessage name="accountHolderName" component="div" className={styles.error} />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <InputText
                                     label="Bank Name"
                                     name="bankName"
@@ -94,7 +95,7 @@ function BankDetails({ bankDetails }) {
                                 <ErrorMessage name="bankName" component="div" className={styles.error} />
 
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <InputText
                                     label="IFSC Code"
                                     name="ifscCode"
@@ -103,6 +104,15 @@ function BankDetails({ bankDetails }) {
                                     value={values.ifscCode}
                                 />
                                 <ErrorMessage name="ifscCode" component="div" className={styles.error} />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <div className='d-flex flex-column'>
+                                    <label>Cancelcheque/Passbook</label>
+                                    {isEditing ? <SalesImageUploader name="documentImageUrl" disabled={!isEditing} buttonName="Update" onFileSelect={(e) => handleOnFileSelect(e, "documentImageUrl", setFieldValue)}
+                                    /> : <img src={values.documentImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    }
+                                </div>
                             </Grid>
                         </Grid>
                     </Form>
