@@ -22,7 +22,7 @@ const DashBoard = lazy(() => import("../src/pages/Dashboard"));
 const SendNotification = lazy(() => import("../src/pages/SendNotification"));
 const SalesCreate = lazy(() => import("../src/Component/salesManagement/Salescreate/SalesCreate"));
 const ReceiveNotification = lazy(() =>
-  import("../src/pages/ReceiveNotification")
+  import("../src/Component/notification/ReceiveNotification")
 );
 const Authentication = lazy(() =>
   import("../src/Component/authentication/Authentication")
