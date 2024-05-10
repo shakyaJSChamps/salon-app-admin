@@ -92,7 +92,7 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
             gallaryImages={gallaryImages}
           />
         </Col>
-        <hr />
+        {/* <hr /> */}
       </Row>
 
     </div>

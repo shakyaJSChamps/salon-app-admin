@@ -92,7 +92,7 @@ function Services({ service, salonDetail }) {
                                             }
                                         })}
                                         value={serviceItem.categoryId}
-                                        className="form-control input"
+                                        // className="form-control input"
                                     >
                                         {services.map((category, idx) => (
                                             <option key={idx} value={parseInt(category.id)}> {/* Convert to number */}

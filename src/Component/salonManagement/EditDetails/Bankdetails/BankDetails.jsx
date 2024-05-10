@@ -29,7 +29,7 @@ function BankDetails({ bankDetails }) {
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
-        } 
+        }
     };
 
     return (
@@ -61,7 +61,7 @@ function BankDetails({ bankDetails }) {
                 onSubmit={editDetails}
                 enableReinitialize
             >
-                {({ handleChange, values, setFieldValue}) => (
+                {({ handleChange, values, setFieldValue }) => (
                     <Form id="bankDetailsForm">
                         <Grid container spacing={2} className='mb-3'>
                             <Grid item xs={6}>
@@ -108,7 +108,7 @@ function BankDetails({ bankDetails }) {
 
                             <Grid item xs={6}>
                                 <div className='d-flex flex-column'>
-                                    <label>Cancelcheque/Passbook</label>
+                                    <label style={{ fontWeight: 500 }}>Cancelcheque/Passbook</label>
                                     {isEditing ? <SalesImageUploader name="documentImageUrl" disabled={!isEditing} buttonName="Update" onFileSelect={(e) => handleOnFileSelect(e, "documentImageUrl", setFieldValue)}
                                     /> : <img src={values.documentImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
                                     }

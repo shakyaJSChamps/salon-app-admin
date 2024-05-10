@@ -8,7 +8,7 @@ const InputText = props => {
       <label htmlFor={name} className={style.bold}>{label}</label>
       <Field
         id={name}
-        className={`${style.control__input} form-control input`}
+        className="form-control input"
         name={name}
         {...rest} />
       {/* <ErrorMessage component="div" name={name} className={style.control__input_error} /> */}

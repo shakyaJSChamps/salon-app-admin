@@ -38,6 +38,22 @@ export default function AddService(props) {
             <Formik>
               <Form id="bankDetailsForm">
                 <Grid container spacing={2} className='mb-3'>
+
+                  <Grid item xs={12}>
+
+                    <InputText
+                      label="Category"
+                      as="select"
+                      name="category"
+                      type="text"
+                      className="Form-control input"
+                    >
+                      <option value="Male">Hair</option>
+                      <option value="Female">Color</option>
+                      <option value="Both">Both</option>
+                    </InputText>
+                  </Grid>
+
                   <Grid item xs={12}>
                     <InputText
                       label="Service Name"

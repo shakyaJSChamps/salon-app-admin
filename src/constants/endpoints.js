@@ -56,4 +56,8 @@ export const __endpoint_updateImage = (id) => {
     return `${endpoint}admin/file/${id}`;
   };
 
+export const __endpoint_deleteImage = (id) => {
+    return `${endpoint}admin/file/salon/${id}`;
+  };
+
 

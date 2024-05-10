@@ -216,11 +216,11 @@ function SalonDetails({ salonDetail }) {
                                     <label className={`${styles.label}`}>
                                         State
                                     </label><br />
-                                    <Field
+                                    <InputText
                                         as="select"
                                         name="state"
                                         type="text"
-                                        className={`${styles.inputSalon} px-2 form-control input`}
+                                        className={` px-2 form-control input`}
                                         disabled={!isEditing}
                                         onChange={handleChange}
                                         value={values.state}
@@ -228,7 +228,7 @@ function SalonDetails({ salonDetail }) {
                                         {indianStates.map(state => (
                                             <option key={state} value={state}>{state}</option>
                                         ))}
-                                    </Field><br />
+                                    </InputText><br />
                                     <ErrorMessage name="state" component="div" className="error" />
                                 </div>
                             </Grid>
