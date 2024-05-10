@@ -11,13 +11,12 @@ import { salonDetailsSchema } from "../../../../utils/schema";
 
 function SalonDetails({ salonDetail }) {
     const [isEditing, setIsEditing] = useState(false);
-    // console.log("SalonDetails  ", salonDetail.id)
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
     };
 
-    const editDetails = async (values, { setSubmitting }) => {
+    const editDetails = async (values) => {
         try {
             const response = await updateSalonDetails(values, salonDetail.id);
             // console.log("salonDetails ::>", response);
@@ -26,10 +25,44 @@ function SalonDetails({ salonDetail }) {
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
-        } finally {
-            setSubmitting(false);
-        }
+        } 
     };
+    const indianStates = [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Telangana",
+        "Tripura",
+        "Uttar Pradesh",
+        "Uttarakhand",
+        "West Bengal",
+        "Andaman and Nicobar Islands",
+        "Chandigarh",
+        "Dadra and Nagar Haveli and Daman and Diu",
+        "Delhi",
+        "Lakshadweep",
+        "Puducherry"
+    ];
 
     return (
         <>
@@ -66,7 +99,7 @@ function SalonDetails({ salonDetail }) {
                 onSubmit={editDetails}
                 enableReinitialize // This enables reinitialization when props change
             >
-                {({ handleChange, values, isSubmitting }) => (
+                {({ handleChange, values}) => (
                     <Form id="salonDetailsForm">
                         <Grid container spacing={2}>
                             <Grid item xs={4}>
@@ -183,23 +216,20 @@ function SalonDetails({ salonDetail }) {
                                     <label className={`${styles.label}`}>
                                         State
                                     </label><br />
-                                    <Field
+                                    <InputText
                                         as="select"
                                         name="state"
                                         type="text"
-                                        className={`${styles.inputSalon} px-2 form-control input`}
+                                        className={` px-2 form-control input`}
                                         disabled={!isEditing}
                                         onChange={handleChange}
                                         value={values.state}
-
                                     >
-                                        <option value="">{values.state}</option>
-                                        <option value="uttar-pradesh">Uttar-Pradesh</option>
-                                        <option value="madhya-pradesh">Madhya-Pradesh</option>
-                                        <option value="andra-pradesh">Andra-Pradesh</option>
-                                    </Field><br />
+                                        {indianStates.map(state => (
+                                            <option key={state} value={state}>{state}</option>
+                                        ))}
+                                    </InputText><br />
                                     <ErrorMessage name="state" component="div" className="error" />
-
                                 </div>
                             </Grid>
                         </Grid>

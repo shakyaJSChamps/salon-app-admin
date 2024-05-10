@@ -1,47 +1,68 @@
-import React, { useState, useEffect } from "react";
-import DataTable from "react-data-table-component";
-import Sales from "../Component/Sales";
+import React, { useEffect, useState } from "react";
 import Profile from "../assets/image/dummy-profile.jpg";
-import SalesDetails from "../Component/salesManagement/salesEditDetails/salesDetails/SaleDetail";
+import { isValidImageUrl } from "../constants";
+import Notify from "../utils/notify";
+import { getSales } from "../api/account.api";
+import DataTable from "react-data-table-component";
+import TableLoader from "../Component/common-component/TableLoader";
+import Sales from "../Component/Sales";
+import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
+
 
 const SalesPerson = () => {
-  const [data, setData] = useState([]);
-  const [selectedSalesPerson, setSelectedSalesPerson] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [perPage, setPerPage] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
+  const [salesData, setSalesData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  // const [option, setOption] = useState("email");
+  const [updatedRowData, setUpdatedRowData] = useState(false);
+
+  const handleRowClick = (row) => {
+    setSelectedRow(row);
+  };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const handlePerPageChange = (newPerPage, page) => {
+    setPerPage(newPerPage);
+    setPage(page);
+  };
+
+  const getSale = async (searchText = "") => {
+    let payload = {
+      page: page,
+      size: perPage,
+      email: searchText,
+    }
+    try {
+      setLoading(true);
+      const response = await getSales(payload);
+      console.log("Sales data -->", response);
+      const salesData = response.data.data.items;
+      setSalesData(salesData);
+      setTotalRows(response.data.data.total);
+      setLoading(false);
+      setUpdatedRowData(false);
+    } catch (error) {
+      Notify.error(error.message);
+    }
+  };
 
   useEffect(() => {
-    // Generate dynamic fake data
-    const generateFakeData = () => {
-      const fakeData = [];
-      for (let i = 1; i <= 30; i++) {
-        fakeData.push({
-          id: i,
-          name: `Person ${i}`,
-          firstName: `First ${i}`,
-          lastName: `Last ${i}`,
-          email: `person${i}@example.com`,
-          active: i % 2 === 0, // Alternate active and inactive
-          phoneNumber: `12345678${i}`,
-          address: `Address ${i}`,
-          createdAt: new Date().toISOString(),
-          profileImageUrl: "https://example.com/profile.jpg",
-          salesPersonId: randomSalesPersonId(), // Generate random Sales Person ID
-          countryCode: "+91",
-          middleName: "Kumar",
-          dob: "2004-01-09",
-          gender: "Male",
-        });
-      }
-      return fakeData;
-    };
+    getSale();
+  }, [perPage, page]);
 
-    // Function to generate random Sales Person ID
-    const randomSalesPersonId = () => {
-      return Math.floor(Math.random() * 10000000000).toString(); // Generate a 10-digit random number
-    };
+  useEffect(() => {
+    updatedRowData && getSale();
+  }, [updatedRowData]);
 
-    // Set dynamic fake data
-    setData(generateFakeData());
-  }, []);
+  const searchByText = (searchText) => {
+    getSale(searchText);
+  };
 
   const columns = [
     {
@@ -50,18 +71,27 @@ const SalesPerson = () => {
       sortable: true,
       width: "300px",
       cell: (row) => (
-        <div className="d-flex ">
+        <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
-            <img
-              src={Profile}
-              alt="Profile"
-              style={{
-                width: 35,
-                height: 35,
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
-            />
+            {isValidImageUrl(row.profileImageUrl) &&
+              isValidImageUrl(row.profileImageUrl) ? (
+              <img
+                src={row.profileImageUrl}
+                alt="Profile"
+                style={{ width: 35, height: 35, borderRadius: "50%" }}
+              />
+            ) : (
+              <img
+                src={Profile}
+                alt="Profile"
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            )}
           </div>
           <div>
             <div
@@ -75,26 +105,37 @@ const SalesPerson = () => {
         </div>
       ),
     },
+
     {
-      name: "Mobile Num",
-      cell: (row) => <div>{row.phoneNumber}</div>,
+      name: "Mobile Number",
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>
+      ),
       sortable: true,
     },
+ 
+
     {
-      name: "Joined On",
-      cell: (row) => <div>{new Date(row.createdAt).toLocaleDateString()}</div>,
+      name: "City",
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          {row.address}
+        </div>
+      ),
       sortable: true,
     },
+
     {
-      name: "Sales Person Id",
-      selector: (row) => row.salesPersonId,
+      name: "UPI Id",
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          {row.upiId}
+        </div>
+      ),
       sortable: true,
     },
-    {
-      name: "Total Sales",
-      cell: () => <div>1100</div>,
-      sortable: true,
-    },
+
+
   ];
 
   const customStyles = {
@@ -114,32 +155,50 @@ const SalesPerson = () => {
     },
   };
 
-  const handleRowClick = (row) => {
-    setSelectedSalesPerson(row);
-  };
-
   return (
     <>
-      <h6>Sales Person</h6>
-      <DataTable
-        title={<Sales />}
-        columns={columns}
-        data={data}
-        pagination
-        highlightOnHover
-        onRowClicked={handleRowClick}
-        customStyles={customStyles}
-      />
-      {selectedSalesPerson && (
-        <>
-          <pre>{JSON.stringify(selectedSalesPerson, null, 2)}</pre>
-          <SalesDetails
-            salesPersonData={selectedSalesPerson}
+      {
+        selectedRow ?
+          <UpdateSalesDetails 
+          id = {selectedRow.userId}
           />
-        </>
-      )}
+          :
+          <div className="main-table rounded ">
+            <DataTable
+              // title={
+              //   <CustomTitle
+              //     icon={icon}
+              //     title={title}
+              //     setOption={setOption}
+              //     searchByText={searchByText}
+              //   />
+              // }
+
+              title={<Sales />}
+              columns={columns}
+              data={salesData}
+              pagination
+              paginationPerPage={perPage}
+              paginationRowsPerPageOptions={[10, 25, 50]}
+              paginationServer
+              paginationTotalRows={totalRows}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handlePerPageChange}
+              fixedHeader
+              fixedHeaderScrollHeight="450px"
+              highlightOnHover
+              onRowClicked={(row) => handleRowClick(row)}
+              progressPending={loading}
+              progressComponent={<TableLoader />}
+              selectedRow={selectedRow}
+              customStyles={customStyles}
+            />
+          </div>
+      }
+
     </>
   );
 };
 
 export default SalesPerson;
+

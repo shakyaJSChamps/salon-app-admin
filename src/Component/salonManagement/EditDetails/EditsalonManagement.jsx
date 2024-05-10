@@ -3,22 +3,21 @@ import SalonDetails from './Salondetails/SalonDetails'
 import { Col, Row } from 'react-bootstrap';
 import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
 import BankDetails from './Bankdetails/BankDetails.jsx';
-import ManageStaff from './Managestaff/ManageStaff.jsx';
+// import ManageStaff from './Managestaff/ManageStaff.jsx';
 import SalonTime from './Salontime/SalonTime.jsx';
 import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
-// import { useNavigate } from 'react-router-dom';
 
-
-function EditsalonManagement({ payload, id }) {
+function EditsalonManagement({ payload, id ,onServicesChange}) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
+  const [salonOwner, setSalonOwner] = useState([]);
 
   useEffect(() => {
     const fetchSalonDetailData = async () => {
@@ -30,7 +29,8 @@ function EditsalonManagement({ payload, id }) {
         setGallaryImages(data?.data?.data?.gallaryImages);
         setWorkingHours(data?.data?.data?.workingHours);
         setService(data?.data?.data?.services);
-        console.log("All Salon Data -> ", data)
+        setSalonOwner(data?.data?.data?.salonOwner);
+        console.log("All Salon Data -> ", data);
       } catch (error) {
         console.error('Error fetching salon details:', error);
       }
@@ -47,16 +47,25 @@ function EditsalonManagement({ payload, id }) {
         <hr />
       </Row>
 
+      {/* <Row>
+        <Col md={12}>
+          <SalonOwnerDetails salonOwner={salonOwner}/>
+        </Col>
+        <hr />
+      </Row> */}
+
       <Row>
         <Col md={12}>
-          <SalonOwnerDetails />
+          <BankDetails bankDetails={bankDetails} />
         </Col>
         <hr />
       </Row>
 
       <Row>
         <Col md={12}>
-          <BankDetails bankDetails={bankDetails} />
+          <Services service={service} 
+          salonDetail={salonDetail} 
+          />
         </Col>
         <hr />
       </Row>
@@ -70,14 +79,7 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <SalonTime workingHours={workingHours} />
-        </Col>
-        <hr />
-      </Row>
-
-      <Row>
-        <Col md={12}>
-          <Services service={service} salonDetail={salonDetail} />
+          <SalonTime workingHours={workingHours} salonDetail={salonDetail}/>
         </Col>
         <hr />
       </Row>
@@ -88,10 +90,9 @@ function EditsalonManagement({ payload, id }) {
             salonDetail={salonDetail}
             bannerImages={bannerImages}
             gallaryImages={gallaryImages}
-            bankDetails={bankDetails}
           />
         </Col>
-        <hr />
+        {/* <hr /> */}
       </Row>
 
     </div>

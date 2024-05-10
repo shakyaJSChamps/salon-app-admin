@@ -168,7 +168,7 @@ const SaloonManagement = () => {
             {<CustomTitle
               icon={icon}
               title={title}
-              // onOptionChange={onOptionChange}
+
               getSearchText={getSearchText}
             />
             }

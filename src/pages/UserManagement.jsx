@@ -41,6 +41,7 @@ const UserManagement = () => {
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
+      console.log("User data -->", response)
       const userData = response.data.data.items;
       setUserData(userData);
       setTotalRows(response.data.data.total);
