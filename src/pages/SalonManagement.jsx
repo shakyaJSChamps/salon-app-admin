@@ -11,7 +11,7 @@ import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 // import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -24,16 +24,17 @@ const SaloonManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [option, setOption] = useState("email");
   // const [updatedRowData, setUpdatedRowData] = useState(false);
   // const [searchOption, setSearchOption] = useState("name");
-  
+
 
   const navigate = useNavigate()
- 
+
 
   const handleRowClick = (row) => {
-    // setModalShow(true);
-    setSelectedRow(row); 
+
+    setSelectedRow(row);
     navigate(`/salon-management/${row.id}`);
   };
 
@@ -46,23 +47,16 @@ const SaloonManagement = () => {
     getSaloonsData(page, newPerPage);
   };
 
-  // const onOptionChange = (prop) => {
-  //   if (prop === "city" || prop === "name") {
-  //     setOption(prop);
-  //   } else {
-  //     Notify.error("Invalid option selected");
-  //   }
-  // };
 
-  const getSearchText = (prop) => {
-    setSearchText(prop);
-    setPage(1);
+  const searchByText = (searchText) => {
+    getSaloonsData(searchText);
   };
 
-  const getSaloonsData = async (page, perPage) => {
+  const getSaloonsData = async (page, perPage, searchText=" ") => {
+    let REQ_URL = `?page=${page}&size=${perPage}&${option}=${searchText}`;
     try {
       setLoading(true);
-      const response = await getSalon(`?page=${page}&size=${perPage}&delay=1`);
+      const response = await getSalon(REQ_URL);
       setSaloonsData(response.data.data.items);
       setTotalRows(response.data.data.total);
       setLoading(false);
@@ -168,8 +162,8 @@ const SaloonManagement = () => {
             {<CustomTitle
               icon={icon}
               title={title}
-
-              getSearchText={getSearchText}
+              setOption={setOption}
+              searchByText={searchByText}
             />
             }
             columns={columns}
