@@ -92,5 +92,5 @@ export const updateBankDetails = (payload, id) =>
   export const updateImage = (payload,id) =>
     HTTP.Request(methods.POST, __endpoint_updateImage(id), payload);
 
-  export const deleteImage = (payload,id) =>
-    HTTP.Request(methods.DELETE, __endpoint_deleteImage(id), payload);
+  export const deleteImage = (id) =>
+    HTTP.Request(methods.DELETE, __endpoint_deleteImage(id));

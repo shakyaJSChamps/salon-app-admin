@@ -113,7 +113,7 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
- 
+
 
     {
       name: "City",
@@ -129,7 +129,7 @@ const SalesPerson = () => {
       name: "UPI Id",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
-          {row.upiId}
+          {row.upiID}
         </div>
       ),
       sortable: true,
@@ -159,21 +159,12 @@ const SalesPerson = () => {
     <>
       {
         selectedRow ?
-          <UpdateSalesDetails 
-          id = {selectedRow.userId}
+          <UpdateSalesDetails
+            id={selectedRow.userId}
           />
           :
           <div className="main-table rounded ">
             <DataTable
-              // title={
-              //   <CustomTitle
-              //     icon={icon}
-              //     title={title}
-              //     setOption={setOption}
-              //     searchByText={searchByText}
-              //   />
-              // }
-
               title={<Sales />}
               columns={columns}
               data={salesData}

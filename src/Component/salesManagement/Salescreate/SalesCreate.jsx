@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import styles from "../../salesManagement/Salescreate/Salescreate.module.css"
 import Notify from "../../../utils/notify.js";
@@ -10,11 +10,6 @@ import SalesImageUploader from "../../common-component/Salesimageuploader/SalesI
 import { salesDetailsSchema } from "../../../utils/schema.js";
 
 function SalesCreate() {
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditing(!isEditing);
-  }
 
   const addSales = async (values) => {
     try {
@@ -37,7 +32,7 @@ function SalesCreate() {
         aadharFrontImageUrl: values.aadharFrontImageUrl,
         aadharBackImageUrl: values.aadharBackImageUrl,
         profileImageUrl: values.profileImageUrl,
-        upiId: values.upiId
+        upiId: values.upiId,
       }
 
       const res = await addSalesDetails(salesData)
@@ -53,16 +48,9 @@ function SalesCreate() {
       <div className='d-flex justify-content-between align-items-center'>
         <h4>Sales Details</h4>
         <div className="d-flex justify-content-start align-items-center mb-3">
-          {!isEditing && (
-            <button type="button" onClick={handleEditClick} className={styles.button} >
-              Add
-            </button>
-          )}
-          {isEditing && (
-            <button type="submit" form="salesDetails" className={styles.button}>
-              Save
-            </button>
-          )}
+          <button type="submit" form="salesDetails" className={styles.button}>
+            save
+          </button>
         </div>
       </div>
       <Formik
@@ -100,7 +88,6 @@ function SalesCreate() {
                   label="First Name"
                   name="firstName"
                   type="text"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="firstName" component="div" className={styles.error} />
               </Grid>
@@ -110,7 +97,6 @@ function SalesCreate() {
                   label="Middle Name"
                   name="middleName"
                   type="text"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="middleName" component="div" className={styles.error} />
               </Grid>
@@ -120,7 +106,6 @@ function SalesCreate() {
                   label="LastName"
                   name="lastName"
                   type="text"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="lastName" component="div" className={styles.error} />
 
@@ -131,7 +116,6 @@ function SalesCreate() {
                   label="Email"
                   name="email"
                   type="email"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="email" component="div" className={styles.error} />
               </Grid>
@@ -141,7 +125,6 @@ function SalesCreate() {
                   label="Phone Number"
                   name="phoneNumber"
                   type="text"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
               </Grid>
@@ -151,7 +134,6 @@ function SalesCreate() {
                   label="Country Code"
                   name="countryCode"
                   type="text"
-                  disabled={!isEditing}
                 />
                 <ErrorMessage name="countryCode" component="div" className={styles.error} />
               </Grid>
@@ -161,31 +143,25 @@ function SalesCreate() {
                   label="DOB"
                   name="dob"
                   type="date"
-                  disabled={!isEditing}
                   max={new Date().toISOString().split("T")[0]}
                 />
                 <ErrorMessage name="dob" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <div>
-                  <label>Gender</label>
-                  <br />
-                  <Field
-                    as="select"
-                    name="gender"
-                    className=" px-2 form-control input"
-                    disabled={!isEditing}
-                    type="text"
-                  >
-                    <option value="">select</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Both</option>
-                  </Field>
-                  <br />
-                  <ErrorMessage name="gender" component="div" className={styles.error} />
-                </div>
+                <InputText
+                  label="Gender"
+                  as="select"
+                  name="gender"
+                  className="input"
+                  type="text"
+                >
+                  <option value="">select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Both</option>
+                </InputText>
+                <ErrorMessage name="gender" component="div" className={styles.error} />
               </Grid>
             </Grid>
             <hr />
@@ -197,7 +173,6 @@ function SalesCreate() {
                 <InputText
                   label="Account Number"
                   name="accountNumber"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="accountNumber" component="div" className={styles.error} />
@@ -207,7 +182,6 @@ function SalesCreate() {
                 <InputText
                   label="Account Holder Name"
                   name="accountHolderName"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="accountHolderName" component="div" className={styles.error} />
@@ -217,7 +191,6 @@ function SalesCreate() {
                 <InputText
                   label="Bank Name"
                   name="bankName"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="bankName" component="div" className={styles.error} />
@@ -227,7 +200,6 @@ function SalesCreate() {
                 <InputText
                   label="IFSC Code"
                   name="ifscCode"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="ifscCode" component="div" className={styles.error} />
@@ -237,7 +209,6 @@ function SalesCreate() {
                 <InputText
                   label="UPI Id"
                   name="upiId"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="upiId" component="div" className={styles.error} />
@@ -247,7 +218,6 @@ function SalesCreate() {
                 <InputText
                   label="Address"
                   name="address"
-                  disabled={!isEditing}
                   type="text"
                 />
                 <ErrorMessage name="address" component="div" className={styles.error} />
@@ -259,27 +229,27 @@ function SalesCreate() {
             <h4>Personal Attachments</h4>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <SalesImageUploader disabled={!isEditing} name="bankdocumentImageUrl" buttonName="Upload" label="Passbook/Cancelcheque" onFileSelect={(e) => handleOnFileSelect(e, "bankdocumentImageUrl", setFieldValue)} />
+                <SalesImageUploader name="bankdocumentImageUrl" buttonName="Upload" label="Passbook/Cancelcheque" onFileSelect={(e) => handleOnFileSelect(e, "bankdocumentImageUrl", setFieldValue)} />
                 <ErrorMessage name="bankdocumentImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader disabled={!isEditing} name="panCardImageUrl" buttonName="Upload" label="Pancard" onFileSelect={(e) => handleOnFileSelect(e, "panCardImageUrl", setFieldValue)} />
+                <SalesImageUploader name="panCardImageUrl" buttonName="Upload" label="Pancard" onFileSelect={(e) => handleOnFileSelect(e, "panCardImageUrl", setFieldValue)} />
                 <ErrorMessage name="panCardImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader disabled={!isEditing} name="aadharFrontImageUrl" buttonName="Upload" label="Aadhar Front" onFileSelect={(e) => handleOnFileSelect(e, "aadharFrontImageUrl", setFieldValue)} />
+                <SalesImageUploader name="aadharFrontImageUrl" buttonName="Upload" label="Aadhar Front" onFileSelect={(e) => handleOnFileSelect(e, "aadharFrontImageUrl", setFieldValue)} />
                 <ErrorMessage name="aadharFrontImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader disabled={!isEditing} name="aadharBackImageUrl" buttonName="Upload" label="Aadhar Back" onFileSelect={(e) => handleOnFileSelect(e, "aadharBackImageUrl", setFieldValue)} />
+                <SalesImageUploader name="aadharBackImageUrl" buttonName="Upload" label="Aadhar Back" onFileSelect={(e) => handleOnFileSelect(e, "aadharBackImageUrl", setFieldValue)} />
                 <ErrorMessage name="aadharBackImageUrl" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
-                <SalesImageUploader disabled={!isEditing} name="profileImageUrl" buttonName="Upload" label="Profile Image" onFileSelect={(e) => handleOnFileSelect(e, "profileImageUrl", setFieldValue)} />
+                <SalesImageUploader name="profileImageUrl" buttonName="Upload" label="Profile Image" onFileSelect={(e) => handleOnFileSelect(e, "profileImageUrl", setFieldValue)} />
                 <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
               </Grid>
             </Grid>

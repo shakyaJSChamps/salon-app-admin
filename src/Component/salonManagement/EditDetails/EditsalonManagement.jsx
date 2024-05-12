@@ -26,7 +26,7 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
         setSalonDetail(data?.data?.data?.salon);
         setBankDetails(data?.data?.data?.bankDetail);
         setBannerImages(data?.data?.data?.bannerImages);
-        setGallaryImages(data?.data?.data?.gallaryImages);
+        setGallaryImages(data?.data?.data?.galleryImages);
         setWorkingHours(data?.data?.data?.workingHours);
         setService(data?.data?.data?.services);
         setSalonOwner(data?.data?.data?.salonOwner);

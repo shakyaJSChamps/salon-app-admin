@@ -13,3 +13,30 @@
     font-size: 11px;
     height: 26px;
 }
+
+
+.deleteButton {
+    padding: 3px 20px;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #909090;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    height: 26px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.imageContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.imageContainer:hover .deleteButton {
+    opacity: 1;
+}

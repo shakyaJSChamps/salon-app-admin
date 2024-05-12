@@ -3,6 +3,8 @@ import InputFile from '../../../../Controls/InputFile';
 import { fileUploaders, updateImage, deleteImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
     const [mainGateImageUrl, setMainGateImageUrl] = useState(null);
@@ -18,33 +20,8 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
         }
     }, [gallaryImages, bannerImages]);
 
-    const isValidImageType = (file) => {
-        const allowedTypes = [
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/bmp',
-            'image/webp',
-            'image/svg+xml',
-            'image/tiff',
-            'image/x-icon',
-            'image/vnd.microsoft.icon',
-            'image/vnd.wap.wbmp',
-            'image/jxr',
-            'image/jp2',
-            'image/avif',
-            // Add more image types here
-        ];
-        return allowedTypes.includes(file.type);
-    };
-
     const handleOnFileSelect = async (file) => {
-        // Validate file type
-        if (!isValidImageType(file)) {
-            Notify.error('Invalid file type. Please upload a valid image (JPEG, PNG, GIF, BMP, WebP, SVG, TIFF, ICO, WBMP, JXR, JP2, AVIF).');
-            return;
-        }
-        // Proceed with uploading if the file type is valid
+        // Indicate upload in progress
         setIsLoading(true);
         try {
             const response = await fileUploaders({ fileName: file.name });
@@ -74,31 +51,9 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
         }
     };
 
-    const removeImage = async () => {
-        try {
-            const data = {
-                imageUrl: mainGateImageUrl == null ? salonDetail.mainGateImageUrl : mainGateImageUrl,
-                imageType: "MainGate",
-                thumbnailUrl: "",
-            }
-            await deleteImage(data, salonDetail.id);
-            Notify.success("Record Deleted!");
-        } catch (error) {
-            Notify.error(error.message);
-        }
-    }
-
     const gallaryFileSelect = async (files, section) => {
         try {
             files = Array.isArray(files) ? files : [files];
-            // Validate file types
-            const invalidFiles = files.filter(file => !isValidImageType(file));
-            if (invalidFiles.length > 0) {
-                const invalidFileNames = invalidFiles.map(file => file.name).join(', ');
-                Notify.error(`Invalid file types: ${invalidFileNames}. Please upload valid images (JPEG, PNG, GIF, BMP, WebP, SVG, TIFF, ICO, WBMP, JXR, JP2, AVIF).`);
-                return;
-            }
-            // Proceed with uploading if all files are valid
             const uploadPromises = files.map(async (file) => {
                 const response = await fileUploaders({ fileName: file.name });
                 const requestOptions = {
@@ -114,19 +69,50 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     imageType: section === 'banner' ? 'Banner' : 'Gallery',
                     thumbnailUrl: '',
                 };
-                await updateImage(updatedData, salonDetail.id);
-                return response.data.data.path; // Return the URL
+                const res = await updateImage(updatedData, salonDetail.id);
+                return { id: res.data.data.id, url: response.data.data.path }; // Return object with id and URL
             });
-            const uploadedUrls = await Promise.all(uploadPromises);
+            const uploadedImages = await Promise.all(uploadPromises);
             if (section === 'banner') {
-                setBannerImage([...bannerImage, ...uploadedUrls]);
+                setBannerImage([...bannerImage, ...uploadedImages]);
             } else if (section === 'gallery') {
-                setGallaryImage([...gallaryImage, ...uploadedUrls]);
+                setGallaryImage([...gallaryImage, ...uploadedImages]);
             }
             Notify.success('Images uploaded successfully.');
         } catch (error) {
             console.error('Error uploading images:', error);
             Notify.error('Image upload failed. Please try again.'); // Inform user
+        }
+    };
+
+    const removeImage = async (id, section) => {
+        try {
+            // Show confirmation dialog
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this salon type",
+                icon: "warning",
+                width: "30%",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                customClass: "custom-swal",
+            });
+
+            if (result.isConfirmed) {
+                await deleteImage(id);
+                Notify.success("Image Deleted Successfully");
+
+                // Filter out the deleted image from the state based on section
+                if (section === 'banner') {
+                    setBannerImage(bannerImage.filter(image => image.id !== id));
+                } else if (section === 'gallery') {
+                    setGallaryImage(gallaryImage.filter(image => image.id !== id));
+                }
+            }
+        } catch (error) {
+            Notify.error(error.message);
         }
     };
 
@@ -141,9 +127,6 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         buttonName={isLoading ? 'Uploading...' : 'Update'} // Display loading state
                         disabled={isLoading} // Disable input while uploading
                     />
-                    <button type="button" className={styles.btn} onClick={removeImage}>
-                        Remove
-                    </button>
                 </div>
             </div>
             {salonDetail && ( // Render only if salonDetail is available
@@ -167,10 +150,13 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     />
                 </div>
             </div>
-            {bannerImages.length > 0 && ( // Render only if bannerImages are available
+            {bannerImage.length > 0 && (
                 <div className='d-flex flex-row flex-wrap gap-2'>
-                    {bannerImages.map((image, index) => (
-                        <img key={index} src={image} style={{ height: '150px', width: '150px' }} alt={`Banner Image ${index}`} />
+                    {bannerImage.map((image, index) => (
+                        <div key={index} className={styles.imageContainer}>
+                            <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Banner Image ${index}`} />
+                            <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'banner')}>Remove</button>
+                        </div>
                     ))}
                 </div>
             )}
@@ -192,7 +178,10 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             {gallaryImage.length > 0 && (
                 <div className='d-flex flex-row flex-wrap gap-2'>
                     {gallaryImage.map((image, index) => (
-                        <img key={index} src={image} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
+                        <div key={index} className={styles.imageContainer}>
+                            <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
+                            <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
+                        </div>
                     ))}
                 </div>
             )}
@@ -203,4 +192,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
 }
 
 export default SalonGallery;
+
+
+
 

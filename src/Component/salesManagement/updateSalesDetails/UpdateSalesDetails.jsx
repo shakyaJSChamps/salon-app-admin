@@ -83,7 +83,7 @@ function UpdateSalesDetails({ payload, id }) {
                         aadharFrontImageUrl: saleDetails.aadharFrontImageUrl || "",
                         aadharBackImageUrl: saleDetails.aadharBackImageUrl || "",
                         profileImageUrl: saleDetails.profileImageUrl || "",
-                        upiId: saleDetails.upiId
+                        upiID: saleDetails.upiID
                     }
                 }
                 onSubmit={editDetails}
@@ -184,10 +184,10 @@ function UpdateSalesDetails({ payload, id }) {
                                 <div>
                                     <label>Gender</label>
                                     <br />
-                                    <Field
+                                    <InputText
                                         as="select"
                                         name="gender"
-                                        className=" px-2 form-control input"
+                                        className="Form-control input"
                                         disabled={!isEditing}
                                         type="text"
                                         onChange={handleChange}
@@ -197,7 +197,7 @@ function UpdateSalesDetails({ payload, id }) {
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Other">Both</option>
-                                    </Field>
+                                    </InputText>
                                     <br />
                                     <ErrorMessage name="gender" component="div" className={styles.error} />
                                 </div>
@@ -259,13 +259,13 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <InputText
                                     label="UPI Id"
-                                    name="upiId"
+                                    name="upiID"
                                     disabled={!isEditing}
                                     type="text"
                                     onChange={handleChange}
                                     value={values.upiId}
                                 />
-                                <ErrorMessage name="upiId" component="div" className={styles.error} />
+                                <ErrorMessage name="upiID" component="div" className={styles.error} />
                             </Grid>
 
                             <Grid item xs={4}>

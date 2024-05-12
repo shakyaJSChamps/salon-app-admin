@@ -7,6 +7,7 @@ import { getServiceType, updateSalonService } from '../../../../src/api/account.
 import Notify from "../../../utils/notify";
 import AddService from './Addservice/AddService.jsx';
 import { Accessible as AccessibleIcon } from '@mui/icons-material';
+import { serviceDetailsSchema } from '../../../utils/schema.js';
 
 
 
@@ -60,7 +61,7 @@ function Services({ service, salonDetail }) {
                 </div>
             </div>
 
-            <AddService open={open} handleClose={handleClose} /> {/* Render AddSales component */}
+            <AddService open={open} handleClose={handleClose} />
 
             <Formik
                 initialValues={{
@@ -73,6 +74,7 @@ function Services({ service, salonDetail }) {
                         type: serviceItem.type || ''
                     }))
                 }}
+                validationSchema={serviceDetailsSchema}
                 enableReinitialize
                 onSubmit={() => { }}
             >
@@ -84,9 +86,11 @@ function Services({ service, salonDetail }) {
                                     <InputText
                                         as="select"
                                         label="Category"
+                                        className=" input"
                                         name={`services[${index}].categoryId`}
                                         type="text"
                                         disabled={!isEditing}
+                                        style={{outline: "none"}}
                                         onChange={(e) => handleChange({
                                             target: {
                                                 name: `services[${index}].categoryId`,
@@ -124,7 +128,9 @@ function Services({ service, salonDetail }) {
                                         disabled={!isEditing}
                                         onChange={handleChange}
                                         value={serviceItem.type}
-                                        className="form-control input"
+                                        className="input"
+                                        style={{outline: "none"}}
+                                       
                                     >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>

@@ -46,7 +46,6 @@ export default function AddService(props) {
                       as="select"
                       name="category"
                       type="text"
-                      className="Form-control input"
                     >
                       <option value="Male">Hair</option>
                       <option value="Female">Color</option>
@@ -81,7 +80,6 @@ export default function AddService(props) {
                       as="select"
                       name="Service Type"
                       type="text"
-                      className="Form-control input"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
