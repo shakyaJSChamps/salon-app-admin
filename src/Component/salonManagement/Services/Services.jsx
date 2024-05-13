@@ -6,6 +6,8 @@ import InputText from '../../common-component/Inputtext/InputText';
 import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
 import AddService from './Addservice/AddService.jsx';
+import { Accessible as AccessibleIcon } from '@mui/icons-material';
+
 
 
 function Services({ service, salonDetail }) {
@@ -92,10 +94,10 @@ function Services({ service, salonDetail }) {
                                             }
                                         })}
                                         value={serviceItem.categoryId}
-                                        // className="form-control input"
                                     >
                                         {services.map((category, idx) => (
                                             <option key={idx} value={parseInt(category.id)}> {/* Convert to number */}
+                                                <AccessibleIcon />
                                                 {category.name}
                                             </option>
                                         ))}
@@ -112,9 +114,28 @@ function Services({ service, salonDetail }) {
                                         value={serviceItem.serviceName}
                                     />
                                 </Grid>
+
                                 <Grid item xs={2}>
                                     <InputText
-                                        label="Duration in Minutes"
+                                        as="select"
+                                        label="Service Type"
+                                        name={`services[${index}].type`}
+                                        type="text"
+                                        disabled={!isEditing}
+                                        onChange={handleChange}
+                                        value={serviceItem.type}
+                                        className="form-control input"
+                                    >
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Both">Both</option>
+                                    </InputText>
+                                    <ErrorMessage name={`services[${index}].type`} component="div" className={styles.error} />
+                                </Grid>
+                                
+                                <Grid item xs={2}>
+                                    <InputText
+                                        label="Duration"
                                         type="number"
                                         name={`services[${index}].serviceDuration`}
                                         disabled={!isEditing}
@@ -134,23 +155,7 @@ function Services({ service, salonDetail }) {
                                     />
                                     <ErrorMessage name={`services[${index}].servicePrice`} component="div" className={styles.error} />
                                 </Grid>
-                                <Grid item xs={2}>
-                                    <InputText
-                                        as="select"
-                                        label="Service Type"
-                                        name={`services[${index}].type`}
-                                        type="text"
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                        value={serviceItem.type}
-                                        className="form-control input"
-                                    >
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Both">Both</option>
-                                    </InputText>
-                                    <ErrorMessage name={`services[${index}].type`} component="div" className={styles.error} />
-                                </Grid>
+                               
                                 {isEditing && (
                                     <Grid item xs={2}>
                                         <button type="button" onClick={() => { editDetails(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>
