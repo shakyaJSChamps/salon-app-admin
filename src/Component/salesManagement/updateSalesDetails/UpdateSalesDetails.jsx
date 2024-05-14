@@ -83,7 +83,7 @@ function UpdateSalesDetails({ payload, id }) {
                         aadharFrontImageUrl: saleDetails.aadharFrontImageUrl || "",
                         aadharBackImageUrl: saleDetails.aadharBackImageUrl || "",
                         profileImageUrl: saleDetails.profileImageUrl || "",
-                        upiID: saleDetails.upiID
+                        upiID: saleDetails.upiID || " "
                     }
                 }
                 onSubmit={editDetails}
@@ -263,7 +263,7 @@ function UpdateSalesDetails({ payload, id }) {
                                     disabled={!isEditing}
                                     type="text"
                                     onChange={handleChange}
-                                    value={values.upiId}
+                                    value={values.upiID}
                                 />
                                 <ErrorMessage name="upiID" component="div" className={styles.error} />
                             </Grid>

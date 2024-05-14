@@ -90,11 +90,11 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             // Show confirmation dialog
             const result = await Swal.fire({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this salon type",
+                text: "Are you sure you want to delete the image ?",
                 icon: "warning",
                 width: "30%",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "black",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, delete it!",
                 customClass: "custom-swal",
@@ -187,6 +187,19 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             )}
 
             <hr />
+
+            <div className="d-flex justify-content-center align-items-center gap-2">
+
+                <button type="button" className={`${styles.btn}`} >
+                    Verify
+                </button>
+
+                <button type="submit" className={styles.btn}>
+                    Publish
+                </button>
+
+            </div>
+
         </>
     );
 }
