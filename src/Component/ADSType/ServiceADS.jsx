@@ -4,21 +4,27 @@ import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { MdOutlineContactMail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import PlayCircleOutlineSharpIcon from "@mui/icons-material/PlayCircleOutlineSharp";
 import CustomTitle from "../CustomTitle";
 import { getAdsManagement } from "../../api/account.api";
+import { isValidImageUrl } from "../../constants";
+import Profile from "../../assets/image/dummy-profile.jpg";
 
 const ServiceADS = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleEditClick = (row) => {
+    setSelectedRow(row);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAdsManagement();
-        console.log("Ads Management Response:", response.data); 
-        setData(response.data);
+        console.log("Ads Management Response:", response);
+        setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -41,20 +47,33 @@ const ServiceADS = () => {
   const columns = [
     {
       name: <strong>NAME</strong>,
+      minWidth: '200px',
       cell: (row, index) => (
-        <div className="mt-1 mb-2 position-relative image-title">
-          {row.title}
-          <img src={row.image} alt="Audio Image" className="audio-image" />
-          {index > 0 && index % 2 === 1 && (
-            <PlayCircleOutlineSharpIcon
-              className="play-icon"
-              style={{ height: "40px", width: "40px" }}
-            />
-          )}
+        <div className="mt-1 mb-2 position-relative image-title" >
+          {row.name}
+          <div className="d-flex justify-content-center align-items-center">
+            {isValidImageUrl(row.imageUrl) && isValidImageUrl(row.imageUrl) ? (
+              <img
+                src={row.imageUrl}
+                alt="Profile"
+                style={{ width: "100%", height:"100%", borderRadius: "5px", }}
+              />
+            ) : (
+              <img
+                src={Profile}
+                alt="Profile"
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            )}
+          </div>
         </div>
       ),
     },
-    {},
     {
       name: <strong>CITY</strong>,
       cell: (row) => <div className="ads-city">{row.city}</div>,
@@ -62,16 +81,10 @@ const ServiceADS = () => {
     {
       name: <strong>DURATION</strong>,
       cell: (row) => (
-        <div className="mt-4  ads-duration">
-          {row.start}
-          <br />
-          {row.startDate}
-          <br />
-
+        <div className="mt-4 ads-duration">
+          <div>Starts<br /> {new Date(row.startDate).toLocaleDateString()}</div>
           <p className="expire-text">
-            {row.expire}
-            <br />
-            {row.expireDate}
+          Expire on {new Date(row.endDate).toLocaleDateString()}
           </p>
         </div>
       ),
@@ -81,7 +94,10 @@ const ServiceADS = () => {
       name: "",
       cell: (row) => (
         <div>
-          <MdEditSquare className="me-2" />
+          <MdEditSquare className="me-2" 
+            onClick={() => handleEditClick(row)}
+            style={{ cursor: "pointer" }}
+          />
           <RiDeleteBin6Fill />
         </div>
       ),
@@ -116,6 +132,7 @@ const ServiceADS = () => {
         paginationPerPage={rowsPerPage}
         paginationRowsPerPageOptions={[15, 25, 50, 100]}
       />
+      
     </Paper>
   );
 };
