@@ -13,29 +13,7 @@ function SalesCreate() {
 
   const addSales = async (values) => {
     try {
-      const salesData = {
-        phoneNumber: values.phoneNumber,
-        countryCode: values.countryCode,
-        firstName: values.firstName,
-        middleName: values.middleName,
-        lastName: values.lastName,
-        dob: values.dob,
-        gender: values.gender,
-        email: values.email,
-        accountNumber: values.accountNumber,
-        accountHolderName: values.accountHolderName,
-        bankName: values.bankName,
-        ifscCode: values.ifscCode,
-        address: values.address,
-        bankdocumentImageUrl: values.bankdocumentImageUrl,
-        panCardImageUrl: values.panCardImageUrl,
-        aadharFrontImageUrl: values.aadharFrontImageUrl,
-        aadharBackImageUrl: values.aadharBackImageUrl,
-        profileImageUrl: values.profileImageUrl,
-        upiId: values.upiId,
-      }
-
-      const res = await addSalesDetails(salesData)
+      const res = await addSalesDetails(values)
       console.log("response:::>", res.data);
       Notify.success(res.data.message);
     } catch (error) {

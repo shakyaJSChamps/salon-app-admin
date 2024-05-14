@@ -60,4 +60,11 @@ export const __endpoint_deleteImage = (id) => {
     return `${endpoint}admin/file/salon/${id}`;
   };
 
+export const __endpoint_verifySalon = (id) => {
+    return `${endpoint}admin/salons/verified/${id}`;
+  };
+
+export const __endpoint_publishSalon = (id) => {
+    return `${endpoint}admin/salons/publish/${id}`;
+  };
 

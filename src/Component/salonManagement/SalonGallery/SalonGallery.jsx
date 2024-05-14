@@ -176,7 +176,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 </div>
             </div>
             {gallaryImage.length > 0 && (
-                <div className='d-flex flex-row flex-wrap gap-2'>
+                <div className='d-flex flex-row flex-wrap gap-2 mb-3'>
                     {gallaryImage.map((image, index) => (
                         <div key={index} className={styles.imageContainer}>
                             <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
@@ -185,21 +185,6 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     ))}
                 </div>
             )}
-
-            <hr />
-
-            <div className="d-flex justify-content-center align-items-center gap-2">
-
-                <button type="button" className={`${styles.btn}`} >
-                    Verify
-                </button>
-
-                <button type="submit" className={styles.btn}>
-                    Publish
-                </button>
-
-            </div>
-
         </>
     );
 }

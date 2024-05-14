@@ -22,7 +22,9 @@ import {
   __endpoint_updateSaleDetails,
   __endpoint_updateSalonTime,
   __endpoint_updateImage,
-  __endpoint_deleteImage
+  __endpoint_deleteImage,
+  __endpoint_verifySalon,
+  __endpoint_publishSalon
 
 } from "../constants/endpoints";
 
@@ -94,3 +96,9 @@ export const updateBankDetails = (payload, id) =>
 
   export const deleteImage = (id) =>
     HTTP.Request(methods.DELETE, __endpoint_deleteImage(id));
+
+  export const verifySalon = (id) =>
+    HTTP.Request(methods.PATCH, __endpoint_verifySalon(id));
+
+  export const publishSalon = (id) =>
+    HTTP.Request(methods.PATCH, __endpoint_publishSalon(id));
