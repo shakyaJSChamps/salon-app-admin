@@ -13,7 +13,7 @@ const NewADS = () => {
       </div>
       <hr />
       <Formik>
-        <Form className="d-flex flex-column mb-2">
+        <Form className="d-flex flex-column">
           <div className="d-flex flex-column  mb-2">
             <InputText label="Advertisement Name" type="text" />
           </div>
@@ -44,7 +44,7 @@ const NewADS = () => {
             <InputText label="End Date" type="date" />
           </div>
 
-          <div className="d-flex justify-content-center pb-2">
+          <div className="d-flex justify-content-center pb-1">
             <button className="submit-ads-btn mt-2">Submit</button>
           </div>
         </Form>
