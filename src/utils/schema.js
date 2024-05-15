@@ -50,16 +50,11 @@ export const bankDetailsSchema = Yup.object().shape({
 export const salonDetailsSchema = Yup.object().shape({
   companyName: Yup.string()
     .required('Company Name is required')
-    .min(3, 'Company Name must be at least 3 characters long')
-    .max(30, 'Company Name must be at least 30 characters long')
-    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+    .max(30, 'Company Name must be at least 30 characters long'),
+
   email: Yup.string().email('Invalid email').required('Email is required'),
   gstNumber: Yup.string()
-    .required('GST Number is required')
-    .matches(
-      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$/,
-      'Invalid GST Number'
-    ),
+    .required('GST Number is required'),
   address: Yup.string().required('Address is required'),
   pincode: Yup.string()
     .required('Pincode is required')
@@ -100,13 +95,11 @@ export const salesDetailsSchema = Yup.object().shape({
   firstName: Yup.string()
     .required('First Name is required')
     .min(3, 'First Name must be at least 3 characters long')
-    .max(30, 'First Name must be at least 30 characters long')
-    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+    .max(30, 'First Name must be at least 30 characters long'),
   lastName: Yup.string()
     .required('Last Name is required')
     .min(3, 'Last Name must be at least 3 characters long')
-    .max(30, 'Last Name must be at least 30 characters long')
-    .matches(/^[A-Z][a-zA-Z ]*$/, 'Salon Name must start with a capital letter and contain only letters and spaces'),
+    .max(30, 'Last Name must be at least 30 characters long'),
   dob: Yup.date()
     .max(getMinDOBDate(), `You must be at least ${MIN_AGE} years old`)
     .required("Date of birth is required"),
@@ -114,23 +107,17 @@ export const salesDetailsSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
   accountNumber: Yup.string()
     .required("Account Number is required")
-    .matches(/^[0-9]+$/, 'Account Number must contain only digits')
-  // .min(11, "Account Number must be at least 11 digits")
-  // .max(16, "Account Number must not exceed 16 digits"),
-  ,
+    .matches(/^[0-9]+$/, 'Account Number must contain only digits'),
   accountHolderName: Yup.string()
     .required('Account Holder Name is required')
-    // .matches(/^[A-Z\s]+$/, 'Account Holder Name must be in capital letters.')
     .min(3, 'Account Holder Name must have at least 3 letters.')
     .max(30, 'Account Holder Name must have at most 30 letters.'),
   bankName: Yup.string()
     .required('Bank Name is required')
-    // .matches(/^[a-zA-Z\s]+$/, 'Bank Name must contain only letters and spaces')
     .min(3, 'Bank Name must be at least 3 characters long')
     .max(50, 'Bank Name must not exceed 50 characters'),
   ifscCode: Yup.string()
     .required("IFSC Code is required")
-    // .matches(/^[A-Z0-9]+$/, 'IFSC Code must contain only uppercase alphabets and digits')
     .min(11, "IFSC Code must be at least 11 characters"),
   address: Yup.string().required('Address is required'),
   bankdocumentImageUrl: Yup.string()
@@ -156,7 +143,23 @@ export const salesDetailsSchema = Yup.object().shape({
 })
 
 export const salonTimeSchema = Yup.object().shape({
-  isOpen: Yup.boolean().required(),
-  openTime: Yup.string().required(),
-  closeTime: Yup.string().required()
+  // Define the shape of the form fields
+  days: Yup.array().of(
+      Yup.object().shape({
+          // isOpen should be a boolean and is required
+          isOpen: Yup.boolean().required('Please specify if the salon is open or closed'),
+
+          // openTime should be a string and is required
+          openTime: Yup.string().when('isOpen', {
+              is: true,
+              then: Yup.string().required('Please specify the opening time'),
+          }),
+
+          // closeTime should be a string and is required when isOpen is true
+          closeTime: Yup.string().when('isOpen', {
+              is: true,
+              then: Yup.string().required('Please specify the closing time'),
+          }),
+      })
+  ),
 });

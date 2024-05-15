@@ -57,6 +57,20 @@ export const __endpoint_updateImage = (id) => {
 };
 
 export const __endpoint_deleteImage = (id) => {
+<<<<<<< HEAD
+    return `${endpoint}admin/file/salon/${id}`;
+  };
+
+export const __endpoint_verifySalon = (id) => {
+    return `${endpoint}admin/salons/verified/${id}`;
+  };
+
+export const __endpoint_publishSalon = (id) => {
+    return `${endpoint}admin/salons/publish/${id}`;
+  };
+
+=======
   return `${endpoint}admin/file/salon/${id}`;
 };
 export const __endpoint_getAdsManagement = endpoint + "admin/services/advertisement";
+>>>>>>> 98c6d1d2b4ec21da20ca8d89171c02695f56ef9b
