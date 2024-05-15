@@ -21,6 +21,11 @@ const style = {
 
 export default function AddService(props) {
 
+  const handleSubmit = (values) => {
+    console.log("Form values:", values);
+    // Here you can perform any further actions with the form values, such as making an API call
+  };
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -35,25 +40,30 @@ export default function AddService(props) {
             Add Services
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <Formik>
+            <Formik
+              initialValues={{
+                category: '',
+                serviceName: '',
+                durationInMinutes: '',
+                price: '',
+                serviceType: ''
+              }}
+              onSubmit={handleSubmit}
+            >
               <Form id="bankDetailsForm">
                 <Grid container spacing={2} className='mb-3'>
-
                   <Grid item xs={12}>
-
                     <InputText
                       label="Category"
                       as="select"
                       name="category"
                       type="text"
-                      className="Form-control input"
                     >
-                      <option value="Male">Hair</option>
-                      <option value="Female">Color</option>
+                      <option value="Hair">Hair</option>
+                      <option value="Color">Color</option>
                       <option value="Both">Both</option>
                     </InputText>
                   </Grid>
-
                   <Grid item xs={12}>
                     <InputText
                       label="Service Name"
@@ -65,7 +75,6 @@ export default function AddService(props) {
                       label="Duration in Minutes"
                       name="durationInMinutes"
                     />
-
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -73,15 +82,12 @@ export default function AddService(props) {
                       name="price"
                     />
                   </Grid>
-
                   <Grid item xs={12}>
-
                     <InputText
                       label="Service Type"
                       as="select"
-                      name="Service Type"
+                      name="serviceType"
                       type="text"
-                      className="Form-control input"
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -90,10 +96,9 @@ export default function AddService(props) {
                   </Grid>
                 </Grid>
                 <div className='d-flex justify-content-center align-items-center'>
-                  <Button variant="contained" >Submit</Button>
+                  <Button variant="contained" type="submit">Submit</Button>
                 </div>
               </Form>
-
             </Formik>
           </Typography>
         </Box>

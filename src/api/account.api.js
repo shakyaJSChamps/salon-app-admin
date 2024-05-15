@@ -23,7 +23,13 @@ import {
   __endpoint_updateSalonTime,
   __endpoint_updateImage,
   __endpoint_deleteImage,
+<<<<<<< HEAD
+  __endpoint_verifySalon,
+  __endpoint_publishSalon
+
+=======
   __endpoint_getAdsManagement,
+>>>>>>> 98c6d1d2b4ec21da20ca8d89171c02695f56ef9b
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -98,7 +104,18 @@ export const updateSalonTime = (payload, id) =>
 export const updateImage = (payload, id) =>
   HTTP.Request(methods.POST, __endpoint_updateImage(id), payload);
 
+<<<<<<< HEAD
+  export const deleteImage = (id) =>
+    HTTP.Request(methods.DELETE, __endpoint_deleteImage(id));
+
+  export const verifySalon = (id) =>
+    HTTP.Request(methods.PATCH, __endpoint_verifySalon(id));
+
+  export const publishSalon = (id) =>
+    HTTP.Request(methods.PATCH, __endpoint_publishSalon(id));
+=======
 export const deleteImage = (payload, id) =>
   HTTP.Request(methods.DELETE, __endpoint_deleteImage(id), payload);
 export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);
+>>>>>>> 98c6d1d2b4ec21da20ca8d89171c02695f56ef9b
