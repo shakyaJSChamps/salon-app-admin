@@ -9,8 +9,9 @@ import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
+import VerifyPublishButton from '../Verifypublishbutton/VerifyPublishButton.jsx';
 
-function EditsalonManagement({ payload, id ,onServicesChange}) {
+function EditsalonManagement({ payload, id, onServicesChange }) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
@@ -26,7 +27,7 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
         setSalonDetail(data?.data?.data?.salon);
         setBankDetails(data?.data?.data?.bankDetail);
         setBannerImages(data?.data?.data?.bannerImages);
-        setGallaryImages(data?.data?.data?.gallaryImages);
+        setGallaryImages(data?.data?.data?.galleryImages);
         setWorkingHours(data?.data?.data?.workingHours);
         setService(data?.data?.data?.services);
         setSalonOwner(data?.data?.data?.salonOwner);
@@ -63,8 +64,8 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
 
       <Row>
         <Col md={12}>
-          <Services service={service} 
-          salonDetail={salonDetail} 
+          <Services service={service}
+            salonDetail={salonDetail}
           />
         </Col>
         <hr />
@@ -79,7 +80,7 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
 
       <Row>
         <Col md={12}>
-          <SalonTime workingHours={workingHours} salonDetail={salonDetail}/>
+          <SalonTime workingHours={workingHours} salonDetail={salonDetail} />
         </Col>
         <hr />
       </Row>
@@ -92,7 +93,13 @@ function EditsalonManagement({ payload, id ,onServicesChange}) {
             gallaryImages={gallaryImages}
           />
         </Col>
-        {/* <hr /> */}
+        <hr />
+      </Row>
+
+      <Row>
+        <Col md={12}>
+          <VerifyPublishButton salonDetail={salonDetail} />
+        </Col>
       </Row>
 
     </div>

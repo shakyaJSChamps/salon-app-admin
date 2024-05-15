@@ -7,8 +7,6 @@ import { updateSalonDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import { salonDetailsSchema } from "../../../../utils/schema";
 
-
-
 function SalonDetails({ salonDetail }) {
     const [isEditing, setIsEditing] = useState(false);
 
@@ -25,7 +23,7 @@ function SalonDetails({ salonDetail }) {
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
-        } 
+        }
     };
     const indianStates = [
         "Andhra Pradesh",
@@ -99,7 +97,7 @@ function SalonDetails({ salonDetail }) {
                 onSubmit={editDetails}
                 enableReinitialize // This enables reinitialization when props change
             >
-                {({ handleChange, values}) => (
+                {({ handleChange, values }) => (
                     <Form id="salonDetailsForm">
                         <Grid container spacing={2}>
                             <Grid item xs={4}>
@@ -189,48 +187,44 @@ function SalonDetails({ salonDetail }) {
 
                             <Grid item xs={4}>
                                 <div>
-                                    <label className={`${styles.label}`}>
-                                        Service Type
-                                    </label><br />
-                                    <Field
+                                    <InputText
+                                        label="Service Type"
                                         as="select"
                                         name="serviceType"
                                         type="text"
-                                        className={`${styles.inputService} px-2 form-control input`}
                                         disabled={!isEditing}
                                         onChange={handleChange}
                                         value={values.serviceType}
+                                        className="input"
+                                        style={{outline: "none"}}
                                     >
                                         <option value="">{values.serviceType}</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="both">Both</option>
-                                    </Field><br />
+                                    </InputText><br />
                                     <ErrorMessage name="serviceType" component="div" className={styles.error} />
 
                                 </div>
                             </Grid>
 
                             <Grid item xs={4}>
-                                <div>
-                                    <label className={`${styles.label}`}>
-                                        State
-                                    </label><br />
-                                    <InputText
-                                        as="select"
-                                        name="state"
-                                        type="text"
-                                        className={` px-2 form-control input`}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                        value={values.state}
-                                    >
-                                        {indianStates.map(state => (
-                                            <option key={state} value={state}>{state}</option>
-                                        ))}
-                                    </InputText><br />
-                                    <ErrorMessage name="state" component="div" className="error" />
-                                </div>
+                                <InputText
+                                    label="State"
+                                    as="select"
+                                    name="state"
+                                    type="text"
+                                    disabled={!isEditing}
+                                    onChange={handleChange}
+                                    value={values.state}
+                                    className="input"
+                                    style={{outline: "none"}}
+                                >
+                                    {indianStates.map(state => (
+                                        <option key={state} value={state}>{state}</option>
+                                    ))}
+                                </InputText><br />
+                                <ErrorMessage name="state" component="div" className="error" />
                             </Grid>
                         </Grid>
                     </Form >

@@ -18,14 +18,12 @@ function BankDetails({ bankDetails }) {
         setIsEditing(!isEditing);
     };
 
-    console.log(bankDetails.salonId)
-
     const editDetails = async (values) => {
         try {
             const response = await updateBankDetails(values, bankDetails.salonId);
             console.log("bankDetails ->", response);
             Notify.success(response.data.message);
-            setIsEditing(false); // Exit edit mode
+            setIsEditing(false);
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
