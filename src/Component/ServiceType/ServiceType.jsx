@@ -93,7 +93,7 @@ const ServiceType = (props) => {
             <img
               src={row.imageUrl}
               alt="Profile"
-              style={{ width: 35, height: 35, borderRadius: "50%" }}
+              style={{ width: 35, height: 35, borderRadius: "5px" }}
             />
           ) : (
             <img
@@ -102,7 +102,8 @@ const ServiceType = (props) => {
               style={{
                 width: 35,
                 height: 35,
-                borderRadius: "50%",
+                backgroundColor:"red",
+                borderRadius: "5px",
                 objectFit: "cover",
               }}
             />

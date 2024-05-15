@@ -5,21 +5,13 @@ import styles from "../file-uploder/fileUploader.module.css";
 import { FaTimes } from "react-icons/fa";
 
 const Preview = ({ meta, fileWithMeta: { cancel, remove }, className }) => {
-  // const handleCancel = (e) => {
-  //   e.preventDefault();
-  //   cancel();
-  // };
-
   return (
     <div className={className}>
       <img
         src={meta.previewUrl}
-        alt={meta.name}
         className={styles.previewImage}
+        style={{ maxHeight: "250px", maxWidth: "250px" }}
       />
-      {/* <div className={styles.cancelIcon} onClick={handleCancel}>
-        <FaTimes />
-      </div> */}
     </div>
   );
 };
@@ -37,34 +29,33 @@ const MyUploader = () => {
   const handleChangeStatus = ({ meta, file }, status) => {
     console.log(status, meta, file);
     if (status === "done" || status === "error") {
-      setIsUploading(false); // Reset uploading state
+      setIsUploading(false); 
     }
   };
 
   return (
-    <Dropzone
-      accept="image/*,audio/*,video/*"
-      classNames={{
-        dropzone: `${styles.customDropzone}`,
-        dropzoneActive: styles.dropzoneActive,
-        dropzoneReject: styles.dropzoneReject,
-      }}
-      PreviewComponent={Preview}
-    >
-      {({ getRootProps, getInputProps }) => (
-        <div
-          {...getRootProps()}
-          className={styles.customDropzone}
-        //   style={{ color: "black" }} 
-        >
-          <input {...getInputProps()} />
-          <p className="dz-message">
-            Drag 'n' drop some files here, or click to select files
-          </p>
-          <button className="dropzone-btn">Add Files</button>
+    <>
+      <Dropzone
+        accept="image/*,audio/*,video/*"
+        classNames={{
+          dropzone: `${styles.customDropzone}`,
+        }}
+        PreviewComponent={Preview}
+        inputContent={(files) => (
+          <div>
+            {!files.length && (
+              <p className="dz-message">Drag & drop some files here</p>
+            )}
+          </div>
+        )}
+        inputWithFilesContent={() => null}
+      />
+      {isUploading && (
+        <div>
+          <button onClick={() => console.log("Submit")} className={styles.submitButton}>Submit</button>
         </div>
       )}
-    </Dropzone>
+    </>
   );
 };
 

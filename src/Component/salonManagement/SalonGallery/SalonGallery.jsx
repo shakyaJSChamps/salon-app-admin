@@ -81,7 +81,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             Notify.success('Images uploaded successfully.');
         } catch (error) {
             console.error('Error uploading images:', error);
-            Notify.error('Image upload failed. Please try again.'); // Inform user
+            Notify.error('Image upload failed. Please try again.'); 
         }
     };
 
@@ -129,7 +129,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     />
                 </div>
             </div>
-            {salonDetail && ( // Render only if salonDetail is available
+            {salonDetail && ( 
                 <div>
                     <h6>Main Gate Image</h6>
                     <img src={mainGateImageUrl == null ? salonDetail.mainGateImageUrl : mainGateImageUrl} style={{ height: '150px', width: '150px' }} alt="Main Gate" />
@@ -146,7 +146,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         name="bannerImages"
                         onFileSelect={(files) => gallaryFileSelect(files, 'banner')}
                         buttonName="Add"
-                        multiple // Allow multiple file selection
+                        multiple 
                     />
                 </div>
             </div>
@@ -171,7 +171,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         name="galleryImages"
                         onFileSelect={(files) => gallaryFileSelect(files, 'gallery')}
                         buttonName="Add"
-                        multiple // Allow multiple file selection
+                        multiple 
                     />
                 </div>
             </div>

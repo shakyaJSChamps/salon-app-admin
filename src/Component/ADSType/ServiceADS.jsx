@@ -1,28 +1,43 @@
-import React from "react";
-import { useState } from "react";
-import { MdOutlineContactMail } from "react-icons/md";
+import React, { useState, useEffect } from "react";
 import { Paper } from "@mui/material";
 import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
+import { MdOutlineContactMail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import PlayCircleOutlineSharpIcon from "@mui/icons-material/PlayCircleOutlineSharp";
 import CustomTitle from "../CustomTitle";
+import { getAdsManagement } from "../../api/account.api";
 
-const ServiceADS = (props) => {
+const ServiceADS = () => {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAdsManagement();
+        console.log("Ads Management Response:", response.data); 
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
-  const paginatedData = props.data || [];
-  const totalRows = paginatedData.length;
+  const totalRows = data.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, totalRows);
-  const slicedData = paginatedData.slice(startIndex, endIndex);
+  const slicedData = data.slice(startIndex, endIndex);
+
   const columns = [
     {
       name: <strong>NAME</strong>,
@@ -80,8 +95,9 @@ const ServiceADS = (props) => {
       },
     },
   };
+
   return (
-    <Paper className="ads-service-paper px-3 h-100" elevation={3}>
+    <Paper className="ads-add-paper  h-100" elevation={3}>
       <DataTable
         title={
           <CustomTitle
@@ -94,6 +110,11 @@ const ServiceADS = (props) => {
         pagination
         highlightOnHover
         customStyles={customStyles}
+        onChangePage={handleChangePage}
+        paginationServer
+        paginationTotalRows={totalRows}
+        paginationPerPage={rowsPerPage}
+        paginationRowsPerPageOptions={[15, 25, 50, 100]}
       />
     </Paper>
   );

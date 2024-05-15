@@ -18,7 +18,8 @@ function VerifyPublishButton({ salonDetail }) {
         } catch (error) {
             console.error("Error verifying salon:", error);
             Notify.error(error.message);
-        } finally {
+        }  
+        finally {
             setLoading(false);
         }
     };
@@ -35,7 +36,8 @@ function VerifyPublishButton({ salonDetail }) {
         } catch (error) {
             console.error("Error while publishing salon:", error);
             Notify.error(error.message);
-        } finally {
+        } 
+        finally {
             setLoading(false);
         }
     };
