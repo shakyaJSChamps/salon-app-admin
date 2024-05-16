@@ -61,7 +61,7 @@ function Services({ service, salonDetail }) {
                 </div>
             </div>
 
-            <AddService open={open} handleClose={handleClose} />
+            <AddService open={open} handleClose={handleClose} services={services}/>
 
             <Formik
                 initialValues={{
@@ -101,7 +101,6 @@ function Services({ service, salonDetail }) {
                                     >
                                         {services.map((category, idx) => (
                                             <option key={idx} value={parseInt(category.id)}> {/* Convert to number */}
-                                                <AccessibleIcon />
                                                 {category.name}
                                             </option>
                                         ))}

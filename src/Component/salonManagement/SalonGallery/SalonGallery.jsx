@@ -3,7 +3,6 @@ import InputFile from '../../../../Controls/InputFile';
 import { fileUploaders, updateImage, deleteImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
-import { RiDeleteBin6Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 
 function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
@@ -89,14 +88,14 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
         try {
             // Show confirmation dialog
             const result = await Swal.fire({
-                title: "Are you sure?",
+                title: "Warning",
                 text: "Are you sure you want to delete the image ?",
                 icon: "warning",
                 width: "30%",
                 showCancelButton: true,
-                confirmButtonColor: "black",
+                confirmButtonColor: " black",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Delete",
                 customClass: "custom-swal",
             });
 
