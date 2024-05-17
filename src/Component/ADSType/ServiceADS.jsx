@@ -8,15 +8,20 @@ import CustomTitle from "../CustomTitle";
 import { getAdsManagement } from "../../api/account.api";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
+import NewADS from "./NewADS";
 
-const ServiceADS = () => {
+const ServiceADS = (props) => {
+  console.log("All Data ::>", props);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
   const [selectedRow, setSelectedRow] = useState(null);
+  const [showNewADS, setShowNewADS] = useState(false);
 
   const handleEditClick = (row) => {
+    console.log("Edit clicked for row:", row);
     setSelectedRow(row);
+    setShowNewADS(true);
   };
 
   useEffect(() => {
@@ -47,16 +52,16 @@ const ServiceADS = () => {
   const columns = [
     {
       name: <strong>NAME</strong>,
-      minWidth: '200px',
+      minWidth: "200px",
       cell: (row, index) => (
-        <div className="mt-1 mb-2 position-relative image-title" >
+        <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.imageUrl) && isValidImageUrl(row.imageUrl) ? (
               <img
                 src={row.imageUrl}
                 alt="Profile"
-                style={{ width: "100%", height:"100%", borderRadius: "5px", }}
+                style={{ width: "100%", height: "100%", borderRadius: "5px" }}
               />
             ) : (
               <img
@@ -82,9 +87,12 @@ const ServiceADS = () => {
       name: <strong>DURATION</strong>,
       cell: (row) => (
         <div className="mt-4 ads-duration">
-          <div>Starts<br /> {new Date(row.startDate).toLocaleDateString()}</div>
+          <div>
+            Starts
+            <br /> {new Date(row.startDate).toLocaleDateString()}
+          </div>
           <p className="expire-text">
-          Expire on {new Date(row.endDate).toLocaleDateString()}
+            Expire on {new Date(row.endDate).toLocaleDateString()}
           </p>
         </div>
       ),
@@ -94,7 +102,8 @@ const ServiceADS = () => {
       name: "",
       cell: (row) => (
         <div>
-          <MdEditSquare className="me-2" 
+          <MdEditSquare
+            className="me-2"
             onClick={() => handleEditClick(row)}
             style={{ cursor: "pointer" }}
           />
@@ -131,8 +140,15 @@ const ServiceADS = () => {
         paginationTotalRows={totalRows}
         paginationPerPage={rowsPerPage}
         paginationRowsPerPageOptions={[15, 25, 50, 100]}
+        selectedRow={selectedRow}
       />
-      
+      {showNewADS && (
+        <NewADS
+          selectedRow={selectedRow}
+          showNewADS={showNewADS}
+          setShowNewADS={setShowNewADS}
+        />
+      )}
     </Paper>
   );
 };
