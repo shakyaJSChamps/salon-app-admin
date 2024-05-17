@@ -20,7 +20,6 @@ function ImageUpdate({ name, onImageUpload , buttonName }) {
             };
             await fetch(response.data.data.url, requestOptions);
             let imagePath = response.data.data.path;
-            Notify.success(response.data.message);
             onImageUpload(imagePath);
         } catch (error) {
             console.error('Error uploading image:', error);
