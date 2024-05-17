@@ -3,7 +3,7 @@ import Notify from "../../../utils/notify";
 import { fileUploaders, updateImage } from '../../../api/account.api';
 import InputFile from '../../../../Controls/InputFile';
 
-function ImageUpdate({ salonDetail, setImageUrl,name, imageType }) {
+function ImageUpdate({ name, onImageUpload , buttonName }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleOnFileSelect = async (file) => {
@@ -18,22 +18,13 @@ function ImageUpdate({ salonDetail, setImageUrl,name, imageType }) {
                     'Content-Type': file.type,
                 },
             };
-
             await fetch(response.data.data.url, requestOptions);
-            const updatedData = {
-                imageUrl: response.data.data.path, // Use uploaded image URL
-                imageType: imageType,
-                thumbnailUrl: '',
-            };
-
-            const updateResponse = await updateImage(updatedData, salonDetail.id);
-            setImageUrl(updateResponse.data.data.imageUrl); 
+            let imagePath = response.data.data.path;
             Notify.success(response.data.message);
+            onImageUpload(imagePath);
         } catch (error) {
             console.error('Error uploading image:', error);
-            Notify.error('Image upload failed. Please try again.'); 
-        } finally {
-            setIsLoading(false); 
+            Notify.error(error.message);
         }
     };
 
@@ -41,7 +32,7 @@ function ImageUpdate({ salonDetail, setImageUrl,name, imageType }) {
         <InputFile
             name={name}
             onFileSelect={handleOnFileSelect}
-            buttonName={isLoading ? 'Uploading...' : 'Update'} 
+            buttonName={buttonName}
             disabled={isLoading}
         />
     );

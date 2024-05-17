@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { deleteImage } from '../../../api/account.api';
+import { deleteImage, updateImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
     const [mainGateImageUrl, setMainGateImageUrl] = useState(null);
     const [bannerImage, setBannerImage] = useState([]);
     const [gallaryImage, setGallaryImage] = useState([]);
+    const [imagePath, setImagePath] = useState('');
 
     useEffect(() => {
         // Fetch existing images from API
@@ -51,17 +52,43 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
         }
     };
 
+    const handleImageUpload = (path) => {
+        setMainGateImageUrl(path);
+        setImagePath(path); // Update the state with the new image path
+    };
+
+    const update = async () => {
+        try {
+            const updatedData = {
+                imageUrl: imagePath, // Use uploaded image URL
+                imageType: "MainGate", // Assuming this is the correct type
+                thumbnailUrl: '',
+            };
+
+            const updateResponse = await updateImage(updatedData, salonDetail.id);
+            setMainGateImageUrl(updateResponse.data.data.imageUrl);
+
+            Notify.success("Image updated successfully");
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
+
     return (
         <>
             <div className='d-flex justify-content-between'>
                 <h4>Salon Gallery</h4>
                 <div className='d-flex flex-row gap-1'>
-                    <ImageUpdate
-                        salonDetail={salonDetail}
-                        setImageUrl={setMainGateImageUrl}
-                        name="mainGateImageUrl"
-                        imageType="Maingate" />
+                    <div className='d-flex flex-row gap-1'>
+                        <ImageUpdate
+                            onImageUpload={handleImageUpload} // Pass the callback to ImageUpdate
+                            name="mainGateImageUrl"
+                            buttonName="Update"
+                        />
+                    </div>
+                    <button onClick={update} className={styles.btn}>Save</button>
                 </div>
+
             </div>
             {salonDetail && (
                 <div>
@@ -95,37 +122,37 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     </div>
                 )}
                 <hr />
-                </div>
+            </div>
 
-                {/* Gallery Images */}
-                <div className='mb-3'>
-                    <div className='d-flex justify-content-between align-items-center'>
-                        <h6>Gallery Images</h6>
-                        <MultipleImageUploader
-                            salonDetail={salonDetail}
-                            setImages={setGallaryImage}
-                            imageType="Gallery"
-                            buttonName="Add"
-                            name="galleryImages"
-                        />
+            {/* Gallery Images */}
+            <div className='mb-3'>
+                <div className='d-flex justify-content-between align-items-center'>
+                    <h6>Gallery Images</h6>
+                    <MultipleImageUploader
+                        salonDetail={salonDetail}
+                        setImages={setGallaryImage}
+                        imageType="Gallery"
+                        buttonName="Add"
+                        name="galleryImages"
+                    />
+                </div>
+                {gallaryImage.length > 0 && (
+                    <div className='d-flex flex-row flex-wrap gap-2'>
+                        {gallaryImage.map((image, index) => (
+                            <div key={index} className={styles.imageContainer}>
+                                <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
+                                <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
+                            </div>
+                        ))}
                     </div>
-                    {bannerImage.length > 0 && (
-                        <div className='d-flex flex-row flex-wrap gap-2'>
-                            {gallaryImage.map((image, index) => (
-                                <div key={index} className={styles.imageContainer}>
-                                    <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
-                                    <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                )}
+            </div>
 
-            </>
-            );
+        </>
+    );
 }
 
-            export default SalonGallery;
+export default SalonGallery;
 
 
 
