@@ -26,6 +26,8 @@ import {
   __endpoint_verifySalon,
   __endpoint_publishSalon,
   __endpoint_getAdsManagement,
+  __endpoint_addAdsType,
+  __endpoint_putAdsType,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -105,3 +107,9 @@ export const publishSalon = (id) =>
 
 export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);
+export const addAdsType = (payload) => {
+  console.log(" Add Advertisement Payload:", payload);
+  return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
+};
+export const putAdsType = (payload, id) =>
+  HTTP.Request(methods.PUT, `${__endpoint_putAdsType}/${id}`, payload);
