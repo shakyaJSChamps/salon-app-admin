@@ -107,6 +107,7 @@ export const publishSalon = (id) =>
 
 export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);
+
 export const addAdsType = (payload) => {
   console.log(" Add Advertisement Payload:", payload);
   return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
