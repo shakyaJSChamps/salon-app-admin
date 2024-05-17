@@ -20,6 +20,7 @@ const style = {
 };
 
 export default function AddService(props) {
+  console.log("Addservices", props.services)
 
   const handleSubmit = (values) => {
     console.log("Form values:", values);
@@ -42,12 +43,12 @@ export default function AddService(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <Formik
               initialValues={{
-                category: '',
-                serviceName: '',
-                durationInMinutes: '',
-                price: '',
-                serviceType: ''
-              }}
+                categoryId : "",
+                serviceName:"",
+                servicePrice:"",
+                serviceDuration:"",
+                type:""
+            }}
               onSubmit={handleSubmit}
             >
               <Form id="bankDetailsForm">
@@ -56,12 +57,13 @@ export default function AddService(props) {
                     <InputText
                       label="Category"
                       as="select"
-                      name="category"
+                      name="categoryId"
                       type="text"
                     >
-                      <option value="Hair">Hair</option>
-                      <option value="Color">Color</option>
-                      <option value="Both">Both</option>
+                      {/* Mapping props.services to populate options */}
+                      {props.services.map((service, index) => (
+                        <option key={index} value={service.id}>{service.name}</option>
+                      ))}
                     </InputText>
                   </Grid>
                   <Grid item xs={12}>
@@ -73,20 +75,20 @@ export default function AddService(props) {
                   <Grid item xs={12}>
                     <InputText
                       label="Duration in Minutes"
-                      name="durationInMinutes"
+                      name="serviceDuration"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
                       label="Price"
-                      name="price"
+                      name="servicePrice"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
                       label="Service Type"
                       as="select"
-                      name="serviceType"
+                      name="type"
                       type="text"
                     >
                       <option value="Male">Male</option>
