@@ -59,34 +59,28 @@ export const fileUploader = () => {
 };
 
 export const salonDetails = (payload, id) =>
-  HTTP.Request(methods.GET, __endpoint_salonDetails(id), payload, id);
+  HTTP.Request(methods.GET,` ${__endpoint_salonDetails}/${id}`, payload, id);
 
 export const salesDetail = (payload, id) =>
-  HTTP.Request(methods.GET, __endpoint_salesDetails(id), payload, id);
+  HTTP.Request(methods.GET, `${__endpoint_salesDetails}/${id}/user`, payload, id);
 
 export const updateBankDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateBankDetails(id), payload);
+  HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(
-    methods.PUT,
-    __endpoint_updateSalonService(salonid, id),
-    payload,
-    salonid,
-    id
-  );
+  HTTP.Request(methods.PUT,`${__endpoint_updateSalonService}/${salonid}/service/${id}`,payload,salonid,id);
 
 export const updateSalonDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateSalonDetails(id), payload, id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);
 
 export const updateSaleDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateSaleDetails(id), payload, id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSaleDetails}/${id}/user`, payload, id);
 
 export const fileUploaders = (payload) =>
   HTTP.Request(methods.GET, __endpoint_fileUploaders, payload);
 
 export const updateSalonOwner = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateSalonOwner(id), payload);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonOwner}/${id}`, payload);
 
 export const getSales = (payload) =>
   HTTP.Request(methods.GET, __endpoint_getSales, payload);
@@ -95,18 +89,19 @@ export const addSalesDetails = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addSalesDetails, payload);
 
 export const updateSalonTime = (payload, id) =>
-  HTTP.Request(methods.PUT, __endpoint_updateSalonTime(id), payload, id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonTime}/${id}/businessHours`, payload, id);
 
 export const updateImage = (payload, id) =>
-  HTTP.Request(methods.POST, __endpoint_updateImage(id), payload);
+  HTTP.Request(methods.POST, `${__endpoint_updateImage}/${id}`, payload);
 
 export const deleteImage = (id) =>
-  HTTP.Request(methods.DELETE, __endpoint_deleteImage(id));
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteImage}/${id}`);
 
 export const verifySalon = (id) =>
-  HTTP.Request(methods.PATCH, __endpoint_verifySalon(id));
+  HTTP.Request(methods.PATCH, `${__endpoint_verifySalon}/${id}`);
 
 export const publishSalon = (id) =>
-  HTTP.Request(methods.PATCH, __endpoint_publishSalon(id));
+  HTTP.Request(methods.PATCH, `${__endpoint_publishSalon}/${id}`);
+
 export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);

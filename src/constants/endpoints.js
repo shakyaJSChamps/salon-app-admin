@@ -14,58 +14,19 @@ export const __endpoint_updateUser = endpoint + "admin/users/consumers";
 export const __endpoint_fileUploader = endpoint + "admin/file/presignedUrl";
 
 // export const __endpoint_salonDetails = endpoint + "admin/salons";
-
-export const __endpoint_salonDetails = (id) => {
-  return `${endpoint}admin/salons/${id}`;
-};
-
-export const __endpoint_salesDetails = (id) => {
-  return `${endpoint}admin/sales/${id}/user`;
-};
-
-export const __endpoint_updateSalonDetails = (id) => {
-  return `${endpoint}admin/salons/${id}`;
-};
-export const __endpoint_updateSaleDetails = (id) => {
-  return `${endpoint}admin/sales/${id}/user`;
-};
-
-export const __endpoint_updateSalonOwner = (id) => {
-  return `${endpoint}admin/salons/profile/${id}`;
-};
-
-export const __endpoint_updateBankDetails = (id) => {
-  return `${endpoint}admin/salons/${id}/bank`;
-};
-
-export const __endpoint_updateSalonService = (salonid, id) => {
-  return `${endpoint}admin/salons/${salonid}/service/${id}`;
-};
-
+export const __endpoint_salonDetails = endpoint + "admin/salons";
+export const __endpoint_salesDetails = endpoint + "admin/sales";
+export const __endpoint_updateSalonDetails = endpoint + "admin/salons";
+export const __endpoint_updateSaleDetails = endpoint + "admin/sales";
+export const __endpoint_updateSalonOwner = endpoint + "admin/salons/profile";
+export const __endpoint_updateBankDetails = endpoint + "admin/salons";
+export const __endpoint_updateSalonService = endpoint + "admin/salons";
 export const __endpoint_fileUploaders = endpoint + "admin/file/presignedUrl";
-
 export const __endpoint_getSales = endpoint + "admin/sales/user";
-
 export const __endpoint_addSalesDetails = endpoint + "admin/sales/user";
-
-export const __endpoint_updateSalonTime = (id) => {
-  return `${endpoint}admin/salons/${id}/businessHours`;
-};
-
-export const __endpoint_updateImage = (id) => {
-  return `${endpoint}admin/file/${id}`;
-};
-
-export const __endpoint_deleteImage = (id) => {
-    return `${endpoint}admin/file/salon/${id}`;
-  };
-
-export const __endpoint_verifySalon = (id) => {
-    return `${endpoint}admin/salons/verified/${id}`;
-  };
-
-export const __endpoint_publishSalon = (id) => {
-    return `${endpoint}admin/salons/publish/${id}`;
-  };
-
+export const __endpoint_updateSalonTime = endpoint + "admin/salons";
+export const __endpoint_updateImage = endpoint + "admin/file";
+export const __endpoint_deleteImage = endpoint + "admin/file/salon";
+export const __endpoint_verifySalon = endpoint + "admin/salons/verified";
+export const __endpoint_publishSalon = endpoint + "admin/salons/publish";
 export const __endpoint_getAdsManagement = endpoint + "admin/services/advertisement";
