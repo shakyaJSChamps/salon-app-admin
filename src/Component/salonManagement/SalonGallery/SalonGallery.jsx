@@ -11,6 +11,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
     const [bannerImage, setBannerImage] = useState([]);
     const [gallaryImage, setGallaryImage] = useState([]);
     const [imagePath, setImagePath] = useState('');
+    const [isImageUpdated, setIsImageUpdated] = useState(false); // State to track image update
 
     useEffect(() => {
         // Fetch existing images from API
@@ -20,6 +21,12 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
         }
     }, [gallaryImages, bannerImages]);
 
+    // Effect to monitor changes in imagePath to update isImageUpdated state
+    useEffect(() => {
+        if (imagePath !== '') {
+            setIsImageUpdated(true);
+        }
+    }, [imagePath]);
 
     const removeImage = async (id, section) => {
         try {
@@ -69,6 +76,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             setMainGateImageUrl(updateResponse.data.data.imageUrl);
 
             Notify.success("Image updated successfully");
+            setIsImageUpdated(false); // Reset the flag after successful update
         } catch (error) {
             Notify.error(error.message);
         }
@@ -79,14 +87,17 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
             <div className='d-flex justify-content-between'>
                 <h4>Salon Gallery</h4>
                 <div className='d-flex flex-row gap-1'>
-                    <div className='d-flex flex-row gap-1'>
-                        <ImageUpdate
-                            onImageUpload={handleImageUpload} // Pass the callback to ImageUpdate
-                            name="mainGateImageUrl"
-                            buttonName="Update"
-                        />
-                    </div>
-                    <button onClick={update} className={styles.btn}>Save</button>
+                    {isImageUpdated ? (
+                        <button onClick={update} className={styles.btn}>Save</button>
+                    ) : (
+                        <div className='d-flex flex-row gap-1'>
+                            <ImageUpdate
+                                onImageUpload={handleImageUpload} // Pass the callback to ImageUpdate
+                                name="mainGateImageUrl"
+                                buttonName="Update"
+                            />
+                        </div>
+                    )}
                 </div>
 
             </div>
@@ -153,7 +164,3 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
 }
 
 export default SalonGallery;
-
-
-
-
