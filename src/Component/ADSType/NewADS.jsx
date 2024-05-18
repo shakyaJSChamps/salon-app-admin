@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineContactMail } from "react-icons/md";
+import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
 import { Form, Formik } from "formik";
@@ -8,7 +9,7 @@ import SalesImageUploader from "../common-component/Salesimageuploader/SalesImag
 import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
 
-const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -35,6 +36,16 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
           : "",
         active: selectedRow.active || true,
       });
+    } else {
+      setInitialValues({
+        name: "",
+        mediaUrl: "",
+        redirectLink: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+        active: true,
+      });
     }
   }, [selectedRow]);
 
@@ -52,20 +63,34 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
 
       let response;
       if (selectedRow) {
-        response = await putAdsType(selectedRow.id, formattedValues);
-        onUpdateAd(response.data); // Update the parent state with the updated ad
+        response = await putAdsType(formattedValues, selectedRow.id);
+        onUpdateAd(response.data.data); // Update the parent state with the updated ad
       } else {
         response = await addAdsType(formattedValues);
-        onAddAd(response.data); // Add the new ad to the parent state
+        onAddAd(response.data.data); // Add the new ad to the parent state
       }
 
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();
       setUploaderKey(Date.now()); // Update the key to reset the uploader
+      onClearSelectedRow(); // Clear the selected row after submission
     } catch (error) {
       Notify.error(error.message);
     }
+  };
+
+  const clearForm = () => {
+    setInitialValues({
+      name: "",
+      mediaUrl: "",
+      redirectLink: "",
+      city: "",
+      startDate: "",
+      endDate: "",
+      active: true,
+    });
+    onClearSelectedRow();
   };
 
   return (
@@ -73,6 +98,12 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContactMail />
         <p className="ps-1 fw-bold mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
+        {selectedRow && (
+          <BiPlusCircle
+            onClick={clearForm}
+            className="cursor-pointer ms-auto"
+          />
+        )}
       </div>
       <hr />
       <Formik

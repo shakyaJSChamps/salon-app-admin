@@ -29,7 +29,6 @@ const AdsManagement = () => {
 
   const handleAddAd = (newAd) => {
     setAdsData((prevAdsData) => [...prevAdsData, newAd]);
-    fetchData(); // Fetch updated data after adding a new ad
   };
 
   const handleUpdateAd = (updatedAd) => {
@@ -47,7 +46,7 @@ const AdsManagement = () => {
     <Container>
       <Row>
         <Col md={4}>
-          <NewADS selectedRow={selectedRow} onAddAd={handleAddAd} onUpdateAd={handleUpdateAd} />
+          <NewADS selectedRow={selectedRow} onAddAd={handleAddAd} onUpdateAd={handleUpdateAd} onClearSelectedRow={() => setSelectedRow(null)} />
         </Col>
         <Col md={8}>
           <ServiceADS

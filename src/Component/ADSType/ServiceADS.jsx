@@ -36,7 +36,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
   const handleDeleteConfirmation = (row) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this advertisement",
+      text: "Advertisement deleted successfully",
       icon: "warning",
       width: "30%",
       showCancelButton: true,
@@ -44,6 +44,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
       customClass: "custom-swal",
+      allowOutsideClick: false, // Prevent closing on outside click
     }).then((result) => {
       if (result.isConfirmed) {
         handleDeleteClick(row.id);
