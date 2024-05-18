@@ -1,7 +1,6 @@
 import { useState } from "react";
-export default function SalesImageUploader({ label, onFileSelect, name, buttonName , ...rest }) {
+export default function SalesImageUploader({ label, onFileSelect, name, buttonName, ...rest }) {
 
-    const [file, setFile] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
     // Handle file select
     const handleOnClick = (e) => {
@@ -18,7 +17,6 @@ export default function SalesImageUploader({ label, onFileSelect, name, buttonNa
         }
     };
 
-
     return (
         <div className='d-flex flex-column mb-1 '>
             <label htmlFor={rest.name} className="" style={{ fontWeight: 500 }}>{label}</label>
@@ -28,7 +26,6 @@ export default function SalesImageUploader({ label, onFileSelect, name, buttonNa
                     {buttonName}
                 </button>
                 <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileSelect} />
-                <small className="p-2">{file?.name}</small>
             </div>
         </div>
     )
