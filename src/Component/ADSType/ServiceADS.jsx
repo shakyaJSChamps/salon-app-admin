@@ -4,11 +4,14 @@ import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { MdOutlineContactMail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import Swal from "sweetalert2"; 
 import CustomTitle from "../CustomTitle";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
+import { deleteADSType } from "../../api/account.api"; 
+import Notify from "../../utils/notify"; 
 
-const ServiceADS = ({ adsData, onEditRow }) => {
+const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
 
@@ -16,7 +19,37 @@ const ServiceADS = ({ adsData, onEditRow }) => {
     console.log("Edit clicked for row:", row);
     onEditRow(row);
   };
-  
+
+  const handleDeleteClick = async (id) => {
+    console.log("Delete clicked for ID:", id); 
+    try {
+      const response = await deleteADSType(id); 
+      console.log("Delete API Response:", response); 
+      Notify.success("Advertisement deleted successfully.");
+      onDeleteRow(id); 
+    } catch (error) {
+      console.error("Delete API Error:", error); 
+      Notify.error("Failed to delete the advertisement.");
+    }
+  };
+
+  const handleDeleteConfirmation = (row) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this advertisement",
+      icon: "warning",
+      width: "30%",
+      showCancelButton: true,
+      confirmButtonColor: "#000000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "custom-swal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteClick(row.id);
+      }
+    });
+  };
 
   const handleChangePage = (newPage) => {
     setPage(newPage);
@@ -86,7 +119,10 @@ const ServiceADS = ({ adsData, onEditRow }) => {
             onClick={() => handleEditClick(row)}
             style={{ cursor: "pointer" }}
           />
-          <RiDeleteBin6Fill />
+          <RiDeleteBin6Fill
+            onClick={() => handleDeleteConfirmation(row)}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       ),
     },

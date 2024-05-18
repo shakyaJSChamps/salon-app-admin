@@ -3,12 +3,12 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
 import { Form, Formik } from "formik";
-import { addAdsType, putAdsType } from "../../api/account.api"; 
+import { addAdsType, putAdsType } from "../../api/account.api";
 import SalesImageUploader from "../common-component/Salesimageuploader/SalesImageUploader";
 import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
 
-const NewADS = ({ selectedRow, onAddAd, }) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -24,7 +24,7 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
     if (selectedRow) {
       setInitialValues({
         name: selectedRow.name || "",
-        mediaUrl: selectedRow.mediaUrl || "", // Image data
+        mediaUrl: selectedRow.mediaUrl || "",
         redirectLink: selectedRow.redirectLink || "",
         city: selectedRow.city || "",
         startDate: selectedRow.startDate
@@ -37,7 +37,6 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
       });
     }
   }, [selectedRow]);
-  
 
   const handleSubmit = async (values, { resetForm }) => {
     console.log("Form Submission::", values);
@@ -54,15 +53,16 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
       let response;
       if (selectedRow) {
         response = await putAdsType(selectedRow.id, formattedValues);
+        onUpdateAd(response.data); // Update the parent state with the updated ad
       } else {
         response = await addAdsType(formattedValues);
+        onAddAd(response.data); // Add the new ad to the parent state
       }
 
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
-      resetForm(); 
+      resetForm();
       setUploaderKey(Date.now()); // Update the key to reset the uploader
-      onAddAd(response.data); // Add the new ad to the parent state
     } catch (error) {
       Notify.error(error.message);
     }

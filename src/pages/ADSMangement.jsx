@@ -8,6 +8,20 @@ const AdsManagement = () => {
   const [adsData, setAdsData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const response = await getAdsManagement();
+      console.log("Ads Management Response:", response);
+      setAdsData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleEditRow = (row) => {
     console.log("Row selected for edit:", row);
     setSelectedRow(row);
@@ -15,31 +29,32 @@ const AdsManagement = () => {
 
   const handleAddAd = (newAd) => {
     setAdsData((prevAdsData) => [...prevAdsData, newAd]);
+    fetchData(); // Fetch updated data after adding a new ad
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAdsManagement();
-        console.log("Ads Management Response:", response);
-        setAdsData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    fetchData();
-  }, [adsData]); 
-  
+  const handleUpdateAd = (updatedAd) => {
+    setAdsData((prevAdsData) =>
+      prevAdsData.map((ad) => (ad.id === updatedAd.id ? updatedAd : ad))
+    );
+    setSelectedRow(null); // Clear the selected row after updating
+  };
+
+  const handleDeleteRow = (id) => {
+    setAdsData((prevAdsData) => prevAdsData.filter((ad) => ad.id !== id));
+  };
 
   return (
     <Container>
       <Row>
         <Col md={4}>
-          <NewADS selectedRow={selectedRow} onAddAd={handleAddAd} />
+          <NewADS selectedRow={selectedRow} onAddAd={handleAddAd} onUpdateAd={handleUpdateAd} />
         </Col>
         <Col md={8}>
-          <ServiceADS adsData={adsData} onEditRow={handleEditRow} />
+          <ServiceADS
+            adsData={adsData}
+            onEditRow={handleEditRow}
+            onDeleteRow={handleDeleteRow}
+          />
         </Col>
       </Row>
     </Container>

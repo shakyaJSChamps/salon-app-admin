@@ -28,6 +28,7 @@ import {
   __endpoint_getAdsManagement,
   __endpoint_addAdsType,
   __endpoint_putAdsType,
+  __endpoint_deleteADSType,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -114,3 +115,5 @@ export const addAdsType = (payload) => {
 };
 export const putAdsType = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_putAdsType}/${id}`, payload);
+export const deleteADSType = (id) =>
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
