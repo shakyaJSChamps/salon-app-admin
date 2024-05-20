@@ -3,11 +3,12 @@ import { MdOutlineContactMail } from "react-icons/md";
 import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
-import { Form, Formik } from "formik";
+import { Form, Formik, ErrorMessage } from "formik";
 import { addAdsType, putAdsType } from "../../api/account.api";
 import SalesImageUploader from "../common-component/Salesimageuploader/SalesImageUploader";
 import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
+import { newADSSchema } from "../../utils/schema"; 
 
 const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
@@ -109,6 +110,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
+        validationSchema={newADSSchema} 
         onSubmit={handleSubmit}
       >
         {({ handleChange, values, setFieldValue }) => (
@@ -121,6 +123,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 value={values.name}
                 onChange={handleChange}
               />
+              <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -131,6 +134,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 value={values.city}
                 onChange={handleChange}
               />
+              <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -142,6 +146,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 onChange={handleChange}
                 value={values.startDate}
               />
+              <ErrorMessage name="startDate" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -152,6 +157,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 onChange={handleChange}
                 value={values.endDate}
               />
+              <ErrorMessage name="endDate" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-1 position-relative">
@@ -164,6 +170,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                   handleOnFileSelect(e, "mediaUrl", setFieldValue)
                 }
               />
+              <ErrorMessage name="mediaUrl" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex justify-content-center pb-1">

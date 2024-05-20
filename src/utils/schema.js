@@ -163,3 +163,10 @@ export const salonTimeSchema = Yup.object().shape({
       })
   ),
 });
+export const newADSSchema = Yup.object().shape({
+  name: Yup.string().required('Advertisement name is required'),
+  city: Yup.string().required('City is required'),
+  startDate: Yup.date().required('Start date is required').nullable(),
+  endDate: Yup.date().required('End date is required').nullable(),
+  mediaUrl: Yup.string().required('Advertisement image is required'),
+});
