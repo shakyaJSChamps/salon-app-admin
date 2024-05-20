@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineContactMail } from "react-icons/md";
+import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
 import { Form, Formik } from "formik";
-import { addAdsType, putAdsType } from "../../api/account.api"; 
+import { addAdsType, putAdsType } from "../../api/account.api";
 import SalesImageUploader from "../common-component/Salesimageuploader/SalesImageUploader";
 import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
 
-const NewADS = ({ selectedRow, onAddAd, }) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -24,7 +25,7 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
     if (selectedRow) {
       setInitialValues({
         name: selectedRow.name || "",
-        mediaUrl: selectedRow.mediaUrl || "", // Image data
+        mediaUrl: selectedRow.mediaUrl || "",
         redirectLink: selectedRow.redirectLink || "",
         city: selectedRow.city || "",
         startDate: selectedRow.startDate
@@ -35,9 +36,18 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
           : "",
         active: selectedRow.active || true,
       });
+    } else {
+      setInitialValues({
+        name: "",
+        mediaUrl: "",
+        redirectLink: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+        active: true,
+      });
     }
   }, [selectedRow]);
-  
 
   const handleSubmit = async (values, { resetForm }) => {
     console.log("Form Submission::", values);
@@ -53,19 +63,34 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
 
       let response;
       if (selectedRow) {
-        response = await putAdsType(selectedRow.id, formattedValues);
+        response = await putAdsType(formattedValues, selectedRow.id);
+        onUpdateAd(response.data.data); // Update the parent state with the updated ad
       } else {
         response = await addAdsType(formattedValues);
+        onAddAd(response.data.data); // Add the new ad to the parent state
       }
 
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
-      resetForm(); 
+      resetForm();
       setUploaderKey(Date.now()); // Update the key to reset the uploader
-      onAddAd(response.data); // Add the new ad to the parent state
+      onClearSelectedRow(); // Clear the selected row after submission
     } catch (error) {
       Notify.error(error.message);
     }
+  };
+
+  const clearForm = () => {
+    setInitialValues({
+      name: "",
+      mediaUrl: "",
+      redirectLink: "",
+      city: "",
+      startDate: "",
+      endDate: "",
+      active: true,
+    });
+    onClearSelectedRow();
   };
 
   return (
@@ -73,6 +98,12 @@ const NewADS = ({ selectedRow, onAddAd, }) => {
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContactMail />
         <p className="ps-1 fw-bold mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
+        {selectedRow && (
+          <BiPlusCircle
+            onClick={clearForm}
+            className="cursor-pointer ms-auto"
+          />
+        )}
       </div>
       <hr />
       <Formik
