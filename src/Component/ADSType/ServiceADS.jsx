@@ -144,6 +144,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
           <CustomTitle
             icon={<MdOutlineContactMail />}
             title={"Advertisement"}
+            disabled={true}
           />
         }
         columns={columns}

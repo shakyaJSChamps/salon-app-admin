@@ -86,6 +86,7 @@ const CouponDetails = (props) => {
           <CustomTitle
             icon={<MdOutlineConfirmationNumber />}
             title={"Coupon"}
+            disabled={true}
           />
         }
         columns={columns}

@@ -164,6 +164,7 @@ const SaloonManagement = () => {
               title={title}
               setOption={setOption}
               searchByText={searchByText}
+              disabled={true}
             />
             }
             columns={columns}

@@ -4,12 +4,12 @@ import MyVerticallyCenteredModal from "./modal/ModalPop";
 import { useNavigate } from "react-router-dom";
 
 const Sales = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 
   const handleAddSalesClick = () => {
     setShowForm(true);
-    navigate("creates"); 
+    navigate("creates");
   };
 
   const handleCloseForm = () => {
@@ -20,7 +20,7 @@ const Sales = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <div className="d-flex justify-content-start">
-          <SearchDropDown />
+          <SearchDropDown disabled={true}  />
         </div>
         <button
           type="button"
