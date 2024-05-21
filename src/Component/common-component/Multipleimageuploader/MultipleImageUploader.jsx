@@ -1,9 +1,9 @@
 import React from 'react'
 import { fileUploaders, updateImage } from '../../../api/account.api';
-import InputFile from '../../../../Controls/InputFile';
 import Notify from "../../../utils/notify"
+import InputFile from '../Inputfile/InputFile';
 
-function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, name }) {
+function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, name, buttonStyle }) {
 
     const multipleFileSelect = async (files) => {
         try {
@@ -41,6 +41,7 @@ function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, 
                 name={name}
                 onFileSelect={(files) => multipleFileSelect(files)}
                 buttonName={buttonName}
+                buttonStyle={buttonStyle}
                 multiple
             />
         </div>

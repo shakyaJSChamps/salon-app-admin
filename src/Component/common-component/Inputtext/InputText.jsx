@@ -1,4 +1,4 @@
-import { Field, ErrorMessage } from "formik";
+import { Field} from "formik";
 import style from "../Inputtext/controls.module.css";
 
 const InputText = ({ label, name, ...rest }) => {
@@ -17,7 +17,6 @@ const InputText = ({ label, name, ...rest }) => {
         {...rest}
         {...maxDate} 
       />
-      {/* <ErrorMessage component="div" name={name} className={style.control__input_error} /> */}
     </div>
   );
 };

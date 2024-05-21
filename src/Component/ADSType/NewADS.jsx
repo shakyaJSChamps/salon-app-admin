@@ -70,7 +70,6 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
         response = await addAdsType(formattedValues);
         onAddAd(response.data.data); // Add the new ad to the parent state
       }
-
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Notify from "../../../utils/notify";
 import { fileUploaders, updateImage } from '../../../api/account.api';
-import InputFile from '../../../../Controls/InputFile';
+import InputFile from '../Inputfile/InputFile';
 
-function ImageUpdate({ name, onImageUpload , buttonName }) {
+function ImageUpdate({ name, onImageUpload, buttonName, buttonStyle, inputClassName }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleOnFileSelect = async (file) => {
-        // Indicate upload in progress
         setIsLoading(true);
         try {
             const response = await fileUploaders({ fileName: file.name });
@@ -24,14 +23,19 @@ function ImageUpdate({ name, onImageUpload , buttonName }) {
         } catch (error) {
             console.error('Error uploading image:', error);
             Notify.error(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
+
 
     return (
         <InputFile
             name={name}
             onFileSelect={handleOnFileSelect}
             buttonName={buttonName}
+            buttonStyle={buttonStyle}
+            inputClassName={inputClassName}
             disabled={isLoading}
         />
     );
