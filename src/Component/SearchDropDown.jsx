@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { IoSearch } from "react-icons/io5";
 
-const SearchDropDown = (props) => {
+const SearchDropDown = ({
+  disabled = false,
+  value = "email",
+  setOption = () => {},
+  searchByText = () => {},
+}) => {
   const [searchText, setSearchText] = useState("");
-  const [categorySelected, setCategorySelected] = useState(false);
-  const [searchIconClicked, setSearchIconClicked] = useState(false);
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
@@ -12,9 +15,8 @@ const SearchDropDown = (props) => {
   };
 
   const handleOptionChange = (prop) => {
-    if (prop !== props.value) {
-      setCategorySelected(prop);
-      props.setOption(prop);
+    if (prop !== value) {
+      setOption(prop);
     }
   };
 
@@ -27,10 +29,10 @@ const SearchDropDown = (props) => {
     <div className="dropdown-container">
       <div className="search-container">
         <select
-          value={props.value}
+          value={value}
           onChange={(e) => handleOptionChange(e.target.value)}
           className="dropdown ps-2"
-          defaultValue="email"
+          disabled={disabled}
         >
           {data.map((item) => (
             <option key={item.value} value={item.value}>
@@ -48,6 +50,10 @@ const SearchDropDown = (props) => {
             className="search-bar"
             value={searchText}
             onChange={handleSearchChange}
+            disabled={disabled}
+            style={{
+              cursor: disabled ? "not-allowed" : "auto",
+            }}
           />
 
           <button
@@ -55,10 +61,10 @@ const SearchDropDown = (props) => {
             style={{
               backgroundColor: "transparent",
               border: "none",
-              cursor: "pointer",
-              color: "#a59c9c",
+              cursor: disabled ? "not-allowed" : "auto",
             }}
-            onClick={() => props.searchByText(searchText)}
+            onClick={() => searchByText(searchText)}
+            disabled={disabled}
           >
             <IoSearch />
           </button>

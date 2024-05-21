@@ -5,31 +5,36 @@ import { Grid } from "@mui/material";
 import Notify from "../../../utils/notify.js";
 import InputText from "../../common-component/Inputtext/InputText.jsx";
 import { updateSaleDetails, salesDetail } from "../../../api/account.api.js";
-import { handleOnFileSelect } from "../../common-component/Imageuploader/ImageUploader.jsx";
-import SalesImageUploader from "../../common-component/Salesimageuploader/SalesImageUploader.jsx";
 import { salesDetailsSchema } from "../../../utils/schema.js";
+import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 
 function UpdateSalesDetails({ payload, id }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [saleDetails, setSaleDetails] = useState(false);
+    const [saleDetails, setSaleDetails] = useState({});
+    const [previewImages, setPreviewImages] = useState({
+        bankdocumentImageUrl: null,
+        panCardImageUrl: null,
+        aadharFrontImageUrl: null,
+        aadharBackImageUrl: null,
+        profileImageUrl: null,
+    });
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
-    }
+    };
 
     useEffect(() => {
         const fetchSalesDetail = async () => {
             try {
                 const data = await salesDetail(payload, id);
                 console.log("Single sale data-->", data);
-                setSaleDetails(data?.data?.data);
+                setSaleDetails(data?.data?.data || {});
             } catch (error) {
                 console.error('Error fetching salon details:', error);
             }
         };
         fetchSalesDetail();
     }, [id]);
-
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
@@ -45,13 +50,24 @@ function UpdateSalesDetails({ payload, id }) {
         }
     };
 
+    const handleImageUpload = (field, imagePath) => {
+        setSaleDetails((prevState) => ({
+            ...prevState,
+            [field]: imagePath,
+        }));
+        setPreviewImages((prevState) => ({
+            ...prevState,
+            [field]: imagePath,
+        }));
+    };
+
     return (
         <div className={styles.mainDiv}>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Sales Details</h4>
                 <div className="d-flex justify-content-start align-items-center mb-3">
                     {!isEditing && (
-                        <button type="button" onClick={handleEditClick} className={styles.button} >
+                        <button type="button" onClick={handleEditClick} className={styles.button}>
                             Edit
                         </button>
                     )}
@@ -63,29 +79,27 @@ function UpdateSalesDetails({ payload, id }) {
                 </div>
             </div>
             <Formik
-                initialValues={
-                    {
-                        phoneNumber: saleDetails.phoneNumber || "",
-                        countryCode: saleDetails.countryCode || "",
-                        firstName: saleDetails.firstName || "",
-                        middleName: saleDetails.middleName || "",
-                        lastName: saleDetails.lastName || "",
-                        dob: saleDetails.dob || "",
-                        gender: saleDetails.gender || "",
-                        email: saleDetails.email || "",
-                        accountNumber: saleDetails.accountNumber || "",
-                        accountHolderName: saleDetails.accountHolderName || "",
-                        bankName: saleDetails.bankName || "",
-                        ifscCode: saleDetails.ifscCode || "",
-                        address: saleDetails.address || "",
-                        bankdocumentImageUrl: saleDetails.bankdocumentImageUrl || "",
-                        panCardImageUrl: saleDetails.panCardImageUrl || "",
-                        aadharFrontImageUrl: saleDetails.aadharFrontImageUrl || "",
-                        aadharBackImageUrl: saleDetails.aadharBackImageUrl || "",
-                        profileImageUrl: saleDetails.profileImageUrl || "",
-                        upiID: saleDetails.upiID || " "
-                    }
-                }
+                initialValues={{
+                    phoneNumber: saleDetails.phoneNumber || "",
+                    countryCode: saleDetails.countryCode || "",
+                    firstName: saleDetails.firstName || "",
+                    middleName: saleDetails.middleName || "",
+                    lastName: saleDetails.lastName || "",
+                    dob: saleDetails.dob || "",
+                    gender: saleDetails.gender || "",
+                    email: saleDetails.email || "",
+                    accountNumber: saleDetails.accountNumber || "",
+                    accountHolderName: saleDetails.accountHolderName || "",
+                    bankName: saleDetails.bankName || "",
+                    ifscCode: saleDetails.ifscCode || "",
+                    address: saleDetails.address || "",
+                    bankdocumentImageUrl: saleDetails.bankdocumentImageUrl || "",
+                    panCardImageUrl: saleDetails.panCardImageUrl || "",
+                    aadharFrontImageUrl: saleDetails.aadharFrontImageUrl || "",
+                    aadharBackImageUrl: saleDetails.aadharBackImageUrl || "",
+                    profileImageUrl: saleDetails.profileImageUrl || "",
+                    upiID: saleDetails.upiID || " ",
+                }}
                 onSubmit={editDetails}
                 validationSchema={salesDetailsSchema}
                 enableReinitialize
@@ -113,14 +127,13 @@ function UpdateSalesDetails({ payload, id }) {
                                     disabled={!isEditing}
                                     onChange={handleChange}
                                     value={values.middleName}
-
                                 />
                                 <ErrorMessage name="middleName" component="div" className={styles.error} />
                             </Grid>
 
                             <Grid item xs={4}>
                                 <InputText
-                                    label="LastName"
+                                    label="Last Name"
                                     name="lastName"
                                     type="text"
                                     disabled={!isEditing}
@@ -128,7 +141,6 @@ function UpdateSalesDetails({ payload, id }) {
                                     value={values.lastName}
                                 />
                                 <ErrorMessage name="lastName" component="div" className={styles.error} />
-
                             </Grid>
 
                             <Grid item xs={4}>
@@ -182,18 +194,17 @@ function UpdateSalesDetails({ payload, id }) {
 
                             <Grid item xs={4}>
                                 <div>
-                                    <label>Gender</label>
-                                    <br />
                                     <InputText
+                                        label="Gender"
                                         as="select"
                                         name="gender"
-                                        className="Form-control input"
-                                        disabled={!isEditing}
+                                        className="input"
                                         type="text"
+                                        disabled={!isEditing}
                                         onChange={handleChange}
                                         value={values.gender}
                                     >
-                                        <option value="">{values.gender}</option>
+                                        <option value="">select</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Other">Both</option>
@@ -216,7 +227,6 @@ function UpdateSalesDetails({ payload, id }) {
                                     type="text"
                                     onChange={handleChange}
                                     value={values.accountNumber}
-
                                 />
                                 <ErrorMessage name="accountNumber" component="div" className={styles.error} />
                             </Grid>
@@ -231,7 +241,6 @@ function UpdateSalesDetails({ payload, id }) {
                                     value={values.accountHolderName}
                                 />
                                 <ErrorMessage name="accountHolderName" component="div" className={styles.error} />
-
                             </Grid>
                             <Grid item xs={4}>
                                 <InputText
@@ -288,10 +297,18 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>CancelCheque/Passbook</label>
-                                    {isEditing ? <SalesImageUploader name="bankdocumentImageUrl" onFileSelect={(e) => handleOnFileSelect(e, "bankdocumentImageUrl", setFieldValue)}
-                                        buttonName="Update Passbook" disabled={!isEditing}
-                                    /> : <img src={values.bankdocumentImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
-                                    }
+                                    <img src={previewImages.bankdocumentImageUrl || values.bankdocumentImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    {isEditing && (
+                                        <ImageUpdate
+                                            name="bankdocumentImageUrl"
+                                            buttonName="Update"
+                                            inputClassName="form-control input"
+                                            onImageUpload={(imagePath) => {
+                                                console.log("Bank Document Image Path:", imagePath);
+                                                handleImageUpload("bankdocumentImageUrl", imagePath);
+                                            }}
+                                        />
+                                    )}
                                 </div>
                                 <ErrorMessage name="bankdocumentImageUrl" component="div" className={styles.error} />
                             </Grid>
@@ -299,8 +316,15 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Pancard</label>
-                                    {isEditing ? <SalesImageUploader name="panCardImageUrl" buttonName="Update" disabled={!isEditing} onFileSelect={(e) => handleOnFileSelect(e, "panCardImageUrl", setFieldValue)} />
-                                        : <img src={values.panCardImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />}
+                                    <img src={previewImages.panCardImageUrl || values.panCardImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    {isEditing && (
+                                        <ImageUpdate
+                                            name="panCardImageUrl"
+                                            buttonName="Update"
+                                            inputClassName="form-control input"
+                                            onImageUpload={(imagePath) => handleImageUpload("panCardImageUrl", imagePath)}
+                                        />
+                                    )}
                                 </div>
                                 <ErrorMessage name="panCardImageUrl" component="div" className={styles.error} />
                             </Grid>
@@ -308,8 +332,15 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Aadhar Front</label>
-                                    {isEditing ? <SalesImageUploader name="aadharFrontImageUrl" buttonName="Update" disabled={!isEditing} onFileSelect={(e) => handleOnFileSelect(e, "aadharFrontImageUrl", setFieldValue)} />
-                                        : <img src={values.aadharFrontImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />}
+                                    <img src={previewImages.aadharFrontImageUrl || values.aadharFrontImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    {isEditing && (
+                                        <ImageUpdate
+                                            name="aadharFrontImageUrl"
+                                            buttonName="Update"
+                                            inputClassName="form-control input"
+                                            onImageUpload={(imagePath) => handleImageUpload("aadharFrontImageUrl", imagePath)}
+                                        />
+                                    )}
                                 </div>
                                 <ErrorMessage name="aadharFrontImageUrl" component="div" className={styles.error} />
                             </Grid>
@@ -317,9 +348,15 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Aadhar Back</label>
-                                    {isEditing ? <SalesImageUploader name="aadharBackImageUrl" disabled={!isEditing} buttonName="Update" onFileSelect={(e) => handleOnFileSelect(e, "aadharBackImageUrl", setFieldValue)} />
-                                        : <img src={values.aadharBackImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
-                                    }
+                                    <img src={previewImages.aadharBackImageUrl || values.aadharBackImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    {isEditing && (
+                                        <ImageUpdate
+                                            name="aadharBackImageUrl"
+                                            buttonName="Update"
+                                            inputClassName="form-control input"
+                                            onImageUpload={(imagePath) => handleImageUpload("aadharBackImageUrl", imagePath)}
+                                        />
+                                    )}
                                 </div>
                                 <ErrorMessage name="aadharBackImageUrl" component="div" className={styles.error} />
                             </Grid>
@@ -327,21 +364,24 @@ function UpdateSalesDetails({ payload, id }) {
                             <Grid item xs={4}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Profile Image</label>
-                                    {isEditing ? <SalesImageUploader name="profileImageUrl" buttonName="Update" disabled={!isEditing} onFileSelect={(e) => handleOnFileSelect(e, "profileImageUrl", setFieldValue)}
-                                    /> : <img src={values.profileImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
-                                    }
+                                    <img src={previewImages.profileImageUrl || values.profileImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+                                    {isEditing && (
+                                        <ImageUpdate
+                                            name="profileImageUrl"
+                                            buttonName="Update"
+                                            inputClassName="form-control input"
+                                            onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath)}
+                                        />
+                                    )}
                                 </div>
-
                                 <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
                             </Grid>
                         </Grid>
                     </Form>
                 )}
-            </Formik >
+            </Formik>
         </div>
     );
 }
 
 export default UpdateSalesDetails;
-
-

@@ -29,6 +29,7 @@ import {
   __endpoint_addAdsType,
   __endpoint_putAdsType,
   __endpoint_deleteADSType,
+  __endpoint_updateMaingate,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -117,3 +118,6 @@ export const putAdsType = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_putAdsType}/${id}`, payload);
 export const deleteADSType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
+
+export const updateMaingate = (payload, id) =>
+  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { deleteImage, updateImage } from '../../../api/account.api';
+import { deleteImage, updateImage, updateMaingate } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
 import Swal from "sweetalert2";
@@ -72,14 +72,23 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 thumbnailUrl: '',
             };
 
-            const updateResponse = await updateImage(updatedData, salonDetail.id);
+            const updateResponse = await updateMaingate(updatedData, salonDetail.id);
             setMainGateImageUrl(updateResponse.data.data.imageUrl);
-
             Notify.success("Image updated successfully");
             setIsImageUpdated(false); // Reset the flag after successful update
         } catch (error) {
             Notify.error(error.message);
         }
+    };
+
+    const buttonStyle = {
+        padding: '3px 20px',
+        backgroundColor: '#000',
+        color: '#fff',
+        border: '2px solid #909090',
+        borderRadius: '12px',
+        marginTop: '10px',
+        fontSize: '11px'
     };
 
     return (
@@ -95,6 +104,8 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                                 onImageUpload={handleImageUpload} // Pass the callback to ImageUpdate
                                 name="mainGateImageUrl"
                                 buttonName="Update"
+                                buttonStyle={buttonStyle}
+                                
                             />
                         </div>
                     )}
@@ -120,6 +131,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         imageType="Banner"
                         buttonName="Add"
                         name="bannerImages"
+                        buttonStyle={buttonStyle}
                     />
                 </div>
                 {bannerImage.length > 0 && (
@@ -145,6 +157,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         imageType="Gallery"
                         buttonName="Add"
                         name="galleryImages"
+                        buttonStyle={buttonStyle}
                     />
                 </div>
                 {gallaryImage.length > 0 && (

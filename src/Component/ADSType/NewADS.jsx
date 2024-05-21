@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineContactMail } from "react-icons/md";
+import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
-import { Form, Formik } from "formik";
+import { Form, Formik, ErrorMessage } from "formik";
 import { addAdsType, putAdsType } from "../../api/account.api";
 import SalesImageUploader from "../common-component/Salesimageuploader/SalesImageUploader";
 import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
+import { newADSSchema } from "../../utils/schema"; 
 
-const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -35,6 +37,16 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
           : "",
         active: selectedRow.active || true,
       });
+    } else {
+      setInitialValues({
+        name: "",
+        mediaUrl: "",
+        redirectLink: "",
+        city: "",
+        startDate: "",
+        endDate: "",
+        active: true,
+      });
     }
   }, [selectedRow]);
 
@@ -53,18 +65,32 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
       let response;
       if (selectedRow) {
         response = await putAdsType(formattedValues, selectedRow.id);
-        onUpdateAd(response.data); // Update the parent state with the updated ad
+        onUpdateAd(response.data.data); // Update the parent state with the updated ad
       } else {
         response = await addAdsType(formattedValues);
-        onAddAd(response.data); // Add the new ad to the parent state
+        onAddAd(response.data.data); // Add the new ad to the parent state
       }
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();
       setUploaderKey(Date.now()); // Update the key to reset the uploader
+      onClearSelectedRow(); // Clear the selected row after submission
     } catch (error) {
       Notify.error(error.message);
     }
+  };
+
+  const clearForm = () => {
+    setInitialValues({
+      name: "",
+      mediaUrl: "",
+      redirectLink: "",
+      city: "",
+      startDate: "",
+      endDate: "",
+      active: true,
+    });
+    onClearSelectedRow();
   };
 
   return (
@@ -72,11 +98,18 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContactMail />
         <p className="ps-1 fw-bold mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
+        {selectedRow && (
+          <BiPlusCircle
+            onClick={clearForm}
+            className="cursor-pointer ms-auto"
+          />
+        )}
       </div>
       <hr />
       <Formik
         enableReinitialize
         initialValues={initialValues}
+        validationSchema={newADSSchema} 
         onSubmit={handleSubmit}
       >
         {({ handleChange, values, setFieldValue }) => (
@@ -89,6 +122,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
                 value={values.name}
                 onChange={handleChange}
               />
+              <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -99,6 +133,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
                 value={values.city}
                 onChange={handleChange}
               />
+              <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -110,6 +145,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
                 onChange={handleChange}
                 value={values.startDate}
               />
+              <ErrorMessage name="startDate" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -120,6 +156,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
                 onChange={handleChange}
                 value={values.endDate}
               />
+              <ErrorMessage name="endDate" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-1 position-relative">
@@ -132,6 +169,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd }) => {
                   handleOnFileSelect(e, "mediaUrl", setFieldValue)
                 }
               />
+              <ErrorMessage name="mediaUrl" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex justify-content-center pb-1">

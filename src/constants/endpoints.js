@@ -32,5 +32,6 @@ export const __endpoint_publishSalon = endpoint + "admin/salons/publish";
 export const __endpoint_getAdsManagement = endpoint + "admin/services/advertisement";
 export const __endpoint_addAdsType = endpoint + "admin/services/advertisement";
 export const __endpoint_putAdsType = endpoint + "admin/services/advertisement";
+export const __endpoint_updateMaingate = endpoint + "admin/file";
 export const __endpoint_deleteADSType =
   endpoint + "admin/services/advertisement";
