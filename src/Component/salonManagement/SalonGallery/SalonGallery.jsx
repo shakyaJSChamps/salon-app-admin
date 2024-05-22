@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { deleteImage, updateImage, updateMaingate } from '../../../api/account.api';
+import { deleteImage, updateMaingate } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
 import Swal from "sweetalert2";

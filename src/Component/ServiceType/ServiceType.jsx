@@ -54,7 +54,7 @@ const ServiceType = (props) => {
       icon: "warning",
       width: "30%",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#000000",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
       customClass: "custom-swal", // Add your custom CSS class here
