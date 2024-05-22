@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from "formik";
 import styles from "../Bankdetails/Bankdetails.module.css";
-import { useState } from 'react';
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateBankDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import { bankDetailsSchema } from "../../../../utils/schema";
-import SalesImageUploader from '../../../common-component/Salesimageuploader/SalesImageUploader';
-import { handleOnFileSelect } from "../../../common-component/Imageuploader/ImageUploader.jsx";
-
+import ImageUpdate from '../../../common-component/Imageupdate/ImageUpdate';
 
 function BankDetails({ bankDetails }) {
     const [isEditing, setIsEditing] = useState(false);
+    const [imagePreview, setImagePreview] = useState(bankDetails.documentImageUrl || '');
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
@@ -28,6 +26,11 @@ function BankDetails({ bankDetails }) {
             console.error("API error:", error);
             Notify.error(error.message);
         }
+    };
+
+    const handleImageUpload = (url, setFieldValue) => {
+        setFieldValue('documentImageUrl', url);
+        setImagePreview(url);
     };
 
     return (
@@ -91,7 +94,6 @@ function BankDetails({ bankDetails }) {
                                     value={values.bankName}
                                 />
                                 <ErrorMessage name="bankName" component="div" className={styles.error} />
-
                             </Grid>
                             <Grid item xs={6}>
                                 <InputText
@@ -103,13 +105,50 @@ function BankDetails({ bankDetails }) {
                                 />
                                 <ErrorMessage name="ifscCode" component="div" className={styles.error} />
                             </Grid>
-
                             <Grid item xs={6}>
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Cancelcheque/Passbook</label>
-                                    {isEditing ? <SalesImageUploader name="documentImageUrl" disabled={!isEditing} buttonName="Update" onFileSelect={(e) => handleOnFileSelect(e, "documentImageUrl", setFieldValue)}
-                                    /> : <img src={values.documentImageUrl} alt="No image" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
-                                    }
+                                    {imagePreview ?
+                                        <img
+                                            src={imagePreview}
+                                            alt="Preview"
+                                            style={{ height: '150px', width: '150px', marginTop: '10px' }}
+                                        />
+                                        : <img
+                                            src={values.documentImageUrl}
+                                            alt="No image"
+                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                        />}
+
+                                    {isEditing && <ImageUpdate
+                                        name="documentImageUrl"
+                                        buttonName="Update"
+                                        inputClassName="form-control input mt-2"
+                                        onImageUpload={(url) => handleImageUpload(url, setFieldValue)}
+                                    />}
+                                    {/* {isEditing ? (
+                                        <>
+                                            <ImageUpdate
+                                                name="documentImageUrl"
+                                                buttonName="Update"
+                                                inputClassName="form-control input"
+                                                onImageUpload={(url) => handleImageUpload(url, setFieldValue)}
+                                            />
+                                            {imagePreview && (
+                                                <img
+                                                    src={imagePreview}
+                                                    alt="Preview"
+                                                    style={{ height: '150px', width: '150px', marginTop: '10px' }}
+                                                />
+                                            )}
+                                        </>
+                                    ) : (
+                                        <img
+                                            src={values.documentImageUrl}
+                                            alt="No image"
+                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                        />
+                                    )} */}
                                 </div>
                             </Grid>
                         </Grid>
@@ -121,4 +160,3 @@ function BankDetails({ bankDetails }) {
 }
 
 export default BankDetails;
-

@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
 import VerifyPublishButton from '../Verifypublishbutton/VerifyPublishButton.jsx';
+import Appointments from './Appointments/Appointments.jsx';
 
 function EditsalonManagement({ payload, id, onServicesChange }) {
   const [salonDetail, setSalonDetail] = useState([]);
@@ -94,6 +95,13 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
           />
         </Col>
         <hr />
+      </Row>
+
+      <Row>
+        <Col md={12}>
+          <Appointments />
+        </Col>
+        <hr/>
       </Row>
 
       <Row>

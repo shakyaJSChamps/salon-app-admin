@@ -24,6 +24,7 @@ const ServiceTypeMan = (props) => {
             selectedRowData={selectedRowData}
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}
+            onUpdateService={setIsEditMode}
           />
         </Col>
         <Col md={8}>

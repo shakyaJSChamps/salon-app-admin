@@ -1,90 +1,92 @@
 import React, { useState, useEffect } from "react";
-import { MdOutlineContentPaste } from "react-icons/md";
+import { MdHeight, MdOutlineContentPaste } from "react-icons/md";
 import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
+import { Form, Formik, ErrorMessage } from "formik";
 import Notify from "../../utils/notify";
-import FileUploader from "../file-uploder/FileUploder";
-import { addServiceType, putServiceType } from "../../api/account.api";
-import { Form, Formik } from "formik";
 import InputText from "../common-component/Inputtext/InputText";
+import { addServiceType, putServiceType } from "../../api/account.api";
+import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
 const AddServiceType = (props) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [isEditMode, setIsEditMode] = useState(false);
+  // const [uploaderKey, setUploaderKey] = useState(Date.now());
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    imageUrl: "",
+    active: true,
+  });
 
   useEffect(() => {
-    if (props.isEditMode) {
-      setIsEditMode(true);
-      setName(props.selectedRowData.name);
-      setDescription(props.selectedRowData.description);
+    if (props.isEditMode && props.selectedRowData) {
+      setInitialValues({
+        name: props.selectedRowData.name || "",
+        imageUrl: props.selectedRowData.imageUrl || "",
+        active: props.selectedRowData.active || true,
+      });
     } else {
-      setIsEditMode(false);
-      setName("");
-      setDescription("");
+      setInitialValues({
+        name: "",
+        imageUrl: "",
+        active: true,
+      });
     }
   }, [props.isEditMode, props.selectedRowData]);
 
-  const clearForm = () => {
-    setName("");
-    setDescription("");
-  };
-
-  const addService = async (event) => {
-    event.preventDefault();
-    console.log("Add service ::>");
+  const handleSubmit = async (values, { resetForm }) => {
+    console.log("Form Submission::", values);
     try {
-      const requestData = {
-        name: name,
-        description: description,
-      };
-      const response = await addServiceType(requestData);
-      Notify.success(response.data.message);
-      props.setServiceAdded(true);
-
-      // Clear the form
-      clearForm();
-    } catch (error) {
-      console.error("API error:", error);
-      Notify.error(error.message);
-    }
-  };
-
-  const editService = async (event) => {
-    event.preventDefault();
-    console.log("edit service ::>");
-    try {
-      const requestData = {
-        name: name,
-        description: description,
+      const formattedValues = {
+        ...values,
         active: true,
       };
-      const response = await putServiceType(
-        requestData,
-        props.selectedRowData.id
-      );
-      console.log("Response ::>", response);
+
+      let response;
+      if (props.isEditMode && props.selectedRowData) {
+        response = await putServiceType(formattedValues, props.selectedRowData.id);
+        props.onUpdateService(response.data.data); 
+      } else {
+        response = await addServiceType(formattedValues);
+        props.setServiceAdded(response.data.data); 
+      }
+      console.log("Add/Update Service Response:", response);
       Notify.success(response.data.message);
-      props.setServiceAdded(true);
-      // Clear the form
-      clearForm();
+      resetForm();
     } catch (error) {
-      console.error("API error:", error);
       Notify.error(error.message);
     }
   };
+
+  const clearForm = () => {
+    setInitialValues({
+      name: "",
+      imageUrl: "",
+      active: true,
+    });
+    props.onClearSelectedRow();
+  };
+
+  const buttonStyle = {
+    padding: '3px 20px',
+    backgroundColor: '#000',
+    border: '2px solid #909090',
+    borderRadius: '12px',
+    marginTop: '10px',
+    fontSize: '11px',
+    height: '300px',
+    width : '295px'
+  }
 
   return (
     <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContentPaste />
         <p className="ps-1 fw-bold mb-0">
-          {isEditMode ? "Edit" : "Add"} Service Type
+          {props.isEditMode ? "Edit" : "Add"} Service Type
         </p>
-        {isEditMode && (
+        {props.isEditMode && (
           <BiPlusCircle
             onClick={() => {
-              setIsEditMode(false);
+              props.onClearSelectedRow();
               clearForm();
             }}
             className="cursor-pointer ms-auto"
@@ -92,48 +94,46 @@ const AddServiceType = (props) => {
         )}
       </div>
       <hr />
-      <Formik>
-        <Form
-          className="d-flex flex-column "
-          onSubmit={isEditMode ? editService : addService}
-        >
-          <div className="d-flex flex-column mt-2 mb-2">
-            {/* <label className="fw-bold pt-2">Name</label> */}
-            <InputText
-              type="text"
-              label="Name"
-              className="form-control input mt-2"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        // validationSchema={newServiceSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ handleChange, values, setFieldValue }) => (
+          <Form className="d-flex flex-column">
+            <div className="d-flex flex-column mb-2">
+              <InputText
+                name="name"
+                label="Service Name"
+                type="text"
+                value={values.name}
+                onChange={handleChange}
+              />
+              <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
+            </div>
 
-          {/* <div className="d-flex flex-column align-items-start mb-2">
-          <label className="fw-bold">Description</label>
-          <textarea
-            className="form-control input"
-            rows="3"
-            cols="25"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-        </div> */}
-          <div className="mt-4">
-            <FileUploader />
-          </div>
+            <div className="d-flex flex-column align-items-center-start mb-2">
+              <label style={{ fontWeight: 500 }}>Service Image</label>
+              <ImageUpdate
+                name="imageUrl"
+                buttonName="Add Image"
+                inputClassName="form-control input"
+                buttonStyle={buttonStyle}
+                onImageUpload={(url) => {
+                  setFieldValue("imageUrl", url);
+                }}
+              />
+              <ErrorMessage name="imageUrl" component="div" style={{ color: 'red' }} />
+            </div>
 
-          <div className="d-flex justify-content-center mt-5">
-            <button
-              type="submit"
-              className={`add-service-btn mt-1 ${
-                name.length < 2 && description?.length < 2 ? "disable" : ""
-              }`}
-              disabled={name.length < 2 && description?.length < 2}
-            >
-              {isEditMode ? "Update" : "Save"}
-            </button>
-          </div>
-        </Form>
+            <div className="d-flex justify-content-center pb-1">
+              <button type="submit" className="add-service-btn mt-3">
+                {props.isEditMode ? "Update" : "Add"}
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </Paper>
   );

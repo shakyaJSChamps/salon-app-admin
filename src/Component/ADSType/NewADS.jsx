@@ -5,10 +5,9 @@ import { Paper } from "@mui/material";
 import InputText from "../common-component/Inputtext/InputText";
 import { Form, Formik, ErrorMessage } from "formik";
 import { addAdsType, putAdsType } from "../../api/account.api";
-import SalesImageUploader from "../common-component/Salesimageuploader/SalesImageUploader";
-import { handleOnFileSelect } from "../common-component/Imageuploader/ImageUploader";
 import Notify from "../../utils/notify";
-import { newADSSchema } from "../../utils/schema"; 
+import { newADSSchema } from "../../utils/schema";
+import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
 const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
@@ -65,16 +64,16 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
       let response;
       if (selectedRow) {
         response = await putAdsType(formattedValues, selectedRow.id);
-        onUpdateAd(response.data.data); // Update the parent state with the updated ad
+        onUpdateAd(response.data.data); 
       } else {
         response = await addAdsType(formattedValues);
-        onAddAd(response.data.data); // Add the new ad to the parent state
+        onAddAd(response.data.data); 
       }
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();
-      setUploaderKey(Date.now()); // Update the key to reset the uploader
-      onClearSelectedRow(); // Clear the selected row after submission
+      setUploaderKey(Date.now()); 
+      onClearSelectedRow(); 
     } catch (error) {
       Notify.error(error.message);
     }
@@ -109,7 +108,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={newADSSchema} 
+        validationSchema={newADSSchema}
         onSubmit={handleSubmit}
       >
         {({ handleChange, values, setFieldValue }) => (
@@ -160,14 +159,14 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-1 position-relative">
-              <SalesImageUploader
-                key={uploaderKey} // Add the key prop to reset the uploader
+              <label>Advertisement Image</label>
+              <ImageUpdate
                 name="mediaUrl"
-                buttonName={selectedRow ? "Update Image" : "Add Image"}
-                label="Advertisement Image"
-                onFileSelect={(e) =>
-                  handleOnFileSelect(e, "mediaUrl", setFieldValue)
-                }
+                buttonName="Add Image"
+                inputClassName="form-control input"
+                onImageUpload={(url) => {
+                  setFieldValue("mediaUrl", url);
+                }}
               />
               <ErrorMessage name="mediaUrl" component="div" style={{ color: 'red' }} />
             </div>

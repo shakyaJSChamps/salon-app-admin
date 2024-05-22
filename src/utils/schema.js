@@ -33,7 +33,6 @@ export const bankDetailsSchema = Yup.object().shape({
     .max(16, "Account Number must not exceed 16 digits"),
   accountHolderName: Yup.string()
     .required('Account Holder Name is required')
-    .matches(/^[A-Z\s]+$/, 'Account Holder Name must be in capital letters.')
     .min(3, 'Account Holder Name must have at least 3 letters.')
     .max(30, 'Account Holder Name must have at most 30 letters.'),
   bankName: Yup.string()
