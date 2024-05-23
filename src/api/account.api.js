@@ -30,6 +30,7 @@ import {
   __endpoint_putAdsType,
   __endpoint_deleteADSType,
   __endpoint_updateMaingate,
+  __endpoint_getSalonAppointments,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -121,3 +122,6 @@ export const deleteADSType = (id) =>
 
 export const updateMaingate = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
+
+export const getSalonAppointments = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
