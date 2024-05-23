@@ -31,6 +31,10 @@ import {
   __endpoint_deleteADSType,
   __endpoint_updateMaingate,
   __endpoint_getSalonAppointments,
+  __endpoint_getCouponManagement,
+  __endpoint_addCouponType,
+  __endpoint_getCouponManagement,
+  __endpoint_addCouponType,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -112,7 +116,6 @@ export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);
 
 export const addAdsType = (payload) => {
-  console.log(" Add Advertisement Payload:", payload);
   return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
 };
 export const putAdsType = (payload, id) =>
@@ -122,6 +125,9 @@ export const deleteADSType = (id) =>
 
 export const updateMaingate = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
-
-export const getSalonAppointments = (id) =>
-  HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
+export const getCouponManagement = () =>
+  HTTP.Request(methods.GET, __endpoint_getCouponManagement);
+export const addCouponType = (payload) => {
+  console.log(" Add Coupon Payload:", payload);
+  return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
+};
