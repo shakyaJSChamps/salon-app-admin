@@ -33,8 +33,6 @@ import {
   __endpoint_getSalonAppointments,
   __endpoint_getCouponManagement,
   __endpoint_addCouponType,
-  __endpoint_getCouponManagement,
-  __endpoint_addCouponType,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -125,6 +123,8 @@ export const deleteADSType = (id) =>
 
 export const updateMaingate = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
+export const getSalonAppointment = () =>
+  HTTP.Request(methods.GET, __endpoint_getSalonAppointments);
 export const getCouponManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getCouponManagement);
 export const addCouponType = (payload) => {
