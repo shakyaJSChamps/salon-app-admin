@@ -33,6 +33,7 @@ import {
   __endpoint_getSalonAppointments,
   __endpoint_getCouponManagement,
   __endpoint_addCouponType,
+  __endpoint_addService,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -66,7 +67,7 @@ export const fileUploader = () => {
 };
 
 export const salonDetails = (payload, id) =>
-  HTTP.Request(methods.GET,` ${__endpoint_salonDetails}/${id}`, payload, id);
+  HTTP.Request(methods.GET, ` ${__endpoint_salonDetails}/${id}`, payload, id);
 
 export const salesDetail = (payload, id) =>
   HTTP.Request(methods.GET, `${__endpoint_salesDetails}/${id}/user`, payload, id);
@@ -75,7 +76,7 @@ export const updateBankDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(methods.PUT,`${__endpoint_updateSalonService}/${salonid}/service/${id}`,payload,salonid,id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/service/${id}`, payload, salonid, id);
 
 export const updateSalonDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);
@@ -131,7 +132,8 @@ export const addCouponType = (payload) => {
   console.log(" Add Coupon Payload:", payload);
   return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
 };
-
+export const getSalonAppointments = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
 
 export const addService = (payload, id) =>
   HTTP.Request(methods.POST, `${__endpoint_addService}/${id}/services`, payload);
