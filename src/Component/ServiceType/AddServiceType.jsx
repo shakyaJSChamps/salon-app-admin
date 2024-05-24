@@ -39,7 +39,7 @@ const AddServiceType = (props) => {
         ...values,
         active: true,
       };
-
+  
       let response;
       if (props.isEditMode && props.selectedRowData) {
         response = await putServiceType(formattedValues, props.selectedRowData.id);
@@ -50,20 +50,19 @@ const AddServiceType = (props) => {
       }
       console.log("Add/Update Service Response:", response);
       Notify.success(response.data.message);
-      resetForm();
+      resetForm(); // Reset the form after successful submission
+      // Update the initial values to reflect the changes immediately
+      setInitialValues({
+        name: "",
+        imageUrl: "",
+        active: true,
+      });
     } catch (error) {
       Notify.error(error.message);
     }
   };
+  
 
-  const clearForm = () => {
-    setInitialValues({
-      name: "",
-      imageUrl: "",
-      active: true,
-    });
-    props.onClearSelectedRow();
-  };
 
   const buttonStyle = {
     padding: '3px 20px',
@@ -85,10 +84,6 @@ const AddServiceType = (props) => {
         </p>
         {props.isEditMode && (
           <BiPlusCircle
-            onClick={() => {
-              props.onClearSelectedRow();
-              clearForm();
-            }}
             className="cursor-pointer ms-auto"
           />
         )}

@@ -6,6 +6,8 @@ import Modal from '@mui/material/Modal';
 import { Form, Formik } from 'formik';
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
+import { addService } from '../../../../api/account.api';
+import Notify from "../../../../utils/notify";
 
 const style = {
   position: 'absolute',
@@ -20,16 +22,29 @@ const style = {
 };
 
 export default function AddService(props) {
-  console.log("Addservices", props.services)
 
-  const handleSubmit = (values) => {
-    console.log("Form values:", values);
-    // Here you can perform any further actions with the form values, such as making an API call
+  const addservice = async (values, { resetForm }) => {
+    try {
+
+      const transformedValues = {
+        ...values,
+        categoryId: Number(values.categoryId),
+        servicePrice: Number(values.servicePrice),
+        serviceDuration: Number(values.serviceDuration),
+      };
+      const res = await addService(transformedValues, props.salonDetail.id);
+      console.log("response:::>", res.data);
+      Notify.success(res.data.message);
+      props.addNewService(res.data); // Update the parent component's state
+      resetForm();
+      props.handleClose();
+    } catch (error) {
+      Notify.error(error.message);
+    }
   };
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={props.open}
         onClose={props.handleClose}
@@ -43,13 +58,13 @@ export default function AddService(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <Formik
               initialValues={{
-                categoryId : "",
-                serviceName:"",
-                servicePrice:"",
-                serviceDuration:"",
-                type:""
-            }}
-              onSubmit={handleSubmit}
+                categoryId: "",
+                serviceName: "",
+                servicePrice: "",
+                serviceDuration: "",
+                type: ""
+              }}
+              onSubmit={addservice}
             >
               <Form id="bankDetailsForm">
                 <Grid container spacing={2} className='mb-3'>
@@ -58,7 +73,7 @@ export default function AddService(props) {
                       label="Category"
                       as="select"
                       name="categoryId"
-                      type="text"
+                      type="number"
                     >
                       {/* Mapping props.services to populate options */}
                       {props.services.map((service, index) => (
@@ -70,18 +85,21 @@ export default function AddService(props) {
                     <InputText
                       label="Service Name"
                       name="serviceName"
+                      type="text"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
                       label="Duration in Minutes"
                       name="serviceDuration"
+                      type="number"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
                       label="Price"
                       name="servicePrice"
+                      type="number"
                     />
                   </Grid>
                   <Grid item xs={12}>
