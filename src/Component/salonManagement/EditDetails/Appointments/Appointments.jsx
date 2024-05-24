@@ -5,7 +5,7 @@ import Pending from './Pending';
 import Cancelled from './Cancelled';
 // import Todays from './Todays';
 import styles from './Appointments.module.css';
-import { getSalonAppointments } from '../../../../api/account.api';
+import { __endpoint_getSalonAppointments } from '../../../../constants/endpoints';
 
 function Appointments({ salonDetail }) {
     console.log("salon ID", salonDetail.id)
@@ -34,7 +34,7 @@ function Appointments({ salonDetail }) {
     useEffect(() => {
         const getAppointments = async (id) => {
             try {
-                const appointments = await getSalonAppointments(id);
+                const appointments = await __endpoint_getSalonAppointments(id);
                 setAppointmentData(appointments?.data?.data)
                 console.log("Salon Appointments", appointments);
             } catch (error) {

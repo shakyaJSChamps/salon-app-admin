@@ -31,6 +31,8 @@ import {
   __endpoint_deleteADSType,
   __endpoint_updateMaingate,
   __endpoint_getSalonAppointments,
+  __endpoint_getCouponManagement,
+  __endpoint_addCouponType,
   __endpoint_addService,
 } from "../constants/endpoints";
 
@@ -65,7 +67,7 @@ export const fileUploader = () => {
 };
 
 export const salonDetails = (payload, id) =>
-  HTTP.Request(methods.GET,` ${__endpoint_salonDetails}/${id}`, payload, id);
+  HTTP.Request(methods.GET, ` ${__endpoint_salonDetails}/${id}`, payload, id);
 
 export const salesDetail = (payload, id) =>
   HTTP.Request(methods.GET, `${__endpoint_salesDetails}/${id}/user`, payload, id);
@@ -74,7 +76,7 @@ export const updateBankDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(methods.PUT,`${__endpoint_updateSalonService}/${salonid}/service/${id}`,payload,salonid,id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/service/${id}`, payload, salonid, id);
 
 export const updateSalonDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);
@@ -113,7 +115,6 @@ export const getAdsManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getAdsManagement);
 
 export const addAdsType = (payload) => {
-  console.log(" Add Advertisement Payload:", payload);
   return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
 };
 export const putAdsType = (payload, id) =>
@@ -122,8 +123,15 @@ export const deleteADSType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
 
 export const updateMaingate = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}/maingate`, payload);
-
+  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
+export const getSalonAppointment = () =>
+  HTTP.Request(methods.GET, __endpoint_getSalonAppointments);
+export const getCouponManagement = () =>
+  HTTP.Request(methods.GET, __endpoint_getCouponManagement);
+export const addCouponType = (payload) => {
+  console.log(" Add Coupon Payload:", payload);
+  return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
+};
 export const getSalonAppointments = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
 
