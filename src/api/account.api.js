@@ -31,6 +31,7 @@ import {
   __endpoint_deleteADSType,
   __endpoint_updateMaingate,
   __endpoint_getSalonAppointments,
+  __endpoint_addService,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -97,7 +98,7 @@ export const updateSalonTime = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonTime}/${id}/businessHours`, payload, id);
 
 export const updateImage = (payload, id) =>
-  HTTP.Request(methods.POST, `${__endpoint_updateImage}/${id}`, payload);
+  HTTP.Request(methods.POST, `${__endpoint_updateImage}/${id}/uploadimage`, payload);
 
 export const deleteImage = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteImage}/${id}`);
@@ -121,7 +122,10 @@ export const deleteADSType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
 
 export const updateMaingate = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
+  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}/maingate`, payload);
 
 export const getSalonAppointments = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
+
+export const addService = (payload, id) =>
+  HTTP.Request(methods.POST, `${__endpoint_addService}/${id}/services`, payload);

@@ -31,10 +31,6 @@ function Services({ service, salonDetail }) {
         getServiceTypes()
     }, []);
 
-    const handleEditClick = () => {
-        setIsEditing(!isEditing);
-    };
-
     const editDetails = async (values, index) => {
         try {
             const response = await updateSalonService(values[index], salonDetail.id, values[index].id);
@@ -43,6 +39,16 @@ function Services({ service, salonDetail }) {
             Notify.error(error.message); // Handle API errors
         }
     };
+
+    const handleEditClick = () => {
+        setIsEditing(!isEditing);
+    };
+
+    const addNewService = (newService) => {
+        setServices((prevServices) => [...prevServices, newService]);
+    };
+
+   
 
     return (
         <>
@@ -61,7 +67,7 @@ function Services({ service, salonDetail }) {
                 </div>
             </div>
 
-            <AddService open={open} handleClose={handleClose} services={services}/>
+            <AddService open={open} handleClose={handleClose} services={services} salonDetail={salonDetail} addNewService={addNewService}/>
 
             <Formik
                 initialValues={{
