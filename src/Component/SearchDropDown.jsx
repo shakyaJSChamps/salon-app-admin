@@ -3,20 +3,26 @@ import { IoSearch } from "react-icons/io5";
 
 const SearchDropDown = ({
   disabled = false,
-  value = "email",
+  initialOption = "email",
   setOption = () => {},
   searchByText = () => {},
 }) => {
   const [searchText, setSearchText] = useState("");
+  const [selectedOption, setSelectedOption] = useState(initialOption);
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
 
-  const handleOptionChange = (prop) => {
-    if (prop !== value) {
-      setOption(prop);
+  const handleOptionChange = (newOption) => {
+    console.log("Previous value:", selectedOption);
+    console.log("New value:", newOption);
+
+    if (newOption !== selectedOption) {
+      setSelectedOption(newOption);
+      setOption(newOption);
+      setSearchText(""); 
     }
   };
 
@@ -29,7 +35,7 @@ const SearchDropDown = ({
     <div className="dropdown-container">
       <div className="search-container">
         <select
-          value={value}
+          value={selectedOption}
           onChange={(e) => handleOptionChange(e.target.value)}
           className="dropdown ps-2"
           disabled={disabled}
@@ -61,7 +67,7 @@ const SearchDropDown = ({
             style={{
               backgroundColor: "transparent",
               border: "none",
-              cursor: disabled ? "not-allowed" : "auto",
+              cursor: disabled ? "not-allowed" : "pointer",
             }}
             onClick={() => searchByText(searchText)}
             disabled={disabled}
