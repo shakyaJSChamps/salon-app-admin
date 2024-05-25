@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Pending({ appointmentData }) {
     
-    const pendingAppointments = appointmentData.filter(data => data.status === "PENDING");
+    const pendingAppointments = appointmentData ? appointmentData.filter(data => data.status === "PENDING"): [];
     console.log("Pending", pendingAppointments)
     return (
         <div className='d-flex flex-row flex-wrap gap-4'>

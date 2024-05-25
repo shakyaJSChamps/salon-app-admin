@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { deleteImage, updateMaingate } from '../../../api/account.api';
+import { deleteImage, updateMaingate, updateImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 import styles from "../SalonGallery/Salongallery.module.css";
 import Swal from "sweetalert2";
@@ -65,21 +65,36 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
     };
 
     const update = async () => {
-        try {
-            const updatedData = {
-                imageUrl: imagePath, // Use uploaded image URL
-                imageType: "MainGate", // Assuming this is the correct type
-                thumbnailUrl: '',
-            };
-
-            const updateResponse = await updateMaingate(updatedData, salonDetail.id);
-            setMainGateImageUrl(updateResponse.data.data.imageUrl);
-            Notify.success("Image updated successfully");
-            setIsImageUpdated(false); // Reset the flag after successful update
-        } catch (error) {
-            Notify.error(error.message);
+        if (salonDetail.mainGateImageUrl) {
+            try {
+                const updatedData = {
+                    imageUrl: imagePath,
+                    thumbnailUrl: 'https://example.com/thumb103.jpg',
+                };
+                const updateResponse = await updateMaingate(updatedData, salonDetail.id);
+                setMainGateImageUrl(updateResponse.data.data.imageUrl);
+                Notify.success("Image updated successfully");
+                setIsImageUpdated(false); // Reset the flag after successful update
+            } catch (error) {
+                Notify.error(error.message);
+            }
+        } else {
+            try {
+                const updatedData = {
+                    imageUrl: imagePath,
+                    imageType: "MainGate",
+                    thumbnailUrl: 'https://example.com/thumb103.jpg',
+                };
+                const updateResponse = await updateImage(updatedData, salonDetail.id);
+                setMainGateImageUrl(updateResponse.data.data.imageUrl);
+                Notify.success("Image updated successfully");
+                setIsImageUpdated(false); // Reset the flag after successful update
+            } catch (error) {
+                Notify.error(error.message);
+            }
         }
-    };
+    }
+
 
     const buttonStyle = {
         padding: '3px 20px',
@@ -101,11 +116,11 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     ) : (
                         <div className='d-flex flex-row gap-1'>
                             <ImageUpdate
-                                onImageUpload={handleImageUpload} // Pass the callback to ImageUpdate
+                                onImageUpload={handleImageUpload}
                                 name="mainGateImageUrl"
                                 buttonName="Update"
                                 buttonStyle={buttonStyle}
-                                
+
                             />
                         </div>
                     )}

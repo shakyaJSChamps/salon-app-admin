@@ -5,10 +5,9 @@ import Pending from './Pending';
 import Cancelled from './Cancelled';
 // import Todays from './Todays';
 import styles from './Appointments.module.css';
-import { __endpoint_getSalonAppointments } from '../../../../constants/endpoints';
+import { getSalonAppointments } from '../../../../api/account.api';
 
 function Appointments({ salonDetail }) {
-    console.log("salon ID", salonDetail.id)
 
     const [activeComponent, setActiveComponent] = useState('Completed');
     const [appointmentData, setAppointmentData] = useState()
@@ -34,7 +33,7 @@ function Appointments({ salonDetail }) {
     useEffect(() => {
         const getAppointments = async (id) => {
             try {
-                const appointments = await __endpoint_getSalonAppointments(id);
+                const appointments = await getSalonAppointments(id);
                 setAppointmentData(appointments?.data?.data)
                 console.log("Salon Appointments", appointments);
             } catch (error) {

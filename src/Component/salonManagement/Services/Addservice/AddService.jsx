@@ -3,11 +3,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { addService } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
+import { addServiceSchema } from '../../../../utils/schema';
+import styles from "./Addservice.module.css";
 
 const style = {
   position: 'absolute',
@@ -35,7 +37,7 @@ export default function AddService(props) {
       const res = await addService(transformedValues, props.salonDetail.id);
       console.log("response:::>", res.data);
       Notify.success(res.data.message);
-      props.addNewService(res.data); // Update the parent component's state
+      props.getServiceTypes();
       resetForm();
       props.handleClose();
     } catch (error) {
@@ -65,6 +67,7 @@ export default function AddService(props) {
                 type: ""
               }}
               onSubmit={addservice}
+              validationSchema={addServiceSchema}
             >
               <Form id="bankDetailsForm">
                 <Grid container spacing={2} className='mb-3'>
@@ -80,6 +83,7 @@ export default function AddService(props) {
                         <option key={index} value={service.id}>{service.name}</option>
                       ))}
                     </InputText>
+                    <ErrorMessage name="categoryId" component="div" className={styles.error}/>
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -87,6 +91,7 @@ export default function AddService(props) {
                       name="serviceName"
                       type="text"
                     />
+                    <ErrorMessage name="serviceName" component="div" className={styles.error}/>
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -94,6 +99,7 @@ export default function AddService(props) {
                       name="serviceDuration"
                       type="number"
                     />
+                    <ErrorMessage name="serviceDuration" component="div" className={styles.error}/>
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -101,6 +107,7 @@ export default function AddService(props) {
                       name="servicePrice"
                       type="number"
                     />
+                    <ErrorMessage name="servicePrice" component="div" className={styles.error}/>
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -109,10 +116,12 @@ export default function AddService(props) {
                       name="type"
                       type="text"
                     >
+                      <option value="Select">Select Option</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Both">Both</option>
                     </InputText>
+                    <ErrorMessage name="type" component="div" className={styles.error}/>
                   </Grid>
                 </Grid>
                 <div className='d-flex justify-content-center align-items-center'>

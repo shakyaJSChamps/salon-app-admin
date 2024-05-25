@@ -76,7 +76,7 @@ export const updateBankDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/service/${id}`, payload, salonid, id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/services/${id}`, payload, salonid, id);
 
 export const updateSalonDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);
@@ -123,7 +123,7 @@ export const deleteADSType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
 
 export const updateMaingate = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}`, payload);
+  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}/maingate`, payload);
 export const getSalonAppointment = () =>
   HTTP.Request(methods.GET, __endpoint_getSalonAppointments);
 export const getCouponManagement = () =>
