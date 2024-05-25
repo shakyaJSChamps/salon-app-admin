@@ -1,35 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Paper } from "@mui/material";
-import { Form, Formik, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { MdOutlineConfirmationNumber } from "react-icons/md";
-import InputText from '../common-component/Inputtext/InputText';
+import InputText from "../common-component/Inputtext/InputText";
 import { couponSchema } from "../../utils/schema";
-import { addCouponType } from "../../api/account.api";
+import { addCouponType, putCouponType } from "../../api/account.api";
+import Notify from "../../utils/notify";
 
-const AddCoupon = () => {
+const AddCoupon = ({ selectedCoupon, onCouponSaved }) => {
+  useEffect(() => {
+    console.log("Selected Coupon changed: ", selectedCoupon);
+  }, [selectedCoupon]);
 
-  const handleSubmit = async (values) => {
-    console.log("ADD Coupon Management ::>", values);
-    const payload = {
-      name: "",
-      details: "",
-      description: "",
-      discountDetails: "",
-      startDate: "",
-      endDate: "",
-      imageUrl: "", 
-      createdBy: "",
-      isActive: true,
-      isDeleted: false,
+  const handleSubmit = async (values, { resetForm }) => {
+    const formatDate = (date) => {
+      const d = new Date(date);
+      return d.toISOString();
     };
 
-    console.log("Payload:", payload);
+    const formattedValues = {
+      ...values,
+      startDate: formatDate(values.startDate),
+      endDate: formatDate(values.endDate),
+    };
 
     try {
-      const response = await addCouponType(payload);
-      console.log("AddCouponType API Response:", response);
+      let response;
+      if (selectedCoupon) {
+        response = await putCouponType(formattedValues, selectedCoupon.ID);
+      } else {
+        response = await addCouponType(formattedValues);
+      }
+      Notify.success(response.data.message);
+      resetForm();
+      onCouponSaved(response.data.data); // Pass the updated coupon data
     } catch (error) {
-      console.error("AddCouponType API Error:", error);
+      Notify.error(error.message);
     }
   };
 
@@ -37,18 +43,23 @@ const AddCoupon = () => {
     <Paper className="coupon-service-paper px-3 mb-1 h-100">
       <div className="d-flex align-items-center">
         <MdOutlineConfirmationNumber />
-        <p className="ps-1 fw-bold mb-0">Create New Coupon</p>
+        <p className="ps-1 fw-bold mb-0">{selectedCoupon ? 'Edit Coupon' : 'Create New Coupon'}</p>
       </div>
       <hr className="mt-4" />
       <div className="coupon-form">
         <Formik
+          enableReinitialize
           initialValues={{
-            couponName: '',
-            couponSubName: '',
-            couponDescription: '',
-            couponDiscount: '',
-            startDate: '',
-            endDate: '',
+            name: selectedCoupon?.name || "",
+            details: selectedCoupon?.details || "",
+            description: selectedCoupon?.description || "",
+            discountDetails: selectedCoupon?.discountDetails || "",
+            startDate: selectedCoupon?.startDate ? new Date(selectedCoupon.startDate).toISOString().split('T')[0] : "",
+            endDate: selectedCoupon?.endDate ? new Date(selectedCoupon.endDate).toISOString().split('T')[0] : "",
+            imageUrl: selectedCoupon?.imageUrl || "https://example.com/summer-sale-image.jpg",
+            createdBy: selectedCoupon?.createdBy || "admin@example.com",
+            isActive: selectedCoupon?.isActive || true,
+            isDeleted: selectedCoupon?.isDeleted || false,
           }}
           validationSchema={couponSchema}
           onSubmit={handleSubmit}
@@ -56,21 +67,21 @@ const AddCoupon = () => {
           {() => (
             <Form>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Name" type="text" name="couponName" />
-                <ErrorMessage name="couponName" component="div" className="text-danger" />
+                <InputText label="Coupon Name" type="text" name="name" />
+                <ErrorMessage name="name" component="div" className="text-danger" />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Sub Name" type="text" name="couponSubName" />
-                <ErrorMessage name="couponSubName" component="div" className="text-danger" />
+                <InputText label="Coupon Sub Name" type="text" name="details" />
+                <ErrorMessage name="details" component="div" className="text-danger" />
               </div>
               <div className="d-flex flex-column">
                 <label className="fw-bold">Coupon Description</label>
-                <textarea className="form-control input" rows="3" cols="25" name="couponDescription"></textarea>
-                <ErrorMessage name="couponDescription" component="div" className="text-danger" />
+                <Field as="textarea" className="form-control input" rows="3" cols="25" name="description" />
+                <ErrorMessage name="description" component="div" className="text-danger" />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Discount" type="text" name="couponDiscount" />
-                <ErrorMessage name="couponDiscount" component="div" className="text-danger" />
+                <InputText label="Coupon Discount" type="text" name="discountDetails" />
+                <ErrorMessage name="discountDetails" component="div" className="text-danger" />
               </div>
               <div className="d-flex flex-column">
                 <InputText label="Start Date" type="date" name="startDate" />
@@ -81,7 +92,7 @@ const AddCoupon = () => {
                 <ErrorMessage name="endDate" component="div" className="text-danger" />
               </div>
               <div className="d-flex justify-content-center coupon-btn mt-1">
-                <button type="submit" className="button pt-1">ADD COUPON</button>
+                <button type="submit" className="button pt-1">{selectedCoupon ? 'UPDATE COUPON' : 'ADD COUPON'}</button>
               </div>
             </Form>
           )}

@@ -1,37 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineConfirmationNumber } from "react-icons/md";
+import { MdOutlineConfirmationNumber, MdEditSquare } from "react-icons/md";
 import { Paper } from "@mui/material";
+import Swal from "sweetalert2"; 
 import DataTable from "react-data-table-component";
-import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import CustomTitle from "../CustomTitle";
-import { getCouponManagement } from "../../api/account.api";
-import { isValidImageUrl } from "../../constants";
-import Profile from "../../assets/image/dummy-profile.jpg"; 
+import CommonImage from "../common-component/CommonImage";
+import { deleteCouponType } from "../../api/account.api";
+import Notify from "../../utils/notify";
 
-const CouponDetails = () => {
+const CouponDetails = ({ onEditCoupon, couponData }) => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(0);
-  const rowsPerPage = 15;
-
-  const fetchCoupons = async (page) => {
-    try {
-      const response = await getCouponManagement();
-      console.log("ALL Coupon Management ::>", response);
-      setData(response.data.data || []); 
-      setTotalRows(response.data.data.total || 0);
-    } catch (error) {
-      console.error("Error fetching coupon data:", error);
-    }
-  };
 
   useEffect(() => {
-    fetchCoupons(page);
-  }, [page]);
+    setData(couponData);
+  }, [couponData]);
 
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
+  const handleDeleteConfirmation = (row) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Coupon deleted successfully",
+      icon: "warning",
+      width: "30%",
+      showCancelButton: true,
+      confirmButtonColor: "#000000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "custom-swal",
+      allowOutsideClick: false, // Prevent closing on outside click
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCoupon(row); 
+      }
+    });
+  };
+  
+
+  const deleteCoupon = async (coupon) => {
+    try {
+      if (!coupon || !coupon.ID) {
+        throw new Error("Invalid coupon data");
+      }
+
+      await deleteCouponType(coupon.ID);
+      Notify.success("Coupon deleted successfully.");
+
+      // Update the data state to remove the deleted coupon
+      setData((prevData) => prevData.filter((item) => item.ID !== coupon.ID));
+    } catch (error) {
+      Notify.error(`Failed to delete coupon: ${error.message}`);
+    }
   };
 
   const columns = [
@@ -42,25 +60,11 @@ const CouponDetails = () => {
         <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
           <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.imageUrl) ? (
-              <img
-                src={row.imageUrl
-                }
-                alt="Profile"
-                style={{ width: "100%", height: "100%", borderRadius: "5px" }}
-              />
-            ) : (
-              <img
-                src={Profile}
-                alt="Profile"
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-              />
-            )}
+            <CommonImage
+              imageUrl={row.imageUrl}
+              alt="Coupon Image"
+              classes="coupon-image"
+            />
           </div>
         </div>
       ),
@@ -68,16 +72,20 @@ const CouponDetails = () => {
     {
       name: <strong>DESCRIPTION</strong>,
       minWidth: "200px",
-      cell: (row) => <div className="coupon-description">{row.description}</div>,
+      cell: (row) => (
+        <div className="coupon-description">{row.description}</div>
+      ),
     },
     {
       name: <strong>DISCOUNT</strong>,
       minWidth: "200px",
-      cell: (row) => <div className="add-coupon-discount">{row.discountDetails}</div>,
+      cell: (row) => (
+        <div className="add-coupon-discount">{row.discountDetails}</div>
+      ),
     },
     {
       name: <strong>DURATION</strong>,
-      // minWidth: "200px",
+      minWidth: "200px",
       cell: (row) => (
         <div className="mt-4 ads-duration">
           <div>
@@ -90,13 +98,19 @@ const CouponDetails = () => {
         </div>
       ),
     },
-    
     {
       name: "",
       cell: (row) => (
         <div>
-          <MdEditSquare className="me-2" />
-          <RiDeleteBin6Fill />
+          <MdEditSquare
+            className="me-2"
+            onClick={() => onEditCoupon(row)}
+            style={{ cursor: "pointer" }}
+          />
+          <RiDeleteBin6Fill
+             onClick={() => handleDeleteConfirmation(row)}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       ),
     },
@@ -123,12 +137,9 @@ const CouponDetails = () => {
         columns={columns}
         data={data}
         pagination
-        paginationServer
-        paginationTotalRows={totalRows}
-        onChangePage={handleChangePage}
         highlightOnHover
         customStyles={customStyles}
-        noDataComponent={<div>No records to display</div>} // Adding noDataComponent
+        noDataComponent={<div>No records to display</div>}
       />
     </Paper>
   );
