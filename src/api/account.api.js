@@ -76,7 +76,7 @@ export const updateBankDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/service/${id}`, payload, salonid, id);
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/services/${id}`, payload, salonid, id);
 
 export const updateSalonDetails = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);

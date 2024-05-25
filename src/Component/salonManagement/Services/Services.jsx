@@ -6,28 +6,29 @@ import InputText from '../../common-component/Inputtext/InputText';
 import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
 import AddService from './Addservice/AddService.jsx';
-import { Accessible as AccessibleIcon } from '@mui/icons-material';
 import { serviceDetailsSchema } from '../../../utils/schema.js';
 
 
 
-function Services({ service, salonDetail }) {
+function Services({ service, salonDetail, fetchSalonDetailData }) {
     const [isEditing, setIsEditing] = useState(false);
     const [services, setServices] = useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    useEffect(() => {
-        const getServiceTypes = async () => {
-            try {
-                const response = await getServiceType();
-                const responseData = response.data.data;
-                setServices(responseData);
-            } catch (error) {
-                Notify.error(error.message);
-            }
+    const getServiceTypes = async () => {
+        try {
+            const response = await getServiceType();
+            const responseData = response.data.data;
+            setServices(responseData);
+            fetchSalonDetailData();
+        } catch (error) {
+            Notify.error(error.message);
         }
+    }
+
+    useEffect(() => {
         getServiceTypes()
     }, []);
 
@@ -44,11 +45,6 @@ function Services({ service, salonDetail }) {
         setIsEditing(!isEditing);
     };
 
-    const addNewService = (newService) => {
-        setServices((prevServices) => [...prevServices, newService]);
-    };
-
-   
 
     return (
         <>
@@ -67,7 +63,7 @@ function Services({ service, salonDetail }) {
                 </div>
             </div>
 
-            <AddService open={open} handleClose={handleClose} services={services} salonDetail={salonDetail} addNewService={addNewService}/>
+            <AddService open={open} handleClose={handleClose} services={services} salonDetail={salonDetail} getServiceTypes={getServiceTypes}/>
 
             <Formik
                 initialValues={{
@@ -96,7 +92,7 @@ function Services({ service, salonDetail }) {
                                         name={`services[${index}].categoryId`}
                                         type="text"
                                         disabled={!isEditing}
-                                        style={{outline: "none"}}
+                                        style={{ outline: "none" }}
                                         onChange={(e) => handleChange({
                                             target: {
                                                 name: `services[${index}].categoryId`,
@@ -134,8 +130,8 @@ function Services({ service, salonDetail }) {
                                         onChange={handleChange}
                                         value={serviceItem.type}
                                         className="input"
-                                        style={{outline: "none"}}
-                                       
+                                        style={{ outline: "none" }}
+
                                     >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -143,7 +139,7 @@ function Services({ service, salonDetail }) {
                                     </InputText>
                                     <ErrorMessage name={`services[${index}].type`} component="div" className={styles.error} />
                                 </Grid>
-                                
+
                                 <Grid item xs={2}>
                                     <InputText
                                         label="Duration"
@@ -166,7 +162,7 @@ function Services({ service, salonDetail }) {
                                     />
                                     <ErrorMessage name={`services[${index}].servicePrice`} component="div" className={styles.error} />
                                 </Grid>
-                               
+
                                 {isEditing && (
                                     <Grid item xs={2}>
                                         <button type="button" onClick={() => { editDetails(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>

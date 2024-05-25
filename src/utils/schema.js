@@ -173,7 +173,6 @@ export const newADSSchema = Yup.object().shape({
  export const couponSchema = Yup.object().shape({
   couponName: Yup.string().required('Coupon name is required'),
   couponSubName: Yup.string().required('Coupon sub name is required'),
-  // couponDescription: Yup.string().required('Coupon description is required').min(0),
   couponDiscount: Yup.number()
     .required('Coupon discount is required')
     .positive('Coupon discount must be a positive number'),
@@ -183,3 +182,12 @@ export const newADSSchema = Yup.object().shape({
     .nullable()
     .min(Yup.ref('startDate'), 'End date must be after the start date'),
 });
+
+export const addServiceSchema = Yup.object().shape({
+  categoryId: Yup.number().required('CategoryId is required'),
+  serviceName: Yup.string().required('Service Name is required'),
+  servicePrice: Yup.number().required('Price is required').min(0, 'Price must be a positive number'),
+  serviceDuration: Yup.number().required('Duration is required').min(0, 'Duration must be a positive number'),
+  type: Yup.string().required('Service Type is required'),
+});
+

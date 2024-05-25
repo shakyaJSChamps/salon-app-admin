@@ -5,9 +5,8 @@ import dummuImage from "../../../../assets/image/hair.png";
 
 function Cancelled({ appointmentData }) {
 
-
-    const cancelledAppointments = appointmentData.filter(data => data.status === "CANCELLED");
-    console.log("Cancelled", cancelledAppointments)
+    const cancelledAppointments = appointmentData ? appointmentData.filter(data => data.status === "CANCELLED") : [];
+    
     return (
         <div className='d-flex flex-row flex-wrap gap-4'>
             {cancelledAppointments.map((data, index) => (

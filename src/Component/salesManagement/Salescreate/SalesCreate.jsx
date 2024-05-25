@@ -19,7 +19,7 @@ function SalesCreate() {
     profileImageUrl: "",
   });
 
-  const addSales = async (values) => {
+  const addSales = async (values, {resetForm}) => {
     try {
       const dataToSend = {
         ...values,
@@ -27,6 +27,7 @@ function SalesCreate() {
       };
       const res = await addSalesDetails(dataToSend)
       console.log("response:::>", res.data);
+      resetForm();
       Notify.success(res.data.message);
     } catch (error) {
       Notify.error(error.message);

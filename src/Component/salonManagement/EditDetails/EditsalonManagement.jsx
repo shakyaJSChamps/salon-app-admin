@@ -19,24 +19,24 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
-  const [salonOwner, setSalonOwner] = useState([]);
+
+
+  const fetchSalonDetailData = async () => {
+    try {
+      const data = await salonDetails(payload, id);
+      setSalonDetail(data?.data?.data?.salon);
+      setBankDetails(data?.data?.data?.bankDetail);
+      setBannerImages(data?.data?.data?.bannerImages);
+      setGallaryImages(data?.data?.data?.galleryImages);
+      setWorkingHours(data?.data?.data?.workingHours);
+      setService(data?.data?.data?.services);
+      console.log("All Salon Data -> ", data);
+    } catch (error) {
+      console.error('Error fetching salon details:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchSalonDetailData = async () => {
-      try {
-        const data = await salonDetails(payload, id);
-        setSalonDetail(data?.data?.data?.salon);
-        setBankDetails(data?.data?.data?.bankDetail);
-        setBannerImages(data?.data?.data?.bannerImages);
-        setGallaryImages(data?.data?.data?.galleryImages);
-        setWorkingHours(data?.data?.data?.workingHours);
-        setService(data?.data?.data?.services);
-        setSalonOwner(data?.data?.data?.salonOwner);
-        console.log("All Salon Data -> ", data);
-      } catch (error) {
-        console.error('Error fetching salon details:', error);
-      }
-    };
     fetchSalonDetailData();
   }, [id]);
 
@@ -49,24 +49,11 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
         <hr />
       </Row>
 
-      {/* <Row>
-        <Col md={12}>
-          <SalonOwnerDetails salonOwner={salonOwner}/>
-        </Col>
-        <hr />
-      </Row> */}
-
-      <Row>
-        <Col md={12}>
-          <BankDetails bankDetails={bankDetails} />
-        </Col>
-        <hr />
-      </Row>
-
       <Row>
         <Col md={12}>
           <Services service={service}
             salonDetail={salonDetail}
+            fetchSalonDetailData={fetchSalonDetailData}
           />
         </Col>
         <hr />
@@ -87,6 +74,13 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
       </Row>
 
       <Row>
+        <Col md={12}>
+          <BankDetails bankDetails={bankDetails} />
+        </Col>
+        <hr />
+      </Row>
+
+      <Row>
         <Col md={12} >
           <SalonGallery
             salonDetail={salonDetail}
@@ -99,9 +93,9 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
 
       <Row>
         <Col md={12}>
-          <Appointments salonDetail={salonDetail}/>
+          <Appointments salonDetail={salonDetail} />
         </Col>
-        <hr/>
+        <hr />
       </Row>
 
       <Row>
