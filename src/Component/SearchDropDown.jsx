@@ -6,6 +6,7 @@ const SearchDropDown = ({
   initialOption = "email",
   setOption = () => {},
   searchByText = () => {},
+  options = [],
 }) => {
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState(initialOption);
@@ -16,20 +17,12 @@ const SearchDropDown = ({
   };
 
   const handleOptionChange = (newOption) => {
-    console.log("Previous value:", selectedOption);
-    console.log("New value:", newOption);
-
     if (newOption !== selectedOption) {
       setSelectedOption(newOption);
       setOption(newOption);
-      setSearchText(""); 
+      setSearchText("");
     }
   };
-
-  const data = [
-    { text: "Email", value: "email" },
-    { text: "Mobile Number", value: "phone_number" },
-  ];
 
   return (
     <div className="dropdown-container">
@@ -40,7 +33,7 @@ const SearchDropDown = ({
           className="dropdown ps-2"
           disabled={disabled}
         >
-          {data.map((item) => (
+          {options.map((item) => (
             <option key={item.value} value={item.value}>
               {item.text}
             </option>
