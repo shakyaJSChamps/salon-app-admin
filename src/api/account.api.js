@@ -34,6 +34,8 @@ import {
   __endpoint_getCouponManagement,
   __endpoint_addCouponType,
   __endpoint_addService,
+  __endpoint_putCouponType,
+  __endpoint_deleteCouponType,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -129,9 +131,12 @@ export const getSalonAppointment = () =>
 export const getCouponManagement = () =>
   HTTP.Request(methods.GET, __endpoint_getCouponManagement);
 export const addCouponType = (payload) => {
-  console.log(" Add Coupon Payload:", payload);
   return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
 };
+export const putCouponType = (payload, id) =>
+  HTTP.Request(methods.PUT, `${__endpoint_putCouponType}/${id}`, payload);
+export const deleteCouponType = (id) =>
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteCouponType}/${id}`);
 export const getSalonAppointments = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
 

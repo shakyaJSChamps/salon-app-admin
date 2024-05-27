@@ -36,7 +36,8 @@ export const __endpoint_putAdsType = endpoint + "admin/services/advertisement";
 export const __endpoint_updateMaingate = endpoint + "admin/salons";
 export const __endpoint_getSalonAppointments = endpoint + "admin/salons";
 export const __endpoint_addService = endpoint + "admin/salons";
-export const __endpoint_deleteADSType =
-  endpoint + "admin/services/advertisement";
+export const __endpoint_deleteADSType = endpoint + "admin/services/advertisement";
 export const __endpoint_getCouponManagement = endpoint + "admin/coupon";
 export const __endpoint_addCouponType = endpoint + "admin/coupon";
+export const __endpoint_putCouponType = endpoint + "admin/coupon";
+export const __endpoint_deleteCouponType = endpoint + "admin/coupon";

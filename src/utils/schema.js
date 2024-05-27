@@ -170,16 +170,39 @@ export const newADSSchema = Yup.object().shape({
   mediaUrl: Yup.string().required('Advertisement image is required'),
 });
 
- export const couponSchema = Yup.object().shape({
-  couponName: Yup.string().required('Coupon name is required'),
-  couponSubName: Yup.string().required('Coupon sub name is required'),
-  couponDiscount: Yup.number()
-    .required('Coupon discount is required')
-    .positive('Coupon discount must be a positive number'),
-  startDate: Yup.date().required('Start date is required').nullable(),
+
+const today = new Date();
+const currentYear = today.getFullYear();
+const currentMonth = today.getMonth() + 1; // Note: January is 0
+
+export const couponSchema = Yup.object().shape({
+  name: Yup.string().required('Coupon name is required'),
+  details: Yup.string().required('Coupon sub name is required'),
+  discountDetails: Yup.string().required('Coupon discount is required'),
+  startDate: Yup.date()
+    .required('Start date is required')
+    .nullable()
+    .test(
+      'is-not-last-day-or-next-month',
+      'Start date cannot be the last day of the month or in the next month',
+      (value) => {
+        const date = new Date(value);
+        const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        return date.getDate() < lastDayOfMonth && date.getMonth() + 1 === currentMonth;
+      }
+    ),
   endDate: Yup.date()
     .required('End date is required')
     .nullable()
+    .test(
+      'is-not-last-day-or-next-month',
+      'End date cannot be the last day of the month or in the next month',
+      (value) => {
+        const date = new Date(value);
+        const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        return date.getDate() < lastDayOfMonth && date.getMonth() + 1 === currentMonth;
+      }
+    )
     .min(Yup.ref('startDate'), 'End date must be after the start date'),
 });
 
