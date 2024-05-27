@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineContentPaste } from "react-icons/md";
 import Swal from "sweetalert2";
 import { getServiceType, deleteServiceType } from "../../api/account.api";
@@ -57,7 +57,7 @@ const ServiceType = (props) => {
       confirmButtonColor: "#000000",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-      customClass: "custom-swal", // Add your custom CSS class here
+      customClass: "custom-swal",
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(row);
@@ -89,7 +89,7 @@ const ServiceType = (props) => {
       sortable: true,
       cell: (row) => (
         <div className="d-flex justify-content-center align-items-center">
-          {isValidImageUrl(row.imageUrl) && isValidImageUrl(row.imageUrl) ? (
+          {isValidImageUrl(row.imageUrl) ? (
             <img
               src={row.imageUrl}
               alt="Profile"
@@ -102,7 +102,7 @@ const ServiceType = (props) => {
               style={{
                 width: 35,
                 height: 35,
-                backgroundColor:"red",
+                backgroundColor: "red",
                 borderRadius: "5px",
                 objectFit: "cover",
               }}
@@ -137,6 +137,7 @@ const ServiceType = (props) => {
       ),
     },
   ];
+
   const customStyles = {
     headCells: {
       style: {
@@ -162,9 +163,9 @@ const ServiceType = (props) => {
           <p className="ps-1 fw-bold mb-0">Service Type</p>
         </div>
         <hr />
-        {services.length >= 0 ? (
+        {services.length > 0 ? (
           <DataTable
-            data={[...services]}
+            data={services}
             columns={columns}
             customStyles={customStyles}
             pagination
@@ -179,3 +180,4 @@ const ServiceType = (props) => {
 };
 
 export default ServiceType;
+
