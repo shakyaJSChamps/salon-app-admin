@@ -158,8 +158,8 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
               <ErrorMessage name="endDate" component="div" style={{ color: 'red' }} />
             </div>
 
-            <div className="d-flex flex-column align-items-center-start mb-1 position-relative">
-              <label>Advertisement Image</label>
+            <div className="d-flex flex-column align-items-center-start mb-2 mt-2 position-relative">
+              <label className="mb-2 fw-bold">Advertisement Image</label>
               <ImageUpdate
                 name="mediaUrl"
                 buttonName="Add Image"
@@ -171,8 +171,8 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
               <ErrorMessage name="mediaUrl" component="div" style={{ color: 'red' }} />
             </div>
 
-            <div className="d-flex justify-content-center pb-1">
-              <button type="submit" className="submit-ads-btn mt-2">
+            <div className="d-flex justify-content-center ">
+              <button type="submit" className="submit-ads-btn mt-4">
                 {selectedRow ? "Update" : "Add"}
               </button>
             </div>
