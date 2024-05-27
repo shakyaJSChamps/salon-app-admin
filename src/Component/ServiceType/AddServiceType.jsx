@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MdHeight, MdOutlineContentPaste } from "react-icons/md";
+import { MdOutlineContentPaste } from "react-icons/md";
 import { BiPlusCircle } from "react-icons/bi";
 import { Paper } from "@mui/material";
 import { Form, Formik, ErrorMessage } from "formik";
@@ -9,7 +9,6 @@ import { addServiceType, putServiceType } from "../../api/account.api";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
 const AddServiceType = (props) => {
-  // const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
     imageUrl: "",
@@ -33,47 +32,43 @@ const AddServiceType = (props) => {
   }, [props.isEditMode, props.selectedRowData]);
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("Form Submission::", values);
     try {
-      const formattedValues = {
-        ...values,
-        active: true,
-      };
-  
+      const formattedValues = { ...values };
+
       let response;
       if (props.isEditMode && props.selectedRowData) {
         response = await putServiceType(formattedValues, props.selectedRowData.id);
-        props.onUpdateService(response.data.data); 
+        props.setServiceAdded(response.data.data);
       } else {
         response = await addServiceType(formattedValues);
-        props.setServiceAdded(response.data.data); 
+        props.setServiceAdded(response.data.data);
       }
-      console.log("Add/Update Service Response:", response);
       Notify.success(response.data.message);
       resetForm(); // Reset the form after successful submission
-      // Update the initial values to reflect the changes immediately
       setInitialValues({
         name: "",
         imageUrl: "",
         active: true,
       });
+      // Reset to Add mode after update
+      if (props.isEditMode) {
+        props.setIsEditMode(false);
+      }
     } catch (error) {
       Notify.error(error.message);
     }
   };
-  
-
 
   const buttonStyle = {
-    padding: '3px 20px',
+    padding: props.isEditMode ? '1.5px 10px' : '3px 20px',
     backgroundColor: '#000',
     border: '2px solid #909090',
     borderRadius: '12px',
-    marginTop: '10px',
+    marginTop: props.isEditMode ? '21px' : '10px',
     fontSize: '11px',
-    height: '300px',
-    width : '295px'
-  }
+    height: props.isEditMode ? '48px' : '300px',
+    width: props.isEditMode ? '290px' : '295px'
+  };
 
   return (
     <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
@@ -85,6 +80,7 @@ const AddServiceType = (props) => {
         {props.isEditMode && (
           <BiPlusCircle
             className="cursor-pointer ms-auto"
+            onClick={() => props.setIsEditMode(false)}
           />
         )}
       </div>
@@ -92,7 +88,6 @@ const AddServiceType = (props) => {
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        // validationSchema={newServiceSchema}
         onSubmit={handleSubmit}
       >
         {({ handleChange, values, setFieldValue }) => (
@@ -110,20 +105,35 @@ const AddServiceType = (props) => {
 
             <div className="d-flex flex-column align-items-center-start mb-2">
               <label style={{ fontWeight: 500 }}>Service Image</label>
-              <ImageUpdate
-                name="imageUrl"
-                buttonName="Add Image"
-                inputClassName="form-control input"
-                buttonStyle={buttonStyle}
-                onImageUpload={(url) => {
-                  setFieldValue("imageUrl", url);
-                }}
-              />
+              {values.imageUrl ? (
+                <img src={values.imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '300px' }} />
+              ) : (
+                <ImageUpdate
+                  name="imageUrl"
+                  buttonName="Add Image"
+                  inputClassName="form-control input"
+                  buttonStyle={buttonStyle}
+                  onImageUpload={(url) => {
+                    setFieldValue("imageUrl", url);
+                  }}
+                />
+              )}
+              {props.isEditMode && values.imageUrl && (
+                <ImageUpdate
+                  name="imageUrl"
+                  buttonName="Update Image"
+                  inputClassName="form-control input"
+                  buttonStyle={buttonStyle}
+                  onImageUpload={(url) => {
+                    setFieldValue("imageUrl", url);
+                  }}
+                />
+              )}
               <ErrorMessage name="imageUrl" component="div" style={{ color: 'red' }} />
             </div>
 
             <div className="d-flex justify-content-center pb-1">
-              <button type="submit" className="add-service-btn mt-3">
+              <button type="submit" className="add-service-btn mt-2">
                 {props.isEditMode ? "Update" : "Add"}
               </button>
             </div>
