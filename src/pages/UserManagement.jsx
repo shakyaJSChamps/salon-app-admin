@@ -181,6 +181,10 @@ const UserManagement = () => {
               title={title}
               setOption={setOption}
               searchByText={searchByText}
+              options={[
+                { text: "Email", value: "email" },
+                { text: "Mobile Number", value: "phoneNumber" },
+              ]}
             />
           }
           columns={columns}

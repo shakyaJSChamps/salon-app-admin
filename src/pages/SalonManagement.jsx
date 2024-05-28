@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { selectSearchTerm } from "../features/countriesInfo";
 import SaloonProfile from "../assets/image/salons.png";
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
@@ -9,14 +7,12 @@ import { getSalon } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
-// import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 import { useNavigate } from "react-router-dom";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
   const icon = <AiOutlineUser />;
-  // const searchText = useSelector(selectSearchTerm);
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [saloonsData, setSaloonsData] = useState([]);
@@ -24,36 +20,30 @@ const SaloonManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [option, setOption] = useState("email");
-  // const [updatedRowData, setUpdatedRowData] = useState(false);
-  // const [searchOption, setSearchOption] = useState("name");
-
-
+  const [option, setOption] = useState("name");
   const navigate = useNavigate()
 
 
   const handleRowClick = (row) => {
-
     setSelectedRow(row);
     navigate(`/salon-management/${row.id}`);
   };
 
   const handlePageChange = (page) => {
-    getSaloonsData(page, perPage);
+    setPage(page);
+    getSaloonsData(page, perPage, searchText);
   };
 
   const handlePerPageChange = (newPerPage, page) => {
     setPerPage(newPerPage);
-    getSaloonsData(page, newPerPage);
+    getSaloonsData(page, newPerPage, searchText);
   };
 
-
-  const searchByText = (searchText) => {
-    getSaloonsData(searchText);
-  };
-
-  const getSaloonsData = async (page, perPage, searchText=" ") => {
-    let REQ_URL = `?page=${page}&size=${perPage}&${option}=${searchText}`;
+  const getSaloonsData = async (page, perPage, searchText = "") => {
+    let REQ_URL = `/salons?page=${page}&size=${perPage}`;
+    if (searchText) {
+      REQ_URL += `&${option}=${searchText}`;
+    }
     try {
       setLoading(true);
       const response = await getSalon(REQ_URL);
@@ -66,15 +56,21 @@ const SaloonManagement = () => {
   };
 
   useEffect(() => {
-    getSaloonsData(1, perPage);
-  }, [perPage]);
+    getSaloonsData(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
-  const filteredSaloonsData = saloonsData.filter(
-    (saloon) =>
-      saloon.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      saloon.city.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const searchByText = (searchText) => {
+    setSearchText(searchText);
+    setPage(1);
+    getSaloonsData(1, perPage, searchText);
+  };
 
+  // const filteredSaloonsData = saloonsData.filter(
+  //   (saloon) =>
+  //     saloon.name.toLowerCase().includes(searchText.toLowerCase()) ||
+  //     saloon.city.toLowerCase().includes(searchText.toLowerCase()) ||
+  //     saloon.companyName.toLowerCase().includes(searchText.toLowerCase())
+  // );
 
   const columns = [
     {
@@ -164,11 +160,15 @@ const SaloonManagement = () => {
               title={title}
               setOption={setOption}
               searchByText={searchByText}
-              disabled={true}
+              options={[
+                { text: "Name", value: "name" },
+                { text: "City", value: "city" },
+                { text: "Company Name", value: "companyName" },
+              ]}
             />
             }
             columns={columns}
-            data={filteredSaloonsData}
+            data={saloonsData}
             pagination
             paginationPerPage={perPage}
             paginationRowsPerPageOptions={[10, 25, 50]}

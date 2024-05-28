@@ -16,8 +16,8 @@ const SalesPerson = () => {
   const [salesData, setSalesData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  // const [option, setOption] = useState("email");
-  const [updatedRowData, setUpdatedRowData] = useState(false);
+  const [option, setOption] = useState("email");
+  const [searchText, setSearchText] = useState("");
 
   const handleRowClick = (row) => {
     setSelectedRow(row);
@@ -25,19 +25,24 @@ const SalesPerson = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
+    getSale(page, perPage, searchText);
   };
 
   const handlePerPageChange = (newPerPage, page) => {
     setPerPage(newPerPage);
-    setPage(page);
+    getSale(page, newPerPage, searchText);
   };
 
-  const getSale = async (searchText = "") => {
+  const getSale = async (page, perPage, searchText = "") => {
     let payload = {
-      page: page,
+      page,
       size: perPage,
-      email: searchText,
+    };
+
+    if (option && searchText) {
+      payload[option] = searchText;
     }
+
     try {
       setLoading(true);
       const response = await getSales(payload);
@@ -46,22 +51,21 @@ const SalesPerson = () => {
       setSalesData(salesData);
       setTotalRows(response.data.data.total);
       setLoading(false);
-      setUpdatedRowData(false);
     } catch (error) {
       Notify.error(error.message);
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    getSale();
-  }, [perPage, page]);
 
   useEffect(() => {
-    updatedRowData && getSale();
-  }, [updatedRowData]);
+    getSale(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
   const searchByText = (searchText) => {
-    getSale(searchText);
+    setSearchText(searchText);
+    setPage(1);
+    getSale(1, perPage, searchText);
   };
 
   const columns = [
@@ -165,7 +169,14 @@ const SalesPerson = () => {
           :
           <div className="main-table rounded ">
             <DataTable
-              title={<Sales />}
+              title={<Sales
+                setOption={setOption}
+                searchByText={searchByText}
+                options={[
+                  { text: "Email", value: "email" },
+                  { text: "Mobile Number", value: "phoneNumber" },
+                ]}
+              />}
               columns={columns}
               data={salesData}
               pagination

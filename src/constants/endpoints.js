@@ -8,7 +8,7 @@ export const __endpoint_putServiceType = endpoint + "admin/services/categories";
 export const __endpoint_addServiceType = endpoint + "admin/services/categories";
 export const __endpoint_deleteServiceType =
   endpoint + "admin/services/categories";
-export const __endpoint_getSalon = endpoint + "admin/salons";
+export const __endpoint_getSalon = endpoint + "admin";
 export const __endpoint_getUser = endpoint + "admin/users";
 export const __endpoint_updateUser = endpoint + "admin/users/consumers";
 export const __endpoint_fileUploader = endpoint + "admin/file/presignedUrl";
