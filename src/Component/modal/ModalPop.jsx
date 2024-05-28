@@ -1,10 +1,12 @@
+// MyVerticallyCenteredModal.js
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
-import styles from "./Modal.module.css";
 import SalesCreate from "../salesManagement/Salescreate/SalesCreate";
+import AddSubAdminForm from "../subAdmin/AddSubAdminForm"; 
+import styles from "./Modal.module.css";
 
 function MyVerticallyCenteredModal({
   show,
@@ -41,6 +43,7 @@ function MyVerticallyCenteredModal({
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
         {showForm === "sales" && <SalesCreate onClose={onHide} />}
+        {showForm === "subAdmin" && <AddSubAdminForm onClose={onHide} />}
       </Modal.Body>
     </Modal>
   );
