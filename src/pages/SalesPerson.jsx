@@ -163,6 +163,7 @@ const SalesPerson = () => {
           <DataTable
             title={
               <AddButton
+              buttonText="Add Sales Person"
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[
