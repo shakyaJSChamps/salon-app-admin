@@ -2,8 +2,10 @@ import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
-const SalesWrapper = lazy(()=>import("./Component/container/SalesWrapper"));
+const SalesWrapper = lazy(() => import("./Component/container/SalesWrapper"));
 import EditsalonManagement from "./Component/salonManagement/EditDetails/EditsalonManagement";
+const AccountSetting = lazy(() => import("./Component/setting/AccountSetting"));
+const ManageSubAdmin = lazy(() => import("./Component/setting/ManageSubAdmin"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
@@ -20,7 +22,9 @@ const Setting = lazy(() => import("./pages/Settings"));
 const Layout = lazy(() => import("../src/pages/Layout"));
 const DashBoard = lazy(() => import("../src/pages/Dashboard"));
 const SendNotification = lazy(() => import("../src/pages/SendNotification"));
-const SalesCreate = lazy(() => import("../src/Component/salesManagement/Salescreate/SalesCreate"));
+const SalesCreate = lazy(() =>
+  import("../src/Component/salesManagement/Salescreate/SalesCreate")
+);
 const ReceiveNotification = lazy(() =>
   import("../src/Component/notification/ReceiveNotification")
 );
@@ -44,7 +48,6 @@ const Error = lazy(() => import("../src/Component/Error"));
 const ProtectedRoutes = ({ authToken }) => {
   return authToken ? <Layout /> : <Navigate to="/account/login" />;
 };
- 
 
 const AppRoute = (props) => {
   const _routes = [
@@ -69,10 +72,10 @@ const AppRoute = (props) => {
         {
           path: "salon-management",
           element: <SalonManagement />,
-          children: [{ path: "details", element: <SaloonDetails /> },
-          { path: ":userId", element: <EditsalonManagement/> }
+          children: [
+            { path: "details", element: <SaloonDetails /> },
+            { path: ":userId", element: <EditsalonManagement /> },
           ],
-
         },
         // { path: "freelance-management", element: <FreelanceManagement /> },
         { path: "service-type-management", element: <ServiceTypeMan /> },
@@ -81,8 +84,16 @@ const AppRoute = (props) => {
         { path: "ads-management", element: <ADSManagement /> },
         { path: "payment-management", element: <PaymentMan /> },
         { path: "notifications", element: <Notification /> },
-        { path: "setting", element: <Setting /> },
+        {
+          path: "",
+          element: <Setting />,
+          children: [
+            { path: "setting", element: <AccountSetting /> },
+            { path: "setting/manage-sub-admin", element: <ManageSubAdmin /> },
+          ],
+        },
         { path: "setting/cms-setting", element: <CmsSetting /> },
+
         {
           path: "",
           element: <Notification />,
@@ -95,11 +106,10 @@ const AppRoute = (props) => {
           path: "sales-person",
           element: <SalesWrapper />,
           children: [
-            { path: "", element: <SalesPerson /> }, 
-            { path: "creates", element: <SalesCreate /> } 
-          ]
+            { path: "", element: <SalesPerson /> },
+            { path: "creates", element: <SalesCreate /> },
+          ],
         },
-        
       ],
     },
     { path: "*", element: <Error /> },

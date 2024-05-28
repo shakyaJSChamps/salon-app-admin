@@ -5,7 +5,7 @@ import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
-import Sales from "../Component/Sales";
+import AddButton from "../Component/AddButton";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 
 const SalesPerson = () => {
@@ -27,7 +27,7 @@ const SalesPerson = () => {
     setPage(page);
   };
 
-  const handlePerPageChange = (newPerPage, page) => {
+  const handlePerPageChange = (newPerPage) => {
     setPerPage(newPerPage);
   };
 
@@ -162,7 +162,7 @@ const SalesPerson = () => {
         <div className="main-table rounded">
           <DataTable
             title={
-              <Sales
+              <AddButton
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[

@@ -48,6 +48,7 @@ const CouponManagement = () => {
           <AddCoupon
             selectedCoupon={selectedCoupon}
             onCouponSaved={handleCouponSaved}
+            setSelectedCoupon={setSelectedCoupon} 
           />
         </Col>
         <Col md={8}>
