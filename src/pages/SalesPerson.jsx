@@ -5,9 +5,8 @@ import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
-import Sales from "../Component/Sales";
+import AddButton from "../Component/AddButton";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
-
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -57,7 +56,6 @@ const SalesPerson = () => {
     }
   };
 
-
   useEffect(() => {
     getSale(page, perPage, searchText);
   }, [page, perPage, searchText]);
@@ -66,6 +64,10 @@ const SalesPerson = () => {
     setSearchText(searchText);
     setPage(1);
     getSale(1, perPage, searchText);
+  };
+
+  const handleAddSubAdminClick = () => {
+    console.log("Add Sales Person button clicked");
   };
 
   const columns = [
@@ -77,8 +79,7 @@ const SalesPerson = () => {
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.profileImageUrl) &&
-              isValidImageUrl(row.profileImageUrl) ? (
+            {isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -98,10 +99,9 @@ const SalesPerson = () => {
             )}
           </div>
           <div>
-            <div
-              className="ps-2"
-              style={{ fontWeight: "500" }}
-            >{`${row.firstName} ${row.lastName}`}</div>
+            <div className="ps-2" style={{ fontWeight: "500" }}>
+              {`${row.firstName} ${row.lastName}`}
+            </div>
             <div className="ps-2" style={{ fontSize: "13px" }}>
               {row.email}
             </div>
@@ -109,7 +109,6 @@ const SalesPerson = () => {
         </div>
       ),
     },
-
     {
       name: "Mobile Number",
       cell: (row) => (
@@ -117,8 +116,6 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
-
-
     {
       name: "City",
       cell: (row) => (
@@ -128,7 +125,6 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
-
     {
       name: "UPI Id",
       cell: (row) => (
@@ -138,8 +134,6 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
-
-
   ];
 
   const customStyles = {
@@ -161,46 +155,44 @@ const SalesPerson = () => {
 
   return (
     <>
-      {
-        selectedRow ?
-          <UpdateSalesDetails
-            id={selectedRow.userId}
-          />
-          :
-          <div className="main-table rounded ">
-            <DataTable
-              title={<Sales
+      {selectedRow ? (
+        <UpdateSalesDetails id={selectedRow.userId} />
+      ) : (
+        <div className="main-table rounded">
+          <DataTable
+            title={
+              <AddButton
+                buttonText="Add sales person"
+                handleButtonClick={handleAddSubAdminClick}
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[
                   { text: "Email", value: "email" },
                   { text: "Mobile Number", value: "phoneNumber" },
                 ]}
-              />}
-              columns={columns}
-              data={salesData}
-              pagination
-              paginationPerPage={perPage}
-              paginationRowsPerPageOptions={[10, 25, 50]}
-              paginationServer
-              paginationTotalRows={totalRows}
-              onChangePage={handlePageChange}
-              onChangeRowsPerPage={handlePerPageChange}
-              fixedHeader
-              fixedHeaderScrollHeight="450px"
-              highlightOnHover
-              onRowClicked={(row) => handleRowClick(row)}
-              progressPending={loading}
-              progressComponent={<TableLoader />}
-              selectedRow={selectedRow}
-              customStyles={customStyles}
-            />
-          </div>
-      }
-
+              />
+            }
+            columns={columns}
+            data={salesData}
+            pagination
+            paginationPerPage={perPage}
+            paginationRowsPerPageOptions={[10, 25, 50]}
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangePage={handlePageChange}
+            onChangeRowsPerPage={handlePerPageChange}
+            fixedHeader
+            fixedHeaderScrollHeight="450px"
+            highlightOnHover
+            onRowClicked={(row) => handleRowClick(row)}
+            progressPending={loading}
+            progressComponent={<TableLoader />}
+            customStyles={customStyles}
+          />
+        </div>
+      )}
     </>
   );
 };
 
 export default SalesPerson;
-

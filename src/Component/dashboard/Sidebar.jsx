@@ -12,6 +12,7 @@ import { MdSend } from "react-icons/md";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
+import { RiShieldUserLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeature } from "../../api/account.api";
 import { setFeature } from "../../features/feature";
@@ -27,16 +28,24 @@ const Sidebar = (props) => {
     try {
       const features = await getFeature();
       const filteredFeatures = features.data.data.filter(
-        (item) => item.name !== "Freelance Management" && item.name !== "Payment Management"
+        (item) =>
+          item.name !== "Freelance Management" &&
+          item.name !== "Payment Management"
       );
 
       const notificationsIndex = filteredFeatures.findIndex(
         (item) => item.name === "Notifications"
       );
+      const settingsIndex = filteredFeatures.findIndex(
+        (item) => item.name === "Setting"
+      );
 
       if (notificationsIndex !== -1) {
         filteredFeatures[notificationsIndex].children =
           notificationsSubmenu.children;
+      }
+      if (settingsIndex !== -1) {
+        filteredFeatures[settingsIndex].children = settingsSubmenu.children;
       }
 
       console.log("FilteredFeature::::> ", filteredFeatures);
@@ -83,11 +92,31 @@ const Sidebar = (props) => {
     ],
   };
 
+  const settingsSubmenu = {
+    children: [
+      {
+        name: "Manage Sub Admin",
+        path: "setting/manage-sub-admin",
+        icon: <RiShieldUserLine />,
+      },
+      {
+        name:"Setting",
+        path:"/setting",
+        icon: <MdSettingsSuggest />,
+      },
+    ],
+  };
+
   const renderMenuItem = (item, index) => {
     if (item.children) {
       return (
         <li key={index}>
-          <div className={`side-nav-item ${item.name === 'Notifications' ? 'cursor-pointer' : ''}`} onClick={() => toggleSubMenu(index)}>
+          <div
+            className={`side-nav-item ${
+              (item.name === "Notifications" || item.name === "Setting") ? "cursor-pointer" : ""
+            }`}
+            onClick={() => toggleSubMenu(index)}
+          >
             <span className="side-nav-icon m-auto">
               {menus[item.name.replace(/\s+/g, "")]}
             </span>
@@ -142,7 +171,6 @@ const Sidebar = (props) => {
       );
     }
   };
-  
 
   const toggleSubMenu = (index) => {
     const updatedFeature = feature.map((item, i) => {
@@ -150,6 +178,13 @@ const Sidebar = (props) => {
         return {
           ...item,
           isOpen: !item.isOpen,
+        };
+      }
+      // Close other open submenus
+      if (item.isOpen && (item.name === "Notifications" || item.name === "Setting")) {
+        return {
+          ...item,
+          isOpen: false,
         };
       }
       return item;

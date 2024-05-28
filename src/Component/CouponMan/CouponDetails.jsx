@@ -132,6 +132,10 @@ const CouponDetails = ({ onEditCoupon, couponData }) => {
             icon={<MdOutlineConfirmationNumber />}
             title={"Coupon"}
             disabled={true}
+            options={[
+              { text: "Email", value: "email" },
+              { text: "Mobile Number", value: "phoneNumber" },
+            ]}
           />
         }
         columns={columns}
