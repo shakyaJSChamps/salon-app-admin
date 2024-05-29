@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Profile from "../assets/image/dummy-profile.jpg";
+import Profile from '.././assets/image/coupon-dummy.webp';
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
@@ -7,6 +7,7 @@ import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
 import AddButton from "../Component/AddButton";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
+import CommonImage from "../Component/common-component/CommonImage";
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -85,21 +86,16 @@ const SalesPerson = () => {
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) ? (
-              <img
-                src={row.profileImageUrl}
-                alt="Profile"
-                style={{ width: 35, height: 35, borderRadius: "50%" }}
+              <CommonImage
+                imageUrl={row.profileImageUrl}
+                alt="Sales Image"
+                classes="sales-image"
               />
             ) : (
-              <img
-                src={Profile}
-                alt="Profile"
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
+              <CommonImage
+                imageUrl={Profile}
+                alt="Sales Image"
+                classes="sales-image"
               />
             )}
           </div>
@@ -130,9 +126,7 @@ const SalesPerson = () => {
     },
     {
       name: "UPI Id",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.upiID}</div>
-      ),
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,
       sortable: true,
     },
   ];
@@ -163,7 +157,7 @@ const SalesPerson = () => {
           <DataTable
             title={
               <AddButton
-              buttonText="Add Sales Person"
+                buttonText="Add Sales Person"
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[

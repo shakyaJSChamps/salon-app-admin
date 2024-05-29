@@ -52,3 +52,9 @@
     opacity: 0;
   }
 }
+.service-image{
+  width: 50%;
+  aspect-ratio: 3/2;
+  border-radius: 5px;
+  object-fit: cover;
+}
