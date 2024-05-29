@@ -224,3 +224,10 @@ export const addServiceSchema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
 });
+
+
+export const addServiceTypeSchema = Yup.object().shape({
+  name: Yup.string().required("Service name is required"),
+  imageUrl: Yup.string().url("Invalid URL format").required("Image URL is required"),
+  active: Yup.boolean().required("Status is required"),
+});

@@ -31,7 +31,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
     <>
       <div className="d-flex justify-content-center align-items-center">
         {isValidImageUrl(rowData.profileImageUrl) &&
-        isValidImageUrl(rowData.profileImageUrl) ? (
+          isValidImageUrl(rowData.profileImageUrl) ? (
           <img
             src={rowData.profileImageUrl}
             alt="Profile"
@@ -92,7 +92,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="data-detail ps-2 "> 7777777</p>
+          <p className="data-detail ps-2 "> {rowData.completed}</p>
           {/* <p className="data-detail">{editedData.totalCompletedAppointments}</p> */}
         </div>
       </div>
@@ -104,6 +104,16 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
         <div className="col-6">
           <p className="data-detail ps-2">{rowData.cancelled}</p>
+        </div>
+      </div>
+
+      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Scheduled Appointments</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="data-detail ps-2">{rowData.scheduled}</p>
         </div>
       </div>
 

@@ -13,6 +13,7 @@ const SalesPerson = () => {
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [salesData, setSalesData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
@@ -24,23 +25,17 @@ const SalesPerson = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
-    getSale(page, perPage, searchText);
   };
 
-  const handlePerPageChange = (newPerPage, page) => {
+  const handlePerPageChange = (newPerPage) => {
     setPerPage(newPerPage);
-    getSale(page, newPerPage, searchText);
   };
 
-  const getSale = async (page, perPage, searchText = "") => {
+  const getSale = async () => {
     let payload = {
-      page,
-      size: perPage,
+      page: 1,
+      size: 1000,
     };
-
-    if (option && searchText) {
-      payload[option] = searchText;
-    }
 
     try {
       setLoading(true);
@@ -48,8 +43,9 @@ const SalesPerson = () => {
       console.log("Sales data -->", response);
       const salesData = response.data.data.items;
       setSalesData(salesData);
-      setTotalRows(response.data.data.total);
+      setTotalRows(salesData.length);
       setLoading(false);
+      filterData(salesData, searchText);
     } catch (error) {
       Notify.error(error.message);
       setLoading(false);
@@ -57,17 +53,26 @@ const SalesPerson = () => {
   };
 
   useEffect(() => {
-    getSale(page, perPage, searchText);
-  }, [page, perPage, searchText]);
+    getSale();
+  }, []);
+
+  const filterData = (data, searchText) => {
+    if (!searchText) {
+      setFilteredData(data);
+      return;
+    }
+    const lowercasedSearchText = searchText.toLowerCase();
+    const filtered = data.filter((item) =>
+      item[option].toLowerCase().includes(lowercasedSearchText)
+    );
+    setFilteredData(filtered);
+    setTotalRows(filtered.length);
+  };
 
   const searchByText = (searchText) => {
     setSearchText(searchText);
+    filterData(salesData, searchText);
     setPage(1);
-    getSale(1, perPage, searchText);
-  };
-
-  const handleAddSubAdminClick = () => {
-    console.log("Add Sales Person button clicked");
   };
 
   const columns = [
@@ -119,18 +124,14 @@ const SalesPerson = () => {
     {
       name: "City",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          {row.address}
-        </div>
+        <div onClick={() => handleRowClick(row)}>{row.address}</div>
       ),
       sortable: true,
     },
     {
       name: "UPI Id",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          {row.upiID}
-        </div>
+        <div onClick={() => handleRowClick(row)}>{row.upiID}</div>
       ),
       sortable: true,
     },
@@ -162,8 +163,7 @@ const SalesPerson = () => {
           <DataTable
             title={
               <AddButton
-                buttonText="Add sales person"
-                handleButtonClick={handleAddSubAdminClick}
+              buttonText="Add Sales Person"
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[
@@ -173,7 +173,7 @@ const SalesPerson = () => {
               />
             }
             columns={columns}
-            data={salesData}
+            data={filteredData.slice((page - 1) * perPage, page * perPage)}
             pagination
             paginationPerPage={perPage}
             paginationRowsPerPageOptions={[10, 25, 50]}
@@ -187,6 +187,7 @@ const SalesPerson = () => {
             onRowClicked={(row) => handleRowClick(row)}
             progressPending={loading}
             progressComponent={<TableLoader />}
+            selectedRow={selectedRow}
             customStyles={customStyles}
           />
         </div>

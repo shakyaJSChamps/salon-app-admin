@@ -7,6 +7,7 @@ import Notify from "../../utils/notify";
 import InputText from "../common-component/Inputtext/InputText";
 import { addServiceType, putServiceType } from "../../api/account.api";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
+import { addServiceTypeSchema } from "../../utils/schema";
 
 const AddServiceType = (props) => {
   const [initialValues, setInitialValues] = useState({
@@ -89,6 +90,7 @@ const AddServiceType = (props) => {
         enableReinitialize
         initialValues={initialValues}
         onSubmit={handleSubmit}
+        validationSchema={addServiceTypeSchema}
       >
         {({ handleChange, values, setFieldValue }) => (
           <Form className="d-flex flex-column">
