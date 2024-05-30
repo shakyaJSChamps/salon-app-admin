@@ -1,32 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToken } from "../features/authInfo";
-// import { fetchUser, selectUserData } from "../features/userInfoSlice";
+import { FaRegUser } from "react-icons/fa";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Sign Out"];
 
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.authInfo.userInfo);
-  const {email} = JSON.parse(userInfo);
-  console.log("UserInfo ::", email.charAt(0).toUpperCase());
+  const { email } = JSON.parse(userInfo);
 
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  // useEffect(() => {
-  //   dispatch(fetchUser());
-  // }, [dispatch]);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleLogout = () => {
     dispatch(removeToken());
@@ -43,36 +39,21 @@ const Profile = () => {
   };
 
   return (
-    <div
-      className="profile-box"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="profile-box">
       <Box
         sx={{
           display: "flex",
-          justifyContent: "revert",
+          justifyContent: "center",
           alignItems: "center",
-          margin: "auto",
           gap: "8px",
+          color: "#fff",
         }}
       >
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            {userInfo ? (
-              <Avatar>{email.charAt(0).toUpperCase()}</Avatar>
-            ) : (
-              <Avatar
-                alt="User Avatar"
-                src="https://example.com/path/to/your/image.jpg"
-              />
-            )}
+            <Avatar>{email.charAt(0).toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
-
         <Menu
           id="menu-appbar"
           anchorEl={anchorElUser}
@@ -87,17 +68,27 @@ const Profile = () => {
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
+          PaperProps={{
+            className: "menu-paper",
+          }}
         >
-          {settings.map((setting) => (
-            <MenuItem
-              key={setting}
-              onClick={
-                setting === "Logout" ? handleLogout : handleCloseUserMenu
-              }
-            >
-              <Typography textAlign="center">{setting}</Typography>
-            </MenuItem>
-          ))}
+          <MenuItem
+            key="Profile"
+            onClick={handleCloseUserMenu}
+            className="menu-item"
+            style={{borderBottom:"2px solid white"}}
+          >
+            <FaRegUser className="menu-icon" />
+            <Typography textAlign="center">Profile</Typography>
+          </MenuItem>
+          <MenuItem
+            key="Sign Out"
+            onClick={handleLogout}
+            className="menu-item"
+          >
+            <ExitToAppIcon className="menu-icon" />
+            <Typography textAlign="center">Sign Out</Typography>
+          </MenuItem>
         </Menu>
         <div className="profile-icon">
           <NotificationsNoneOutlinedIcon />

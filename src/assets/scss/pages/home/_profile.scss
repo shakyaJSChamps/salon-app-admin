@@ -1,11 +1,35 @@
-.profile-box{
-    width: 130px;
-    height: 45px;
-    background-color: $color-black;
-    border-radius: 10px;
-    .profile-icon{
-        color: $color-white;
-        display: flex;
-        gap: 8px;
-    }
+.profile-box {
+  width: 130px;
+  height: 45px;
+  background-color: $color-black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-white;
+
+  .profile-icon {
+    color: $color-white;
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.menu-paper {
+  background-color: $color-black !important;
+  color: $color-white !important;
+  margin-top: 40px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .menu-icon {
+    color: $color-white;
+  }
+}
+.profile-icon {
+  display: flex;
+  gap: 8px;
 }
