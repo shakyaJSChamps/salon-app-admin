@@ -18,6 +18,7 @@ import FDate from "../controls/FDate";
 import CustomTitle from "../CustomTitle";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../../constants";
+import CommonImage from "../common-component/CommonImage";
 
 const ServiceType = (props) => {
   const [services, setServices] = useState([]);
@@ -90,22 +91,16 @@ const ServiceType = (props) => {
       cell: (row) => (
         <div className="d-flex justify-content-center align-items-center">
           {isValidImageUrl(row.imageUrl) ? (
-            <img
-              src={row.imageUrl}
-              alt="Profile"
-              style={{ width: 35, height: 35, borderRadius: "5px" }}
-            />
+            <CommonImage 
+            imageUrl={row.imageUrl}
+            alt="Service Image"
+            classes="service-image"
+          />
           ) : (
-            <img
+            <CommonImage
               src={Profile}
               alt="Profile"
-              style={{
-                width: 35,
-                height: 35,
-                backgroundColor: "red",
-                borderRadius: "5px",
-                objectFit: "cover",
-              }}
+              classes="service-image"
             />
           )}
         </div>
@@ -148,7 +143,7 @@ const ServiceType = (props) => {
     rows: {
       style: {
         fontSize: "16px",
-        height: "150px",
+        minHeight: "70px",
         color: "#6F6B7D",
         fontFamily: "Poppins",
       },
