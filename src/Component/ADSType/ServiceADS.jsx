@@ -10,6 +10,7 @@ import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { deleteADSType } from "../../api/account.api"; 
 import Notify from "../../utils/notify"; 
+import CommonImage from "../common-component/CommonImage";
 
 const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
   const [page, setPage] = useState(1);
@@ -70,23 +71,18 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
       cell: (row) => (
         <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
-          <div className="d-flex justify-content-center align-items-center">
+          <div className="d-flex  align-items-center">
             {isValidImageUrl(row.mediaUrl) ? (
-              <img
+              <CommonImage
                 src={row.mediaUrl}
                 alt="Profile"
-                style={{ width: "100%", height: "100%", borderRadius: "5px" }}
+                classes="ads-image"
               />
             ) : (
-              <img
+              <CommonImage
                 src={Profile}
                 alt="Profile"
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
+                classes="adsDummy-image"
               />
             )}
           </div>

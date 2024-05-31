@@ -8,6 +8,8 @@ import CustomTitle from "../CustomTitle";
 import CommonImage from "../common-component/CommonImage";
 import { deleteCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
+import { isValidImageUrl } from "../../constants";
+import Profile from "../../assets/image/dummy-profile.jpg";
 
 const CouponDetails = ({ onEditCoupon, couponData }) => {
   const [data, setData] = useState([]);
@@ -59,12 +61,21 @@ const CouponDetails = ({ onEditCoupon, couponData }) => {
       cell: (row) => (
         <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
-          <div className="d-flex justify-content-center align-items-center">
+          <div className="d-flex  align-items-center">
+            {isValidImageUrl(row.imageUrl) ? 
             <CommonImage
               imageUrl={row.imageUrl}
               alt="Coupon Image"
               classes="coupon-image"
             />
+            :
+            <CommonImage 
+            imageUrl={Profile}
+            alt="Coupon Image"
+            classes="coupon-image"
+
+            />
+          }
           </div>
         </div>
       ),

@@ -1,69 +1,76 @@
-.ads-service-paper{
-   .search-box {
-    .search-details{
+.ads-service-paper {
+  .search-box {
+    .search-details {
       display: flex;
       align-items: center;
       background-color: $color-light-grey;
       border-radius: 2px;
-      border: 3px solid #D9D9D9;
+      border: 3px solid #d9d9d9;
       border-right: 2px solid $color-lgrey;
-      .search-details{
+      .search-details {
         &::placeholder {
-          color: $color-lgrey; 
-        }}
-      
+          color: $color-lgrey;
+        }
+      }
     }
-    .category-btn{
-        border: 2px solid #D9D9D9;
-        border-radius: 2px;
-        color: $color-lgrey;
-        font-size: 14px;
-        padding: 5px;  
-        border-left: 2px solid $color-lgrey;
+    .category-btn {
+      border: 2px solid #d9d9d9;
+      border-radius: 2px;
+      color: $color-lgrey;
+      font-size: 14px;
+      padding: 5px;
+      border-left: 2px solid $color-lgrey;
     }
+  }
+  .show-page-no {
+    background-color: #f1f1f2;
+    color: #a5a3ae;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+  }
+  .show-page-no.active {
+    background-color: $color-black;
+    color: #ffffff;
+  }
+  .btn-previous {
+    background-color: #f1f1f2;
+    color: #a5a3ae;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 5px;
+  }
 }
-.show-page-no{
-  background-color:#F1F1F2;
-  color:#A5A3AE;
-  border: none;
-  padding: 5px 15px;
-  border-radius: 5px;
-}
-.show-page-no.active{
-  background-color: $color-black;
-  color: #FFFFFF;
-}
-.btn-previous{
-  background-color:#F1F1F2;
-  color: #A5A3AE;
-  border: none;
-  padding: 5px 8px;
-  border-radius: 5px;
-}
-}
-.ads-city{
+.ads-city {
   font-weight: 500;
-  color: #6F6B7D;
+  color: #6f6b7d;
   font-size: 14px;
 }
-.ads-duration{
+.ads-duration {
   font-weight: 500;
-  color: #6F6B7D;
-.expire-text{
-  color: #FF0000 !important;
-}}
-.image-title{
+  color: #6f6b7d;
+  .expire-text {
+    color: #ff0000 !important;
+  }
+}
+.image-title {
   font-weight: 500;
-  color: #6F6B7D;
-.audio-image{
-  height: 70px;
-  width: 220px;
-  border-radius: 4px;
-}}
-.play-icon{
+  color: #6f6b7d;
+  .audio-image {
+    height: 70px;
+    width: 220px;
+    border-radius: 4px;
+  }
+}
+.play-icon {
   position: absolute;
   top: 63%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+.ads-image {
+  width:80%;
+  border-radius: 5px;
+  object-fit: cover;
 }

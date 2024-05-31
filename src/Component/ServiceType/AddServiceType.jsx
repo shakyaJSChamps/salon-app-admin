@@ -105,7 +105,7 @@ const AddServiceType = (props) => {
               <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
             </div>
 
-            <div className="d-flex flex-column align-items-center-start mb-2">
+            <div className="d-flex flex-column align-items-center mb-2">
               <label style={{ fontWeight: 500 }}>Service Image</label>
               {values.imageUrl ? (
                 <img src={values.imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '300px' }} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Profile from '../../assets/image/dummy-profile.jpg';
+import Profile from '../../assets/image/coupon-dummy.webp';
 
 const CommonImage = ({ imageUrl, alt, classes }) => {
   const [isValid, setIsValid] = useState(null);

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Profile from "../assets/image/dummy-profile.jpg";
+import Profile from '.././assets/image/coupon-dummy.webp';
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
+import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
 
 
@@ -77,6 +78,11 @@ const SalesPerson = () => {
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
+            {isValidImageUrl(row.profileImageUrl) ? (
+              <CommonImage
+                imageUrl={row.profileImageUrl}
+                alt="Sales Image"
+                classes="sales-image"
             {isValidImageUrl(row.profileImageUrl) &&
               isValidImageUrl(row.profileImageUrl) ? (
               <img
@@ -85,15 +91,10 @@ const SalesPerson = () => {
                 style={{ width: 35, height: 35, borderRadius: "50%" }}
               />
             ) : (
-              <img
-                src={Profile}
-                alt="Profile"
-                style={{
-                  width: 35,
-                  height: 35,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
+              <CommonImage
+                imageUrl={Profile}
+                alt="Sales Image"
+                classes="sales-image"
               />
             )}
           </div>
@@ -131,6 +132,7 @@ const SalesPerson = () => {
 
     {
       name: "UPI Id",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
           {row.upiID}
@@ -161,6 +163,14 @@ const SalesPerson = () => {
 
   return (
     <>
+      {selectedRow ? (
+        <UpdateSalesDetails id={selectedRow.userId} />
+      ) : (
+        <div className="main-table rounded">
+          <DataTable
+            title={
+              <AddButton
+                buttonText="Add Sales Person"
       {
         selectedRow ?
           <UpdateSalesDetails
