@@ -5,15 +5,15 @@ import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
-import AddButton from "../Component/AddButton";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
+import AddButton from "../Component/AddButton";
+
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [salesData, setSalesData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
@@ -25,17 +25,23 @@ const SalesPerson = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
+    getSale(page, perPage, searchText);
   };
 
-  const handlePerPageChange = (newPerPage) => {
+  const handlePerPageChange = (newPerPage, page) => {
     setPerPage(newPerPage);
+    getSale(page, newPerPage, searchText);
   };
 
-  const getSale = async () => {
+  const getSale = async (page, perPage, searchText = "") => {
     let payload = {
-      page: 1,
-      size: 1000,
+      page,
+      size: perPage,
     };
+
+    if (option && searchText) {
+      payload[option] = searchText;
+    }
 
     try {
       setLoading(true);
@@ -43,36 +49,23 @@ const SalesPerson = () => {
       console.log("Sales data -->", response);
       const salesData = response.data.data.items;
       setSalesData(salesData);
-      setTotalRows(salesData.length);
+      setTotalRows(response.data.data.total);
       setLoading(false);
-      filterData(salesData, searchText);
     } catch (error) {
       Notify.error(error.message);
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    getSale();
-  }, []);
 
-  const filterData = (data, searchText) => {
-    if (!searchText) {
-      setFilteredData(data);
-      return;
-    }
-    const lowercasedSearchText = searchText.toLowerCase();
-    const filtered = data.filter((item) =>
-      item[option].toLowerCase().includes(lowercasedSearchText)
-    );
-    setFilteredData(filtered);
-    setTotalRows(filtered.length);
-  };
+  useEffect(() => {
+    getSale(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
   const searchByText = (searchText) => {
     setSearchText(searchText);
-    filterData(salesData, searchText);
     setPage(1);
+    getSale(1, perPage, searchText);
   };
 
   const columns = [
@@ -84,7 +77,8 @@ const SalesPerson = () => {
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.profileImageUrl) ? (
+            {isValidImageUrl(row.profileImageUrl) &&
+              isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -104,9 +98,10 @@ const SalesPerson = () => {
             )}
           </div>
           <div>
-            <div className="ps-2" style={{ fontWeight: "500" }}>
-              {`${row.firstName} ${row.lastName}`}
-            </div>
+            <div
+              className="ps-2"
+              style={{ fontWeight: "500" }}
+            >{`${row.firstName} ${row.lastName}`}</div>
             <div className="ps-2" style={{ fontSize: "13px" }}>
               {row.email}
             </div>
@@ -114,6 +109,7 @@ const SalesPerson = () => {
         </div>
       ),
     },
+
     {
       name: "Mobile Number",
       cell: (row) => (
@@ -121,20 +117,29 @@ const SalesPerson = () => {
       ),
       sortable: true,
     },
+
+
     {
       name: "City",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.address}</div>
+        <div onClick={() => handleRowClick(row)}>
+          {row.address}
+        </div>
       ),
       sortable: true,
     },
+
     {
       name: "UPI Id",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.upiID}</div>
+        <div onClick={() => handleRowClick(row)}>
+          {row.upiID}
+        </div>
       ),
       sortable: true,
     },
+
+
   ];
 
   const customStyles = {
@@ -156,42 +161,43 @@ const SalesPerson = () => {
 
   return (
     <>
-      {selectedRow ? (
-        <UpdateSalesDetails id={selectedRow.userId} />
-      ) : (
-        <div className="main-table rounded">
-          <DataTable
-            title={
-              <AddButton
-              buttonText="Add Sales Person"
+      {
+        selectedRow ?
+          <UpdateSalesDetails
+            id={selectedRow.userId}
+          />
+          :
+          <div className="main-table rounded ">
+            <DataTable
+              title={<AddButton
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[
                   { text: "Email", value: "email" },
                   { text: "Mobile Number", value: "phoneNumber" },
                 ]}
-              />
-            }
-            columns={columns}
-            data={filteredData.slice((page - 1) * perPage, page * perPage)}
-            pagination
-            paginationPerPage={perPage}
-            paginationRowsPerPageOptions={[10, 25, 50]}
-            paginationServer
-            paginationTotalRows={totalRows}
-            onChangePage={handlePageChange}
-            onChangeRowsPerPage={handlePerPageChange}
-            fixedHeader
-            fixedHeaderScrollHeight="450px"
-            highlightOnHover
-            onRowClicked={(row) => handleRowClick(row)}
-            progressPending={loading}
-            progressComponent={<TableLoader />}
-            selectedRow={selectedRow}
-            customStyles={customStyles}
-          />
-        </div>
-      )}
+              />}
+              columns={columns}
+              data={salesData}
+              pagination
+              paginationPerPage={perPage}
+              paginationRowsPerPageOptions={[10, 25, 50]}
+              paginationServer
+              paginationTotalRows={totalRows}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handlePerPageChange}
+              fixedHeader
+              fixedHeaderScrollHeight="450px"
+              highlightOnHover
+              onRowClicked={(row) => handleRowClick(row)}
+              progressPending={loading}
+              progressComponent={<TableLoader />}
+              selectedRow={selectedRow}
+              customStyles={customStyles}
+            />
+          </div>
+      }
+
     </>
   );
 };

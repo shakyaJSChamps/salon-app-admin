@@ -1,6 +1,7 @@
 import { Paper } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import styles from "../Appointments/Appointments.module.css"
 
 
 function Completed({ appointmentData }) {
@@ -10,7 +11,7 @@ function Completed({ appointmentData }) {
     return (
         <div className='d-flex flex-row flex-wrap gap-4'>
             {completedAppointments.map((data, index) => (
-                <Paper elevation={3} style={{ width: "455px" }} key={index} style={{ width: "455px", height: '136px', padding: '29px', lineHeight: '10px' }}>
+                <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
                     <div className='d-flex justify-content-center align-items-center gap-5'>
                         <div>
                             <img src={data?.user?.profileImageUrl} style={{ height: "79px" }}></img>
