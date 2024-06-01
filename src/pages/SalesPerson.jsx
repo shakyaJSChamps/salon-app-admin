@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Profile from '.././assets/image/coupon-dummy.webp';
+import Profile from "../assets/image/coupon-dummy.webp";
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
@@ -8,7 +8,6 @@ import TableLoader from "../Component/common-component/TableLoader";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
-
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -58,7 +57,6 @@ const SalesPerson = () => {
     }
   };
 
-
   useEffect(() => {
     getSale(page, perPage, searchText);
   }, [page, perPage, searchText]);
@@ -76,33 +74,26 @@ const SalesPerson = () => {
       sortable: true,
       width: "300px",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)} className="d-flex ">
+        <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) ? (
               <CommonImage
                 imageUrl={row.profileImageUrl}
                 alt="Sales Image"
                 classes="sales-image"
-            {isValidImageUrl(row.profileImageUrl) &&
-              isValidImageUrl(row.profileImageUrl) ? (
-              <img
-                src={row.profileImageUrl}
-                alt="Profile"
-                style={{ width: 35, height: 35, borderRadius: "50%" }}
               />
             ) : (
-              <CommonImage
-                imageUrl={Profile}
-                alt="Sales Image"
-                classes="sales-image"
+              <img
+                src={Profile}
+                alt="Profile"
+                style={{ width: 35, height: 35, borderRadius: "50%" }}
               />
             )}
           </div>
           <div>
-            <div
-              className="ps-2"
-              style={{ fontWeight: "500" }}
-            >{`${row.firstName} ${row.lastName}`}</div>
+            <div className="ps-2" style={{ fontWeight: "500" }}>
+              {`${row.firstName} ${row.lastName}`}
+            </div>
             <div className="ps-2" style={{ fontSize: "13px" }}>
               {row.email}
             </div>
@@ -110,38 +101,21 @@ const SalesPerson = () => {
         </div>
       ),
     },
-
     {
       name: "Mobile Number",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>
-      ),
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>,
       sortable: true,
     },
-
-
     {
       name: "City",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          {row.address}
-        </div>
-      ),
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.address}</div>,
       sortable: true,
     },
-
     {
       name: "UPI Id",
       cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          {row.upiID}
-        </div>
-      ),
       sortable: true,
     },
-
-
   ];
 
   const customStyles = {
@@ -171,43 +145,33 @@ const SalesPerson = () => {
             title={
               <AddButton
                 buttonText="Add Sales Person"
-      {
-        selectedRow ?
-          <UpdateSalesDetails
-            id={selectedRow.userId}
-          />
-          :
-          <div className="main-table rounded ">
-            <DataTable
-              title={<AddButton
                 setOption={setOption}
                 searchByText={searchByText}
                 options={[
                   { text: "Email", value: "email" },
                   { text: "Mobile Number", value: "phoneNumber" },
                 ]}
-              />}
-              columns={columns}
-              data={salesData}
-              pagination
-              paginationPerPage={perPage}
-              paginationRowsPerPageOptions={[10, 25, 50]}
-              paginationServer
-              paginationTotalRows={totalRows}
-              onChangePage={handlePageChange}
-              onChangeRowsPerPage={handlePerPageChange}
-              fixedHeader
-              fixedHeaderScrollHeight="450px"
-              highlightOnHover
-              onRowClicked={(row) => handleRowClick(row)}
-              progressPending={loading}
-              progressComponent={<TableLoader />}
-              selectedRow={selectedRow}
-              customStyles={customStyles}
-            />
-          </div>
-      }
-
+              />
+            }
+            columns={columns}
+            data={salesData}
+            pagination
+            paginationPerPage={perPage}
+            paginationRowsPerPageOptions={[10, 25, 50]}
+            paginationServer
+            paginationTotalRows={totalRows}
+            onChangePage={handlePageChange}
+            onChangeRowsPerPage={handlePerPageChange}
+            fixedHeader
+            fixedHeaderScrollHeight="450px"
+            highlightOnHover
+            onRowClicked={(row) => handleRowClick(row)}
+            progressPending={loading}
+            progressComponent={<TableLoader />}
+            customStyles={customStyles}
+          />
+        </div>
+      )}
     </>
   );
 };
