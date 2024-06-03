@@ -19,47 +19,17 @@ function SalonDetails({ salonDetail }) {
             const response = await updateSalonDetails(values, salonDetail.id);
             // console.log("salonDetails ::>", response);
             Notify.success(response.data.message);
-            setIsEditing(false); // Exit edit mode
+            setIsEditing(false);
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
         }
     };
-    const indianStates = [
-        "Andhra Pradesh",
-        "Arunachal Pradesh",
-        "Assam",
-        "Bihar",
-        "Chhattisgarh",
-        "Goa",
-        "Gujarat",
-        "Haryana",
-        "Himachal Pradesh",
-        "Jharkhand",
-        "Karnataka",
-        "Kerala",
-        "Madhya Pradesh",
-        "Maharashtra",
-        "Manipur",
-        "Meghalaya",
-        "Mizoram",
-        "Nagaland",
-        "Odisha",
-        "Punjab",
-        "Rajasthan",
-        "Sikkim",
-        "Tamil Nadu",
-        "Telangana",
-        "Tripura",
-        "Uttar Pradesh",
-        "Uttarakhand",
-        "West Bengal",
-        "Andaman and Nicobar Islands",
-        "Chandigarh",
-        "Dadra and Nagar Haveli and Daman and Diu",
-        "Delhi",
-        "Lakshadweep",
-        "Puducherry"
+    const indianStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
+        "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
+        "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+        "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
+        "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"
     ];
 
     return (
@@ -196,7 +166,7 @@ function SalonDetails({ salonDetail }) {
                                         onChange={handleChange}
                                         value={values.serviceType}
                                         className="input"
-                                        style={{outline: "none"}}
+                                        style={{ outline: "none" }}
                                     >
                                         <option value="">{values.serviceType}</option>
                                         <option value="male">Male</option>
@@ -218,7 +188,7 @@ function SalonDetails({ salonDetail }) {
                                     onChange={handleChange}
                                     value={values.state}
                                     className="input"
-                                    style={{outline: "none"}}
+                                    style={{ outline: "none" }}
                                 >
                                     {indianStates.map(state => (
                                         <option key={state} value={state}>{state}</option>

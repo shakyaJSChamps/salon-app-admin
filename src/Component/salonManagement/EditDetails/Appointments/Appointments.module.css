@@ -12,3 +12,10 @@
     color: white;
     border: none;
 }
+
+.paper{
+    width: 455px;
+    height: 136px;
+    padding: 28px;
+    line-height: 8px;
+}

@@ -1,12 +1,18 @@
 import { ErrorMessage, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputText from "../common-component/Inputtext/InputText";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { subAdminSchema } from "../../utils/schema";
+import { getFeatures, getRoles } from "../../api/account.api";
 
 const AddSubAdminForm = () => {
+  const [passwordGenerated, setPasswordGenerated] = useState(false);
+  const [role, setRole] = useState([]);
+  const [feature, setFeature] = useState([]);
+  const [roleSelected, setRoleSelected] = useState(false);
 
-    const [passwordGenerated, setPasswordGenerated] = useState(false);
+  console.log("features", feature);
+  console.log("role", role)
 
   const initialValues = {
     name: "",
@@ -14,10 +20,37 @@ const AddSubAdminForm = () => {
     email: "",
     password: "",
     autoGenerate: false,
+    role: "",
+    features: [],
   };
 
+  const roles = async () => {
+    try {
+      const response = await getRoles();
+      setRole(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    roles();
+  }, []);
+
+  const features = async () => {
+    try {
+      const response = await getFeatures();
+      setFeature(response?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    features();
+  }, []);
+
   const handleSubmit = (values) => {
-    // Handle form submission here
     console.log("Form submitted with values:", values);
   };
 
@@ -29,16 +62,11 @@ const AddSubAdminForm = () => {
         onSubmit={handleSubmit}
         validationSchema={subAdminSchema}
       >
-        {({ isSubmitting, setFieldValue  }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
           <Form autoComplete="off">
             <div className="d-flex flex-column mb-2 ps-3">
-              {/* <input type="text" name="fake-name" style={{ display: 'none' }} autoComplete="new-name" /> */}
-             <InputText name="name" label="Name" type="text" />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className="text-danger"
-              />
+              <InputText name="name" label="Name" type="text" />
+              <ErrorMessage name="name" component="div" className="text-danger" />
             </div>
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText name="mobileNumber" label="Mobile Number" type="tel" />
@@ -49,16 +77,8 @@ const AddSubAdminForm = () => {
               />
             </div>
             <div className="d-flex flex-column mb-2 ps-3">
-              <InputText
-                name="email"
-                label="Email Id"
-                type="email"
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="text-danger"
-              />
+              <InputText name="email" label="Email Id" type="email" />
+              <ErrorMessage name="email" component="div" className="text-danger" />
             </div>
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText
@@ -67,11 +87,7 @@ const AddSubAdminForm = () => {
                 type="password"
                 disabled={passwordGenerated}
               />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-danger"
-              />
+              <ErrorMessage name="password" component="div" className="text-danger" />
               <FormControlLabel
                 control={
                   <Checkbox
@@ -89,59 +105,64 @@ const AddSubAdminForm = () => {
                 label="Auto Generate"
               />
             </div>
+
+            <div className="d-flex flex-column mb-2 ps-3">
+              <label  style={{fontWeight: "500"}}>Role</label>
+              <select
+                name="role"
+                value={values.role}
+                onChange={(e) => {
+                  const selectedRole = role.find(r => r.roleName === e.target.value);
+                  const selectedFeatures = selectedRole ? selectedRole.features.map(f => f.featureKey) : [];
+                  setRoleSelected(!!selectedRole); // Set roleSelected to true if a role is selected
+                  setFieldValue("role", e.target.value);
+                  setFieldValue("features", selectedFeatures);
+                }}
+                className="form-control input"
+              >
+                <option value="" label="Select role" />
+                {role.map((data, index) => (
+                  <option key={index} value={data.roleName}>
+                    {data.roleName}
+                  </option>
+                ))}
+              </select>
+              <ErrorMessage name="role" component="div" className="text-danger" />
+            </div>
+
             <label className="mt-3 ps-3 fw-bold">Access Module</label>
             <div className="container">
               <div className="row">
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="user-management" />}
-                    label="User Management"
-                  />
-                </div>
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="salon-management" />}
-                    label="Salon Management"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="coupon-management" />}
-                    label="Coupon Management"
-                  />
-                </div>
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="service-type" />}
-                    label="Service Type"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="sales-person" />}
-                    label="Sales Person"
-                  />
-                </div>
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="advertisement" />}
-                    label="Advertisement"
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-6">
-                  <FormControlLabel
-                    control={<Checkbox id="setting" />}
-                    label="Setting"
-                  />
-                </div>
+                {feature.map((featureData, index) => (
+                  <div className="col-md-6" key={index}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={values.features.includes(featureData.featureKey)}
+                          onChange={(e) => {
+                            if (!roleSelected) { // Prevent modification if a role is selected
+                              const newFeatures = e.target.checked
+                                ? [...values.features, featureData.featureKey]
+                                : values.features.filter(key => key !== featureData.featureKey);
+                              setFieldValue("features", newFeatures);
+                            }
+                          }}
+                          disabled={roleSelected} // Disable if a role is selected
+                          sx={{
+                            color: values.features.includes(featureData.featureKey) ? 'blue' : 'default',
+                            '&.Mui-checked': {
+                              color: 'blue',
+                            },
+                          }}
+                        />
+                      }
+                      label={featureData.featuresName}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
+
             <div className="d-flex justify-content-center">
               <button
                 type="submit"

@@ -144,22 +144,22 @@ export const salesDetailsSchema = Yup.object().shape({
 export const salonTimeSchema = Yup.object().shape({
   // Define the shape of the form fields
   days: Yup.array().of(
-      Yup.object().shape({
-          // isOpen should be a boolean and is required
-          isOpen: Yup.boolean().required('Please specify if the salon is open or closed'),
+    Yup.object().shape({
+      // isOpen should be a boolean and is required
+      isOpen: Yup.boolean().required('Please specify if the salon is open or closed'),
 
-          // openTime should be a string and is required
-          openTime: Yup.string().when('isOpen', {
-              is: true,
-              then: Yup.string().required('Please specify the opening time'),
-          }),
+      // openTime should be a string and is required
+      openTime: Yup.string().when('isOpen', {
+        is: true,
+        then: Yup.string().required('Please specify the opening time'),
+      }),
 
-          // closeTime should be a string and is required when isOpen is true
-          closeTime: Yup.string().when('isOpen', {
-              is: true,
-              then: Yup.string().required('Please specify the closing time'),
-          }),
-      })
+      // closeTime should be a string and is required when isOpen is true
+      closeTime: Yup.string().when('isOpen', {
+        is: true,
+        then: Yup.string().required('Please specify the closing time'),
+      }),
+    })
   ),
 });
 export const newADSSchema = Yup.object().shape({
@@ -213,7 +213,7 @@ export const addServiceSchema = Yup.object().shape({
   serviceDuration: Yup.number().required('Duration is required').min(0, 'Duration must be a positive number'),
   type: Yup.string().required('Service Type is required'),
 });
- export const subAdminSchema = Yup.object().shape({
+export const subAdminSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   mobileNumber: Yup.string()
     .matches(/^[0-9]+$/, "Mobile number must be numeric")
@@ -223,6 +223,7 @@ export const addServiceSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
+  role: Yup.string().required("Role is required")
 });
 
 

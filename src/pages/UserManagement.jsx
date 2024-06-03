@@ -17,12 +17,10 @@ const UserManagement = () => {
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [userData, setUserData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
   const [updatedRowData, setUpdatedRowData] = useState(false);
-  const [searchText, setSearchText] = useState("");
 
   const handleRowClick = (row) => {
     setModalShow(true);
@@ -38,18 +36,17 @@ const UserManagement = () => {
     setPage(page);
   };
 
-  const getUsers = async () => {
-    let REQ_URL = `/consumers?page=1&size=1000`; 
+  const getUsers = async (searchText = "") => {
+    let REQ_URL = `/consumers?page=${page}&size=${perPage}&${option}=${searchText}`;
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
-      console.log("User data -->", response);
+      console.log("User data -->", response)
       const userData = response.data.data.items;
       setUserData(userData);
-      setTotalRows(userData.length);
+      setTotalRows(response.data.data.total);
       setLoading(false);
       setUpdatedRowData(false);
-      filterData(userData, searchText);
     } catch (error) {
       Notify.error(error.message);
     }
@@ -57,29 +54,14 @@ const UserManagement = () => {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [perPage, page]);
 
   useEffect(() => {
     updatedRowData && getUsers();
   }, [updatedRowData]);
 
-  const filterData = (data, searchText) => {
-    if (!searchText) {
-      setFilteredData(data);
-      return;
-    }
-    const lowercasedSearchText = searchText.toLowerCase();
-    const filtered = data.filter((item) =>
-      item[option].toLowerCase().includes(lowercasedSearchText)
-    );
-    setFilteredData(filtered);
-    setTotalRows(filtered.length);
-  };
-
   const searchByText = (searchText) => {
-    setSearchText(searchText);
-    filterData(userData, searchText);
-    setPage(1);
+    getUsers(searchText);
   };
 
   const columns = [
@@ -91,7 +73,8 @@ const UserManagement = () => {
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.profileImageUrl) ? (
+            {isValidImageUrl(row.profileImageUrl) &&
+              isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -111,9 +94,10 @@ const UserManagement = () => {
             )}
           </div>
           <div>
-            <div className="ps-2" style={{ fontWeight: "500" }}>
-              {`${row.firstName} ${row.lastName}`}
-            </div>
+            <div
+              className="ps-2"
+              style={{ fontWeight: "500" }}
+            >{`${row.firstName} ${row.lastName}`}</div>
             <div className="ps-2" style={{ fontSize: "13px" }}>
               {row.email}
             </div>
@@ -121,6 +105,7 @@ const UserManagement = () => {
         </div>
       ),
     },
+
     {
       name: "Active",
       cell: (row) => (
@@ -202,7 +187,7 @@ const UserManagement = () => {
             />
           }
           columns={columns}
-          data={filteredData.slice((page - 1) * perPage, page * perPage)}
+          data={userData}
           pagination
           paginationPerPage={perPage}
           paginationRowsPerPageOptions={[10, 25, 50]}

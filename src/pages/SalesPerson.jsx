@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Profile from '.././assets/image/coupon-dummy.webp';
+import Profile from "../assets/image/coupon-dummy.webp";
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
 import { getSales } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import TableLoader from "../Component/common-component/TableLoader";
-import AddButton from "../Component/AddButton";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 import CommonImage from "../Component/common-component/CommonImage";
+import AddButton from "../Component/AddButton";
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [salesData, setSalesData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
@@ -26,17 +25,23 @@ const SalesPerson = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
+    getSale(page, perPage, searchText);
   };
 
-  const handlePerPageChange = (newPerPage) => {
+  const handlePerPageChange = (newPerPage, page) => {
     setPerPage(newPerPage);
+    getSale(page, newPerPage, searchText);
   };
 
-  const getSale = async () => {
+  const getSale = async (page, perPage, searchText = "") => {
     let payload = {
-      page: 1,
-      size: 1000,
+      page,
+      size: perPage,
     };
+
+    if (option && searchText) {
+      payload[option] = searchText;
+    }
 
     try {
       setLoading(true);
@@ -44,9 +49,8 @@ const SalesPerson = () => {
       console.log("Sales data -->", response);
       const salesData = response.data.data.items;
       setSalesData(salesData);
-      setTotalRows(salesData.length);
+      setTotalRows(response.data.data.total);
       setLoading(false);
-      filterData(salesData, searchText);
     } catch (error) {
       Notify.error(error.message);
       setLoading(false);
@@ -54,26 +58,13 @@ const SalesPerson = () => {
   };
 
   useEffect(() => {
-    getSale();
-  }, []);
-
-  const filterData = (data, searchText) => {
-    if (!searchText) {
-      setFilteredData(data);
-      return;
-    }
-    const lowercasedSearchText = searchText.toLowerCase();
-    const filtered = data.filter((item) =>
-      item[option].toLowerCase().includes(lowercasedSearchText)
-    );
-    setFilteredData(filtered);
-    setTotalRows(filtered.length);
-  };
+    getSale(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
   const searchByText = (searchText) => {
     setSearchText(searchText);
-    filterData(salesData, searchText);
     setPage(1);
+    getSale(1, perPage, searchText);
   };
 
   const columns = [
@@ -83,7 +74,7 @@ const SalesPerson = () => {
       sortable: true,
       width: "300px",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)} className="d-flex ">
+        <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
             {isValidImageUrl(row.profileImageUrl) ? (
               <CommonImage
@@ -92,10 +83,10 @@ const SalesPerson = () => {
                 classes="sales-image"
               />
             ) : (
-              <CommonImage
-                imageUrl={Profile}
-                alt="Sales Image"
-                classes="sales-image"
+              <img
+                src={Profile}
+                alt="Profile"
+                style={{ width: 35, height: 35, borderRadius: "50%" }}
               />
             )}
           </div>
@@ -112,16 +103,12 @@ const SalesPerson = () => {
     },
     {
       name: "Mobile Number",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>
-      ),
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>,
       sortable: true,
     },
     {
       name: "City",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.address}</div>
-      ),
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.address}</div>,
       sortable: true,
     },
     {
@@ -167,7 +154,7 @@ const SalesPerson = () => {
               />
             }
             columns={columns}
-            data={filteredData.slice((page - 1) * perPage, page * perPage)}
+            data={salesData}
             pagination
             paginationPerPage={perPage}
             paginationRowsPerPageOptions={[10, 25, 50]}
@@ -181,7 +168,6 @@ const SalesPerson = () => {
             onRowClicked={(row) => handleRowClick(row)}
             progressPending={loading}
             progressComponent={<TableLoader />}
-            selectedRow={selectedRow}
             customStyles={customStyles}
           />
         </div>

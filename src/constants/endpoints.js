@@ -41,3 +41,5 @@ export const __endpoint_getCouponManagement = endpoint + "admin/coupon";
 export const __endpoint_addCouponType = endpoint + "admin/coupon";
 export const __endpoint_putCouponType = endpoint + "admin/coupon";
 export const __endpoint_deleteCouponType = endpoint + "admin/coupon";
+export const __endpoint_getRoles = endpoint + "admin/roles";
+export const __endpoint_getFeatures = endpoint + "admin/features";

@@ -3,7 +3,6 @@ import { Col, Row } from 'react-bootstrap';
 import Completed from './Completed';
 import Pending from './Pending';
 import Cancelled from './Cancelled';
-// import Todays from './Todays';
 import styles from './Appointments.module.css';
 import { getSalonAppointments } from '../../../../api/account.api';
 
