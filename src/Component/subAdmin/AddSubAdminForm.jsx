@@ -86,7 +86,7 @@ const AddSubAdminForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        // validationSchema={subAdminSchema}
+        validationSchema={subAdminSchema}
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form autoComplete="off">
