@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import InputText from "../common-component/Inputtext/InputText";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { subAdminSchema } from "../../utils/schema";
-import { getFeatures, getRoles } from "../../api/account.api";
+import { getFeatures, getRoles, createSubAdmin } from "../../api/account.api";
+import Notify from "../../utils/notify";
 
 const AddSubAdminForm = () => {
   const [passwordGenerated, setPasswordGenerated] = useState(false);
@@ -11,47 +12,72 @@ const AddSubAdminForm = () => {
   const [feature, setFeature] = useState([]);
   const [roleSelected, setRoleSelected] = useState(false);
 
-  console.log("features", feature);
-  console.log("role", role)
-
   const initialValues = {
-    name: "",
-    mobileNumber: "",
+    firstName: "",
+    phoneNumber: "",
     email: "",
     password: "",
-    autoGenerate: false,
-    role: "",
+    roleName: "",
+    countryCode: "",
+    roleId: "",
     features: [],
   };
 
-  const roles = async () => {
+  const fetchRoles = async () => {
     try {
       const response = await getRoles();
-      setRole(response?.data?.data);
+      setRole(response?.data?.data || []);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    roles();
+    fetchRoles();
   }, []);
 
-  const features = async () => {
+  const fetchFeatures = async () => {
     try {
       const response = await getFeatures();
-      setFeature(response?.data?.data);
+      setFeature(response?.data?.data || []);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    features();
+    fetchFeatures();
   }, []);
 
-  const handleSubmit = (values) => {
-    console.log("Form submitted with values:", values);
+  const generatePassword = () => {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+  };
+
+  const handleSubmit = async (values, { resetForm }) => {
+    console.log("Form values on submit:", values); // Debugging line
+    const selectedRole = role.find(r => r.roleName === values.roleName);
+    const dataToSend = {
+      firstName: values.firstName,
+      phoneNumber: values.phoneNumber,
+      email: values.email,
+      password: values.password,
+      roleName: values.roleName,
+      countryCode: values.countryCode,
+      roleId: selectedRole ? selectedRole.roleId : "",
+    };
+    try {
+      const response = await createSubAdmin(dataToSend);
+      console.log("API response:", response); 
+      Notify.success(response.data.message);
+      resetForm();
+    } catch (error) {
+      Notify.error(error.message);
+    }
   };
 
   return (
@@ -60,22 +86,25 @@ const AddSubAdminForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={subAdminSchema}
+        // validationSchema={subAdminSchema}
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form autoComplete="off">
             <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="name" label="Name" type="text" />
-              <ErrorMessage name="name" component="div" className="text-danger" />
+              <InputText name="firstName" label="Name" type="text" />
+              <ErrorMessage name="firstName" component="div" className="text-danger" />
             </div>
+
             <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="mobileNumber" label="Mobile Number" type="tel" />
-              <ErrorMessage
-                name="mobileNumber"
-                component="div"
-                className="text-danger"
-              />
+              <InputText name="countryCode" label="Country Code" type="text" />
+              <ErrorMessage name="countryCode" component="div" className="text-danger" />
             </div>
+
+            <div className="d-flex flex-column mb-2 ps-3">
+              <InputText name="phoneNumber" label="Mobile Number" type="tel" />
+              <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
+            </div>
+
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText name="email" label="Email Id" type="email" />
               <ErrorMessage name="email" component="div" className="text-danger" />
@@ -84,7 +113,7 @@ const AddSubAdminForm = () => {
               <InputText
                 name="password"
                 label="Password"
-                type="password"
+                type="text"
                 disabled={passwordGenerated}
               />
               <ErrorMessage name="password" component="div" className="text-danger" />
@@ -94,11 +123,13 @@ const AddSubAdminForm = () => {
                     id="autoGenerate"
                     checked={passwordGenerated}
                     onChange={(e) => {
-                      setPasswordGenerated(e.target.checked);
-                      setFieldValue(
-                        "password",
-                        e.target.checked ? "auto-generated-password" : ""
-                      );
+                      const isChecked = e.target.checked;
+                      setPasswordGenerated(isChecked);
+                      if (isChecked) {
+                        setFieldValue("password", generatePassword());
+                      } else {
+                        setFieldValue("password", "");
+                      }
                     }}
                   />
                 }
@@ -107,15 +138,15 @@ const AddSubAdminForm = () => {
             </div>
 
             <div className="d-flex flex-column mb-2 ps-3">
-              <label  style={{fontWeight: "500"}}>Role</label>
+              <label style={{ fontWeight: "500" }}>Role</label>
               <select
-                name="role"
-                value={values.role}
+                name="roleName"
+                value={values.roleName}
                 onChange={(e) => {
                   const selectedRole = role.find(r => r.roleName === e.target.value);
                   const selectedFeatures = selectedRole ? selectedRole.features.map(f => f.featureKey) : [];
-                  setRoleSelected(!!selectedRole); // Set roleSelected to true if a role is selected
-                  setFieldValue("role", e.target.value);
+                  setRoleSelected(!!selectedRole);
+                  setFieldValue("roleName", e.target.value);
                   setFieldValue("features", selectedFeatures);
                 }}
                 className="form-control input"
@@ -127,7 +158,7 @@ const AddSubAdminForm = () => {
                   </option>
                 ))}
               </select>
-              <ErrorMessage name="role" component="div" className="text-danger" />
+              <ErrorMessage name="roleName" component="div" className="text-danger" />
             </div>
 
             <label className="mt-3 ps-3 fw-bold">Access Module</label>
@@ -140,14 +171,14 @@ const AddSubAdminForm = () => {
                         <Checkbox
                           checked={values.features.includes(featureData.featureKey)}
                           onChange={(e) => {
-                            if (!roleSelected) { // Prevent modification if a role is selected
+                            if (!roleSelected) {
                               const newFeatures = e.target.checked
                                 ? [...values.features, featureData.featureKey]
                                 : values.features.filter(key => key !== featureData.featureKey);
                               setFieldValue("features", newFeatures);
                             }
                           }}
-                          disabled={roleSelected} // Disable if a role is selected
+                          disabled={roleSelected}
                           sx={{
                             color: values.features.includes(featureData.featureKey) ? 'blue' : 'default',
                             '&.Mui-checked': {

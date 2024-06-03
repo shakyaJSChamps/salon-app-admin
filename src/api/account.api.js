@@ -38,6 +38,7 @@ import {
   __endpoint_deleteCouponType,
   __endpoint_getRoles,
   __endpoint_getFeatures,
+  __endpoint_createSubAdmin,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -150,3 +151,7 @@ export const getRoles = () =>
 
 export const getFeatures = () =>
   HTTP.Request(methods.GET, __endpoint_getFeatures);
+
+export const createSubAdmin = (payload) => {
+  return HTTP.Request(methods.POST, __endpoint_createSubAdmin, payload);
+};
