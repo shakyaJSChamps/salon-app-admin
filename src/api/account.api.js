@@ -36,6 +36,8 @@ import {
   __endpoint_addService,
   __endpoint_putCouponType,
   __endpoint_deleteCouponType,
+  __endpoint_getRoles,
+  __endpoint_getFeatures,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -142,3 +144,9 @@ export const getSalonAppointments = (id) =>
 
 export const addService = (payload, id) =>
   HTTP.Request(methods.POST, `${__endpoint_addService}/${id}/services`, payload);
+
+export const getRoles = () =>
+  HTTP.Request(methods.GET, __endpoint_getRoles);
+
+export const getFeatures = () =>
+  HTTP.Request(methods.GET, __endpoint_getFeatures);
