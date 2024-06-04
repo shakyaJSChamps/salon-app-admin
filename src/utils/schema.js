@@ -213,9 +213,11 @@ export const addServiceSchema = Yup.object().shape({
   serviceDuration: Yup.number().required('Duration is required').min(0, 'Duration must be a positive number'),
   type: Yup.string().required('Service Type is required'),
 });
+
 export const subAdminSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  mobileNumber: Yup.string()
+  firstName: Yup.string().required("Name is required"),
+  countryCode: Yup.string().required("Country Code is required"),
+  phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, "Mobile number must be numeric")
     .min(10, "Mobile number must be at least 10 digits")
     .required("Mobile number is required"),
@@ -223,7 +225,7 @@ export const subAdminSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
-  role: Yup.string().required("Role is required")
+  roleName: Yup.string().required("Role is required"),
 });
 
 
