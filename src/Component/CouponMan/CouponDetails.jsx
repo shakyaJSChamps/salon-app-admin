@@ -8,10 +8,8 @@ import CustomTitle from "../CustomTitle";
 import CommonImage from "../common-component/CommonImage";
 import { deleteCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
-import { isValidImageUrl } from "../../constants";
-import Profile from "../../assets/image/dummy-profile.jpg";
 
-const CouponDetails = ({ onEditCoupon, couponData }) => {
+const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -62,20 +60,11 @@ const CouponDetails = ({ onEditCoupon, couponData }) => {
         <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
           <div className="d-flex  align-items-center">
-            {isValidImageUrl(row.imageUrl) ? 
             <CommonImage
               imageUrl={row.imageUrl}
               alt="Coupon Image"
               classes="coupon-image"
             />
-            :
-            <CommonImage 
-            imageUrl={Profile}
-            alt="Coupon Image"
-            classes="coupon-image"
-
-            />
-          }
           </div>
         </div>
       ),
@@ -142,10 +131,11 @@ const CouponDetails = ({ onEditCoupon, couponData }) => {
           <CustomTitle
             icon={<MdOutlineConfirmationNumber />}
             title={"Coupon"}
-            disabled={true}
+            setOption={setOption}
+            searchByText={searchByText}
             options={[
-              { text: "Email", value: "email" },
-              { text: "Mobile Number", value: "phoneNumber" },
+              { text: "Name", value: "name" },
+              { text: "Date", value: "date" },
             ]}
           />
         }
