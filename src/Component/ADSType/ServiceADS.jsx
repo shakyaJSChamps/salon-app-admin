@@ -4,15 +4,13 @@ import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { MdOutlineContactMail } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import CustomTitle from "../CustomTitle";
-import { isValidImageUrl } from "../../constants";
-import Profile from "../../assets/image/dummy-profile.jpg";
-import { deleteADSType } from "../../api/account.api"; 
-import Notify from "../../utils/notify"; 
+import { deleteADSType } from "../../api/account.api";
+import Notify from "../../utils/notify";
 import CommonImage from "../common-component/CommonImage";
 
-const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
+const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption}) => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 15;
 
@@ -22,14 +20,14 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
   };
 
   const handleDeleteClick = async (id) => {
-    console.log("Delete clicked for ID:", id); 
+    console.log("Delete clicked for ID:", id);
     try {
-      const response = await deleteADSType(id); 
-      console.log("Delete API Response:", response); 
+      const response = await deleteADSType(id);
+      console.log("Delete API Response:", response);
       Notify.success("Advertisement deleted successfully.");
-      onDeleteRow(id); 
+      onDeleteRow(id);
     } catch (error) {
-      console.error("Delete API Error:", error); 
+      console.error("Delete API Error:", error);
       Notify.error("Failed to delete the advertisement.");
     }
   };
@@ -72,19 +70,11 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
         <div className="mt-1 mb-2 position-relative image-title">
           {row.name}
           <div className="d-flex  align-items-center">
-            {isValidImageUrl(row.mediaUrl) ? (
-              <CommonImage
-                src={row.mediaUrl}
-                alt="Profile"
-                classes="ads-image"
-              />
-            ) : (
-              <CommonImage
-                src={Profile}
-                alt="Profile"
-                classes="adsDummy-image"
-              />
-            )}
+            <CommonImage
+              imageUrl={row.mediaUrl}
+              alt="Profile"
+              classes="ads-image"
+            />
           </div>
         </div>
       ),
@@ -133,6 +123,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
     },
   };
 
+
   return (
     <Paper className="ads-add-paper h-100" elevation={3}>
       <DataTable
@@ -140,11 +131,13 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow }) => {
           <CustomTitle
             icon={<MdOutlineContactMail />}
             title={"Advertisement"}
+            setOption={setOption}
+            searchByText={searchByText}
             options={[
-              { text: "Email", value: "email" },
-              { text: "Mobile Number", value: "phoneNumber" },
+              { text: "Name", value: "name" },
+              { text: "City", value: "city" },
+              { text: "Date", value: "date" },
             ]}
-            disabled={true}
           />
         }
         columns={columns}

@@ -116,8 +116,8 @@ export const verifySalon = (id) =>
 export const publishSalon = (id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_publishSalon}/${id}`);
 
-export const getAdsManagement = () =>
-  HTTP.Request(methods.GET, __endpoint_getAdsManagement);
+export const getAdsManagement = (reqUrl) =>
+  HTTP.Request(methods.GET, __endpoint_getAdsManagement+reqUrl);
 
 export const addAdsType = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
@@ -131,8 +131,8 @@ export const updateMaingate = (payload, id) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}/maingate`, payload);
 export const getSalonAppointment = () =>
   HTTP.Request(methods.GET, __endpoint_getSalonAppointments);
-export const getCouponManagement = () =>
-  HTTP.Request(methods.GET, __endpoint_getCouponManagement);
+export const getCouponManagement = (reqUrl) =>
+  HTTP.Request(methods.GET, __endpoint_getCouponManagement+reqUrl);
 export const addCouponType = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
 };
