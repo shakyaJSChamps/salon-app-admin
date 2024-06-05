@@ -13,22 +13,14 @@ const AdsManagement = () => {
 
  
   const fetchData = async () => {
-    console.log("search text ::>", searchText)
-    // let REQ_URL = `?name=${searchText}&city=${searchText}&${option}=${searchText}`;
-    let REQ_URL;
-    if (option === "name") {
-      REQ_URL = `?name=${searchText}`;
-    } else if (option === "city") {
-      REQ_URL = `?city=${searchText}`;
-    }else if (option === "date"){
-      REQ_URL = `?date=${searchText}`
-    }
+    // console.log("search text ::>", searchText)
+    let REQ_URL = `?${option}=${searchText}`;
     console.log("Search URL:", REQ_URL);
     try {
       const response = await getAdsManagement(REQ_URL);
-      console.log("Ads Management Response:", response);
+      // console.log("Ads Management Response:", response);
       const adsData = response.data.data.items;
-      console.log("Ads Data:", adsData);
+      // console.log("Ads Data:", adsData);
       setAdsData(adsData);
     } catch (error) {
       Notify.error(error.message);

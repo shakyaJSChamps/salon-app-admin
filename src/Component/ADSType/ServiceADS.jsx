@@ -136,7 +136,8 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
             options={[
               { text: "Name", value: "name" },
               { text: "City", value: "city" },
-              { text: "Date", value: "date" },
+              { text: "Start Date", value: "startDate" },
+              { text: "End Date", value: "endDate" },
             ]}
           />
         }

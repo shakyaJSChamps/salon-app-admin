@@ -11,10 +11,8 @@ const SearchDropDown = ({
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState(initialOption);
   const searchInputRef = useRef(null);
-  const [selectedOptionType, setSelectedOptionType] = useState("text");
 
   const handleSearchChange = (e) => {
-    // console.log("Input change ::", e);
     setSearchText(e.target.value);
     // console.log("Set Search ::", e.target.value);
   };
@@ -24,7 +22,6 @@ const SearchDropDown = ({
     if (newOption !== selectedOption) {
       setSelectedOption(newOption);
       setOption(newOption);
-      setSelectedOptionType(newOption === "date" ? "date" : "text");
       setSearchText("");
     }
   };
@@ -49,7 +46,7 @@ const SearchDropDown = ({
         <form>
           <input
             ref={searchInputRef}
-            type={selectedOptionType}
+            type={(selectedOption === "startDate" || selectedOption === "endDate")  ? "date" : "text"}
             placeholder="Search"
             className="search-bar"
             value={searchText}
