@@ -88,7 +88,7 @@ const AddSubAdminForm = () => {
         onSubmit={handleSubmit}
         validationSchema={subAdminSchema}
       >
-        {({ isSubmitting, setFieldValue, values }) => (
+        {({setFieldValue, values }) => (
           <Form autoComplete="off">
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText name="firstName" label="Name" type="text" />
@@ -198,7 +198,6 @@ const AddSubAdminForm = () => {
               <button
                 type="submit"
                 className="add-sub-admin mt-1"
-                disabled={isSubmitting}
               >
                 Save
               </button>
