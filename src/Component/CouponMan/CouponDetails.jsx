@@ -135,7 +135,8 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
             searchByText={searchByText}
             options={[
               { text: "Name", value: "name" },
-              { text: "Date", value: "date" },
+              { text: "Start Date", value: "startDate" },
+              { text: "End Date", value: "endDate" },
             ]}
           />
         }
