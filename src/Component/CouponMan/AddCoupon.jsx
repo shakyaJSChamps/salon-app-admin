@@ -7,6 +7,7 @@ import InputText from "../common-component/Inputtext/InputText";
 import { couponSchema } from "../../utils/schema";
 import { addCouponType, putCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
+import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
 const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
   const initialFormValues = {
@@ -37,10 +38,18 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
         endDate: selectedCoupon.endDate
           ? new Date(selectedCoupon.endDate).toISOString().split("T")[0]
           : "",
-        imageUrl: selectedCoupon.imageUrl || "https://example.com/summer-sale-image.jpg",
+        imageUrl:
+          selectedCoupon.imageUrl ||
+          "https://example.com/summer-sale-image.jpg",
         createdBy: selectedCoupon.createdBy || "admin@example.com",
-        isActive: selectedCoupon.isActive !== undefined ? selectedCoupon.isActive : true,
-        isDeleted: selectedCoupon.isDeleted !== undefined ? selectedCoupon.isDeleted : false,
+        isActive:
+          selectedCoupon.isActive !== undefined
+            ? selectedCoupon.isActive
+            : true,
+        isDeleted:
+          selectedCoupon.isDeleted !== undefined
+            ? selectedCoupon.isDeleted
+            : false,
       });
     } else {
       setInitialValues(initialFormValues);
@@ -84,7 +93,9 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
     <Paper className="coupon-service-paper px-3 mb-1 h-100">
       <div className="d-flex align-items-center">
         <MdOutlineConfirmationNumber />
-        <p className="ps-1 fw-bold mb-0">{selectedCoupon ? "Edit Coupon" : "Create New Coupon"}</p>
+        <p className="ps-1 fw-bold mb-0">
+          {selectedCoupon ? "Edit Coupon" : "Create New Coupon"}
+        </p>
         {selectedCoupon && (
           <BiPlusCircle
             onClick={clearForm}
@@ -92,7 +103,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
           />
         )}
       </div>
-      <hr className="mt-4" />
+      <hr className="mt-3 mb-0" />
       <div className="coupon-form">
         <Formik
           enableReinitialize
@@ -100,35 +111,85 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
           validationSchema={couponSchema}
           onSubmit={handleSubmit}
         >
-          {() => (
+          {({setFieldValue}) => (
             <Form>
               <div className="d-flex flex-column">
                 <InputText label="Coupon Name" type="text" name="name" />
-                <ErrorMessage name="name" component="div" className="text-danger" />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex flex-column">
                 <InputText label="Coupon Sub Name" type="text" name="details" />
-                <ErrorMessage name="details" component="div" className="text-danger" />
+                <ErrorMessage
+                  name="details"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex flex-column">
                 <label className="fw-bold">Coupon Description</label>
-                <Field as="textarea" className="form-control input" rows="3" cols="25" name="description" />
-                <ErrorMessage name="description" component="div" className="text-danger" />
+                <Field
+                  as="textarea"
+                  className="form-control input"
+                  rows="1"
+                  cols="25"
+                  name="description"
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Discount" type="text" name="discountDetails" />
-                <ErrorMessage name="discountDetails" component="div" className="text-danger" />
+                <InputText
+                  label="Coupon Discount"
+                  type="text"
+                  name="discountDetails"
+                />
+                <ErrorMessage
+                  name="discountDetails"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex flex-column">
                 <InputText label="Start Date" type="date" name="startDate" />
-                <ErrorMessage name="startDate" component="div" className="text-danger" />
+                <ErrorMessage
+                  name="startDate"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex flex-column">
                 <InputText label="End Date" type="date" name="endDate" />
-                <ErrorMessage name="endDate" component="div" className="text-danger" />
+                <ErrorMessage
+                  name="endDate"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
-              <div className="d-flex justify-content-center coupon-btn mt-1">
-                <button type="submit" className="button pt-1">
+              <div className="d-flex flex-column">
+                <label className=" fw-bold">Coupon Image</label>
+                <ImageUpdate
+                  name="imageUrl"
+                  buttonName="Add Image"
+                  inputClassName="form-control input"
+                  onImageUpload={(url) => {
+                    setFieldValue("imageUrl", url);
+                  }}
+                />
+                <ErrorMessage
+                  name="endDate"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+              <div className="d-flex justify-content-center coupon-btn">
+                <button type="submit" className="button">
                   {selectedCoupon ? "UPDATE COUPON" : "ADD COUPON"}
                 </button>
               </div>
