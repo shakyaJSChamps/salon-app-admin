@@ -84,11 +84,11 @@ const Sidebar = (props) => {
         path: "/send-notification",
         icon: <MdSend />,
       },
-      {
-        name: "Receive Notification",
-        path: "/receive-notification",
-        icon: <RiFolderReceivedLine />,
-      },
+      // {
+      //   name: "Receive Notification",
+      //   path: "/receive-notification",
+      //   icon: <RiFolderReceivedLine />,
+      // },
     ],
   };
 

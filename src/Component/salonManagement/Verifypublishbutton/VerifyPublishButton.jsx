@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from "../Verifypublishbutton/Verifypublishbutton.module.css";
+import styles from "./Verifypublishbutton.module.css";
 import { verifySalon, publishSalon } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
 

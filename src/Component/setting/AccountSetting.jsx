@@ -12,7 +12,7 @@ const AccountSetting = () => {
 
   const options = [
     { label: "Account Setting", value: "" },
-    { label: "CMS Setting", value: "option1", route: "/setting/cms-setting" },
+    // { label: "CMS Setting", value: "option1", route: "/setting/cms-setting" },
   ];
 
   const handleChange = (event) => {
