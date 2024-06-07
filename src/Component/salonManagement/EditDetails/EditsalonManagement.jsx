@@ -1,14 +1,14 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap';
-import BankDetails from './bankDetails/BankDetails.jsx';
-import SalonTime from './salonTime/SalonTime.jsx';
+import BankDetails from '../EditDetails/Bankdetails/BankDetails.jsx';
+import SalonTime from '../EditDetails/Salontime/SalonTime.jsx';
 import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
-import SalonGallery from '../salonGallery/SalonGallery.jsx';
+import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
-import VerifyPublishButton from '../verifyPublishButton/VerifyPublishButton.jsx';
-import Appointments from './appointments/Appointments.jsx';
-import  SalonDetails from "./salonDetails/SalonDetails.jsx"
+import VerifyPublishButton from '../Verifypublishbutton/VerifyPublishButton.jsx';
+import Appointments from '../EditDetails/Appointments/Appointments.jsx';
+import  SalonDetails from "../EditDetails/Salondetails/SalonDetails.jsx"
 
 function EditsalonManagement({ payload, id, onServicesChange }) {
   const [salonDetail, setSalonDetail] = useState([]);
