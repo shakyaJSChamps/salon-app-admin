@@ -2,7 +2,7 @@ import { Paper, createStyles, styled } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import dummuImage from "../../../../assets/image/hair.png";
-import styles from "../Appointments/Appointments.module.css"
+import styles from "./Appointments.module.css"
 
 function Cancelled({ appointmentData }) {
 

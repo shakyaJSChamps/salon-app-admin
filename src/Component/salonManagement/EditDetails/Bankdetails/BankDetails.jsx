@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, ErrorMessage } from "formik";
-import styles from "../Bankdetails/Bankdetails.module.css";
+import styles from "./Bankdetails.module.css";
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateBankDetails } from '../../../../api/account.api';

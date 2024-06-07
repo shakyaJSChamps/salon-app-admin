@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik"
-import styles from "../Salondetails/Salondetails.module.css";
+import styles from "./Salondetails.module.css";
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateSalonDetails } from '../../../../api/account.api';

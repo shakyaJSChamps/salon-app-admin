@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styles from "../Appointments/Appointments.module.css"
+import styles from "./Appointments.module.css"
 
 function Pending({ appointmentData }) {
     

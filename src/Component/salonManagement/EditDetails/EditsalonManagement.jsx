@@ -1,16 +1,14 @@
 import React from 'react'
-import SalonDetails from './Salondetails/SalonDetails'
 import { Col, Row } from 'react-bootstrap';
-import SalonOwnerDetails from './Salonownerdetails/SalonOwnerDetails';
-import BankDetails from './Bankdetails/BankDetails.jsx';
-// import ManageStaff from './Managestaff/ManageStaff.jsx';
-import SalonTime from './Salontime/SalonTime.jsx';
+import BankDetails from './bankDetails/BankDetails.jsx';
+import SalonTime from './salonTime/SalonTime.jsx';
 import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
-import SalonGallery from '../SalonGallery/SalonGallery.jsx';
+import SalonGallery from '../salonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
-import VerifyPublishButton from '../Verifypublishbutton/VerifyPublishButton.jsx';
-import Appointments from './Appointments/Appointments.jsx';
+import VerifyPublishButton from '../verifyPublishButton/VerifyPublishButton.jsx';
+import Appointments from './appointments/Appointments.jsx';
+import  SalonDetails from "./salonDetails/SalonDetails.jsx"
 
 function EditsalonManagement({ payload, id, onServicesChange }) {
   const [salonDetail, setSalonDetail] = useState([]);
@@ -58,13 +56,6 @@ function EditsalonManagement({ payload, id, onServicesChange }) {
         </Col>
         <hr />
       </Row>
-
-      {/* <Row>
-        <Col md={12}>
-          <ManageStaff />
-        </Col>
-        <hr />
-      </Row> */}
 
       <Row>
         <Col md={12}>

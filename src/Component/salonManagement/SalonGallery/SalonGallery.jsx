@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { deleteImage, updateMaingate, updateImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify";
-import styles from "../SalonGallery/Salongallery.module.css";
+import styles from "./Salongallery.module.css";
 import Swal from "sweetalert2";
 import ImageUpdate from '../../common-component/Imageupdate/ImageUpdate';
 import MultipleImageUploader from '../../common-component/Multipleimageuploader/MultipleImageUploader';

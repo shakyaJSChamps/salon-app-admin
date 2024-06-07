@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Grid, Switch } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
-import styles from '../Salontime/Salontime.module.css';
+import styles from './Salontime.module.css';
 import { updateSalonTime } from '../../../../api/account.api';
 import Notify from '../../../../utils/notify';
 import { salonTimeSchema } from '../../../../utils/schema';
