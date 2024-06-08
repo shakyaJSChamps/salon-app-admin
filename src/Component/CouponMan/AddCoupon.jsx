@@ -28,28 +28,13 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
   useEffect(() => {
     if (selectedCoupon) {
       setInitialValues({
-        name: selectedCoupon.name || "",
-        details: selectedCoupon.details || "",
-        description: selectedCoupon.description || "",
-        discountDetails: selectedCoupon.discountDetails || "",
+        ...selectedCoupon,
         startDate: selectedCoupon.startDate
           ? new Date(selectedCoupon.startDate).toISOString().split("T")[0]
           : "",
         endDate: selectedCoupon.endDate
           ? new Date(selectedCoupon.endDate).toISOString().split("T")[0]
           : "",
-        imageUrl:
-          selectedCoupon.imageUrl ||
-          "https://example.com/summer-sale-image.jpg",
-        createdBy: selectedCoupon.createdBy || "admin@example.com",
-        isActive:
-          selectedCoupon.isActive !== undefined
-            ? selectedCoupon.isActive
-            : true,
-        isDeleted:
-          selectedCoupon.isDeleted !== undefined
-            ? selectedCoupon.isDeleted
-            : false,
       });
     } else {
       setInitialValues(initialFormValues);
@@ -111,10 +96,16 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
           validationSchema={couponSchema}
           onSubmit={handleSubmit}
         >
-          {({setFieldValue}) => (
+          {({ handleChange, values, setFieldValue }) => (
             <Form>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Name" type="text" name="name" />
+                <InputText
+                  label="Coupon Name"
+                  type="text"
+                  name="name"
+                  value={values.name}
+                  onChange={handleChange}
+                />
                 <ErrorMessage
                   name="name"
                   component="div"
@@ -122,7 +113,13 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                 />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="Coupon Sub Name" type="text" name="details" />
+                <InputText
+                  label="Coupon Details"
+                  type="text"
+                  name="details"
+                  value={values.details}
+                  onChange={handleChange}
+                />
                 <ErrorMessage
                   name="details"
                   component="div"
@@ -137,6 +134,8 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                   rows="1"
                   cols="25"
                   name="description"
+                  value={values.description}
+                  onChange={handleChange}
                 />
                 <ErrorMessage
                   name="description"
@@ -146,9 +145,11 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
               </div>
               <div className="d-flex flex-column">
                 <InputText
-                  label="Coupon Discount"
+                  label="Discount Details"
                   type="text"
                   name="discountDetails"
+                  value={values.discountDetails}
+                  onChange={handleChange}
                 />
                 <ErrorMessage
                   name="discountDetails"
@@ -157,7 +158,13 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                 />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="Start Date" type="date" name="startDate" />
+                <InputText
+                  label="Start Date"
+                  type="date"
+                  name="startDate"
+                  value={values.startDate}
+                  onChange={handleChange}
+                />
                 <ErrorMessage
                   name="startDate"
                   component="div"
@@ -165,7 +172,13 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                 />
               </div>
               <div className="d-flex flex-column">
-                <InputText label="End Date" type="date" name="endDate" />
+                <InputText
+                  label="End Date"
+                  type="date"
+                  name="endDate"
+                  value={values.endDate}
+                  onChange={handleChange}
+                />
                 <ErrorMessage
                   name="endDate"
                   component="div"
@@ -173,20 +186,36 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                 />
               </div>
               <div className="d-flex flex-column">
-                <label className=" fw-bold">Coupon Image</label>
-                <ImageUpdate
+                <label className="fw-bold">Coupon Image</label>
+                {selectedCoupon ? (
+                  <>
+                    <img src={values.imageUrl} alt="Coupon" className="mb-2" />
+                    <ImageUpdate
+                      name="imageUrl"
+                      buttonName="Update Image"
+                      inputClassName="form-control input"
+                      onImageUpload={(url) => {
+                        setFieldValue("imageUrl", url);
+                      }}
+                      imageUrl={values.imageUrl}
+                    />
+                    <ErrorMessage
+                      name="imageUrl"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </>
+                ) : (
+                  <ImageUpdate
                   name="imageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
                   onImageUpload={(url) => {
                     setFieldValue("imageUrl", url);
                   }}
-                />
-                <ErrorMessage
-                  name="endDate"
-                  component="div"
-                  className="text-danger"
-                />
+                  imageUrl={values.imageUrl}
+                  />
+                )}
               </div>
               <div className="d-flex justify-content-center coupon-btn">
                 <button type="submit" className="button">
