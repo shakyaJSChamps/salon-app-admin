@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { RxCross2 } from "react-icons/rx";
-import Button from "@mui/material/Button";
 import hair from "../../../assets/image/hair.png";
 import { Link } from "@mui/material";
 

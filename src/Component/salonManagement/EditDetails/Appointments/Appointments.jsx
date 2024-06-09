@@ -4,24 +4,25 @@ import Completed from './Completed';
 import Pending from './Pending';
 import Cancelled from './Cancelled';
 import styles from './Appointments.module.css';
-import { getSalonAppointments } from '../../../../api/account.api';
+import { getAppointmentDetails, getSalonAppointments } from '../../../../api/account.api';
 
 function Appointments({ salonDetail }) {
 
     const [activeComponent, setActiveComponent] = useState('Completed');
     const [appointmentData, setAppointmentData] = useState()
+    // const [appointmentDetails, setAppointmentDetails] = useState()
     console.log("Appointment", appointmentData)
 
     const renderComponent = () => {
         switch (activeComponent) {
             case 'Pending':
-                return <Pending appointmentData={appointmentData}/>;
+                return <Pending appointmentData={appointmentData} />;
             case 'Cancelled':
-                return <Cancelled appointmentData={appointmentData}/>;
+                return <Cancelled appointmentData={appointmentData} />;
             case 'Completed':
-                return <Completed appointmentData={appointmentData}/>;
+                return <Completed appointmentData={appointmentData} />;
             default:
-                return <Completed appointmentData={appointmentData}/>;
+                return <Completed appointmentData={appointmentData} />;
         }
     }
 
@@ -46,7 +47,6 @@ function Appointments({ salonDetail }) {
             console.error('Salon ID is not defined');
         }
     }, [salonDetail?.id]);
-
 
 
     return (

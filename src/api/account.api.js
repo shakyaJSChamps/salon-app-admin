@@ -39,6 +39,8 @@ import {
   __endpoint_getRoles,
   __endpoint_getFeatures,
   __endpoint_createSubAdmin,
+  __endpoint_appointmentDetails,
+  __endpoint_qrCode,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -155,3 +157,8 @@ export const getFeatures = () =>
 export const createSubAdmin = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_createSubAdmin, payload);
 };
+export const getAppointmentDetails = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_appointmentDetails}/${id}`);
+
+export const getQrCode = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_qrCode}/${id}/qrcode`);

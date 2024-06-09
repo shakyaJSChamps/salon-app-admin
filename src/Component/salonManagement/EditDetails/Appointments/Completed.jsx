@@ -1,17 +1,26 @@
-import { Paper } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styles from "./Appointments.module.css"
+import React, { useState } from 'react';
+import { Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
+import styles from "./Appointments.module.css";
 import Invoice from '../../../common-component/invoice/Invoice';
 import { MdOutlineFileDownload } from 'react-icons/md';
-
+import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
 
 function Completed({ appointmentData }) {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+    const handleOpenDrawer = (appointment) => {
+        setSelectedAppointment(appointment);
+        setDrawerOpen(true);
+    };
+
+    const handleCloseDrawer = () => setDrawerOpen(false);
+
     const completedAppointments = appointmentData ? appointmentData.filter(data => data.status === "COMPLETED") : [];
-    console.log("Completed", completedAppointments);
 
     const invoiceData = {
-        image: null, // You can use a different image URL if you want
+        image: null,
         name: "Aniket Singh",
         address: "2972 Westheimer Rd. Santa Ana, Illinois 85486",
         phone: "(603) 555-0123",
@@ -33,35 +42,51 @@ function Completed({ appointmentData }) {
                             <img src={data?.user?.profileImageUrl} style={{ height: "79px" }}></img>
                         </div>
 
-                        <div>
-                            <p>{data.user.firstName}</p>
-                            <p>{data.serviceStartTime}</p>
-                            <p>{data.startTime}</p>
-                            <p>{data.date}</p>
+                        <div className='d-flex flex-column gap-3'>
+                            <span>{data.user.firstName}</span>
+                            <span>{data.serviceStartTime}</span>
+                            <span>{data.startTime}</span>
+                            <span>{data.date}</span>
                         </div>
 
-                        <div className='d-flex flex-column justify-content-start align-items-start'>
-                                <p>{data.status}</p>
-                            <div className='d-flex gap-1 justify-content-center align-items-center gap-2'>
-                                <Invoice invoiceData={invoiceData}
-                                    buttonName="Salon Invoice"
-                                />
-                                <MdOutlineFileDownload className="fs-5 cursor-pointer" />
-                            </div>
-                            <br/>
-                            <div className='d-flex gap-1 justify-content-center align-items-center gap-2'>
-                                <Invoice invoiceData={invoiceData}
-                                    buttonName="User Invoice"
-                                />
-                                <MdOutlineFileDownload className="fs-5 cursor-pointer" />
-                            </div>
-                        </div>
+                        <div className='d-flex flex-column  gap-2'>
+                            
+                            <div>{data.status}</div>
 
+                            <div>
+                                <Link
+                                    className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer"
+                                    onClick={() => handleOpenDrawer(data)}
+                                >
+                                    View Details
+                                </Link>
+                            </div>
+
+                            <div className='mt-2'>
+                                <div className='d-flex justify-content-center align-items-center gap-2'>
+                                    <Invoice invoiceData={invoiceData} buttonName="Salon Invoice" />
+                                    <MdOutlineFileDownload className="fs-5 cursor-pointer" />
+                                </div>
+                                <br />
+                                <div className='d-flex justify-content-center align-items-center gap-2'>
+                                    <Invoice invoiceData={invoiceData} buttonName="User Invoice" />
+                                    <MdOutlineFileDownload className="fs-5 cursor-pointer" />
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
                 </Paper>
             ))}
+
+            <Appointmentpopup
+                open={drawerOpen}
+                onClose={handleCloseDrawer}
+                appointment={selectedAppointment}
+            />
         </div>
-    )
+    );
 }
 
-export default Completed
+export default Completed;
