@@ -44,5 +44,7 @@ export const __endpoint_deleteCouponType = endpoint + "admin/coupon";
 export const __endpoint_getRoles = endpoint + "admin/roles";
 export const __endpoint_getFeatures = endpoint + "admin/features";
 export const __endpoint_createSubAdmin = endpoint + "admin/subAdmin";
+export const __endpoint_getSubAdmin = endpoint + "admin/subAdmin";
+export const __endpoint_deleteSubAdmin = endpoint + "admin/subAdmin";
 export const __endpoint_appointmentDetails = endpoint + "admin/appointments";
 export const __endpoint_qrCode = endpoint + "b2b/salons";
