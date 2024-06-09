@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Profile from '../../assets/image/coupon-dummy.webp';
 
 const CommonImage = ({ imageUrl, alt, classes }) => {
+  console.log("Common Image ::", imageUrl);
   const [isValid, setIsValid] = useState(null);
 
   useEffect(() => {
@@ -14,9 +15,11 @@ const CommonImage = ({ imageUrl, alt, classes }) => {
     img.onload = () => setIsValid(true);
     img.onerror = () => setIsValid(false);
     img.src = imageUrl;
+    console.log("Image ::", imageUrl);
   }, [imageUrl]);
 
-  if (isValid === null) {
+  if (!isValid === null) {
+    console.log("Valid image ::", isValid === null);
     return <div>Loading...</div>; 
   }
 
