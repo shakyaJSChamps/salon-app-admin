@@ -137,6 +137,9 @@ const SalesPerson = () => {
 
   return (
     <>
+    <div className=" font-weight ps-2">
+      Sales Person
+    </div>
       {selectedRow ? (
         <UpdateSalesDetails id={selectedRow.userId} />
       ) : (

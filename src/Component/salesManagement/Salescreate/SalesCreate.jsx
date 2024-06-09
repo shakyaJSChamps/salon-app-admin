@@ -159,10 +159,9 @@ function SalesCreate() {
                   className="input"
                   type="text"
                 >
-                  <option value="">select</option>
+                  <option value="">Select gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="Other">Both</option>
                 </InputText>
                 <ErrorMessage name="gender" component="div" className={styles.error} />
               </Grid>

@@ -27,6 +27,7 @@ const SearchDropDown = ({
   };
 
   return (
+    <>
     <div className="dropdown-container">
       <div className="search-container">
         <select
@@ -72,6 +73,7 @@ const SearchDropDown = ({
         </form>
       </div>
     </div>
+    </>
   );
 };
 

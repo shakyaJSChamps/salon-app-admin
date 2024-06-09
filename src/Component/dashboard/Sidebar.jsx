@@ -100,8 +100,8 @@ const Sidebar = (props) => {
         icon: <RiShieldUserLine />,
       },
       {
-        name:"Setting",
-        path:"/setting",
+        name: "Setting",
+        path: "/setting",
         icon: <MdSettingsSuggest />,
       },
     ],
@@ -112,9 +112,8 @@ const Sidebar = (props) => {
       return (
         <li key={index}>
           <div
-            className={`side-nav-item ${
-              (item.name === "Notifications" || item.name === "Setting") ? "cursor-pointer" : ""
-            }`}
+            className={`side-nav-item ${(item.name === "Notifications" || item.name === "Setting") ? "cursor-pointer" : ""
+              }`}
             onClick={() => toggleSubMenu(index)}
           >
             <span className="side-nav-icon m-auto">
@@ -153,21 +152,21 @@ const Sidebar = (props) => {
       );
     } else {
       return (
-        <li key={index}>
-          <NavLink
-            to={item.name.toLowerCase().replace(/\s+/g, "-")}
-            className="text-decoration-none text-dark "
-          >
-            <div className="side-nav-item">
-              <span className="side-nav-icon m-auto">
-                {menus[item.name.replace(/\s+/g, "")]}
-              </span>
-              {props.toggleSidebar && (
-                <span className="side-nav-label m-auto ps-2">{item.name}</span>
-              )}
-            </div>
-          </NavLink>
-        </li>
+          <li key={index}>
+            <NavLink
+              to={item.name.toLowerCase().replace(/\s+/g, "-")}
+              className="text-decoration-none text-dark "
+            >
+              <div className="side-nav-item">
+                <span className="side-nav-icon m-auto">
+                  {menus[item.name.replace(/\s+/g, "")]}
+                </span>
+                {props.toggleSidebar && (
+                  <span className="side-nav-label m-auto ps-2">{item.name}</span>
+                )}
+              </div>
+            </NavLink>
+          </li>
       );
     }
   };
@@ -197,7 +196,7 @@ const Sidebar = (props) => {
       {feature.length === 0 ? (
         <SidebarLoader />
       ) : (
-        <ul className="sidebar list-unstyled px-2">
+        <ul className="sidebar list-unstyled px-2 pt-4">
           {feature.map((item, i) => renderMenuItem(item, i))}
         </ul>
       )}

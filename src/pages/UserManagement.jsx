@@ -8,9 +8,6 @@ import { getUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
-import { Link } from "@mui/material";
-import { BsCurrencyRupee } from "react-icons/bs";
-import { MdOutlineFileDownload } from "react-icons/md";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -146,25 +143,6 @@ const UserManagement = () => {
       sortable: true,
     },
 
-    // {
-    //   name: "Invoice Amount",
-    //   cell: (row) => (
-    //     <div onClick={() => handleRowClick(row)}>
-    //       <div className="d-flex flex-row gap-2">
-    //         <div className="d-flex flex-column justify-content-center align-items-center" style={{ lineHeight: "0.5px" }}>
-    //           <p> <BsCurrencyRupee />700</p>
-    //           <Link className ="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-    //             View Details
-    //           </Link>
-    //         </div>
-    //         <div>
-    //           <MdOutlineFileDownload className="fs-6"/>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   ),
-    //   sortable: true,
-    // },
   ];
 
   const customStyles = {

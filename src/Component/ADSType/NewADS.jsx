@@ -95,8 +95,8 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
   return (
     <Paper className="ads-add-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
-        <MdOutlineContactMail />
-        <p className="ps-1 fw-bold mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
+        <MdOutlineContactMail className="fs-2"/>
+        <p className="font ps-1 mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
         {selectedRow && (
           <BiPlusCircle
             onClick={clearForm}
@@ -159,7 +159,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2 mt-2 position-relative">
-              <label className="mb-2 fw-bold">Advertisement Image</label>
+              <label className="mb-2 font">Advertisement Image</label>
               <ImageUpdate
                 name="mediaUrl"
                 buttonName="Add Image"

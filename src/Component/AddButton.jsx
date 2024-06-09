@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CustomTitle from "./CustomTitle";
 import MyVerticallyCenteredModal from "./modal/ModalPop";
 
-const AddButton = ({  setOption, searchByText, options, buttonText }) => {
+const AddButton = ({ setOption, searchByText, options, buttonText }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState("");
@@ -20,30 +20,32 @@ const AddButton = ({  setOption, searchByText, options, buttonText }) => {
   const handleCloseModal = () => setShowModal(false);
 
   return (
-    <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <div className="d-flex justify-content-start">
-        <CustomTitle
-            options={options}
-            setOption={setOption}
-            searchByText={searchByText}
-          />
+    <>
+      <div>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <CustomTitle
+              options={options}
+              setOption={setOption}
+              searchByText={searchByText}
+            />
+          </div>
+          <button
+            type="button"
+            className="add-sales rounded-pill px-3"
+            onClick={handleButtonClick}
+          >
+            {buttonText}
+          </button>
         </div>
-        <button
-          type="button"
-          className="add-sales rounded-pill px-3 p-2"
-          onClick={handleButtonClick}
-        >
-          {buttonText}
-        </button>
-      </div>
 
-      <MyVerticallyCenteredModal
-        show={showModal}
-        onHide={handleCloseModal}
-        showForm={showForm}
-      />
-    </div>
+        <MyVerticallyCenteredModal
+          show={showModal}
+          onHide={handleCloseModal}
+          showForm={showForm}
+        />
+      </div>
+    </>
   );
 };
 

@@ -154,8 +154,8 @@ const ServiceType = (props) => {
     <>
       <Paper className="add-service-paper  rounded h-100" elevation={3}>
         <div className="d-flex align-items-center pt-2 ps-3">
-          <MdOutlineContentPaste />
-          <p className="ps-1 fw-bold mb-0">Service Type</p>
+          <MdOutlineContentPaste className="fs-3"/>
+          <p className=" font ps-1  mb-0" >Service Type</p>
         </div>
         <hr />
         {services.length > 0 ? (

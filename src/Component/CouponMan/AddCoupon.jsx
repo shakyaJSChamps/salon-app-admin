@@ -82,9 +82,9 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
 
   return (
     <Paper className="coupon-service-paper px-3 mb-1 h-100">
-      <div className="d-flex align-items-center">
-        <MdOutlineConfirmationNumber />
-        <p className="ps-1 fw-bold mb-0">{selectedCoupon ? "Edit Coupon" : "Create New Coupon"}</p>
+      <div className="d-flex justify-content-start align-items-center">
+        <MdOutlineConfirmationNumber className="fs-3"/>
+        <p className=" font ps-1  mb-0">{selectedCoupon ? "Edit Coupon" : "Create New Coupon"}</p>
         {selectedCoupon && (
           <BiPlusCircle
             onClick={clearForm}
