@@ -64,16 +64,16 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
       let response;
       if (selectedRow) {
         response = await putAdsType(formattedValues, selectedRow.id);
-        onUpdateAd(response.data.data); 
+        onUpdateAd(response.data.data);
       } else {
         response = await addAdsType(formattedValues);
-        onAddAd(response.data.data); 
+        onAddAd(response.data.data);
       }
       console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();
-      setUploaderKey(Date.now()); 
-      onClearSelectedRow(); 
+      setUploaderKey(Date.now());
+      onClearSelectedRow();
     } catch (error) {
       Notify.error(error.message);
     }
@@ -96,7 +96,9 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
     <Paper className="ads-add-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
         <MdOutlineContactMail />
-        <p className="ps-1 fw-bold mb-0">{selectedRow ? "Edit" : "Add"} Advertisement</p>
+        <p className="ps-1 fw-bold mb-0">
+          {selectedRow ? "Edit" : "Add"} Advertisement
+        </p>
         {selectedRow && (
           <BiPlusCircle
             onClick={clearForm}
@@ -121,7 +123,11 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 value={values.name}
                 onChange={handleChange}
               />
-              <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
+              <ErrorMessage
+                name="name"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -132,7 +138,11 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 value={values.city}
                 onChange={handleChange}
               />
-              <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
+              <ErrorMessage
+                name="city"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -144,7 +154,11 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 onChange={handleChange}
                 value={values.startDate}
               />
-              <ErrorMessage name="startDate" component="div" style={{ color: 'red' }} />
+              <ErrorMessage
+                name="startDate"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <div className="d-flex flex-column align-items-center-start mb-2">
@@ -155,20 +169,44 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 onChange={handleChange}
                 value={values.endDate}
               />
-              <ErrorMessage name="endDate" component="div" style={{ color: 'red' }} />
+              <ErrorMessage
+                name="endDate"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
-            <div className="d-flex flex-column align-items-center-start mb-2 mt-2 position-relative">
-              <label className="mb-2 fw-bold">Advertisement Image</label>
-              <ImageUpdate
-                name="mediaUrl"
-                buttonName="Add Image"
-                inputClassName="form-control input"
-                onImageUpload={(url) => {
-                  setFieldValue("mediaUrl", url);
-                }}
-              />
-              <ErrorMessage name="mediaUrl" component="div" style={{ color: 'red' }} />
+            <div className="d-flex flex-column align-items-center-start">
+              <label className="fw-bold">Advertisement Image</label>
+              {selectedRow ? (
+                <>
+                  <img src={values.mediaUrl} alt="Coupon" className="mb-2" />
+                  <ImageUpdate
+                    name="mediaUrl"
+                    buttonName="Update Image"
+                    inputClassName="form-control input"
+                    onImageUpload={(url) => {
+                      setFieldValue("mediaUrl", url);
+                    }}
+                    mediaUrl={values.mediaUrl}
+                  />
+                  <ErrorMessage
+                    name="mediaUrl"
+                    component="div"
+                    className="text-danger"
+                  />
+                </>
+              ) : (
+                <ImageUpdate
+                  name="mediaUrl"
+                  buttonName="Add Image"
+                  inputClassName="form-control input"
+                  onImageUpload={(url) => {
+                    setFieldValue("mediaUrl", url);
+                  }}
+                  mediaUrl={values.mediaUrl}
+                />
+              )}
             </div>
 
             <div className="d-flex justify-content-center ">

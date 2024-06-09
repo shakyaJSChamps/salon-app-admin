@@ -11,30 +11,20 @@ const CouponManagement = () => {
   const [searchText, setSearchText] = useState("");
   const [option, setOption] = useState("name");
 
-  const fetchCoupons = async (pageNumber = 1) => {
-    // console.log("  ::", pageNumber);
+  const fetchCoupons = async () => {
     let REQ_URL = `?${option}=${searchText}`;
-    // console.log("Coupon Search url ::", REQ_URL);
     try {
-      const response = await getCouponManagement( REQ_URL);
-      // console.log("ALL Coupon Management ::>", response);
+      const response = await getCouponManagement(REQ_URL);
       const couponData = response.data.data.items;
-      // console.log("coupon Data ::", couponData);
       setCouponData(couponData || []);
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
-  const handleSearchChange = (searchText) => {
-    // console.log("Search called ::>", searchText);
-    setSearchText(searchText);
-  };
-
   useEffect(() => {
     fetchCoupons(); // Fetch coupons on initial render
-    // console.log("called ::>", searchText);
-  }, [searchText]);
+  }, [searchText, option]);
 
   const handleEditCoupon = (coupon) => {
     setSelectedCoupon(coupon);
@@ -43,7 +33,7 @@ const CouponManagement = () => {
   const handleCouponSaved = (savedCoupon) => {
     setCouponData((prevCouponData) => {
       if (selectedCoupon) {
-        // Update the existing coupon
+        // Update existing coupon
         return prevCouponData.map((coupon) =>
           coupon.ID === savedCoupon.ID ? savedCoupon : coupon
         );
@@ -62,14 +52,14 @@ const CouponManagement = () => {
           <AddCoupon
             selectedCoupon={selectedCoupon}
             onCouponSaved={handleCouponSaved}
-            setSelectedCoupon={setSelectedCoupon} 
+            setSelectedCoupon={setSelectedCoupon}
           />
         </Col>
         <Col md={8}>
           <CouponDetails
             onEditCoupon={handleEditCoupon}
             couponData={couponData}
-            searchByText={handleSearchChange}
+            searchByText={setSearchText}
             setOption={setOption}
           />
         </Col>
