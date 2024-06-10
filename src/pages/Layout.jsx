@@ -39,7 +39,7 @@ const Layout = () => {
 
   return (
     <>
-      <div className="nav d-flex w-100  justify-content-between">
+      <div className="nav d-flex w-100  justify-content-between align-items-center">
         <div className="logo-sec  w-24 d-flex justify-content-center align-items-center">
           <div className="logo ps-1">
             {/* <img src={Dlogo} alt="dlogo.png" /> */}
@@ -70,7 +70,7 @@ const Layout = () => {
         </div>
         <div
           className={`content px-5 py-3  rounded ${toggleSidebar ? "w-76" : "w-94"} h-100`}
-          style={{ width: `${toggleSidebar ? "76%" : "94%"}`, overflow: 'auto' }}
+          style={{ width: `${toggleSidebar ? "75%" : "94%"}`, overflow: 'auto' }}
         >
           {loading ? (
             <LogoLoader />

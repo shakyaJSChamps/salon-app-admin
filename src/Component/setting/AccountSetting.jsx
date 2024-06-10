@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { AccountSettingSchema } from "../../utils/schema";
 import AccountDropDown from "./SettingDropDown";
 import InputText from "../common-component/Inputtext/InputText";
+import { IoIosSettings } from "react-icons/io";
 
 const AccountSetting = () => {
   const [selectedValue, setSelectedValue] = useState("");
@@ -23,11 +24,12 @@ const AccountSetting = () => {
   return (
     <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
-        <MdSettingsSuggest />
+        <IoIosSettings className="fs-3"/>
         <AccountDropDown
           options={options}
           selectedValue={selectedValue}
           handleChange={handleChange}
+          className="fw-bold"
         />
       </div>
       <hr />

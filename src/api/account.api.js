@@ -41,6 +41,8 @@ import {
   __endpoint_createSubAdmin,
   __endpoint_getSubAdmin,
   __endpoint_deleteSubAdmin,
+  __endpoint_appointmentDetails,
+  __endpoint_qrCode,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -162,3 +164,8 @@ export const getSubAdmin = (reqUrl) => {
 };
 export const deleteSubAdmin = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteSubAdmin}/${id}`);
+export const getAppointmentDetails = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_appointmentDetails}/${id}`);
+
+export const getQrCode = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_qrCode}/${id}/qrcode`);

@@ -119,6 +119,7 @@ export const salesDetailsSchema = Yup.object().shape({
     .required("IFSC Code is required")
     .min(11, "IFSC Code must be at least 11 characters"),
   address: Yup.string().required('Address is required'),
+  upiID: Yup.string().required("Upi Id is required"),
   bankdocumentImageUrl: Yup.string()
     .url('Bank document image must be a valid URL')
     .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')

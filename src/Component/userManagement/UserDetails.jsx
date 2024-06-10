@@ -88,6 +88,16 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
         <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Gender</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2">{rowData.gender}</p>
+        </div>
+      </div>
+
+      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+        <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Total Completed Appointments</p>
           <span>:</span>
         </div>

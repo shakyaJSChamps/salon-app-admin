@@ -74,8 +74,8 @@ const AddServiceType = (props) => {
   return (
     <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
-        <MdOutlineContentPaste />
-        <p className="ps-1 fw-bold mb-0">
+        <MdOutlineContentPaste className="fs-3"/>
+        <p className="font ps-1  mb-0">
           {props.isEditMode ? "Edit" : "Add"} Service Type
         </p>
         {props.isEditMode && (
@@ -105,8 +105,8 @@ const AddServiceType = (props) => {
               <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
             </div>
 
-            <div className="d-flex flex-column align-items-center mb-2">
-              <label style={{ fontWeight: 500 }}>Service Image</label>
+            <label style={{ fontWeight: "500" }}>Service Image</label>
+            <div className="d-flex flex-column align-items-center">
               {values.imageUrl ? (
                 <img src={values.imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '300px' }} />
               ) : (

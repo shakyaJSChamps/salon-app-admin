@@ -1,0 +1,26 @@
+.myQr{
+    height: 309px;
+    width: 311px;
+  }
+
+  .heading{
+    font-weight: 500;
+  }
+
+  .buttonContainer{
+    /* padding-top: 10px; */
+    display: flex;
+    gap: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .buttonContainer button{
+    padding: 3px 20px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(144, 144, 144);
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+  }
+  

@@ -13,9 +13,60 @@
     border: none;
 }
 
-.paper{
+.paper {
     width: 455px;
     height: 136px;
-    padding: 28px;
+    padding: 25px 0px;
     line-height: 8px;
+}
+
+.firstName {
+    font-weight: 500;
+}
+
+.startTime {
+    font-size: 13px;
+}
+
+.date {
+    font-size: 14px;
+    font-weight: 500
+}
+
+.completeStatus {
+    color: green;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.cancelledStatus {
+    color: red;
+    font-weight: 500;
+    font-size: 14px
+}
+
+.pendingStatus {
+    color: rgb(117, 117, 16);
+    font-weight: 500;
+    font-size: 14px
+}
+
+.primDiv {
+    line-height: 19px;
+}
+
+.lineHeight {
+    line-height: 5px;
+}
+
+.link{
+    font-size: 13px;
+}
+
+.data{
+    line-height: 20px;
+}
+
+.customDiv{
+    line-height: 3px;
 }

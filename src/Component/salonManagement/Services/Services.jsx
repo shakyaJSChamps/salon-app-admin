@@ -5,7 +5,7 @@ import styles from '../Services/Services.module.css';
 import InputText from '../../common-component/Inputtext/InputText';
 import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
-import AddService from '../Services/Addservice/AddService.jsx';
+import AddService from '../Services/addService/AddService.jsx';
 import { serviceDetailsSchema } from '../../../utils/schema.js';
 
 function Services({ service, salonDetail, fetchSalonDetailData }) {

@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { RxCross2 } from "react-icons/rx";
-import Button from "@mui/material/Button";
 import hair from "../../../assets/image/hair.png";
 import { Link } from "@mui/material";
 
@@ -100,7 +99,7 @@ const Invoice = ({ invoiceData, buttonName }) => {
 
     return (
         <div>
-            <Link onClick={toggleDrawer(true)} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer">{buttonName}</Link>
+            <Link onClick={toggleDrawer(true)} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer" style={{ fontSize: "13px" }}>{buttonName}</Link>
             <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
                 {invoiceDetails}
             </Drawer>

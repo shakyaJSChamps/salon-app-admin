@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
 import SaloonProfile from "../assets/image/salons.png";
 import { isValidImageUrl } from "../constants";
 import Notify from "../utils/notify";
@@ -9,20 +8,21 @@ import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineContentCut } from "react-icons/md";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
-  const icon = <AiOutlineUser />;
+  const icon = <MdOutlineContentCut />;
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [saloonsData, setSaloonsData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [selectedRow, setSelectedRow] = useState(null);
   const [option, setOption] = useState("name");
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
 
   const handleRowClick = (row) => {
     setSelectedRow(row);
@@ -31,47 +31,38 @@ const SaloonManagement = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
+    getSaloonsData(page, perPage, searchText);
   };
 
   const handlePerPageChange = (newPerPage, page) => {
     setPerPage(newPerPage);
+    getSaloonsData(page, newPerPage, searchText);
   };
 
-  const getSaloonsData = async () => {
-    let REQ_URL = `/salons?page=1&size=1000`;
+  const getSaloonsData = async (page, perPage, searchText = "") => {
+    let REQ_URL = `/salons?page=${page}&size=${perPage}`;
+    if (searchText) {
+      REQ_URL += `&${option}=${searchText}`;
+    }
     try {
       setLoading(true);
       const response = await getSalon(REQ_URL);
       setSaloonsData(response.data.data.items);
-      setTotalRows(response.data.data.items.length);
+      setTotalRows(response.data.data.total);
       setLoading(false);
-      filterData(response.data.data.items, searchText);
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
   useEffect(() => {
-    getSaloonsData();
-  }, []);
-
-  const filterData = (data, searchText) => {
-    if (!searchText) {
-      setFilteredData(data);
-      return;
-    }
-    const lowercasedSearchText = searchText.toLowerCase();
-    const filtered = data.filter((item) =>
-      item[option].toLowerCase().includes(lowercasedSearchText)
-    );
-    setFilteredData(filtered);
-    setTotalRows(filtered.length);
-  };
+    getSaloonsData(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
   const searchByText = (searchText) => {
     setSearchText(searchText);
-    filterData(saloonsData, searchText);
     setPage(1);
+    getSaloonsData(1, perPage, searchText);
   };
 
   const columns = [
@@ -113,33 +104,21 @@ const SaloonManagement = () => {
       ),
     },
     {
+
       name: "Company Name",
-      selector: (row) => (
-        <p onClick={() => handleRowClick(row)} className="cursor-pointer">
-          {row.companyName}
-        </p>
-      ),
+      selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.companyName}</p>,
       sortable: true,
     },
     {
       name: "Service Type",
-      selector: (row) => (
-        <p onClick={() => handleRowClick(row)} className="cursor-pointer">
-          {row.serviceType}
-        </p>
-      ),
+      selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
       sortable: true,
     },
     {
       name: "City",
-      cell: (row) => (
-        <p onClick={() => handleRowClick(row)} className="cursor-pointer">
-          {row.city}
-        </p>
-      ),
+      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.city}</p>,
       sortable: true,
     },
-    // Add more columns as per your requirement
   ];
 
   const customStyles = {
@@ -160,26 +139,28 @@ const SaloonManagement = () => {
 
   return (
     <>
-      {selectedRow ? (
-        <EditsalonManagement id={selectedRow.id} />
-      ) : (
-        <div className="main-table rounded">
+      {selectedRow ?
+        <EditsalonManagement
+          id={selectedRow.id}
+        />
+        :
+        <div className="main-table rounded ">
           <DataTable
-            title={
-              <CustomTitle
-                icon={icon}
-                title={title}
-                setOption={setOption}
-                searchByText={searchByText}
-                options={[
-                  { text: "Name", value: "name" },
-                  { text: "City", value: "city" },
-                  { text: "Company Name", value: "companyName" },
-                ]}
-              />
+            title=
+            {<CustomTitle
+              icon={icon}
+              title={title}
+              setOption={setOption}
+              searchByText={searchByText}
+              options={[
+                { text: "Name", value: "name" },
+                { text: "City", value: "city" },
+                { text: "Company Name", value: "companyName" },
+              ]}
+            />
             }
             columns={columns}
-            data={filteredData.slice((page - 1) * perPage, page * perPage)}
+            data={saloonsData}
             pagination
             paginationPerPage={perPage}
             paginationRowsPerPageOptions={[10, 25, 50]}
@@ -195,7 +176,7 @@ const SaloonManagement = () => {
             customStyles={customStyles}
           />
         </div>
-      )}
+      }
     </>
   );
 };

@@ -13,17 +13,27 @@ const SearchDropDown = ({
   const searchInputRef = useRef(null);
 
   const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
-    // console.log("Set Search ::", e.target.value);
+    const { value } = e.target;
+    if (selectedOption === "phoneNumber") {
+      if (value.length <= 10 && /^\d*$/.test(value)) {
+        setSearchText(value);
+      }
+    } else {
+      setSearchText(value);
+    }
   };
 
   const handleOptionChange = (newOption) => {
-    // console.log(" New Option ", newOption);
     if (newOption !== selectedOption) {
       setSelectedOption(newOption);
       setOption(newOption);
       setSearchText("");
     }
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    searchByText(searchText);
   };
 
   return (
@@ -43,10 +53,10 @@ const SearchDropDown = ({
         </select>
 
         <div className="vertical-line"></div>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <input
             ref={searchInputRef}
-            type={(selectedOption === "startDate" || selectedOption === "endDate")  ? "date" : "text"}
+            type={(selectedOption === "startDate" || selectedOption === "endDate") ? "date" : "text"}
             placeholder="Search"
             className="search-bar"
             value={searchText}
@@ -55,16 +65,16 @@ const SearchDropDown = ({
             style={{
               cursor: disabled ? "not-allowed" : "auto",
             }}
+            maxLength={selectedOption === "phoneNumber" ? 10 : undefined}
           />
 
           <button
-            type="button"
+            type="submit"
             style={{
               backgroundColor: "transparent",
               border: "none",
               cursor: disabled ? "not-allowed" : "pointer",
             }}
-            onClick={() => searchByText(searchText)}
             disabled={disabled}
           >
             <IoSearch />

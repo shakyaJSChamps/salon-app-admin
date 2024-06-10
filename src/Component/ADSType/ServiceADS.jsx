@@ -129,7 +129,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
       <DataTable
         title={
           <CustomTitle
-            icon={<MdOutlineContactMail />}
+            icon={<MdOutlineContactMail/>}
             title={"Advertisement"}
             setOption={setOption}
             searchByText={searchByText}

@@ -160,7 +160,7 @@ function UpdateSalesDetails({ payload, id }) {
                                     label="Phone Number"
                                     name="phoneNumber"
                                     type="text"
-                                    disabled={!isEditing}
+                                    disabled
                                     onChange={handleChange}
                                     value={values.phoneNumber}
                                 />
@@ -172,7 +172,7 @@ function UpdateSalesDetails({ payload, id }) {
                                     label="Country Code"
                                     name="countryCode"
                                     type="text"
-                                    disabled={!isEditing}
+                                    disabled
                                     onChange={handleChange}
                                     value={values.countryCode}
                                 />
