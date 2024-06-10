@@ -2,7 +2,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { MdOutlineContentPaste } from "react-icons/md";
-import EditServiceForm from "../serviceType/EditServiceForm";
+import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
 import SalesCreate from "../salesManagement/Salescreate/SalesCreate";
 import AddSubAdminForm from "../subAdmin/AddSubAdminForm"; 

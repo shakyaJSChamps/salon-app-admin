@@ -1,15 +1,14 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
-import LogoLoader from "./Component/LogoLoader";
 import Login from "../src/Component/authentication/Login";
 const SalesWrapper = lazy(() => import("./Component/container/SalesWrapper"));
-import EditsalonManagement from "./Component/salonManagement/editDetails/EditsalonManagement";
+const EditsalonManagement = lazy(() => import("./Component/salonManagement/EditDetails/EditsalonManagement"));
 const AccountSetting = lazy(() => import("./Component/setting/AccountSetting"));
 const ManageSubAdmin = lazy(() => import("./Component/setting/ManageSubAdmin"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
-const SaloonDetails = lazy(() => import("./Component/saloon/SaloonDetails"));
+const SalonDetails = lazy(() => import("./Component/salonManagement/EditDetails/salondetails/SalonDetails"));
 const FreelanceManagement = lazy(() => import("./pages/FreelanceManagement"));
 const ServiceTypeMan = lazy(() => import("./pages/ServiceTypeMan"));
 const CouponManagement = lazy(() => import("./pages/CouponManagement"));
@@ -73,7 +72,7 @@ const AppRoute = (props) => {
           path: "salon-management",
           element: <SalonManagement />,
           children: [
-            { path: "details", element: <SaloonDetails /> },
+            { path: "details", element: <SalonDetails /> },
             { path: ":userId", element: <EditsalonManagement /> },
           ],
         },

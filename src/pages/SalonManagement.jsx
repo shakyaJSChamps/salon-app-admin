@@ -6,7 +6,7 @@ import { getSalon } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
-import EditsalonManagement from "../Component/salonManagement/editDetails/EditsalonManagement";
+import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineContentCut } from "react-icons/md";
 
