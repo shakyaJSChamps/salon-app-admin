@@ -36,7 +36,7 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                 <Typography variant="h6" gutterBottom className="fw-bold">
                     Appointment Details
                 </Typography>
-                <hr/>
+                <hr />
                 {loading && <p>Loading...</p>}
                 {appointmentDetails && !loading && (
                     <>
@@ -47,109 +47,90 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         <div className=' mt-1'>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Email</p>
-                                <p>{appointmentDetails.salon.email || 'manish@gmail.com'}</p>
+                                <p style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.salon.email || 'manish@gmail.com'}</p>
                             </div>
                         </div>
 
                         <div>
-                            <p className='text-start fw-bold fs-5'>Appointments Details</p>
+                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>Appointments Details</p>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Date</p>
-                                <p>{new Date(appointmentDetails.date).toLocaleDateString()}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{new Date(appointmentDetails.date).toLocaleDateString()}</p>
                             </div>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Time</p>
-                                <p>{new Date(appointmentDetails.serviceStartTime).toLocaleTimeString()}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{new Date(appointmentDetails.serviceStartTime).toLocaleTimeString()}</p>
                             </div>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Duration</p>
-                                <p>{appointmentDetails.duration} minutes</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.duration} minutes</p>
                             </div>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Home Service</p>
-                                <p>{appointmentDetails.homeService ? 'Yes' : 'No'}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.homeService ? 'Yes' : 'No'}</p>
                             </div>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Appointment ID</p>
-                                <p>{appointmentDetails.appointmentId}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.appointmentId}</p>
                             </div>
 
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Address</p>
-                                <p>{appointmentDetails.salon.address}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.salon.address}</p>
                             </div>
-
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Total Payment</p>
-                                <p>500</p> {/* Assuming total payment is static, replace if dynamic */}
-                            </div>
+                            <hr />
                         </div>
 
                         <div>
-                            <p className='text-start fw-bold fs-5'>Services</p>
+                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>Services</p>
                             {appointmentDetails.services.map(service => (
                                 <div key={service.serviceId}>
                                     <div className='d-flex justify-content-between align-items-center'>
                                         <p className="fw-bold" style={{ fontSize: "14px" }}>Service Name</p>
-                                        <p>{service.serviceName}</p>
+                                        <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{service.serviceName}</p>
                                     </div>
 
                                     <div className='d-flex justify-content-between align-items-center'>
                                         <p className="fw-bold" style={{ fontSize: "14px" }}>Service Price</p>
-                                        <p>{service.servicePrice}</p>
+                                        <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{service.servicePrice}</p>
                                     </div>
-
-
-                                  
                                 </div>
                             ))}
                         </div>
 
                         <div>
-                            <p className='text-start fw-bold fs-5'>User Details</p>
+                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>User Details</p>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Name</p>
-                                <p>{appointmentDetails.userAddress.houseNo}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.houseNo}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Street Address</p>
-                                <p>{appointmentDetails.userAddress.streetAddress}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.streetAddress}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Landmark</p>
-                                <p>{appointmentDetails.userAddress.landmark}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.landmark}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>City</p>
-                                <p>{appointmentDetails.userAddress.city}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.city}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>State</p>
-                                <p>{appointmentDetails.userAddress.state}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.state}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Country</p>
-                                <p>{appointmentDetails.userAddress.country}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.country}</p>
                             </div>
                             <div className='d-flex justify-content-between align-items-center'>
                                 <p className="fw-bold" style={{ fontSize: "14px" }}>Pincode</p>
-                                <p>{appointmentDetails.userAddress.pincode}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className='text-start fw-bold fs-5'>Review</p>
-                            <div>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Rating</p>
-                                <p>{appointmentDetails.review ? appointmentDetails.review.rating : 'No rating'}</p>
-                            </div>
-                            <div>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Review</p>
-                                <p>{appointmentDetails.review ? appointmentDetails.review.review : 'No review'}</p>
+                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.pincode}</p>
                             </div>
                         </div>
                     </>

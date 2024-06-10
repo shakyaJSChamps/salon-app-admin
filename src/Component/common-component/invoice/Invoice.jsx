@@ -99,7 +99,7 @@ const Invoice = ({ invoiceData, buttonName }) => {
 
     return (
         <div>
-            <Link onClick={toggleDrawer(true)} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer">{buttonName}</Link>
+            <Link onClick={toggleDrawer(true)} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer" style={{ fontSize: "13px" }}>{buttonName}</Link>
             <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
                 {invoiceDetails}
             </Drawer>

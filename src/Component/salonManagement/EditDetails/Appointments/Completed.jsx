@@ -37,39 +37,43 @@ function Completed({ appointmentData }) {
         <div className='d-flex flex-row flex-wrap gap-5'>
             {completedAppointments.map((data, index) => (
                 <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
-                    <div className='d-flex justify-content-center align-items-center gap-3'>
+                    <div className='d-flex justify-content-around align-items-center'>
                         <div>
                             <img src={data?.user?.profileImageUrl} style={{ height: "79px" }}></img>
                         </div>
 
-                        <div className='d-flex flex-column gap-3'>
-                            <span>{data.user.firstName}</span>
-                            <span>{data.serviceStartTime}</span>
-                            <span>{data.startTime}</span>
-                            <span>{data.date}</span>
+                        <div className={`d-flex flex-column ${styles.data}`}>
+                            <span className={styles.firstName}>{data.user.firstName}</span>
+                            <span className={styles.startTime}>{data.serviceStartTime}</span>
+                            <span className={styles.startTime}>{data.startTime}</span>
+                            <span className={styles.date}>{data.date}</span>
                         </div>
 
-                        <div className='d-flex flex-column  gap-2'>
-                            
-                            <div>{data.status}</div>
+                        <div className={`d-flex flex-column justify-content-start align-items-start ${styles.customDiv}`}>
+                            <div className={styles.primDiv}>
+                                <div>
+                                    <div className={styles.completeStatus}>{data.status}</div>
+                                </div>
 
-                            <div>
-                                <Link
-                                    className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer"
-                                    onClick={() => handleOpenDrawer(data)}
-                                >
-                                    View Details
-                                </Link>
+                                <div class>
+                                    <Link
+                                        className={`link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer ${styles.link}`}
+                                        onClick={() => handleOpenDrawer(data)}
+                                    >
+                                        View Details
+                                    </Link>
+                                </div>
                             </div>
 
-                            <div className='mt-2'>
+
+                            <div className=''>
                                 <div className='d-flex justify-content-center align-items-center gap-2'>
-                                    <Invoice invoiceData={invoiceData} buttonName="Salon Invoice" />
+                                    <Invoice invoiceData={invoiceData} buttonName="Salon Invoice" className={styles.link} />
                                     <MdOutlineFileDownload className="fs-5 cursor-pointer" />
                                 </div>
                                 <br />
                                 <div className='d-flex justify-content-center align-items-center gap-2'>
-                                    <Invoice invoiceData={invoiceData} buttonName="User Invoice" />
+                                    <Invoice invoiceData={invoiceData} buttonName="User Invoice" className={styles.link} />
                                     <MdOutlineFileDownload className="fs-5 cursor-pointer" />
                                 </div>
                             </div>

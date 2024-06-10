@@ -54,10 +54,21 @@ const Qrcode = ({ salonDetail }) => {
   return (
 
     <>
-      <div>
+      <div className="d-flex justify-content-between align-items-center">
         <h4>
           QR code
         </h4>
+
+        <div className={styles.buttonContainer}>
+          <a
+            href={qr}
+            download="salon_qr_code.png"
+            className={styles.downloadBtn}
+          >
+            <button className={styles.button}>Download</button>
+          </a>
+          <button className={styles.button} onClick={handleShare}>Share</button>
+        </div>
 
       </div>
 
@@ -65,16 +76,6 @@ const Qrcode = ({ salonDetail }) => {
         {qr ? (
           <>
             <img src={qr} alt="QR Code" className={styles.myQr} />
-            <div className={styles.buttonContainer}>
-              <a
-                href={qr}
-                download="salon_qr_code.png"
-                className={styles.downloadBtn}
-              >
-                <button className={styles.button}>Download</button>
-              </a>
-              <button className={styles.button} onClick={handleShare}>Share</button>
-            </div>
           </>
         ) : (
           <p>Loading QR code...</p>
