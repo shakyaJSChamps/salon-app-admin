@@ -1,17 +1,17 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap';
-import BankDetails from '../EditDetails/bankDetails/BankDetails.jsx';
-import SalonTime from '../EditDetails/salonTime/SalonTime.jsx';
+import BankDetails from '../editDetails/bankDetails/BankDetails.jsx';
+import SalonTime from '../editDetails/salonTime/SalonTime.jsx';
 import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
-import SalonGallery from '../salonGallery/SalonGallery.jsx';
 import Services from '../Services/Services.jsx';
-import VerifyPublishButton from '../verifyPublishButton/VerifyPublishButton.jsx';
-import Appointments from '../EditDetails/appointments/Appointments.jsx';
-import  SalonDetails from "../EditDetails/salonDetails/SalonDetails.jsx"
+import Appointments from '../editDetails/appointments/Appointments.jsx';
+import  SalonDetails from "../editDetails/salonDetails/SalonDetails.jsx"
 import Qrcode from './qrCode/Qrcode.jsx';
+import SalonGallery from '../salonGallery/SalonGallery.jsx';
+import VerifyPublishButton from "../verifyPublishButton/VerifyPublishButton.jsx";
 
-function EditsalonManagement({ payload, id, onServicesChange }) {
+function EditsalonManagement({ payload, id }) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
