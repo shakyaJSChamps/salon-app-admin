@@ -1,7 +1,7 @@
 // ServiceTypeMan.js
 import React, { useState } from "react";
-import AddServiceType from "../Component/ServiceType/AddServiceType";
-import ServiceType from "../Component/ServiceType/ServiceType";
+import AddServiceType from "../Component/serviceType/AddServiceType";
+import ServiceType from "../Component/serviceType/ServiceType";
 import { Row, Col, Container } from "react-bootstrap";
 
 const ServiceTypeMan = (props) => {

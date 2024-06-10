@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import styles from '../Services/Services.module.css';
-import InputText from '../../common-component/Inputtext/InputText';
+import InputText from '../../common-component/Inputtext/InputText.jsx';
 import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
 import AddService from '../Services/addService/AddService.jsx';
