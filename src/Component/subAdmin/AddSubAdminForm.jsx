@@ -3,24 +3,25 @@ import React, { useState, useEffect } from "react";
 import InputText from "../common-component/Inputtext/InputText";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { subAdminSchema } from "../../utils/schema";
-import { getFeatures, getRoles, createSubAdmin } from "../../api/account.api";
+import { getFeatures, getRoles, createSubAdmin, putSubAdmin } from "../../api/account.api";
 import Notify from "../../utils/notify";
 
-const AddSubAdminForm = () => {
+const AddSubAdminForm = ({ rowData }) => {
+  console.log(" Edit Icon Clicked Data ::", rowData);
   const [passwordGenerated, setPasswordGenerated] = useState(false);
   const [role, setRole] = useState([]);
   const [feature, setFeature] = useState([]);
   const [roleSelected, setRoleSelected] = useState(false);
 
   const initialValues = {
-    firstName: "",
-    phoneNumber: "",
-    email: "",
+    firstName: rowData?.firstName || "",
+    phoneNumber: rowData?.phoneNumber || "",
+    email: rowData?.email || "",
     password: "",
-    roleName: "",
-    countryCode: "",
-    roleId: "",
-    features: [],
+    roleName: rowData?.roleName || "",
+    countryCode: rowData?.countryCode || "",
+    roleId: rowData?.roleId || "",
+    features: rowData?.features || [],
   };
 
   const fetchRoles = async () => {
@@ -59,8 +60,8 @@ const AddSubAdminForm = () => {
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("Form values on submit:", values); // Debugging line
-    const selectedRole = role.find(r => r.roleName === values.roleName);
+    console.log("Form values on submit:", values);
+    const selectedRole = role.find((r) => r.roleName === values.roleName);
     const dataToSend = {
       firstName: values.firstName,
       phoneNumber: values.phoneNumber,
@@ -70,15 +71,44 @@ const AddSubAdminForm = () => {
       countryCode: values.countryCode,
       roleId: selectedRole ? selectedRole.roleId : "",
     };
+    
     try {
-      const response = await createSubAdmin(dataToSend);
-      console.log("API response:", response); 
+      let response;
+      if (rowData) {
+        const updatedData = { ...dataToSend, id: rowData.id }; 
+        response = await putSubAdmin(updatedData);
+      } else {
+        response = await createSubAdmin(dataToSend);
+      }
+      console.log("API response:", response);
       Notify.success(response.data.message);
       resetForm();
     } catch (error) {
       Notify.error(error.message);
     }
   };
+
+  // const handleSubmit = async (values, { resetForm }) => {
+  //   console.log("Form values on submit:", values); 
+  //   const selectedRole = role.find(r => r.roleName === values.roleName);
+  //   const dataToSend = {
+  //     firstName: values.firstName,
+  //     phoneNumber: values.phoneNumber,
+  //     email: values.email,
+  //     password: values.password,
+  //     roleName: values.roleName,
+  //     countryCode: values.countryCode,
+  //     roleId: selectedRole ? selectedRole.roleId : "",
+  //   };
+  //   try {
+  //     const response = await createSubAdmin(dataToSend);
+  //     console.log("API response:", response); 
+  //     Notify.success(response.data.message);
+  //     resetForm();
+  //   } catch (error) {
+  //     Notify.error(error.message);
+  //   }
+  // };
 
   return (
     <>

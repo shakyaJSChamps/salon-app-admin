@@ -43,6 +43,7 @@ import {
   __endpoint_deleteSubAdmin,
   __endpoint_appointmentDetails,
   __endpoint_qrCode,
+  __endpoint_putSubAdmin,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -79,19 +80,44 @@ export const salonDetails = (payload, id) =>
   HTTP.Request(methods.GET, ` ${__endpoint_salonDetails}/${id}`, payload, id);
 
 export const salesDetail = (payload, id) =>
-  HTTP.Request(methods.GET, `${__endpoint_salesDetails}/${id}/user`, payload, id);
+  HTTP.Request(
+    methods.GET,
+    `${__endpoint_salesDetails}/${id}/user`,
+    payload,
+    id
+  );
 
 export const updateBankDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateBankDetails}/${id}/bank`, payload);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateBankDetails}/${id}/bank`,
+    payload
+  );
 
 export const updateSalonService = (payload, salonid, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonService}/${salonid}/services/${id}`, payload, salonid, id);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateSalonService}/${salonid}/services/${id}`,
+    payload,
+    salonid,
+    id
+  );
 
 export const updateSalonDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonDetails}/${id}`, payload, id);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateSalonDetails}/${id}`,
+    payload,
+    id
+  );
 
 export const updateSaleDetails = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSaleDetails}/${id}/user`, payload, id);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateSaleDetails}/${id}/user`,
+    payload,
+    id
+  );
 
 export const fileUploaders = (payload) =>
   HTTP.Request(methods.GET, __endpoint_fileUploaders, payload);
@@ -106,10 +132,19 @@ export const addSalesDetails = (payload) =>
   HTTP.Request(methods.POST, __endpoint_addSalesDetails, payload);
 
 export const updateSalonTime = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonTime}/${id}/businessHours`, payload, id);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateSalonTime}/${id}/businessHours`,
+    payload,
+    id
+  );
 
 export const updateImage = (payload, id) =>
-  HTTP.Request(methods.POST, `${__endpoint_updateImage}/${id}/uploadimage`, payload);
+  HTTP.Request(
+    methods.POST,
+    `${__endpoint_updateImage}/${id}/uploadimage`,
+    payload
+  );
 
 export const deleteImage = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteImage}/${id}`);
@@ -121,7 +156,7 @@ export const publishSalon = (id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_publishSalon}/${id}`);
 
 export const getAdsManagement = (reqUrl) =>
-  HTTP.Request(methods.GET, __endpoint_getAdsManagement+reqUrl);
+  HTTP.Request(methods.GET, __endpoint_getAdsManagement + reqUrl);
 
 export const addAdsType = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_addAdsType, payload);
@@ -132,11 +167,15 @@ export const deleteADSType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteADSType}/${id}`);
 
 export const updateMaingate = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateMaingate}/${id}/maingate`, payload);
+  HTTP.Request(
+    methods.PUT,
+    `${__endpoint_updateMaingate}/${id}/maingate`,
+    payload
+  );
 export const getSalonAppointment = () =>
   HTTP.Request(methods.GET, __endpoint_getSalonAppointments);
 export const getCouponManagement = (reqUrl) =>
-  HTTP.Request(methods.GET, __endpoint_getCouponManagement+reqUrl);
+  HTTP.Request(methods.GET, __endpoint_getCouponManagement + reqUrl);
 export const addCouponType = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_addCouponType, payload);
 };
@@ -145,13 +184,19 @@ export const putCouponType = (payload, id) =>
 export const deleteCouponType = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteCouponType}/${id}`);
 export const getSalonAppointments = (id) =>
-  HTTP.Request(methods.GET, `${__endpoint_getSalonAppointments}/${id}/appointments`);
+  HTTP.Request(
+    methods.GET,
+    `${__endpoint_getSalonAppointments}/${id}/appointments`
+  );
 
 export const addService = (payload, id) =>
-  HTTP.Request(methods.POST, `${__endpoint_addService}/${id}/services`, payload);
+  HTTP.Request(
+    methods.POST,
+    `${__endpoint_addService}/${id}/services`,
+    payload
+  );
 
-export const getRoles = () =>
-  HTTP.Request(methods.GET, __endpoint_getRoles);
+export const getRoles = () => HTTP.Request(methods.GET, __endpoint_getRoles);
 
 export const getFeatures = () =>
   HTTP.Request(methods.GET, __endpoint_getFeatures);
@@ -160,10 +205,12 @@ export const createSubAdmin = (payload) => {
   return HTTP.Request(methods.POST, __endpoint_createSubAdmin, payload);
 };
 export const getSubAdmin = (reqUrl) => {
-  return HTTP.Request(methods.GET, __endpoint_getSubAdmin+reqUrl);
+  return HTTP.Request(methods.GET, __endpoint_getSubAdmin + reqUrl);
 };
 export const deleteSubAdmin = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteSubAdmin}/${id}`);
+export const putSubAdmin = (payload, id) =>
+  HTTP.Request(methods.PUT, `${__endpoint_putSubAdmin}/${id}`, payload);
 export const getAppointmentDetails = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_appointmentDetails}/${id}`);
 

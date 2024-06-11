@@ -17,6 +17,14 @@ const ManageSubAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [option, setOption] = useState("email");
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [rowData, setRowData] = useState(null);
+
+  const handleRowClick = (row) => {
+    console.log("Edit icon clicked ::", row);
+    setRowData(row);
+    setShowModal(true);
+  };
 
   const handleDeleteClick = async (id) => {
     console.log("Delete clicked for ID:", id);
@@ -24,7 +32,7 @@ const ManageSubAdmin = () => {
       const response = await deleteSubAdmin(id);
       console.log("Delete API Response:", response);
       Notify.success("Sub-admin deleted successfully.");
-      onDeleteRow(id);
+      // onDeleteRow(id);
     } catch (error) {
       console.error("Delete API Error:", error);
       Notify.error(error.message); 
@@ -119,7 +127,9 @@ const ManageSubAdmin = () => {
       name: "",
       cell: (row) => (
         <div>
-          <MdEditSquare className="me-2" />
+          <MdEditSquare className="me-2" 
+          onClick={() => handleRowClick(row)}
+          />
           <RiDeleteBin6Fill
             className="cursor-pointer"
             onClick={() => handleDeleteConfirmation(row)}
@@ -205,11 +215,13 @@ const ManageSubAdmin = () => {
         progressPending={loading}
         pagination
         highlightOnHover
+        selectedRow={selectedRow}
         customStyles={customStyles}
       />
       <MyVerticallyCenteredModal
         show={showModal}
         onHide={handleCloseModal}
+        rowData={rowData}
         showForm="subAdmin"
       />
     </div>
