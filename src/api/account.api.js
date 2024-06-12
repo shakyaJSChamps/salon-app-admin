@@ -44,6 +44,7 @@ import {
   __endpoint_appointmentDetails,
   __endpoint_qrCode,
   __endpoint_putSubAdmin,
+  __endpoint_salonStatus,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -216,3 +217,6 @@ export const getAppointmentDetails = (id) =>
 
 export const getQrCode = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_qrCode}/${id}/qrcode`);
+
+export const salonStatus = (payload, id) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_salonStatus}/${id}`, payload);

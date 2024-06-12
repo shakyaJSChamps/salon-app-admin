@@ -7,7 +7,7 @@ import { getFeatures, getRoles, createSubAdmin, putSubAdmin } from "../../api/ac
 import Notify from "../../utils/notify";
 
 const AddSubAdminForm = ({ rowData }) => {
-  console.log(" Edit Icon Clicked Data ::", rowData);
+  console.log("Edit Icon Clicked Data ::", rowData);
   const [passwordGenerated, setPasswordGenerated] = useState(false);
   const [role, setRole] = useState([]);
   const [feature, setFeature] = useState([]);
@@ -17,7 +17,7 @@ const AddSubAdminForm = ({ rowData }) => {
     firstName: rowData?.firstName || "",
     phoneNumber: rowData?.phoneNumber || "",
     email: rowData?.email || "",
-    password: "",
+    password: rowData?.password || "",
     roleName: rowData?.roleName || "",
     countryCode: rowData?.countryCode || "",
     roleId: rowData?.roleId || "",
@@ -75,8 +75,8 @@ const AddSubAdminForm = ({ rowData }) => {
     try {
       let response;
       if (rowData) {
-        const updatedData = { ...dataToSend, id: rowData.id }; 
-        response = await putSubAdmin(updatedData);
+        const updatedData = { ...dataToSend };
+        response = await putSubAdmin(updatedData, rowData?.id);
       } else {
         response = await createSubAdmin(dataToSend);
       }
@@ -88,28 +88,6 @@ const AddSubAdminForm = ({ rowData }) => {
     }
   };
 
-  // const handleSubmit = async (values, { resetForm }) => {
-  //   console.log("Form values on submit:", values); 
-  //   const selectedRole = role.find(r => r.roleName === values.roleName);
-  //   const dataToSend = {
-  //     firstName: values.firstName,
-  //     phoneNumber: values.phoneNumber,
-  //     email: values.email,
-  //     password: values.password,
-  //     roleName: values.roleName,
-  //     countryCode: values.countryCode,
-  //     roleId: selectedRole ? selectedRole.roleId : "",
-  //   };
-  //   try {
-  //     const response = await createSubAdmin(dataToSend);
-  //     console.log("API response:", response); 
-  //     Notify.success(response.data.message);
-  //     resetForm();
-  //   } catch (error) {
-  //     Notify.error(error.message);
-  //   }
-  // };
-
   return (
     <>
       <p className="ps-3 fw-bold mb-2">Add Sub Admin</p>
@@ -118,7 +96,7 @@ const AddSubAdminForm = ({ rowData }) => {
         onSubmit={handleSubmit}
         validationSchema={subAdminSchema}
       >
-        {({setFieldValue, values }) => (
+        {({ setFieldValue, values }) => (
           <Form autoComplete="off">
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText name="firstName" label="Name" type="text" />
@@ -139,6 +117,7 @@ const AddSubAdminForm = ({ rowData }) => {
               <InputText name="email" label="Email Id" type="email" />
               <ErrorMessage name="email" component="div" className="text-danger" />
             </div>
+            
             <div className="d-flex flex-column mb-2 ps-3">
               <InputText
                 name="password"
@@ -158,7 +137,7 @@ const AddSubAdminForm = ({ rowData }) => {
                       if (isChecked) {
                         setFieldValue("password", generatePassword());
                       } else {
-                        setFieldValue("password", "");
+                        setFieldValue("password", rowData?.password || "");
                       }
                     }}
                   />
@@ -240,3 +219,27 @@ const AddSubAdminForm = ({ rowData }) => {
 };
 
 export default AddSubAdminForm;
+
+
+
+  // const handleSubmit = async (values, { resetForm }) => {
+  //   console.log("Form values on submit:", values); 
+  //   const selectedRole = role.find(r => r.roleName === values.roleName);
+  //   const dataToSend = {
+  //     firstName: values.firstName,
+  //     phoneNumber: values.phoneNumber,
+  //     email: values.email,
+  //     password: values.password,
+  //     roleName: values.roleName,
+  //     countryCode: values.countryCode,
+  //     roleId: selectedRole ? selectedRole.roleId : "",
+  //   };
+  //   try {
+  //     const response = await createSubAdmin(dataToSend);
+  //     console.log("API response:", response); 
+  //     Notify.success(response.data.message);
+  //     resetForm();
+  //   } catch (error) {
+  //     Notify.error(error.message);
+  //   }
+  // };

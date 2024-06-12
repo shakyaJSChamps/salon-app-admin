@@ -6,8 +6,9 @@ import InputText from '../../../common-component/Inputtext/InputText';
 import { updateSalonDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import { salonDetailsSchema } from "../../../../utils/schema";
+import Salonstatus from '../Salonstatus/Salonstatus';
 
-function SalonDetails({ salonDetail }) {
+function SalonDetails({ salonDetail, fetchSalonDetailData }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
@@ -37,17 +38,21 @@ function SalonDetails({ salonDetail }) {
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Salon Details</h4>
 
-                <div className="d-flex justify-content-start align-items-center mb-3">
-                    {!isEditing && (
-                        <button type="button" className={styles.btn} onClick={handleEditClick}>
-                            Edit
-                        </button>
-                    )}
-                    {isEditing && (
-                        <button type="submit" className={styles.btn} form="salonDetailsForm">
-                            Save
-                        </button>
-                    )}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <Salonstatus salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
+                    <div>
+                        {!isEditing && (
+                            <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                Edit
+                            </button>
+                        )}
+                        {isEditing && (
+                            <button type="submit" className={styles.btn} form="salonDetailsForm">
+                                Save
+                            </button>
+                        )}
+                    </div>
+
                 </div>
             </div>
 

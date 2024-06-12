@@ -6,7 +6,7 @@ import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import Services from '../Services/Services.jsx';
 import Appointments from '../EditDetails/Appointments/Appointments.jsx';
-import  SalonDetails from "./salondetails/SalonDetails.jsx"
+import  SalonDetails from "./Salondetails/SalonDetails.jsx"
 import Qrcode from './qrCode/Qrcode.jsx';
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import VerifyPublishButton from "../Verifypublishbutton/VerifyPublishButton.jsx";
@@ -43,7 +43,8 @@ function EditsalonManagement({ payload, id }) {
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
         <Col md={12} >
-          <SalonDetails salonDetail={salonDetail} />
+          <SalonDetails salonDetail={salonDetail}
+          fetchSalonDetailData={fetchSalonDetailData} />
         </Col>
         <hr />
       </Row>

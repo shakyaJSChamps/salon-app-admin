@@ -49,3 +49,4 @@ export const __endpoint_deleteSubAdmin = endpoint + "admin/users/admins";
 export const __endpoint_putSubAdmin = endpoint + "admin/users/admins";
 export const __endpoint_appointmentDetails = endpoint + "admin/appointments";
 export const __endpoint_qrCode = endpoint + "b2b/salons";
+export const __endpoint_salonStatus = endpoint + "admin/salons";

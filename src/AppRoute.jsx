@@ -8,7 +8,7 @@ const ManageSubAdmin = lazy(() => import("./Component/setting/ManageSubAdmin"));
 const CmsSetting = lazy(() => import("./Component/setting/CmsSetting"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const SalonManagement = lazy(() => import("./pages/SalonManagement"));
-const SalonDetails = lazy(() => import("./Component/salonManagement/EditDetails/salondetails/SalonDetails"));
+const SalonDetails = lazy(() => import("./Component/salonManagement/EditDetails/Salondetails/SalonDetails"));
 const FreelanceManagement = lazy(() => import("./pages/FreelanceManagement"));
 const ServiceTypeMan = lazy(() => import("./pages/ServiceTypeMan"));
 const CouponManagement = lazy(() => import("./pages/CouponManagement"));
