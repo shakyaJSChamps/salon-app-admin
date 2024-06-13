@@ -1,0 +1,23 @@
+.button {
+    padding: 3px 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    background-color: transparent;
+    font-weight: 500;
+}
+
+.inactive {
+    color: white;
+    border:none;
+    background-color: red;
+}
+
+ .active{
+    color: white;
+    border: none;
+    background-color: green;
+}
+
+
+

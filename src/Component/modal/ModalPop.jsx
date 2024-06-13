@@ -43,7 +43,7 @@ function MyVerticallyCenteredModal({
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
         {showForm === "sales" && <SalesCreate onClose={onHide} />}
-        {showForm === "subAdmin" && <AddSubAdminForm onClose={onHide} />}
+        {showForm === "subAdmin" && <AddSubAdminForm rowData={rowData}onClose={onHide} />}
       </Modal.Body>
     </Modal>
   );

@@ -70,6 +70,7 @@ const SaloonManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
+      width:"260px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
@@ -100,6 +101,19 @@ const SaloonManagement = () => {
               {row.email}
             </div>
           </div>
+        </div>
+      ),
+    },
+    {
+      name: "Active",
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)}>
+          <span
+            className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
+              }`}
+          >
+            {row.active ? "Active" : "Blocked"}
+          </span>
         </div>
       ),
     },
