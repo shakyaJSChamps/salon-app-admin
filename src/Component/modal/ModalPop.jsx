@@ -1,4 +1,3 @@
-// MyVerticallyCenteredModal.js
 import React from "react";
 import { Modal } from "react-bootstrap";
 import { MdOutlineContentPaste } from "react-icons/md";
@@ -14,6 +13,10 @@ function MyVerticallyCenteredModal({
   rowData,
   showForm,
   setUpdatedRowData,
+  fetchData,
+  page,
+  perPage,
+  searchText
 }) {
   return (
     <Modal
@@ -42,8 +45,19 @@ function MyVerticallyCenteredModal({
         {showForm === "user" && (
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
-        {showForm === "sales" && <SalesCreate onClose={onHide} />}
-        {showForm === "subAdmin" && <AddSubAdminForm rowData={rowData}onClose={onHide} />}
+        {showForm === "sales" && (
+          <SalesCreate rowData={rowData} onHide={onHide} />
+        )}
+        {showForm === "subAdmin" && (
+          <AddSubAdminForm
+            rowData={rowData}
+            fetchData={fetchData}
+            page={page}
+            perPage={perPage}
+            searchText={searchText}
+            onClose={onHide}
+          />
+        )}
       </Modal.Body>
     </Modal>
   );

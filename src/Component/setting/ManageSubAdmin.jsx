@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
-import axios from "axios";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
@@ -19,6 +18,9 @@ const ManageSubAdmin = () => {
   const [option, setOption] = useState("email");
   const [selectedRow, setSelectedRow] = useState(null);
   const [rowData, setRowData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const [totalRows, setTotalRows] = useState(0);
 
   const handleRowClick = (row) => {
     console.log("Edit icon clicked ::", row);
@@ -32,7 +34,7 @@ const ManageSubAdmin = () => {
       const response = await deleteSubAdmin(id);
       console.log("Delete API Response:", response);
       Notify.success("Sub-admin deleted successfully.");
-      // onDeleteRow(id);
+      fetchData(page, perPage, searchText);
     } catch (error) {
       console.error("Delete API Error:", error);
       Notify.error(error.message); 
@@ -57,7 +59,6 @@ const ManageSubAdmin = () => {
     });
   };
 
-
   const columns = [
     {
       name: "Name",
@@ -65,10 +66,9 @@ const ManageSubAdmin = () => {
       sortable: true,
       width: "300px",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)} className="d-flex ">
+        <div className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
-            {isValidImageUrl(row.profileImageUrl) &&
-            isValidImageUrl(row.profileImageUrl) ? (
+            {isValidImageUrl(row.profileImageUrl) ? (
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
@@ -110,9 +110,6 @@ const ManageSubAdmin = () => {
       selector: (row) => row.phoneNumber,
       sortable: true,
     },
-    // { name: "Last Login",width: "200px", selector: (row) => row.lastLogin, sortable: true },
-    // { name: "Modules",width: "200px", selector: (row) => row.modules, sortable: true },
-    // { name: "Status",width: "200px", selector: (row) => row.status, sortable: true },
     {
       name: "Create Date",
       width: "200px",
@@ -160,30 +157,42 @@ const ManageSubAdmin = () => {
     },
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      let REQ_URL = `?${option}=${searchText}`;
-      console.log("REQURL  ::", REQ_URL);
-      try {
-        const response = await getSubAdmin(REQ_URL);
-        console.log("All SubAdmin :: ", response);
-        const subAdminData = response.data.data.items;
-        console.log("Sub Admin Data ::", subAdminData);
-        setData(subAdminData);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
+  const fetchData = async (page, perPage, searchText = "") => {
+    let REQ_URL = `?page=${page}&size=${perPage}&${option}=${searchText}`;
+    console.log("REQURL  ::", REQ_URL);
+    try {
+      const response = await getSubAdmin(REQ_URL);
+      console.log("All SubAdmin :: ", response);
+      const subAdminData = response.data.data.items;
+      console.log("Sub Admin Data ::", subAdminData);
+      setData(subAdminData);
+      setTotalRows(response.data.data.total); 
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-    console.log("called ::>", searchText);
-  }, [searchText]);
+  useEffect(() => {
+    fetchData(page, perPage, searchText);
+  }, [page, perPage, searchText]);
 
   const searchByText = (searchText) => {
     console.log("Search text Called ::", searchText);
     setSearchText(searchText);
+    setPage(1);  // Reset to first page on search
+    fetchData(1, perPage, searchText);
+  };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+    fetchData(page, perPage, searchText);
+  };
+
+  const handlePerPageChange = (newPerPage, page) => {
+    setPerPage(newPerPage);
+    fetchData(page, newPerPage, searchText);
   };
 
   const handleAddSubAdminClick = () => {
@@ -214,6 +223,10 @@ const ManageSubAdmin = () => {
         data={data}
         progressPending={loading}
         pagination
+        paginationServer
+        paginationTotalRows={totalRows}
+        onChangePage={handlePageChange}
+        onChangeRowsPerPage={handlePerPageChange}
         highlightOnHover
         selectedRow={selectedRow}
         customStyles={customStyles}
@@ -222,6 +235,10 @@ const ManageSubAdmin = () => {
         show={showModal}
         onHide={handleCloseModal}
         rowData={rowData}
+        fetchData={() => fetchData(page, perPage, searchText)} 
+        page={page}
+        perPage={perPage}
+        searchText={searchText}
         showForm="subAdmin"
       />
     </div>

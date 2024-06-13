@@ -7,6 +7,7 @@ import InputText from "../../common-component/Inputtext/InputText.jsx";
 import { updateSaleDetails, salesDetail } from "../../../api/account.api.js";
 import { salesDetailsSchema } from "../../../utils/schema.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
+import Salessalon from "../salesSalon/Salessalon.jsx";
 
 function UpdateSalesDetails({ payload, id }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -62,6 +63,7 @@ function UpdateSalesDetails({ payload, id }) {
     };
 
     return (
+        <>
         <div className={styles.mainDiv}>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Sales Details</h4>
@@ -381,6 +383,12 @@ function UpdateSalesDetails({ payload, id }) {
                 )}
             </Formik>
         </div>
+
+        <div>
+            <Salessalon id={id}/>
+        </div>
+        </>
+        
     );
 }
 

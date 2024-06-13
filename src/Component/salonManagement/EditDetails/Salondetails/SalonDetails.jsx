@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Formik, Form, Field, ErrorMessage } from "formik"
-import styles from "./Salondetails.module.css";
+import { Formik, Form, ErrorMessage } from "formik"
+import styles from "../Salondetails/Salondetails.module.css";
 import { Grid } from '@mui/material';
 import InputText from '../../../common-component/Inputtext/InputText';
 import { updateSalonDetails } from '../../../../api/account.api';
@@ -18,7 +18,6 @@ function SalonDetails({ salonDetail, fetchSalonDetailData }) {
     const editDetails = async (values) => {
         try {
             const response = await updateSalonDetails(values, salonDetail.id);
-            // console.log("salonDetails ::>", response);
             Notify.success(response.data.message);
             setIsEditing(false);
         } catch (error) {

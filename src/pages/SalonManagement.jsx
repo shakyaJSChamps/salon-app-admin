@@ -107,7 +107,7 @@ const SaloonManagement = () => {
     {
       name: "Active",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
+        <div onClick={() => handleRowClick(row)} className="cursor-pointer">
           <span
             className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
               }`}
