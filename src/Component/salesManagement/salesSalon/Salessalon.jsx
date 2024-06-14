@@ -120,6 +120,14 @@ const Salessalon = ({ id }) => {
             ),
             sortable: true,
         },
+
+        {
+            name: "Joined On",
+            cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString()}</p>,
+            sortable: true,
+        },
+
+
         {
             name: "City",
             cell: (row) => (
@@ -151,9 +159,9 @@ const Salessalon = ({ id }) => {
         <>
             {selectedRow ? (
                 <EditsalonManagement
-                id={selectedRow.id}
-                className="mt-2"
-              />
+                    id={selectedRow.id}
+                    className="mt-2"
+                />
             ) : (
 
                 <div>

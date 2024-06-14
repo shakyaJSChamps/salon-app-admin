@@ -11,7 +11,7 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
   const [role, setRole] = useState([]);
   const [feature, setFeature] = useState([]);
   const [roleSelected, setRoleSelected] = useState(false);
-  console.log("Row Data", rowData)
+
   const initialValues = {
     firstName: rowData?.firstName || "",
     phoneNumber: rowData?.phoneNumber || "",
@@ -73,7 +73,13 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
     try {
       let response;
       if (rowData) {
-        const updatedData = { ...dataToSend };
+        const updatedData = {
+          firstName: values.firstName,
+          phoneNumber: values.phoneNumber,
+          roleName: values.roleName,
+          countryCode: values.countryCode,
+          roleId: selectedRole ? selectedRole.roleId : "",
+        };
         response = await putSubAdmin(updatedData, rowData?.id);
         fetchData(page, perPage, searchText);
       } else {
@@ -112,38 +118,42 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
               <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
             </div>
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="email" label="Email Id" type="email" />
-              <ErrorMessage name="email" component="div" className="text-danger" />
-            </div>
+            {!rowData && (
+              <>
+                <div className="d-flex flex-column mb-2 ps-3">
+                  <InputText name="email" label="Email Id" type="email" />
+                  <ErrorMessage name="email" component="div" className="text-danger" />
+                </div>
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText
-                name="password"
-                label="Password"
-                type="text"
-                disabled={passwordGenerated}
-              />
-              <ErrorMessage name="password" component="div" className="text-danger" />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    id="autoGenerate"
-                    checked={passwordGenerated}
-                    onChange={(e) => {
-                      const isChecked = e.target.checked;
-                      setPasswordGenerated(isChecked);
-                      if (isChecked) {
-                        setFieldValue("password", generatePassword());
-                      } else {
-                        setFieldValue("password", rowData?.password || "");
-                      }
-                    }}
+                <div className="d-flex flex-column mb-2 ps-3">
+                  <InputText
+                    name="password"
+                    label="Password"
+                    type="text"
+                    disabled={passwordGenerated}
                   />
-                }
-                label="Auto Generate"
-              />
-            </div>
+                  <ErrorMessage name="password" component="div" className="text-danger" />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        id="autoGenerate"
+                        checked={passwordGenerated}
+                        onChange={(e) => {
+                          const isChecked = e.target.checked;
+                          setPasswordGenerated(isChecked);
+                          if (isChecked) {
+                            setFieldValue("password", generatePassword());
+                          } else {
+                            setFieldValue("password", rowData?.password || "");
+                          }
+                        }}
+                      />
+                    }
+                    label="Auto Generate"
+                  />
+                </div>
+              </>
+            )}
 
             <div className="d-flex flex-column mb-2 ps-3">
               <label style={{ fontWeight: "500" }}>Role</label>

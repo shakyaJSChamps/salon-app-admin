@@ -5,23 +5,23 @@ import styles from "./Salongallery.module.css";
 import Swal from "sweetalert2";
 import ImageUpdate from '../../common-component/Imageupdate/ImageUpdate';
 import MultipleImageUploader from '../../common-component/Multipleimageuploader/MultipleImageUploader';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
     const [mainGateImageUrl, setMainGateImageUrl] = useState(null);
     const [bannerImage, setBannerImage] = useState([]);
     const [gallaryImage, setGallaryImage] = useState([]);
     const [imagePath, setImagePath] = useState('');
-    const [isImageUpdated, setIsImageUpdated] = useState(false); // State to track image update
+    const [isImageUpdated, setIsImageUpdated] = useState(false); 
 
     useEffect(() => {
-        // Fetch existing images from API
         if (gallaryImages && bannerImages) {
             setBannerImage(bannerImages || []);
             setGallaryImage(gallaryImages || []);
         }
     }, [gallaryImages, bannerImages]);
 
-    // Effect to monitor changes in imagePath to update isImageUpdated state
     useEffect(() => {
         if (imagePath !== '') {
             setIsImageUpdated(true);
@@ -30,7 +30,6 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
 
     const removeImage = async (id, section) => {
         try {
-            // Show confirmation dialog
             const result = await Swal.fire({
                 title: "Warning",
                 text: "Are you sure you want to delete the image ?",
@@ -47,7 +46,6 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 await deleteImage(id);
                 Notify.success("Image Deleted Successfully");
 
-                // Filter out the deleted image from the state based on section
                 if (section === 'banner') {
                     setBannerImage(bannerImage.filter(image => image.id !== id));
                 } else if (section === 'gallery') {
@@ -61,7 +59,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
 
     const handleImageUpload = (path) => {
         setMainGateImageUrl(path);
-        setImagePath(path); // Update the state with the new image path
+        setImagePath(path);
     };
 
     const update = async () => {
@@ -88,13 +86,12 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 const updateResponse = await updateImage(updatedData, salonDetail.id);
                 setMainGateImageUrl(updateResponse.data.data.imageUrl);
                 Notify.success("Image updated successfully");
-                setIsImageUpdated(false); // Reset the flag after successful update
+                setIsImageUpdated(false); 
             } catch (error) {
                 Notify.error(error.message);
             }
         }
     }
-
 
     const buttonStyle = {
         padding: '3px 20px',
@@ -120,22 +117,20 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                                 name="mainGateImageUrl"
                                 buttonName="Update"
                                 buttonStyle={buttonStyle}
-
                             />
                         </div>
                     )}
                 </div>
-
             </div>
             {salonDetail && (
                 <div>
                     <h6>Main Gate Image</h6>
-                    <img src={mainGateImageUrl == null ? salonDetail.mainGateImageUrl : mainGateImageUrl} style={{ height: '150px', width: '150px' }} alt="Main Gate" />
+                    <Zoom>
+                        <img src={mainGateImageUrl == null ? salonDetail.mainGateImageUrl : mainGateImageUrl} style={{ height: '150px', width: '150px' }} alt="Main Gate" />
+                    </Zoom>
                 </div>
             )}
-
             <hr />
-
             {/* Banner Images */}
             <div>
                 <div className='d-flex justify-content-between align-items-center'>
@@ -153,7 +148,9 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     <div className='d-flex flex-row flex-wrap gap-2'>
                         {bannerImage.map((image, index) => (
                             <div key={index} className={styles.imageContainer}>
-                                <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Banner Image ${index}`} />
+                                <Zoom>
+                                    <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Banner Image ${index}`} />
+                                </Zoom>
                                 <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'banner')}>Remove</button>
                             </div>
                         ))}
@@ -161,7 +158,6 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 )}
                 <hr />
             </div>
-
             {/* Gallery Images */}
             <div className='mb-3'>
                 <div className='d-flex justify-content-between align-items-center'>
@@ -179,14 +175,15 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                     <div className='d-flex flex-row flex-wrap gap-2'>
                         {gallaryImage.map((image, index) => (
                             <div key={index} className={styles.imageContainer}>
-                                <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
+                                <Zoom>
+                                    <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
+                                </Zoom>
                                 <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
                             </div>
                         ))}
                     </div>
                 )}
             </div>
-
         </>
     );
 }

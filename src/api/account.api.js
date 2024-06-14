@@ -212,7 +212,7 @@ export const getSubAdmin = (reqUrl) => {
 export const deleteSubAdmin = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteSubAdmin}/${id}`);
 export const putSubAdmin = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_putSubAdmin}/${id}`, payload);
+  HTTP.Request(methods.PATCH, `${__endpoint_putSubAdmin}/${id}`, payload);
 export const getAppointmentDetails = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_appointmentDetails}/${id}`);
 

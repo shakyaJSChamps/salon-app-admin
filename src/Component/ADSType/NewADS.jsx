@@ -92,6 +92,8 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
     onClearSelectedRow();
   };
 
+  const currentDate = new Date().toISOString().split("T")[0];
+
   return (
     <Paper className="ads-add-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
@@ -151,8 +153,12 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 label="Start Date"
                 type="date"
                 placeholder="07/07/43"
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setFieldValue("endDate", ""); // Reset end date when start date changes
+                }}
                 value={values.startDate}
+                min={currentDate}
               />
               <ErrorMessage
                 name="startDate"
@@ -168,6 +174,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 type="date"
                 onChange={handleChange}
                 value={values.endDate}
+                min={values.startDate || currentDate} // Set min to startDate or currentDate
               />
               <ErrorMessage
                 name="endDate"

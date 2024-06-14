@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
 import { getAppointmentDetails } from '../../../api/account.api';
 
 const Appointmentpopup = ({ open, onClose, appointment }) => {
     const [appointmentDetails, setAppointmentDetails] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchAppointmentDetails = async () => {
             if (!appointment || !appointment.id) return;
             setLoading(true);
+            setError(null);
             try {
                 const response = await getAppointmentDetails(appointment.id);
                 setAppointmentDetails(response.data.data);
             } catch (error) {
+                setError('Error fetching appointment details. Please try again later.');
                 console.error('Error fetching appointment details:', error);
             }
             setLoading(false);
@@ -37,102 +43,85 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                     Appointment Details
                 </Typography>
                 <hr />
-                {loading && <p>Loading...</p>}
+                {loading && <CircularProgress />}
+                {error && <Typography color="error">{error}</Typography>}
                 {appointmentDetails && !loading && (
                     <>
-                        <div>
-                            <p className='fw-bold'>{appointmentDetails.salon.name}</p>
-                        </div>
+                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
+                            <Typography variant="subtitle1" className='fw-bold'>{appointmentDetails.salon.name}</Typography>
+                            <Typography variant="body2">Email: {appointmentDetails.salon.email || 'manish@gmail.com'}</Typography>
+                        </Paper>
 
-                        <div className=' mt-1'>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Email</p>
-                                <p style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.salon.email || 'manish@gmail.com'}</p>
-                            </div>
-                        </div>
+                        <Typography variant="h6" gutterBottom className='fw-bold'>
+                            Appointment Details
+                        </Typography>
+                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleDateString()}</Typography></Grid>
 
-                        <div>
-                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>Appointments Details</p>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Date</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{new Date(appointmentDetails.date).toLocaleDateString()}</p>
-                            </div>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.serviceStartTime).toLocaleTimeString()}</Typography></Grid>
 
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Time</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{new Date(appointmentDetails.serviceStartTime).toLocaleTimeString()}</p>
-                            </div>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.duration} minutes</Typography></Grid>
 
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Duration</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.duration} minutes</p>
-                            </div>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Home Service:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.homeService ? 'Yes' : 'No'}</Typography></Grid>
 
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Home Service</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.homeService ? 'Yes' : 'No'}</p>
-                            </div>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment ID:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.appointmentId}</Typography></Grid>
 
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Appointment ID</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.appointmentId}</p>
-                            </div>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Address:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.address}</Typography></Grid>
+                            </Grid>
+                        </Paper>
 
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Address</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.salon.address}</p>
-                            </div>
-                            <hr />
-                        </div>
+                        <Typography variant="h6" gutterBottom className='fw-bold'>
+                            Services
+                        </Typography>
+                        {appointmentDetails.services.map(service => (
+                            <Paper key={service.serviceId} elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Name:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.serviceName}</Typography></Grid>
 
-                        <div>
-                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>Services</p>
-                            {appointmentDetails.services.map(service => (
-                                <div key={service.serviceId}>
-                                    <div className='d-flex justify-content-between align-items-center'>
-                                        <p className="fw-bold" style={{ fontSize: "14px" }}>Service Name</p>
-                                        <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{service.serviceName}</p>
-                                    </div>
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Price:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.servicePrice}</Typography></Grid>
 
-                                    <div className='d-flex justify-content-between align-items-center'>
-                                        <p className="fw-bold" style={{ fontSize: "14px" }}>Service Price</p>
-                                        <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{service.servicePrice}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Duration:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.serviceDuration}</Typography></Grid>
+                                </Grid>
+                            </Paper>
+                        ))}
 
-                        <div>
-                            <p className='text-start fw-bold ' style={{ fontSize: "16px" }}>User Details</p>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Name</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.houseNo}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Street Address</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.streetAddress}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Landmark</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.landmark}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>City</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.city}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>State</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.state}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Country</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.country}</p>
-                            </div>
-                            <div className='d-flex justify-content-between align-items-center'>
-                                <p className="fw-bold" style={{ fontSize: "14px" }}>Pincode</p>
-                                <p className='text-muted' style={{ fontSize: "13px", lineHeight: "1px" }}>{appointmentDetails.userAddress.pincode}</p>
-                            </div>
-                        </div>
+                        <Typography variant="h6" gutterBottom className='fw-bold'>
+                            User Details
+                        </Typography>
+                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Name:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.houseNo}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Street Address:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.streetAddress}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Landmark:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.landmark}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">City:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.city}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">State:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.state}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Country:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.country}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Pincode:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.pincode}</Typography></Grid>
+                            </Grid>
+                        </Paper>
                     </>
                 )}
             </Box>
