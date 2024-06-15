@@ -55,7 +55,39 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           />
         )}
       </div>
-      <h4 className="text-center mt-2">{`${rowData.firstName} ${rowData.lastName}`}</h4>
+      {/* <h4 className="text-center mt-2">{`${rowData.firstName} ${rowData.lastName}`}</h4> */}
+
+      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 mt-1">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">First Name</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2"> {rowData.firstName} </p>
+        </div>
+      </div>
+
+      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Middle Name</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2"> {rowData.middleName} </p>
+        </div>
+      </div>
+
+      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+        <div className="col-6 d-flex justify-content-between">
+          <p className="small fw-bold">Last Name</p>
+          <span>:</span>
+        </div>
+        <div className="col-6">
+          <p className="ps-2"> {rowData.lastName} </p>
+        </div>
+      </div>
+
+
       <div className=" row d-flex  justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Email id </p>

@@ -6,8 +6,7 @@ import { subAdminSchema } from "../../utils/schema";
 import { getFeatures, getRoles, createSubAdmin, putSubAdmin } from "../../api/account.api";
 import Notify from "../../utils/notify";
 
-const AddSubAdminForm = ({ rowData }) => {
-  console.log("Edit Icon Clicked Data ::", rowData);
+const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClose }) => {
   const [passwordGenerated, setPasswordGenerated] = useState(false);
   const [role, setRole] = useState([]);
   const [feature, setFeature] = useState([]);
@@ -60,7 +59,6 @@ const AddSubAdminForm = ({ rowData }) => {
   };
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("Form values on submit:", values);
     const selectedRole = role.find((r) => r.roleName === values.roleName);
     const dataToSend = {
       firstName: values.firstName,
@@ -71,18 +69,25 @@ const AddSubAdminForm = ({ rowData }) => {
       countryCode: values.countryCode,
       roleId: selectedRole ? selectedRole.roleId : "",
     };
-    
+
     try {
       let response;
       if (rowData) {
-        const updatedData = { ...dataToSend };
+        const updatedData = {
+          firstName: values.firstName,
+          phoneNumber: values.phoneNumber,
+          roleName: values.roleName,
+          countryCode: values.countryCode,
+          roleId: selectedRole ? selectedRole.roleId : "",
+        };
         response = await putSubAdmin(updatedData, rowData?.id);
+        fetchData(page, perPage, searchText);
       } else {
         response = await createSubAdmin(dataToSend);
       }
-      console.log("API response:", response);
       Notify.success(response.data.message);
       resetForm();
+      onClose();
     } catch (error) {
       Notify.error(error.message);
     }
@@ -113,38 +118,42 @@ const AddSubAdminForm = ({ rowData }) => {
               <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
             </div>
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="email" label="Email Id" type="email" />
-              <ErrorMessage name="email" component="div" className="text-danger" />
-            </div>
-            
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText
-                name="password"
-                label="Password"
-                type="text"
-                disabled={passwordGenerated}
-              />
-              <ErrorMessage name="password" component="div" className="text-danger" />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    id="autoGenerate"
-                    checked={passwordGenerated}
-                    onChange={(e) => {
-                      const isChecked = e.target.checked;
-                      setPasswordGenerated(isChecked);
-                      if (isChecked) {
-                        setFieldValue("password", generatePassword());
-                      } else {
-                        setFieldValue("password", rowData?.password || "");
-                      }
-                    }}
+            {!rowData && (
+              <>
+                <div className="d-flex flex-column mb-2 ps-3">
+                  <InputText name="email" label="Email Id" type="email" />
+                  <ErrorMessage name="email" component="div" className="text-danger" />
+                </div>
+
+                <div className="d-flex flex-column mb-2 ps-3">
+                  <InputText
+                    name="password"
+                    label="Password"
+                    type="text"
+                    disabled={passwordGenerated}
                   />
-                }
-                label="Auto Generate"
-              />
-            </div>
+                  <ErrorMessage name="password" component="div" className="text-danger" />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        id="autoGenerate"
+                        checked={passwordGenerated}
+                        onChange={(e) => {
+                          const isChecked = e.target.checked;
+                          setPasswordGenerated(isChecked);
+                          if (isChecked) {
+                            setFieldValue("password", generatePassword());
+                          } else {
+                            setFieldValue("password", rowData?.password || "");
+                          }
+                        }}
+                      />
+                    }
+                    label="Auto Generate"
+                  />
+                </div>
+              </>
+            )}
 
             <div className="d-flex flex-column mb-2 ps-3">
               <label style={{ fontWeight: "500" }}>Role</label>
@@ -219,27 +228,3 @@ const AddSubAdminForm = ({ rowData }) => {
 };
 
 export default AddSubAdminForm;
-
-
-
-  // const handleSubmit = async (values, { resetForm }) => {
-  //   console.log("Form values on submit:", values); 
-  //   const selectedRole = role.find(r => r.roleName === values.roleName);
-  //   const dataToSend = {
-  //     firstName: values.firstName,
-  //     phoneNumber: values.phoneNumber,
-  //     email: values.email,
-  //     password: values.password,
-  //     roleName: values.roleName,
-  //     countryCode: values.countryCode,
-  //     roleId: selectedRole ? selectedRole.roleId : "",
-  //   };
-  //   try {
-  //     const response = await createSubAdmin(dataToSend);
-  //     console.log("API response:", response); 
-  //     Notify.success(response.data.message);
-  //     resetForm();
-  //   } catch (error) {
-  //     Notify.error(error.message);
-  //   }
-  // };

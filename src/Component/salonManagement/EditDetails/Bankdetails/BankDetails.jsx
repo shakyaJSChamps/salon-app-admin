@@ -7,6 +7,8 @@ import { updateBankDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import { bankDetailsSchema } from "../../../../utils/schema";
 import ImageUpdate from '../../../common-component/Imageupdate/ImageUpdate';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 function BankDetails({ bankDetails }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -109,16 +111,22 @@ function BankDetails({ bankDetails }) {
                                 <div className='d-flex flex-column'>
                                     <label style={{ fontWeight: 500 }}>Cancelcheque/Passbook</label>
                                     {imagePreview ?
-                                        <img
-                                            src={imagePreview}
-                                            alt="Preview"
-                                            style={{ height: '150px', width: '150px', marginTop: '10px' }}
-                                        />
-                                        : <img
-                                            src={values.documentImageUrl}
-                                            alt="No image"
-                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                        />}
+                                        <Zoom>
+                                            <img
+                                                src={imagePreview}
+                                                alt="Preview"
+                                                style={{ height: '150px', width: '150px', marginTop: '10px' }}
+                                            />
+                                        </Zoom>
+
+                                        :
+                                        <Zoom>
+                                            <img
+                                                src={values.documentImageUrl}
+                                                alt="No image"
+                                                style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                            />
+                                        </Zoom>}
 
                                     {isEditing && <ImageUpdate
                                         name="documentImageUrl"
@@ -126,29 +134,7 @@ function BankDetails({ bankDetails }) {
                                         inputClassName="form-control input mt-2"
                                         onImageUpload={(url) => handleImageUpload(url, setFieldValue)}
                                     />}
-                                    {/* {isEditing ? (
-                                        <>
-                                            <ImageUpdate
-                                                name="documentImageUrl"
-                                                buttonName="Update"
-                                                inputClassName="form-control input"
-                                                onImageUpload={(url) => handleImageUpload(url, setFieldValue)}
-                                            />
-                                            {imagePreview && (
-                                                <img
-                                                    src={imagePreview}
-                                                    alt="Preview"
-                                                    style={{ height: '150px', width: '150px', marginTop: '10px' }}
-                                                />
-                                            )}
-                                        </>
-                                    ) : (
-                                        <img
-                                            src={values.documentImageUrl}
-                                            alt="No image"
-                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                        />
-                                    )} */}
+
                                 </div>
                             </Grid>
                         </Grid>

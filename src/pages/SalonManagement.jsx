@@ -70,7 +70,7 @@ const SaloonManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width:"260px",
+      width:"250px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
@@ -107,7 +107,7 @@ const SaloonManagement = () => {
     {
       name: "Active",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
+        <div onClick={() => handleRowClick(row)} className="cursor-pointer">
           <span
             className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
               }`}
@@ -126,6 +126,12 @@ const SaloonManagement = () => {
     {
       name: "Service Type",
       selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
+      sortable: true,
+    },
+
+    {
+      name: "Joined On",
+      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString()}</p>,
       sortable: true,
     },
     {
