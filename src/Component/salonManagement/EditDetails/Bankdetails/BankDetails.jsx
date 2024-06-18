@@ -10,7 +10,7 @@ import ImageUpdate from '../../../common-component/Imageupdate/ImageUpdate';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-function BankDetails({ bankDetails }) {
+function BankDetails({ bankDetails, allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);
     const [imagePreview, setImagePreview] = useState(bankDetails.documentImageUrl || '');
 
@@ -39,18 +39,25 @@ function BankDetails({ bankDetails }) {
         <>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4 className={styles.color}>Bank Details</h4>
-                <div className="d-flex justify-content-start align-items-center mb-3">
-                    {!isEditing && (
-                        <button type="button" className={styles.btn} onClick={handleEditClick}>
-                            Edit
-                        </button>
-                    )}
-                    {isEditing && (
-                        <button type="submit" form="bankDetailsForm" className={styles.btn}>
-                            Save
-                        </button>
-                    )}
-                </div>
+                {
+                    allowEdit ? (
+                        <div className="d-flex justify-content-start align-items-center mb-3">
+                            {!isEditing && (
+                                <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                    Edit
+                                </button>
+                            )}
+                            {isEditing && (
+                                <button type="submit" form="bankDetailsForm" className={styles.btn}>
+                                    Save
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        null
+                    )
+                }
+
             </div>
             <Formik
                 initialValues={{
@@ -133,7 +140,9 @@ function BankDetails({ bankDetails }) {
                                         buttonName="Update"
                                         inputClassName="form-control input mt-2"
                                         onImageUpload={(url) => handleImageUpload(url, setFieldValue)}
-                                    />}
+                                        allowEdit={allowEdit}
+                                    />
+                                    }
 
                                 </div>
                             </Grid>

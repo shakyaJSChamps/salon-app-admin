@@ -3,7 +3,7 @@ import { fileUploaders, updateImage } from '../../../api/account.api';
 import Notify from "../../../utils/notify"
 import InputFile from '../Inputfile/InputFile';
 
-function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, name, buttonStyle }) {
+function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, name, buttonStyle ,allowEdit}) {
 
     const multipleFileSelect = async (files) => {
         try {
@@ -43,6 +43,7 @@ function MultipleImageUploader({ salonDetail, setImages, imageType, buttonName, 
                 buttonName={buttonName}
                 buttonStyle={buttonStyle}
                 multiple
+                allowEdit={allowEdit}
             />
         </div>
 

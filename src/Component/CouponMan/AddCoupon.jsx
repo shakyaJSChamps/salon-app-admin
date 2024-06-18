@@ -9,7 +9,7 @@ import { addCouponType, putCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
-const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
+const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit }) => {
   const initialFormValues = {
     name: "",
     details: "",
@@ -74,11 +74,15 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
     setInitialValues(initialFormValues);
   };
 
+  const currentDate = new Date().toISOString().split("T")[0];
+
   return (
     <Paper className="coupon-service-paper px-3 mb-1 h-100">
       <div className="d-flex justify-content-start align-items-center">
-        <MdOutlineConfirmationNumber className="fs-3"/>
-        <p className=" font ps-1  mb-0">{selectedCoupon ? "Edit Coupon" : "Create New Coupon"}</p>
+        <MdOutlineConfirmationNumber className="fs-3" />
+        <p className="font ps-1 mb-0">
+          {selectedCoupon ? "Edit Coupon" : "Create New Coupon"}
+        </p>
         {selectedCoupon && (
           <BiPlusCircle
             onClick={clearForm}
@@ -161,7 +165,11 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                   type="date"
                   name="startDate"
                   value={values.startDate}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFieldValue("endDate", ""); // Reset end date when start date changes
+                  }}
+                  min={currentDate}
                 />
                 <ErrorMessage
                   name="startDate"
@@ -176,6 +184,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                   name="endDate"
                   value={values.endDate}
                   onChange={handleChange}
+                  min={values.startDate || currentDate} // Set the minimum value for the end date
                 />
                 <ErrorMessage
                   name="endDate"
@@ -196,6 +205,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                         setFieldValue("imageUrl", url);
                       }}
                       imageUrl={values.imageUrl}
+                      allowEdit={allowEdit}
                     />
                     <ErrorMessage
                       name="imageUrl"
@@ -205,13 +215,14 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon }) => {
                   </>
                 ) : (
                   <ImageUpdate
-                  name="imageUrl"
-                  buttonName="Add Image"
-                  inputClassName="form-control input"
-                  onImageUpload={(url) => {
-                    setFieldValue("imageUrl", url);
-                  }}
-                  imageUrl={values.imageUrl}
+                    name="imageUrl"
+                    buttonName="Add Image"
+                    inputClassName="form-control input"
+                    onImageUpload={(url) => {
+                      setFieldValue("imageUrl", url);
+                    }}
+                    imageUrl={values.imageUrl}
+                    allowEdit={allowEdit}
                   />
                 )}
               </div>

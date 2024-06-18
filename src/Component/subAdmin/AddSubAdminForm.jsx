@@ -49,14 +49,16 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
     fetchFeatures();
   }, []);
 
-  const generatePassword = () => {
-    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let password = "";
-    for (let i = 0; i < 12; i++) {
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
+  useEffect(() => {
+    if (rowData && role.length > 0) {
+      const selectedRole = role.find((r) => r.roleName === rowData.roleName);
+      if (selectedRole) {
+        setRoleSelected(true);
+        const selectedFeatures = selectedRole.features.map((f) => f.featureKey);
+        initialValues.features = selectedFeatures;
+      }
     }
-    return password;
-  };
+  }, [role, rowData]);
 
   const handleSubmit = async (values, { resetForm }) => {
     const selectedRole = role.find((r) => r.roleName === values.roleName);
@@ -100,128 +102,141 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={subAdminSchema}
+        enableReinitialize
       >
-        {({ setFieldValue, values }) => (
-          <Form autoComplete="off">
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="firstName" label="Name" type="text" />
-              <ErrorMessage name="firstName" component="div" className="text-danger" />
-            </div>
+        {({ setFieldValue, values }) => {
+          useEffect(() => {
+            if (rowData && role.length > 0) {
+              const selectedRole = role.find((r) => r.roleName === rowData.roleName);
+              if (selectedRole) {
+                const selectedFeatures = selectedRole.features.map((f) => f.featureKey);
+                setFieldValue("features", selectedFeatures);
+              }
+            }
+          }, [role, rowData, setFieldValue]);
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="countryCode" label="Country Code" type="text" />
-              <ErrorMessage name="countryCode" component="div" className="text-danger" />
-            </div>
+          return (
+            <Form autoComplete="off">
+              <div className="d-flex flex-column mb-2 ps-3">
+                <InputText name="firstName" label="Name" type="text" />
+                <ErrorMessage name="firstName" component="div" className="text-danger" />
+              </div>
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <InputText name="phoneNumber" label="Mobile Number" type="tel" />
-              <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
-            </div>
+              <div className="d-flex flex-column mb-2 ps-3">
+                <InputText name="countryCode" label="Country Code" type="text" />
+                <ErrorMessage name="countryCode" component="div" className="text-danger" />
+              </div>
 
-            {!rowData && (
-              <>
-                <div className="d-flex flex-column mb-2 ps-3">
-                  <InputText name="email" label="Email Id" type="email" />
-                  <ErrorMessage name="email" component="div" className="text-danger" />
-                </div>
+              <div className="d-flex flex-column mb-2 ps-3">
+                <InputText name="phoneNumber" label="Mobile Number" type="tel" />
+                <ErrorMessage name="phoneNumber" component="div" className="text-danger" />
+              </div>
 
-                <div className="d-flex flex-column mb-2 ps-3">
-                  <InputText
-                    name="password"
-                    label="Password"
-                    type="text"
-                    disabled={passwordGenerated}
-                  />
-                  <ErrorMessage name="password" component="div" className="text-danger" />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        id="autoGenerate"
-                        checked={passwordGenerated}
-                        onChange={(e) => {
-                          const isChecked = e.target.checked;
-                          setPasswordGenerated(isChecked);
-                          if (isChecked) {
-                            setFieldValue("password", generatePassword());
-                          } else {
-                            setFieldValue("password", rowData?.password || "");
-                          }
-                        }}
-                      />
-                    }
-                    label="Auto Generate"
-                  />
-                </div>
-              </>
-            )}
+              {!rowData && (
+                <>
+                  <div className="d-flex flex-column mb-2 ps-3">
+                    <InputText name="email" label="Email Id" type="email" />
+                    <ErrorMessage name="email" component="div" className="text-danger" />
+                  </div>
 
-            <div className="d-flex flex-column mb-2 ps-3">
-              <label style={{ fontWeight: "500" }}>Role</label>
-              <select
-                name="roleName"
-                value={values.roleName}
-                onChange={(e) => {
-                  const selectedRole = role.find(r => r.roleName === e.target.value);
-                  const selectedFeatures = selectedRole ? selectedRole.features.map(f => f.featureKey) : [];
-                  setRoleSelected(!!selectedRole);
-                  setFieldValue("roleName", e.target.value);
-                  setFieldValue("features", selectedFeatures);
-                }}
-                className="form-control input"
-              >
-                <option value="" label="Select role" />
-                {role.map((data, index) => (
-                  <option key={index} value={data.roleName}>
-                    {data.roleName}
-                  </option>
-                ))}
-              </select>
-              <ErrorMessage name="roleName" component="div" className="text-danger" />
-            </div>
-
-            <label className="mt-3 ps-3 fw-bold">Access Module</label>
-            <div className="container">
-              <div className="row">
-                {feature.map((featureData, index) => (
-                  <div className="col-md-6" key={index}>
+                  <div className="d-flex flex-column mb-2 ps-3">
+                    <InputText
+                      name="password"
+                      label="Password"
+                      type="text"
+                      disabled={passwordGenerated}
+                    />
+                    <ErrorMessage name="password" component="div" className="text-danger" />
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={values.features.includes(featureData.featureKey)}
+                          id="autoGenerate"
+                          checked={passwordGenerated}
                           onChange={(e) => {
-                            if (!roleSelected) {
-                              const newFeatures = e.target.checked
-                                ? [...values.features, featureData.featureKey]
-                                : values.features.filter(key => key !== featureData.featureKey);
-                              setFieldValue("features", newFeatures);
+                            const isChecked = e.target.checked;
+                            setPasswordGenerated(isChecked);
+                            if (isChecked) {
+                              setFieldValue("password", generatePassword());
+                            } else {
+                              setFieldValue("password", rowData?.password || "");
                             }
-                          }}
-                          disabled={roleSelected}
-                          sx={{
-                            color: values.features.includes(featureData.featureKey) ? 'blue' : 'default',
-                            '&.Mui-checked': {
-                              color: 'blue',
-                            },
                           }}
                         />
                       }
-                      label={featureData.featuresName}
+                      label="Auto Generate"
                     />
                   </div>
-                ))}
-              </div>
-            </div>
+                </>
+              )}
 
-            <div className="d-flex justify-content-center">
-              <button
-                type="submit"
-                className="add-sub-admin mt-1"
-              >
-                Save
-              </button>
-            </div>
-          </Form>
-        )}
+              <div className="d-flex flex-column mb-2 ps-3">
+                <label style={{ fontWeight: "500" }}>Role</label>
+                <select
+                  name="roleName"
+                  value={values.roleName}
+                  onChange={(e) => {
+                    const selectedRole = role.find((r) => r.roleName === e.target.value);
+                    const selectedFeatures = selectedRole ? selectedRole.features.map((f) => f.featureKey) : [];
+                    setRoleSelected(!!selectedRole);
+                    setFieldValue("roleName", e.target.value);
+                    setFieldValue("features", selectedFeatures);
+                  }}
+                  className="form-control input"
+                >
+                  <option value="" label="Select role" />
+                  {role.map((data, index) => (
+                    <option key={index} value={data.roleName}>
+                      {data.roleName}
+                    </option>
+                  ))}
+                </select>
+                <ErrorMessage name="roleName" component="div" className="text-danger" />
+              </div>
+
+              <label className="mt-3 ps-3 fw-bold">Access Module</label>
+              <div className="container">
+                <div className="row">
+                  {feature.map((featureData, index) => (
+                    <div className="col-md-6" key={index}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={values.features.includes(featureData.featureKey)}
+                            onChange={(e) => {
+                              if (!roleSelected) {
+                                const newFeatures = e.target.checked
+                                  ? [...values.features, featureData.featureKey]
+                                  : values.features.filter((key) => key !== featureData.featureKey);
+                                setFieldValue("features", newFeatures);
+                              }
+                            }}
+                            disabled={roleSelected}
+                            sx={{
+                              color: 'blue',
+                              '&.Mui-checked': {
+                                color: 'blue',
+                              },
+                            }}
+                          />
+                        }
+                        label={featureData.featuresName}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-center">
+                <button
+                  type="submit"
+                  className="add-sub-admin mt-1"
+                >
+                  Save
+                </button>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
     </>
   );

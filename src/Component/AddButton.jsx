@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import CustomTitle from "./CustomTitle";
 import MyVerticallyCenteredModal from "./modal/ModalPop";
 
-const AddButton = ({ setOption, searchByText, options, buttonText }) => {
+const AddButton = ({ setOption, searchByText, options, buttonText,allowEdit }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState("");
+  console.log("Modal popup", allowEdit)
 
   const handleButtonClick = () => {
     if (buttonText === "Add sub admin") {
@@ -16,6 +17,7 @@ const AddButton = ({ setOption, searchByText, options, buttonText }) => {
       navigate("creates");
     }
   };
+
 
   const handleCloseModal = () => setShowModal(false);
 
@@ -43,6 +45,7 @@ const AddButton = ({ setOption, searchByText, options, buttonText }) => {
           show={showModal}
           onHide={handleCloseModal}
           showForm={showForm}
+          allowEdit={allowEdit}
         />
       </div>
     </>

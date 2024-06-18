@@ -8,12 +8,12 @@ import MultipleImageUploader from '../../common-component/Multipleimageuploader/
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
+function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
     const [mainGateImageUrl, setMainGateImageUrl] = useState(null);
     const [bannerImage, setBannerImage] = useState([]);
     const [gallaryImage, setGallaryImage] = useState([]);
     const [imagePath, setImagePath] = useState('');
-    const [isImageUpdated, setIsImageUpdated] = useState(false); 
+    const [isImageUpdated, setIsImageUpdated] = useState(false);
 
     useEffect(() => {
         if (gallaryImages && bannerImages) {
@@ -86,7 +86,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                 const updateResponse = await updateImage(updatedData, salonDetail.id);
                 setMainGateImageUrl(updateResponse.data.data.imageUrl);
                 Notify.success("Image updated successfully");
-                setIsImageUpdated(false); 
+                setIsImageUpdated(false);
             } catch (error) {
                 Notify.error(error.message);
             }
@@ -117,6 +117,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                                 name="mainGateImageUrl"
                                 buttonName="Update"
                                 buttonStyle={buttonStyle}
+                                allowEdit={allowEdit}
                             />
                         </div>
                     )}
@@ -142,6 +143,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         buttonName="Add"
                         name="bannerImages"
                         buttonStyle={buttonStyle}
+                        allowEdit={allowEdit}
                     />
                 </div>
                 {bannerImage.length > 0 && (
@@ -151,7 +153,14 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                                 <Zoom>
                                     <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Banner Image ${index}`} />
                                 </Zoom>
-                                <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'banner')}>Remove</button>
+                                {
+                                    allowEdit ? (
+                                        <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'banner')}>Remove</button>
+                                    ):(
+                                        null
+                                    )
+                                }
+
                             </div>
                         ))}
                     </div>
@@ -169,6 +178,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                         buttonName="Add"
                         name="galleryImages"
                         buttonStyle={buttonStyle}
+                        allowEdit={allowEdit}
                     />
                 </div>
                 {gallaryImage.length > 0 && (
@@ -178,7 +188,13 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages }) {
                                 <Zoom>
                                     <img src={image.url} style={{ height: '150px', width: '150px' }} alt={`Gallery Image ${index}`} />
                                 </Zoom>
-                                <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
+                                {
+                                    allowEdit ? (
+                                        <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'gallery')}>Remove</button>
+                                    ) : (
+                                        null
+                                    )
+                                }
                             </div>
                         ))}
                     </div>

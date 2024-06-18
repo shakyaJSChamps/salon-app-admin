@@ -1,23 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { MdOutlineContentPaste } from "react-icons/md";
 import EditServiceForm from "../ServiceType/EditServiceForm";
 import UserDetails from "../userManagement/UserDetails";
 import SalesCreate from "../salesManagement/Salescreate/SalesCreate";
-import AddSubAdminForm from "../subAdmin/AddSubAdminForm"; 
+import AddSubAdminForm from "../subAdmin/AddSubAdminForm";
 import styles from "./Modal.module.css";
 
-function MyVerticallyCenteredModal({
-  show,
-  onHide,
-  rowData,
-  showForm,
-  setUpdatedRowData,
-  fetchData,
-  page,
-  perPage,
-  searchText
-}) {
+function MyVerticallyCenteredModal({ show, onHide, rowData, showForm, setUpdatedRowData, fetchData, page, perPage, searchText, allowEdit: allowEditProp }) {
+  const [allowEdit, setAllowEdit] = useState(allowEditProp);
+
+  useEffect(() => {
+    setAllowEdit(allowEditProp);
+  }, [allowEditProp]);
+
+  console.log(allowEdit);
+
   return (
     <Modal
       show={show}
@@ -46,7 +44,11 @@ function MyVerticallyCenteredModal({
           <UserDetails rowData={rowData} setUpdatedRowData={setUpdatedRowData} />
         )}
         {showForm === "sales" && (
-          <SalesCreate rowData={rowData} onHide={onHide} />
+          <SalesCreate
+            rowData={rowData}
+            onHide={onHide}
+            allowEdit={allowEdit}
+          />
         )}
         {showForm === "subAdmin" && (
           <AddSubAdminForm

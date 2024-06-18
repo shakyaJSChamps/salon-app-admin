@@ -15,7 +15,6 @@ const Salessalon = ({ id }) => {
     const [page, setPage] = useState(1);
     const [selectedRow, setSelectedRow] = useState(null);
 
-    console.log("Salons Data", saloonsData);
 
     const handleRowClick = (row) => {
         setSelectedRow(row);
@@ -161,6 +160,7 @@ const Salessalon = ({ id }) => {
                 <EditsalonManagement
                     id={selectedRow.id}
                     className="mt-2"
+                    allowEdit={false}
                 />
             ) : (
 

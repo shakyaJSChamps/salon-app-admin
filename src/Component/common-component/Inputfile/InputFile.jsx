@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function InputFile({ buttonName, onFileSelect, name, buttonStyle, inputClassName, ...rest }) {
+export default function InputFile({ buttonName, onFileSelect, name, buttonStyle, inputClassName, allowEdit, ...rest }) {
     const [file, setFile] = useState("");
 
     const handleOnClick = (e) => {
@@ -17,15 +17,22 @@ export default function InputFile({ buttonName, onFileSelect, name, buttonStyle,
 
     return (
         <div className='d-flex flex-column mb-1 '>
-            <div>
-                <button type="button" onClick={handleOnClick}
-                    style={buttonStyle}
-                    className={inputClassName}
-                >
-                    {buttonName}
-                </button>
-                <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileChange} />
-            </div>
+            {
+                allowEdit ? (
+                    <div>
+                        <button type="button" onClick={handleOnClick}
+                            style={buttonStyle}
+                            className={inputClassName}
+                        >
+                            {buttonName}
+                        </button>
+                        <input type='file' name={name} {...rest} style={{ display: "none" }} onChange={handleFileChange} />
+                    </div>
+                ):(
+                    null
+                )
+            }
+
         </div>
     )
 }

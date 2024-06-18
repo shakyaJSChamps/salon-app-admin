@@ -8,9 +8,10 @@ import { addSalesDetails } from "../../../api/account.api.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import { salesDetailsSchema } from "../../../utils/schema.js";
 
-function SalesCreate() {
+function SalesCreate(allowEdit) {
   const [updatedImageUrls, setUpdatedImageUrls] = useState({});
 
+  console.log("Sales Create",allowEdit);
   const [saleDetails, setSaleDetails] = useState({
     bankdocumentImageUrl: "",
     panCardImageUrl: "",
@@ -23,7 +24,7 @@ function SalesCreate() {
     try {
       const dataToSend = {
         ...values,
-        ...saleDetails, // Include image paths from state
+        ...saleDetails,
       };
       const res = await addSalesDetails(dataToSend)
       console.log("response:::>", res.data);
@@ -41,9 +42,9 @@ function SalesCreate() {
     }));
     setUpdatedImageUrls((prevState) => ({
       ...prevState,
-      [fieldName]: imagePath, // Update the state with the new image URL
+      [fieldName]: imagePath, 
     }));
-    setFieldValue(fieldName, imagePath); // Update Formik's field value
+    setFieldValue(fieldName, imagePath); 
   };
 
   return (
@@ -243,9 +244,11 @@ function SalesCreate() {
                   name="bankdocumentImageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
+                  allowEdit={allowEdit}
                   onImageUpload={(imagePath) =>
                     handleImageUpload("bankdocumentImageUrl", imagePath, setFieldValue)
                   }
+                  
                 />
                 <ErrorMessage name="bankdocumentImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -266,9 +269,11 @@ function SalesCreate() {
                   name="panCardImageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
+                  allowEdit={allowEdit}
                   onImageUpload={(imagePath) =>
                     handleImageUpload("panCardImageUrl", imagePath, setFieldValue)
                   }
+                  
                 />
                 <ErrorMessage name="panCardImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -289,9 +294,11 @@ function SalesCreate() {
                   name="aadharFrontImageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
+                  allowEdit={allowEdit}
                   onImageUpload={(imagePath) =>
                     handleImageUpload("aadharFrontImageUrl", imagePath, setFieldValue)
                   }
+                  
                 />
                 <ErrorMessage name="aadharFrontImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -311,9 +318,11 @@ function SalesCreate() {
                   name="aadharBackImageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
+                  allowEdit={allowEdit}
                   onImageUpload={(imagePath) =>
                     handleImageUpload("aadharBackImageUrl", imagePath, setFieldValue)
                   }
+                  
                 />
                 <ErrorMessage name="aadharBackImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -333,9 +342,11 @@ function SalesCreate() {
                   name="profileImageUrl"
                   buttonName="Add Image"
                   inputClassName="form-control input"
+                  allowEdit={allowEdit}
                   onImageUpload={(imagePath) =>
                     handleImageUpload("profileImageUrl", imagePath, setFieldValue)
                   }
+                
                 />
                 <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
               </Grid>

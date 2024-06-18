@@ -39,7 +39,6 @@ function SalesDetails() {
       const res = await addSalesDetails(salesData)
       console.log("response:::>", res.data);
       Notify.success(res.data.message);
-      // onContinue(values);
     } catch (error) {
       Notify.error(error.message);
     }

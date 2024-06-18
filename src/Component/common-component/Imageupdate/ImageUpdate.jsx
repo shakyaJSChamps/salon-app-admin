@@ -3,7 +3,7 @@ import Notify from "../../../utils/notify";
 import { fileUploaders, updateImage } from '../../../api/account.api';
 import InputFile from '../Inputfile/InputFile';
 
-function ImageUpdate({ name, onImageUpload, buttonName, buttonStyle, inputClassName }) {
+function ImageUpdate({ name, onImageUpload, buttonName, buttonStyle, inputClassName, allowEdit }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleOnFileSelect = async (file) => {
@@ -37,6 +37,7 @@ function ImageUpdate({ name, onImageUpload, buttonName, buttonStyle, inputClassN
             buttonStyle={buttonStyle}
             inputClassName={inputClassName}
             disabled={isLoading}
+            allowEdit={allowEdit}
         />
     );
 }

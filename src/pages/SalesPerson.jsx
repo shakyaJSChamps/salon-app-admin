@@ -141,7 +141,9 @@ const SalesPerson = () => {
       Sales Person
     </div>
       {selectedRow ? (
-        <UpdateSalesDetails id={selectedRow.userId} />
+        <UpdateSalesDetails 
+        id={selectedRow.userId}
+        allowEdit={true} />
       ) : (
         <div className="main-table rounded">
           <DataTable
@@ -150,10 +152,11 @@ const SalesPerson = () => {
                 buttonText="Add Sales Person"
                 setOption={setOption}
                 searchByText={searchByText}
+                allowEdit={true}
                 options={[
                   { text: "Email", value: "email" },
                   { text: "Mobile Number", value: "phoneNumber" },
-                ]}
+                ]} 
               />
             }
             columns={columns}

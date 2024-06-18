@@ -40,16 +40,18 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
         >
             <Box sx={{ width: 400, padding: '20px' }}>
                 <Typography variant="h6" gutterBottom className="fw-bold">
-                    Appointment Details
+                    Salon Details
                 </Typography>
                 <hr />
                 {loading && <CircularProgress />}
                 {error && <Typography color="error">{error}</Typography>}
                 {appointmentDetails && !loading && (
                     <>
-                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
-                            <Typography variant="subtitle1" className='fw-bold'>{appointmentDetails.salon.name}</Typography>
-                            <Typography variant="body2">Email: {appointmentDetails.salon.email || 'manish@gmail.com'}</Typography>
+                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }} className=''>
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Salon Name:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.name}</Typography></Grid>
+                            </Grid>
                         </Paper>
 
                         <Typography variant="h6" gutterBottom className='fw-bold'>
@@ -57,11 +59,11 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         </Typography>
                         <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
                             <Grid container spacing={1}>
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleDateString()}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.serviceStartTime).toLocaleTimeString()}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleTimeString()}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.duration} minutes</Typography></Grid>
@@ -74,6 +76,12 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Address:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.address}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Start Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service End Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceEndTime}</Typography></Grid>
                             </Grid>
                         </Paper>
 
@@ -91,6 +99,11 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
 
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Duration:</Typography></Grid>
                                     <Grid item xs={6}><Typography variant="body2">{service.serviceDuration}</Typography></Grid>
+
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Type:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.type}</Typography></Grid>
+
+
                                 </Grid>
                             </Paper>
                         ))}
@@ -101,13 +114,13 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
                             <Grid container spacing={1}>
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Name:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.houseNo}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{`${appointmentDetails.userDetails.firstName} ${appointmentDetails.userDetails.middleName} ${appointmentDetails.userDetails.lastName}`}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Street Address:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.streetAddress}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Phone Number:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userDetails.phoneNumber}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Landmark:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.landmark}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Email:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userDetails.email}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">City:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.city}</Typography></Grid>
@@ -117,9 +130,25 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Country:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.country}</Typography></Grid>
+                                {
+                                    appointmentDetails.homeService ? (
+                                        <>
+                                            <Grid item xs={6}><Typography variant="body2" className="fw-bold">Street Address:</Typography></Grid>
+                                            <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.streetAddress}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Pincode:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.pincode}</Typography></Grid>
+                                            <Grid item xs={6}><Typography variant="body2" className="fw-bold">House Number:</Typography></Grid>
+                                            <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.houseNo}</Typography></Grid>
+
+
+                                            <Grid item xs={6}><Typography variant="body2" className="fw-bold">Lankmark:</Typography></Grid>
+                                            <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.houseNo}</Typography></Grid>
+                                        </>
+
+                                    ) : (null)
+
+                                }
+
+
                             </Grid>
                         </Paper>
                     </>

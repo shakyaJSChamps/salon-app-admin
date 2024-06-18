@@ -8,7 +8,7 @@ import Notify from "../../../../utils/notify";
 import { salonDetailsSchema } from "../../../../utils/schema";
 import Salonstatus from '../Salonstatus/Salonstatus';
 
-function SalonDetails({ salonDetail, fetchSalonDetailData }) {
+function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
@@ -37,21 +37,28 @@ function SalonDetails({ salonDetail, fetchSalonDetailData }) {
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Salon Details</h4>
 
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                    <Salonstatus salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
-                    <div>
-                        {!isEditing && (
-                            <button type="button" className={styles.btn} onClick={handleEditClick}>
-                                Edit
-                            </button>
-                        )}
-                        {isEditing && (
-                            <button type="submit" className={styles.btn} form="salonDetailsForm">
-                                Save
-                            </button>
-                        )}
-                    </div>
-
+                <div >
+                    {
+                        allowEdit ? (
+                            <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
+                                <Salonstatus salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
+                                <div>
+                                    {!isEditing && (
+                                        <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                            Edit
+                                        </button>
+                                    )}
+                                    {isEditing && (
+                                        <button type="submit" className={styles.btn} form="salonDetailsForm">
+                                            Save
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ):(
+                           null 
+                        )
+                    }
                 </div>
             </div>
 
@@ -69,7 +76,7 @@ function SalonDetails({ salonDetail, fetchSalonDetailData }) {
                 }}
                 validationSchema={salonDetailsSchema}
                 onSubmit={editDetails}
-                enableReinitialize // This enables reinitialization when props change
+                enableReinitialize
             >
                 {({ handleChange, values }) => (
                     <Form id="salonDetailsForm">

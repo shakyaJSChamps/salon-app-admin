@@ -7,7 +7,7 @@ import { updateSalonTime } from '../../../../api/account.api';
 import Notify from '../../../../utils/notify';
 import { salonTimeSchema } from '../../../../utils/schema';
 
-function SalonTime({ workingHours, salonDetail }) {
+function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }) {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const [isEditing, setIsEditing] = useState(false);
 
@@ -24,10 +24,10 @@ function SalonTime({ workingHours, salonDetail }) {
                 closeTime: values[`closeTime${index}`]
             }));
 
-            // Call API to update salon time
             const response = await updateSalonTime(updatedData, salonDetail.id);
+            fetchSalonDetailData();
             Notify.success(response.data.message);
-            setIsEditing(false); // Exit edit mode
+            setIsEditing(false);
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
@@ -38,18 +38,25 @@ function SalonTime({ workingHours, salonDetail }) {
         <div>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Salon Time</h4>
-                <div className="d-flex justify-content-start align-items-center mb-3">
-                    {!isEditing && (
-                        <button type="button" className={styles.btn} onClick={handleEditClick}>
-                            Edit
-                        </button>
-                    )}
-                    {isEditing && (
-                        <button type="submit" form="salonTime" className={styles.btn}>
-                            Save
-                        </button>
-                    )}
-                </div>
+                {
+                    allowEdit ? (
+                        <div className="d-flex justify-content-start align-items-center mb-3">
+                            {!isEditing && (
+                                <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                    Edit
+                                </button>
+                            )}
+                            {isEditing && (
+                                <button type="submit" form="salonTime" className={styles.btn}>
+                                    Save
+                                </button>
+                            )}
+                        </div>
+                    ):(
+                        null
+                    )
+                }
+
             </div>
             <Formik
                 initialValues={{
