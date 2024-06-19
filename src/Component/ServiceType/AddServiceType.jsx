@@ -15,8 +15,10 @@ const AddServiceType = (props) => {
     imageUrl: "",
     active: true,
   });
+  const[allowEdit,setAllowEdit] = useState(null)
 
   useEffect(() => {
+    setAllowEdit(props.allowEdit);
     if (props.isEditMode && props.selectedRowData) {
       setInitialValues({
         name: props.selectedRowData.name || "",
@@ -30,7 +32,7 @@ const AddServiceType = (props) => {
         active: true,
       });
     }
-  }, [props.isEditMode, props.selectedRowData]);
+  }, [props.isEditMode, props.selectedRowData,props.allowEdit]);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -74,7 +76,7 @@ const AddServiceType = (props) => {
   return (
     <Paper className="add-service-paper px-3 h-100 rounded" elevation={3}>
       <div className="d-flex align-items-center pt-2">
-        <MdOutlineContentPaste className="fs-3"/>
+        <MdOutlineContentPaste className="fs-3" />
         <p className="font ps-1  mb-0">
           {props.isEditMode ? "Edit" : "Add"} Service Type
         </p>
@@ -118,6 +120,8 @@ const AddServiceType = (props) => {
                   onImageUpload={(url) => {
                     setFieldValue("imageUrl", url);
                   }}
+                  allowEdit={allowEdit}
+                  
                 />
               )}
               {props.isEditMode && values.imageUrl && (
@@ -129,6 +133,7 @@ const AddServiceType = (props) => {
                   onImageUpload={(url) => {
                     setFieldValue("imageUrl", url);
                   }}
+                  allowEdit={allowEdit}
                 />
               )}
               <ErrorMessage name="imageUrl" component="div" style={{ color: 'red' }} />

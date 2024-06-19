@@ -8,7 +8,7 @@ import Notify from "../../../utils/notify";
 import AddService from '../Services/Addservice/AddService.jsx';
 import { serviceDetailsSchema } from '../../../utils/schema.js';
 
-function Services({ service, salonDetail, fetchSalonDetailData }) {
+function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);
     const [services, setServices] = useState([]);
     const [open, setOpen] = React.useState(false);
@@ -33,9 +33,9 @@ function Services({ service, salonDetail, fetchSalonDetailData }) {
     const editDetails = async (values, index) => {
         try {
             const response = await updateSalonService(values[index], salonDetail.id, values[index].id);
-            Notify.success(response.data.message); // Display success notification
+            Notify.success(response.data.message); 
         } catch (error) {
-            Notify.error(error.message); // Handle API errors
+            Notify.error(error.message); 
         }
     };
 
@@ -48,20 +48,25 @@ function Services({ service, salonDetail, fetchSalonDetailData }) {
         <>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4 className={styles.color}>Services</h4>
-                <div className="d-flex justify-content-start align-items-center mb-3 gap-1">
-                    {!isEditing && (
-                        <button type="button" className={styles.btn} onClick={handleEditClick}>
-                            Edit
-                        </button>
-                    )}
+                {allowEdit ? (
+                    <div className="d-flex justify-content-start align-items-center mb-3 gap-1">
+                        {!isEditing && (
+                            <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                Edit
+                            </button>
+                        )}
 
-                    <button type="button" className={styles.btn} onClick={handleOpen}>
-                        Add
-                    </button>
-                </div>
+                        <button type="button" className={styles.btn} onClick={handleOpen}>
+                            Add
+                        </button>
+                    </div>
+                ): (
+                    null
+                )}
+
             </div>
 
-            <AddService open={open} handleClose={handleClose} services={services} salonDetail={salonDetail} getServiceTypes={getServiceTypes}/>
+            <AddService open={open} handleClose={handleClose} services={services} salonDetail={salonDetail} getServiceTypes={getServiceTypes} />
 
             <Formik
                 initialValues={{

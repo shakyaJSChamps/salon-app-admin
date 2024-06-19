@@ -66,6 +66,7 @@ const AdsManagement = () => {
             onAddAd={handleAddAd}
             onUpdateAd={handleUpdateAd}
             onClearSelectedRow={() => setSelectedRow(null)}
+            allowEdit={true}
           />
         </Col>
         <Col md={8}>

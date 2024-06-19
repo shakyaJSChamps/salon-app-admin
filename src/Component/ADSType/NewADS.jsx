@@ -9,7 +9,7 @@ import Notify from "../../utils/notify";
 import { newADSSchema } from "../../utils/schema";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
-const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow , allowEdit}) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -174,7 +174,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                 type="date"
                 onChange={handleChange}
                 value={values.endDate}
-                min={values.startDate || currentDate} // Set min to startDate or currentDate
+                min={values.startDate || currentDate} 
               />
               <ErrorMessage
                 name="endDate"
@@ -196,6 +196,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                       setFieldValue("mediaUrl", url);
                     }}
                     mediaUrl={values.mediaUrl}
+                    allowEdit={allowEdit}
                   />
                   <ErrorMessage
                     name="mediaUrl"
@@ -212,6 +213,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow }) => {
                     setFieldValue("mediaUrl", url);
                   }}
                   mediaUrl={values.mediaUrl}
+                  allowEdit={allowEdit}
                 />
               )}
             </div>

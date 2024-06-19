@@ -162,6 +162,7 @@ const SaloonManagement = () => {
       {selectedRow ?
         <EditsalonManagement
           id={selectedRow.id}
+          allowEdit={true}
         />
         :
         <div className="main-table rounded ">

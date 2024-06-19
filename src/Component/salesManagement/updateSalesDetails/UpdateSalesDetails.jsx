@@ -11,7 +11,7 @@ import Salessalon from "../salesSalon/Salessalon.jsx";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-function UpdateSalesDetails({ payload, id }) {
+function UpdateSalesDetails({ payload, id , allowEdit}) {
     const [isEditing, setIsEditing] = useState(false);
     const [saleDetails, setSaleDetails] = useState({});
     const [previewImages, setPreviewImages] = useState({
@@ -313,6 +313,7 @@ function UpdateSalesDetails({ payload, id }) {
                                                     console.log("Bank Document Image Path:", imagePath);
                                                     handleImageUpload("bankdocumentImageUrl", imagePath);
                                                 }}
+                                                allowEdit={allowEdit}
                                             />
                                         )}
                                     </div>
@@ -331,6 +332,7 @@ function UpdateSalesDetails({ payload, id }) {
                                                 buttonName="Update"
                                                 inputClassName="form-control input"
                                                 onImageUpload={(imagePath) => handleImageUpload("panCardImageUrl", imagePath)}
+                                                allowEdit={allowEdit}
                                             />
                                         )}
                                     </div>
@@ -349,6 +351,7 @@ function UpdateSalesDetails({ payload, id }) {
                                                 buttonName="Update"
                                                 inputClassName="form-control input"
                                                 onImageUpload={(imagePath) => handleImageUpload("aadharFrontImageUrl", imagePath)}
+                                                allowEdit={allowEdit}
                                             />
                                         )}
                                     </div>
@@ -367,6 +370,7 @@ function UpdateSalesDetails({ payload, id }) {
                                                 buttonName="Update"
                                                 inputClassName="form-control input"
                                                 onImageUpload={(imagePath) => handleImageUpload("aadharBackImageUrl", imagePath)}
+                                                allowEdit={allowEdit}
                                             />
                                         )}
                                     </div>
@@ -385,6 +389,7 @@ function UpdateSalesDetails({ payload, id }) {
                                                 buttonName="Update"
                                                 inputClassName="form-control input"
                                                 onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath)}
+                                                allowEdit={allowEdit}
                                             />
                                         )}
                                     </div>

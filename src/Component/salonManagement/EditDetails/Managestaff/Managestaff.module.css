@@ -1,0 +1,35 @@
+.button {
+    padding: 3px 20px;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #909090;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.mainDiv{
+    background-color: white;
+    padding: 30px;
+    border: 3px solid #eae4e4;
+    border-radius: 5px;
+}
+
+.error{
+    color: red;
+    font-size: 15px;
+}
+
+
+.label{
+    font-weight: 500
+}
+
+.formControl {
+    width: 310px;
+    padding: 0px;
+}
+
+.size{
+    font-size: 30px;
+}

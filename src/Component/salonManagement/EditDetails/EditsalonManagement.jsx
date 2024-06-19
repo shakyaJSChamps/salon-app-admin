@@ -6,12 +6,14 @@ import { salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import Services from '../Services/Services.jsx';
 import Appointments from '../EditDetails/Appointments/Appointments.jsx';
-import  SalonDetails from "./Salondetails/SalonDetails.jsx"
+import SalonDetails from "./Salondetails/SalonDetails.jsx"
 import Qrcode from './qrCode/Qrcode.jsx';
 import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import VerifyPublishButton from "../Verifypublishbutton/VerifyPublishButton.jsx";
+import Salonownerdetails from './Salonownerdetails/Salonownerdetails.jsx';
+import Managestaff from './Managestaff/Managestaff.jsx';
 
-function EditsalonManagement({ payload, id }) {
+function EditsalonManagement({ payload, id, allowEdit }) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
@@ -29,7 +31,6 @@ function EditsalonManagement({ payload, id }) {
       setGallaryImages(data?.data?.data?.galleryImages);
       setWorkingHours(data?.data?.data?.workingHours);
       setService(data?.data?.data?.services);
-      console.log("All Salon Data -> ", data);
     } catch (error) {
       console.error('Error fetching salon details:', error);
     }
@@ -39,12 +40,29 @@ function EditsalonManagement({ payload, id }) {
     fetchSalonDetailData();
   }, [id]);
 
+
+
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
         <Col md={12} >
           <SalonDetails salonDetail={salonDetail}
-          fetchSalonDetailData={fetchSalonDetailData} />
+            fetchSalonDetailData={fetchSalonDetailData}
+            allowEdit={allowEdit} />
+        </Col>
+        <hr />
+      </Row>
+
+      {/* <Row>
+        <Col md={12}>
+          <Salonownerdetails />
+        </Col>
+        <hr />
+      </Row> */}
+
+      <Row>
+        <Col md={12}>
+          <Managestaff id={id}/>
         </Col>
         <hr />
       </Row>
@@ -54,6 +72,7 @@ function EditsalonManagement({ payload, id }) {
           <Services service={service}
             salonDetail={salonDetail}
             fetchSalonDetailData={fetchSalonDetailData}
+            allowEdit={allowEdit}
           />
         </Col>
         <hr />
@@ -61,14 +80,17 @@ function EditsalonManagement({ payload, id }) {
 
       <Row>
         <Col md={12}>
-          <SalonTime workingHours={workingHours} salonDetail={salonDetail} />
+          <SalonTime workingHours={workingHours}
+            salonDetail={salonDetail}
+            allowEdit={allowEdit}
+            fetchSalonDetailData={fetchSalonDetailData} />
         </Col>
         <hr />
       </Row>
 
       <Row>
         <Col md={12}>
-          <BankDetails bankDetails={bankDetails} />
+          <BankDetails bankDetails={bankDetails} allowEdit={allowEdit} />
         </Col>
         <hr />
       </Row>
@@ -79,6 +101,7 @@ function EditsalonManagement({ payload, id }) {
             salonDetail={salonDetail}
             bannerImages={bannerImages}
             gallaryImages={gallaryImages}
+            allowEdit={allowEdit}
           />
         </Col>
         <hr />
