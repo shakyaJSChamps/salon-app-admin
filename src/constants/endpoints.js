@@ -52,3 +52,4 @@ export const __endpoint_qrCode = endpoint + "b2b/salons";
 export const __endpoint_salonStatus = endpoint + "admin/salons";
 export const __endpoint_salesSalon = endpoint + "sales/";
 export const __endpoint_salonStaff = endpoint + "admin/salons";
+export const __endpoint_updateSalonStaff = endpoint + "admin/salons";

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { updateUser } from "../../api/account.api";
@@ -8,6 +8,7 @@ import Loader from "../Loader";
 const UserDetails = ({ rowData, setUpdatedRowData }) => {
   const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   const handleToggleBlock = async () => {
     setIsLoading(true);
@@ -27,11 +28,15 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
     }
   };
 
+  const handleAddressChange = (event) => {
+    setSelectedAddress(event.target.value);
+
+  };
+
   return (
     <>
       <div className="d-flex justify-content-center align-items-center">
-        {isValidImageUrl(rowData.profileImageUrl) &&
-          isValidImageUrl(rowData.profileImageUrl) ? (
+        {isValidImageUrl(rowData.profileImageUrl) ? (
           <img
             src={rowData.profileImageUrl}
             alt="Profile"
@@ -55,9 +60,8 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           />
         )}
       </div>
-      {/* <h4 className="text-center mt-2">{`${rowData.firstName} ${rowData.lastName}`}</h4> */}
 
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 mt-1">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2 mt-1">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">First Name</p>
           <span>:</span>
@@ -67,7 +71,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Middle Name</p>
           <span>:</span>
@@ -77,7 +81,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Last Name</p>
           <span>:</span>
@@ -87,10 +91,9 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">Email id </p>
+          <p className="small fw-bold">Email id</p>
           <span>:</span>
         </div>
         <div className="col-6">
@@ -98,7 +101,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className=" row d-flex  justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Mobile Number</p>
           <span>:</span>
@@ -108,17 +111,33 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Address</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2">{rowData.address}</p>
+          <select
+            value={selectedAddress}
+            onChange={handleAddressChange}
+            className="form-select"
+          >
+            
+            {rowData.address ? (
+              <option value="primary">{rowData.address}</option>
+            ) : null}
+            {rowData.addresses ? (
+              rowData.addresses.map((data) => (
+                <option key={data.id} value={data.streetAddress}>
+                  {data.streetAddress}
+                </option>
+              ))
+            ) : null}
+          </select>
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Gender</p>
           <span>:</span>
@@ -128,18 +147,17 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Total Completed Appointments</p>
           <span>:</span>
         </div>
         <div className="col-6">
           <p className="data-detail ps-2 "> {rowData.completed}</p>
-          {/* <p className="data-detail">{editedData.totalCompletedAppointments}</p> */}
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Total Canceled Appointments</p>
           <span>:</span>
@@ -149,7 +167,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Scheduled Appointments</p>
           <span>:</span>
@@ -159,7 +177,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className="row d-flex justify-content-between align-items-evenly mb-2 ">
+      <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
           <p className="small fw-bold">Joining Date</p>
           <span>:</span>
@@ -171,7 +189,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
       </div>
 
-      <div className="d-flex justify-content-center ">
+      <div className="d-flex justify-content-center">
         <button
           onClick={handleToggleBlock}
           className="button"

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Notify from "../../../utils/notify";
-import { fileUploaders, updateImage } from '../../../api/account.api';
+import { fileUploaders } from '../../../api/account.api';
 import InputFile from '../Inputfile/InputFile';
 
 function ImageUpdate({ name, onImageUpload, buttonName, buttonStyle, inputClassName, allowEdit }) {

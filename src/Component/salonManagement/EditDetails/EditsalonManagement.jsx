@@ -40,6 +40,8 @@ function EditsalonManagement({ payload, id, allowEdit }) {
     fetchSalonDetailData();
   }, [id]);
 
+
+
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
       <Row>
@@ -51,12 +53,12 @@ function EditsalonManagement({ payload, id, allowEdit }) {
         <hr />
       </Row>
 
-      <Row>
+      {/* <Row>
         <Col md={12}>
           <Salonownerdetails />
         </Col>
         <hr />
-      </Row>
+      </Row> */}
 
       <Row>
         <Col md={12}>
