@@ -129,7 +129,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
             {rowData.addresses ? (
               rowData.addresses.map((data) => (
                 <option key={data.id} value={data.streetAddress}>
-                  {data.streetAddress}
+                  {`${data.streetAddress} ${data.city} ${data.state}`}
                 </option>
               ))
             ) : null}
