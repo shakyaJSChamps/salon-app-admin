@@ -231,3 +231,41 @@ export const addServiceTypeSchema = Yup.object().shape({
   imageUrl: Yup.string().url("Invalid URL format").required("Image URL is required"),
   active: Yup.boolean().required("Status is required"),
 });
+
+
+export const salonStaffSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .matches(/^\d+$/, 'Phone number must contain only digits')
+    .max(10, 'Phone number cannot exceed 10 digits')
+    .required('Phone number is required'),
+  firstName: Yup.string()
+    .required('First Name is required')
+    .min(3, 'First Name must be at least 3 characters long')
+    .max(30, 'First Name must be at least 30 characters long'),
+  lastName: Yup.string()
+    .required('Last Name is required')
+    .min(3, 'Last Name must be at least 3 characters long')
+    .max(30, 'Last Name must be at least 30 characters long'),
+  dateOfBirth: Yup.date()
+    .max(getMinDOBDate(), `You must be at least ${MIN_AGE} years old`)
+    .required("Date of birth is required"),
+  gender: Yup.string().required('Gender is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  aadharFrontUrl: Yup.string()
+    .url('Aadhar Front document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Front document image is required'),
+  aadharBackUrl: Yup.string()
+    .url('Aadhar Back document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Back document image is required'),
+  profileImageUrl: Yup.string()
+    .url('Profile document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Profile document image is required'),
+  specialization: Yup.string()
+    .required("Specialization is required"),
+  role: Yup.string()
+    .required("Role is required")
+
+})
