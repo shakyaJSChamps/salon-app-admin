@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { Grid, FormControl, Select, MenuItem } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
 import { salonStaff, updateSalonStaff } from "../../../../api/account.api";
 import styles from "./Managestaff.module.css";
 import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify.js";
+import { salonStaffSchema } from "../../../../utils/schema.js";
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 function Managestaff({ id }) {
     const [staffList, setStaffList] = useState([]);
@@ -13,6 +16,7 @@ function Managestaff({ id }) {
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    console.log("Staff", staffList)
 
     useEffect(() => {
         const fetchStaffList = async () => {
@@ -69,6 +73,11 @@ function Managestaff({ id }) {
         setFieldValue(field, imagePath);
     };
 
+    const getMinDOBDate = () => {
+        const currentDate = new Date();
+        return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
+    };
+
     return (
         <div className="mb-3">
             <div className='d-flex justify-content-between align-items-center'>
@@ -86,19 +95,22 @@ function Managestaff({ id }) {
                     )}
                 </div>
             </div>
-
-            <label className={`${styles.label} mb-2`}>Select Staff</label>
-            <Select
-                value={selectedStaffId || ""}
-                onChange={handleChangeSelect}
-                className="form-control input mb-3"
-            >
-                {staffList.map(staff => (
-                    <MenuItem key={staff.id} value={staff.id} className={styles.size}>
-                        {staff.firstName}
-                    </MenuItem>
-                ))}
-            </Select>
+            {staffList.length === 0 ? (null) :
+                (<>
+                    <label className={`${styles.label} mb-2`}>Select Staff</label>
+                    <Select
+                        value={selectedStaffId || ""}
+                        onChange={handleChangeSelect}
+                        className="form-control input mb-3"
+                    >
+                        {staffList.map(staff => (
+                            <MenuItem key={staff.id} value={staff.id} className={styles.size}>
+                                {staff.firstName}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </>)
+            }
 
             {isLoading ? (
                 <p>Loading...</p>
@@ -109,7 +121,7 @@ function Managestaff({ id }) {
                         lastName: selectedStaff.lastName || "",
                         email: selectedStaff.email || "",
                         phoneNumber: selectedStaff.phoneNumber || "",
-                        dataOfBirth: selectedStaff.dataOfBirth || "",
+                        dateOfBirth: selectedStaff.dataOfBirth || "",
                         gender: selectedStaff.gender || "",
                         profileImageUrl: selectedStaff.profileImageUrl || "",
                         aadharFrontUrl: selectedStaff.aadharFrontUrl || "",
@@ -117,8 +129,9 @@ function Managestaff({ id }) {
                         specialization: selectedStaff.specialization || "",
                         role: selectedStaff.role || ""
                     }}
-                    enableReinitialize  // Enable reinitialization when initialValues change
+                    enableReinitialize
                     onSubmit={editDetails}
+                    validationSchema={salonStaffSchema}
                 >
                     {({ values, handleChange, setFieldValue }) => (
                         <Form id="staffDetailsForm">
@@ -132,6 +145,7 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.firstName}
                                     />
+                                    <ErrorMessage name="firstName" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -142,6 +156,8 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.lastName}
                                     />
+                                    <ErrorMessage name="lastName" component="div" className={styles.error} />
+
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -152,6 +168,7 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.email}
                                     />
+                                    <ErrorMessage name="email" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -162,16 +179,19 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.phoneNumber}
                                     />
+                                    <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
                                         label="Date of Birth"
-                                        name="dataOfBirth"
+                                        name="dateOfBirth"
                                         type="date"
                                         onChange={handleChange}
                                         disabled={!isEditing}
-                                        value={values.dataOfBirth}
+                                        value={values.dateOfBirth}
+                                        max={getMinDOBDate()}
                                     />
+                                    <ErrorMessage name="dateOfBirth" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -182,6 +202,7 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.gender}
                                     />
+                                    <ErrorMessage name="gender" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -192,6 +213,7 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.specialization}
                                     />
+                                    <ErrorMessage name="specialization" component="div" className={styles.error} />
                                 </Grid>
                                 <Grid item xs={4}>
                                     <InputText
@@ -202,64 +224,77 @@ function Managestaff({ id }) {
                                         disabled={!isEditing}
                                         value={values.role}
                                     />
+                                    <ErrorMessage name="role" component="div" className={styles.error} />
                                 </Grid>
 
-                                <Grid item xs={4}>
-                                    <div className="d-flex flex-column">
-                                        <label style={{ fontWeight: 500 }}>Profile Image</label>
-                                        <img
-                                            src={values.profileImageUrl}
-                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                            alt="Profile Image"
-                                        />
-                                        {isEditing && (
-                                            <ImageUpdate
-                                                name="profileImageUrl"
-                                                buttonName="Update"
-                                                inputClassName="form-control input"
-                                                onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath, setFieldValue)}
-                                                allowEdit={true}
-                                            />
-                                        )}
-                                    </div>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <div className="d-flex flex-column">
-                                        <label style={{ fontWeight: 500 }}>Aadhar Front</label>
-                                        <img
-                                            src={values.aadharFrontUrl}
-                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                            alt="Aadhar Front"
-                                        />
-                                        {isEditing && (
-                                            <ImageUpdate
-                                                name="aadharFrontUrl"
-                                                buttonName="Update"
-                                                inputClassName="form-control input"
-                                                onImageUpload={(imagePath) => handleImageUpload("aadharFrontUrl", imagePath, setFieldValue)}
-                                                allowEdit={true}
-                                            />
-                                        )}
-                                    </div>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <div className="d-flex flex-column">
-                                        <label style={{ fontWeight: 500 }}>Aadhar Back</label>
-                                        <img
-                                            src={values.aadharBackUrl}
-                                            style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                            alt="Aadhar Back"
-                                        />
-                                        {isEditing && (
-                                            <ImageUpdate
-                                                name="aadharBackUrl"
-                                                buttonName="Update"
-                                                inputClassName="form-control input"
-                                                onImageUpload={(imagePath) => handleImageUpload("aadharBackUrl", imagePath, setFieldValue)}
-                                                allowEdit={true}
-                                            />
-                                        )}
-                                    </div>
+                                <Grid container spacing={2} className="px-3 mt-1">
+                                    <Grid item xs={4}>
+                                        <div className="d-flex flex-column">
+                                            <label style={{ fontWeight: 500 }}>Profile Image</label>
+                                            <Zoom>
+                                                <img
+                                                    src={values.profileImageUrl}
+                                                    style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                                    alt="Profile Image"
+                                                />
+                                            </Zoom>
+
+                                            {isEditing && (
+                                                <ImageUpdate
+                                                    name="profileImageUrl"
+                                                    buttonName="Update"
+                                                    inputClassName="form-control input"
+                                                    onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath, setFieldValue)}
+                                                    allowEdit={true}
+                                                />
+                                            )}
+                                        </div>
+                                        <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <div className="d-flex flex-column">
+                                            <label style={{ fontWeight: 500 }}>Aadhar Front</label>
+                                            <Zoom>
+                                                <img
+                                                    src={values.aadharFrontUrl}
+                                                    style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                                    alt="Aadhar Front"
+                                                />
+                                            </Zoom>
+
+                                            {isEditing && (
+                                                <ImageUpdate
+                                                    name="aadharFrontUrl"
+                                                    buttonName="Update"
+                                                    inputClassName="form-control input"
+                                                    onImageUpload={(imagePath) => handleImageUpload("aadharFrontUrl", imagePath, setFieldValue)}
+                                                    allowEdit={true}
+                                                />
+                                            )}
+                                        </div>
+                                        <ErrorMessage name="aadharFrontUrl" component="div" className={styles.error} />
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <div className="d-flex flex-column">
+                                            <label style={{ fontWeight: 500 }}>Aadhar Back</label>
+                                            <Zoom> <img
+                                                src={values.aadharBackUrl}
+                                                style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                                alt="Aadhar Back"
+                                            /></Zoom>
+                                            {isEditing && (
+                                                <ImageUpdate
+                                                    name="aadharBackUrl"
+                                                    buttonName="Update"
+                                                    inputClassName="form-control input"
+                                                    onImageUpload={(imagePath) => handleImageUpload("aadharBackUrl", imagePath, setFieldValue)}
+                                                    allowEdit={true}
+                                                />
+                                            )}
+                                        </div>
+                                        <ErrorMessage name="aadharBackUrl" component="div" className={styles.error} />
+                                    </Grid>
+
                                 </Grid>
                             </Grid>
 
@@ -268,7 +303,7 @@ function Managestaff({ id }) {
                 </Formik>
 
             ) : (
-                <p>No staff selected</p>
+                <p>No staff Available</p>
             )}
         </div>
     );
