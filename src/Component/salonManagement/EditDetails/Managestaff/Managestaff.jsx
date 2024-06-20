@@ -7,6 +7,8 @@ import styles from "./Managestaff.module.css";
 import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify.js";
 import { salonStaffSchema } from "../../../../utils/schema.js";
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 function Managestaff({ id }) {
     const [staffList, setStaffList] = useState([]);
@@ -229,11 +231,14 @@ function Managestaff({ id }) {
                                     <Grid item xs={4}>
                                         <div className="d-flex flex-column">
                                             <label style={{ fontWeight: 500 }}>Profile Image</label>
-                                            <img
-                                                src={values.profileImageUrl}
-                                                style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                                alt="Profile Image"
-                                            />
+                                            <Zoom>
+                                                <img
+                                                    src={values.profileImageUrl}
+                                                    style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                                    alt="Profile Image"
+                                                />
+                                            </Zoom>
+
                                             {isEditing && (
                                                 <ImageUpdate
                                                     name="profileImageUrl"
@@ -249,11 +254,14 @@ function Managestaff({ id }) {
                                     <Grid item xs={4}>
                                         <div className="d-flex flex-column">
                                             <label style={{ fontWeight: 500 }}>Aadhar Front</label>
-                                            <img
-                                                src={values.aadharFrontUrl}
-                                                style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                                alt="Aadhar Front"
-                                            />
+                                            <Zoom>
+                                                <img
+                                                    src={values.aadharFrontUrl}
+                                                    style={{ height: '150px', width: '150px', marginBottom: '10px' }}
+                                                    alt="Aadhar Front"
+                                                />
+                                            </Zoom>
+
                                             {isEditing && (
                                                 <ImageUpdate
                                                     name="aadharFrontUrl"
@@ -269,11 +277,11 @@ function Managestaff({ id }) {
                                     <Grid item xs={4}>
                                         <div className="d-flex flex-column">
                                             <label style={{ fontWeight: 500 }}>Aadhar Back</label>
-                                            <img
+                                            <Zoom> <img
                                                 src={values.aadharBackUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
                                                 alt="Aadhar Back"
-                                            />
+                                            /></Zoom>
                                             {isEditing && (
                                                 <ImageUpdate
                                                     name="aadharBackUrl"
