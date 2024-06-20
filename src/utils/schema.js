@@ -216,15 +216,21 @@ export const addServiceSchema = Yup.object().shape({
 });
 
 export const subAdminSchema = Yup.object().shape({
-  firstName: Yup.string().required("Name is required"),
-  countryCode: Yup.string().required("Country Code is required"),
+  firstName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
+    .required("Name is required"),
+  countryCode: Yup.string()
+    .matches(/^\+91$/, "Only +91 code is allowed")
+    .required("Country Code is required"),
   phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, "Mobile number must be numeric")
-    .min(10, "Mobile number must be at least 10 digits")
+    .max(10, "Mobile number is not greater than 10 digits")
+    .min(10, "Mobile number must be of 10 digits")
     .required("Mobile number is required"),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().required("Password is required"),
   roleName: Yup.string().required("Role is required"),
 });
-
 
 export const addServiceTypeSchema = Yup.object().shape({
   name: Yup.string().required("Service name is required"),
