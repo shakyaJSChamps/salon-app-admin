@@ -53,16 +53,16 @@ function EditsalonManagement({ payload, id, allowEdit }) {
         <hr />
       </Row>
 
-      {/* <Row>
+      <Row>
         <Col md={12}>
-          <Salonownerdetails />
+          <Salonownerdetails id={id}/>
         </Col>
         <hr />
-      </Row> */}
+      </Row>
 
       <Row>
         <Col md={12}>
-          <Managestaff id={id}/>
+          <Managestaff id={id} />
         </Col>
         <hr />
       </Row>

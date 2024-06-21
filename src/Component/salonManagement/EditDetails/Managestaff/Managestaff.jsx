@@ -18,21 +18,22 @@ function Managestaff({ id }) {
     const [isLoading, setIsLoading] = useState(true);
     console.log("Staff", staffList)
 
-    useEffect(() => {
-        const fetchStaffList = async () => {
-            try {
-                const response = await salonStaff(id);
-                setStaffList(response?.data?.data || []);
-                setIsLoading(false);
+    const fetchStaffList = async () => {
+        try {
+            const response = await salonStaff(id);
+            setStaffList(response?.data?.data || []);
+            setIsLoading(false);
 
-                if (response?.data?.data.length > 0) {
-                    setSelectedStaffId(response.data.data[0].id);
-                }
-            } catch (error) {
-                console.error("Error fetching staff list:", error);
-                setIsLoading(false);
+            if (response?.data?.data.length > 0) {
+                setSelectedStaffId(response.data.data[0].id);
             }
-        };
+        } catch (error) {
+            console.error("Error fetching staff list:", error);
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchStaffList();
     }, [id]);
 
@@ -59,7 +60,7 @@ function Managestaff({ id }) {
     const editDetails = async (values, { setSubmitting }) => {
         try {
             const response = await updateSalonStaff(id, selectedStaffId, values);
-            console.log("updateSalonStaff ->", response);
+            fetchStaffList();
             setIsEditing(false);
             Notify.success(response.data.message);
         } catch (error) {

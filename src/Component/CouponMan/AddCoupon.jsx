@@ -9,7 +9,7 @@ import { addCouponType, putCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
-const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit }) => {
+const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit }) => {
   const initialFormValues = {
     name: "",
     details: "",
@@ -17,13 +17,14 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
     discountDetails: "",
     startDate: "",
     endDate: "",
-    imageUrl: "https://example.com/summer-sale-image.jpg",
+    imageUrl: "",
     createdBy: "admin@example.com",
     isActive: true,
     isDeleted: false,
   };
 
   const [initialValues, setInitialValues] = useState(initialFormValues);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(initialFormValues.imageUrl);
 
   useEffect(() => {
     if (selectedCoupon) {
@@ -36,8 +37,10 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
           ? new Date(selectedCoupon.endDate).toISOString().split("T")[0]
           : "",
       });
+      setUploadedImageUrl(selectedCoupon.imageUrl);
     } else {
       setInitialValues(initialFormValues);
+      setUploadedImageUrl(initialFormValues.imageUrl);
     }
   }, [selectedCoupon]);
 
@@ -51,6 +54,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
       ...values,
       startDate: formatDate(values.startDate),
       endDate: formatDate(values.endDate),
+      imageUrl: uploadedImageUrl,
     };
 
     try {
@@ -63,7 +67,8 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
       Notify.success(response.data.message);
       resetForm();
       onCouponSaved(response.data.data);
-      setSelectedCoupon(null); // Reset to add mode
+      setSelectedCoupon(null); 
+      setUploadedImageUrl(initialFormValues.imageUrl); 
     } catch (error) {
       Notify.error(error.message);
     }
@@ -72,6 +77,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
   const clearForm = () => {
     setSelectedCoupon(null);
     setInitialValues(initialFormValues);
+    setUploadedImageUrl(initialFormValues.imageUrl);
   };
 
   const currentDate = new Date().toISOString().split("T")[0];
@@ -94,7 +100,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
       <div className="coupon-form">
         <Formik
           enableReinitialize
-          initialValues={initialValues}
+          initialValues={{ ...initialValues, imageUrl: uploadedImageUrl }}
           validationSchema={couponSchema}
           onSubmit={handleSubmit}
         >
@@ -129,7 +135,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
                 />
               </div>
               <div className="d-flex flex-column">
-                <label className="fw-bold">Coupon Description</label>
+                <label style={{fontWeight:"500"}}>Coupon Description</label>
                 <Field
                   as="textarea"
                   className="form-control input"
@@ -167,7 +173,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
                   value={values.startDate}
                   onChange={(e) => {
                     handleChange(e);
-                    setFieldValue("endDate", ""); // Reset end date when start date changes
+                    setFieldValue("endDate", ""); 
                   }}
                   min={currentDate}
                 />
@@ -184,7 +190,7 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
                   name="endDate"
                   value={values.endDate}
                   onChange={handleChange}
-                  min={values.startDate || currentDate} // Set the minimum value for the end date
+                  min={values.startDate || currentDate} 
                 />
                 <ErrorMessage
                   name="endDate"
@@ -193,38 +199,33 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon,allowEdit 
                 />
               </div>
               <div className="d-flex flex-column">
-                <label className="fw-bold">Coupon Image</label>
-                {selectedCoupon ? (
-                  <>
-                    <img src={values.imageUrl} alt="Coupon" className="mb-2" />
-                    <ImageUpdate
-                      name="imageUrl"
-                      buttonName="Update Image"
-                      inputClassName="form-control input"
-                      onImageUpload={(url) => {
-                        setFieldValue("imageUrl", url);
-                      }}
-                      imageUrl={values.imageUrl}
-                      allowEdit={allowEdit}
-                    />
-                    <ErrorMessage
-                      name="imageUrl"
-                      component="div"
-                      className="text-danger"
-                    />
-                  </>
-                ) : (
-                  <ImageUpdate
-                    name="imageUrl"
-                    buttonName="Add Image"
-                    inputClassName="form-control input"
-                    onImageUpload={(url) => {
-                      setFieldValue("imageUrl", url);
-                    }}
-                    imageUrl={values.imageUrl}
-                    allowEdit={allowEdit}
-                  />
-                )}
+                <label style={{fontWeight:"500"}}>Coupon Image</label>
+                {uploadedImageUrl &&
+                  <div className="d-flex justify-content-center align-items-center">
+                    <img
+                      src={uploadedImageUrl}
+                      alt="Coupon"
+                      className="mb-2"
+                      style={{ width: "300px", height: "150px" }}
+                    /></div>
+                }
+
+                <ImageUpdate
+                  name="imageUrl"
+                  buttonName={selectedCoupon ? "Update Image" : "Add Image"}
+                  inputClassName="form-control input"
+                  onImageUpload={(url) => {
+                    setFieldValue("imageUrl", url);
+                    setUploadedImageUrl(url);
+                  }}
+                  imageUrl={uploadedImageUrl}
+                  allowEdit={allowEdit}
+                />
+                <ErrorMessage
+                  name="imageUrl"
+                  component="div"
+                  className="text-danger"
+                />
               </div>
               <div className="d-flex justify-content-center coupon-btn">
                 <button type="submit" className="button">

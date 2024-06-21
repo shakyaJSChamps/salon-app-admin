@@ -9,7 +9,7 @@ import Notify from "../../utils/notify";
 import { newADSSchema } from "../../utils/schema";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
 
-const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow , allowEdit}) => {
+const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdit }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
   const [initialValues, setInitialValues] = useState({
     name: "",
@@ -155,7 +155,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow , allowEd
                 placeholder="07/07/43"
                 onChange={(e) => {
                   handleChange(e);
-                  setFieldValue("endDate", ""); // Reset end date when start date changes
+                  setFieldValue("endDate", "");
                 }}
                 value={values.startDate}
                 min={currentDate}
@@ -174,7 +174,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow , allowEd
                 type="date"
                 onChange={handleChange}
                 value={values.endDate}
-                min={values.startDate || currentDate} 
+                min={values.startDate || currentDate}
               />
               <ErrorMessage
                 name="endDate"
@@ -185,37 +185,26 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow , allowEd
 
             <div className="d-flex flex-column align-items-center-start">
               <label className="fw-bold">Advertisement Image</label>
-              {selectedRow ? (
-                <>
-                  <img src={values.mediaUrl} alt="Coupon" className="mb-2" />
-                  <ImageUpdate
-                    name="mediaUrl"
-                    buttonName="Update Image"
-                    inputClassName="form-control input"
-                    onImageUpload={(url) => {
-                      setFieldValue("mediaUrl", url);
-                    }}
-                    mediaUrl={values.mediaUrl}
-                    allowEdit={allowEdit}
-                  />
-                  <ErrorMessage
-                    name="mediaUrl"
-                    component="div"
-                    className="text-danger"
-                  />
-                </>
-              ) : (
-                <ImageUpdate
-                  name="mediaUrl"
-                  buttonName="Add Image"
-                  inputClassName="form-control input"
-                  onImageUpload={(url) => {
-                    setFieldValue("mediaUrl", url);
-                  }}
-                  mediaUrl={values.mediaUrl}
-                  allowEdit={allowEdit}
-                />
+              {values.mediaUrl && (
+                <div className="d-flex justify-content-center align-items-center">
+                  <img src={values.mediaUrl} alt="Advertisement" className=" mb-2" style={{height:"150px",width:"300px"}}/>
+                </div>
               )}
+              <ImageUpdate
+                name="mediaUrl"
+                buttonName={selectedRow ? "Update Image" : "Add Image"}
+                inputClassName="form-control input"
+                onImageUpload={(url) => {
+                  setFieldValue("mediaUrl", url);
+                }}
+                mediaUrl={values.mediaUrl}
+                allowEdit={allowEdit}
+              />
+              <ErrorMessage
+                name="mediaUrl"
+                component="div"
+                className="text-danger"
+              />
             </div>
 
             <div className="d-flex justify-content-center ">

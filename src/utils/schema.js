@@ -177,7 +177,9 @@ const currentYear = today.getFullYear();
 const currentMonth = today.getMonth() + 1; // Note: January is 0
 
 export const couponSchema = Yup.object().shape({
-  name: Yup.string().required('Coupon name is required'),
+  name: Yup.string()
+    .required('Coupon name is required')
+    .matches(/^[A-Za-z ]+$/, 'Coupon name can only contain alphabets and spaces'),
   details: Yup.string().required('Coupon sub name is required'),
   discountDetails: Yup.string().required('Coupon discount is required'),
   startDate: Yup.date()
