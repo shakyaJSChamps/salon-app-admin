@@ -8,7 +8,7 @@ import Loader from "../Loader";
 const UserDetails = ({ rowData, setUpdatedRowData }) => {
   const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
 
   const handleToggleBlock = async () => {
     setIsLoading(true);
@@ -29,9 +29,15 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
   };
 
   const handleAddressChange = (event) => {
-    setSelectedAddress(event.target.value);
-
+    setSelectedAddressIndex(event.target.value);
   };
+
+  const addresses = rowData.address
+    ? [{ streetAddress: rowData.address, city: "", state: "", id: "primary" }]
+    : [];
+  if (rowData.addresses) {
+    addresses.push(...rowData.addresses);
+  }
 
   return (
     <>
@@ -113,27 +119,34 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">Address</p>
+          {
+            rowData.addresses === null ? (<p style={{ fontWeight: "500" }}>Address</p>) : (
+              <>
+                <select
+                  value={selectedAddressIndex}
+                  onChange={handleAddressChange}
+                  className="form-select"
+                  style={{ height: "40px", width: "149px" }}
+
+                >
+                  {addresses.map((address, index) => (
+                    <option key={address.id} value={index}>
+                      Address {index + 1}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )
+          }
           <span>:</span>
         </div>
         <div className="col-6">
-          <select
-            value={selectedAddress}
-            onChange={handleAddressChange}
-            className="form-select"
-          >
-            
-            {rowData.address ? (
-              <option value="primary">{rowData.address}</option>
-            ) : null}
-            {rowData.addresses ? (
-              rowData.addresses.map((data) => (
-                <option key={data.id} value={data.streetAddress}>
-                  {`${data.streetAddress} ${data.city} ${data.state}`}
-                </option>
-              ))
-            ) : null}
-          </select>
+
+          {addresses[selectedAddressIndex] ? (
+            <p className="mt-2">
+              {`${addresses[selectedAddressIndex].streetAddress} ${addresses[selectedAddressIndex].city} ${addresses[selectedAddressIndex].state}`}
+            </p>
+          ): (<p>{rowData.address}</p>)}
         </div>
       </div>
 
