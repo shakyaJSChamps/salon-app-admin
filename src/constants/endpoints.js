@@ -54,3 +54,5 @@ export const __endpoint_salesSalon = endpoint + "sales/";
 export const __endpoint_salonStaff = endpoint + "admin/salons";
 export const __endpoint_updateSalonStaff = endpoint + "admin/salons";
 export const __endpoint_salonOwner = endpoint + "admin/salons";
+export const __endpoint_deleteStaff = endpoint + "admin/salons";
+export const __endpoint_deleteService = endpoint + "admin/salons/services";

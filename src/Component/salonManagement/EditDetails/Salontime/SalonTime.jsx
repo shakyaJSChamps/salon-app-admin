@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Grid, Switch } from '@mui/material';
-import InputText from '../../../common-component/Inputtext/InputText';
+import { Grid, Switch, TextField } from '@mui/material';
 import styles from './Salontime.module.css';
 import { updateSalonTime } from '../../../../api/account.api';
 import Notify from '../../../../utils/notify';
 import { salonTimeSchema } from '../../../../utils/schema';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
+// import 'dayjs/locale/en'; // Make sure to import the locale
 
-function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }) {
+function SalonTime({ workingHours, salonDetail, allowEdit, fetchSalonDetailData }) {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const [isEditing, setIsEditing] = useState(false);
 
@@ -20,8 +24,8 @@ function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }
             const updatedData = daysOfWeek.map((day, index) => ({
                 day,
                 isOpen: values[`isOpen${index}`],
-                openTime: values[`openTime${index}`],
-                closeTime: values[`closeTime${index}`]
+                openTime: values[`openTime${index}`] ? dayjs(values[`openTime${index}`]).format('hh:mm A') : '',
+                closeTime: values[`closeTime${index}`] ? dayjs(values[`closeTime${index}`]).format('hh:mm A') : ''
             }));
 
             const response = await updateSalonTime(updatedData, salonDetail.id);
@@ -52,19 +56,18 @@ function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }
                                 </button>
                             )}
                         </div>
-                    ):(
+                    ) : (
                         null
                     )
                 }
-
             </div>
             <Formik
                 initialValues={{
                     ...daysOfWeek.reduce((acc, day, index) => {
                         const hour = workingHours ? workingHours.find(h => h.day === day) : null;
                         acc[`isOpen${index}`] = hour ? hour.isOpen : false;
-                        acc[`openTime${index}`] = hour ? hour.openTime : '';
-                        acc[`closeTime${index}`] = hour ? hour.closeTime : '';
+                        acc[`openTime${index}`] = hour ? dayjs(hour.openTime, 'hh:mm A').format() : null;
+                        acc[`closeTime${index}`] = hour ? dayjs(hour.closeTime, 'hh:mm A').format() : null;
                         return acc;
                     }, {})
                 }}
@@ -78,11 +81,9 @@ function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }
                             <Grid item xs={2}>
                                 <label className={styles.label}>Day</label>
                             </Grid>
-
                             <Grid item xs={3}>
                                 <label className={styles.label}>Opening Time</label>
                             </Grid>
-
                             <Grid item xs={3}>
                                 <label className={styles.label}>Closing Time</label>
                             </Grid>
@@ -93,32 +94,25 @@ function SalonTime({ workingHours, salonDetail, allowEdit,fetchSalonDetailData }
                                 <Grid item xs={2}>
                                     <p className={styles.day}>{day}</p>
                                 </Grid>
-
                                 <Grid item xs={3} className='mt-4'>
-                                    <Field
-                                        type="text"
-                                        id={`openTime${index}`}
-                                        name={`openTime${index}`}
-                                        placeholder="Enter Time"
-                                        component={InputText}
-                                        value={values[`openTime${index}`]}
-                                        className="form-control input"
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimePicker
+                                            value={values[`openTime${index}`] ? dayjs(values[`openTime${index}`]) : null}
+                                            onChange={(newValue) => setFieldValue(`openTime${index}`, newValue ? newValue.format() : null)}
+                                            disabled={!isEditing}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={3} className='mt-4'>
-                                    <Field
-                                        type="text"
-                                        id={`closeTime${index}`}
-                                        name={`closeTime${index}`}
-                                        component={InputText}
-                                        placeholder="Enter Time"
-                                        value={values[`closeTime${index}`]}
-                                        className="form-control input"
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimePicker
+                                            value={values[`closeTime${index}`] ? dayjs(values[`closeTime${index}`]) : null}
+                                            onChange={(newValue) => setFieldValue(`closeTime${index}`, newValue ? newValue.format() : null)}
+                                            disabled={!isEditing}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={2} className="d-flex justify-content-center align-items-center mt-3 flex-column">
                                     <div>

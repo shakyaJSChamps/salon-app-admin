@@ -3,10 +3,11 @@ import { Grid } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import styles from '../Services/Services.module.css';
 import InputText from '../../common-component/Inputtext/InputText.jsx';
-import { getServiceType, updateSalonService } from '../../../../src/api/account.api';
+import { deleteService, getServiceType, updateSalonService } from '../../../../src/api/account.api';
 import Notify from "../../../utils/notify";
 import AddService from '../Services/Addservice/AddService.jsx';
 import { serviceDetailsSchema } from '../../../utils/schema.js';
+import Swal from "sweetalert2";
 
 function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -33,9 +34,33 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
     const editDetails = async (values, index) => {
         try {
             const response = await updateSalonService(values[index], salonDetail.id, values[index].id);
-            Notify.success(response.data.message); 
+            Notify.success(response.data.message);
         } catch (error) {
-            Notify.error(error.message); 
+            Notify.error(error.message);
+        }
+    };
+
+    const removeService = async (values, index) => {
+        try {
+            const result = await Swal.fire({
+                title: "Warning",
+                text: "Are you sure you want to delete this Service ?",
+                icon: "warning",
+                width: "30%",
+                showCancelButton: true,
+                confirmButtonColor: " black",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Delete",
+                customClass: "custom-swal",
+            });
+
+            if (result.isConfirmed) {
+                await deleteService(values[index].id);
+                fetchSalonDetailData();
+                Notify.success(" Service removed Successfully");
+            }
+        } catch (error) {
+            Notify.error(error.message);
         }
     };
 
@@ -60,7 +85,7 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
                             Add
                         </button>
                     </div>
-                ): (
+                ) : (
                     null
                 )}
 
@@ -145,7 +170,7 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
 
                                 <Grid item xs={2}>
                                     <InputText
-                                        label="Duration"
+                                        label="Duration in min"
                                         type="number"
                                         name={`services[${index}].serviceDuration`}
                                         disabled={!isEditing}
@@ -168,9 +193,16 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
 
                                 {isEditing && (
                                     <Grid item xs={2}>
-                                        <button type="button" onClick={() => { editDetails(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>
-                                            Save
-                                        </button>
+                                        <div className='d-flex gap-2'>
+                                            <button type="button" onClick={() => { editDetails(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>
+                                                Save
+                                            </button>
+
+                                            <button type="button" onClick={() => { removeService(values.services, index); setIsEditing(false) }} className={styles.btn} style={{ marginTop: '32px' }}>
+                                                Delete
+                                            </button>
+                                        </div>
+
                                     </Grid>
                                 )}
                             </Grid>

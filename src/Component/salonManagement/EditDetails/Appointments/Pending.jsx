@@ -3,6 +3,7 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import styles from "./Appointments.module.css";
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
+import Profile from "../../../../assets/image/Profile.webp"
 
 function Pending({ appointmentData }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -22,8 +23,10 @@ function Pending({ appointmentData }) {
             {pendingAppointments.map((data, index) => (
                 <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
                     <div className='d-flex justify-content-around align-items-center'>
-                        <div>
-                            <img src={data?.user?.profileImageUrl} style={{ height: "79px" }} alt="User" />
+                        <div>{data?.user?.profileImageUrl ? (<img src={data?.user?.profileImageUrl} style={{ height: "85px", width: "85px" }} alt="User" />) :
+                            (<img src={Profile} style={{ height: "85px", width: "85px" }} alt="User" />)
+                        }
+
                         </div>
 
                         <div>
