@@ -5,6 +5,7 @@ import styles from "./Appointments.module.css";
 import Invoice from '../../../common-component/invoice/Invoice';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
+import Profile from "../../../../assets/image/Profile.webp"
 
 function Completed({ appointmentData }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -38,8 +39,9 @@ function Completed({ appointmentData }) {
             {completedAppointments.map((data, index) => (
                 <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
                     <div className='d-flex justify-content-around align-items-center'>
-                        <div>
-                            <img src={data?.user?.profileImageUrl} style={{ height: "79px" }}></img>
+                        <div>{data?.user?.profileImageUrl ? (<img src={data?.user?.profileImageUrl} style={{ height: "85px", width:"85px"}}></img>)
+                        :(<img src={Profile} style={{ height: "85px", width:"85px"}}></img>)}
+                            
                         </div>
 
                         <div className={`d-flex flex-column ${styles.data}`}>

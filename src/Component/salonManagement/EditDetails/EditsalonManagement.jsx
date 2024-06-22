@@ -44,18 +44,19 @@ function EditsalonManagement({ payload, id, allowEdit }) {
 
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
+
       <Row>
-        <Col md={12} >
-          <SalonDetails salonDetail={salonDetail}
-            fetchSalonDetailData={fetchSalonDetailData}
-            allowEdit={allowEdit} />
+        <Col md={12}>
+          <Salonownerdetails id={id} />
         </Col>
         <hr />
       </Row>
 
       <Row>
-        <Col md={12}>
-          <Salonownerdetails id={id}/>
+        <Col md={12} >
+          <SalonDetails salonDetail={salonDetail}
+            fetchSalonDetailData={fetchSalonDetailData}
+            allowEdit={allowEdit} />
         </Col>
         <hr />
       </Row>

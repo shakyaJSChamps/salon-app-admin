@@ -44,6 +44,7 @@ export const bankDetailsSchema = Yup.object().shape({
     .required("IFSC Code is required")
     .matches(/^[A-Z0-9]+$/, 'IFSC Code must contain only uppercase alphabets and digits')
     .min(11, "IFSC Code must be at least 11 characters")
+    .max(11, "IFSC Code must be equal to 11 characters")
 });
 
 export const salonDetailsSchema = Yup.object().shape({
@@ -53,7 +54,8 @@ export const salonDetailsSchema = Yup.object().shape({
 
   email: Yup.string().email('Invalid email').required('Email is required'),
   gstNumber: Yup.string()
-    .required('GST Number is required'),
+    .required('GST Number is required')
+    .matches(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, 'Invalid GST Number format'),
   address: Yup.string().required('Address is required'),
   pincode: Yup.string()
     .required('Pincode is required')
@@ -67,7 +69,7 @@ export const serviceDetailsSchema = Yup.object().shape({
     Yup.object().shape({
       // categoryId: Yup.number().required('Category ID is required').positive('Category ID must be a positive number'),
       serviceName: Yup.string().required('Service name is required'),
-      serviceDuration: Yup.number().required('Service duration is required').positive('Service duration must be a positive number'),
+      serviceDuration: Yup.number().required('Service duration is required').positive('Service duration must be a positive number').max(120, 'Service duration must not exceed 120 minutes'),
       servicePrice: Yup.number().required('Service price is required').positive('Service price must be a positive number'),
       type: Yup.string().required('Service type is required'),
     })

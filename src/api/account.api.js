@@ -49,6 +49,8 @@ import {
   __endpoint_salonStaff,
   __endpoint_updateSalonStaff,
   __endpoint_salonOwner,
+  __endpoint_deleteStaff,
+  __endpoint_deleteService,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -236,3 +238,10 @@ export const updateSalonStaff = ( id, empId, payload) =>
 
 export const salonOwner = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_salonOwner}/${id}/owner`);
+
+export const deleteStaff = (id, empId) =>
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteStaff}/${id}/employees/${empId}`);
+
+
+export const deleteService = (id) =>
+  HTTP.Request(methods.DELETE, `${__endpoint_deleteService}/${id}`);
