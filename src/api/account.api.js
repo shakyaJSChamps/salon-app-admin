@@ -48,6 +48,7 @@ import {
   __endpoint_salesSalon,
   __endpoint_salonStaff,
   __endpoint_updateSalonStaff,
+  __endpoint_salonOwner,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -232,3 +233,6 @@ export const salonStaff = (id) =>
 
 export const updateSalonStaff = ( id, empId, payload) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonStaff}/${id}/employees/${empId}`, payload);
+
+export const salonOwner = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_salonOwner}/${id}/owner`);
