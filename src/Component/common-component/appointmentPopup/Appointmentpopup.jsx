@@ -91,6 +91,9 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         {appointmentDetails.services.map(service => (
                             <Paper key={service.serviceId} elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
                                 <Grid container spacing={1}>
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Category:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.serviceCategory}</Typography></Grid>
+
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Name:</Typography></Grid>
                                     <Grid item xs={6}><Typography variant="body2">{service.serviceName}</Typography></Grid>
 
