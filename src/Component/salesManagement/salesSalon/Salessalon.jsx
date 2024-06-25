@@ -122,7 +122,11 @@ const Salessalon = ({ id }) => {
 
         {
             name: "Joined On",
-            cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString()}</p>,
+            cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString("en-US", {
+                day:"numeric",
+                month: "long",
+                year: "numeric",
+            })}</p>,
             sortable: true,
         },
 

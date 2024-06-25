@@ -12,15 +12,15 @@ import SalonGallery from '../SalonGallery/SalonGallery.jsx';
 import VerifyPublishButton from "../Verifypublishbutton/VerifyPublishButton.jsx";
 import Salonownerdetails from './Salonownerdetails/Salonownerdetails.jsx';
 import Managestaff from './Managestaff/Managestaff.jsx';
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
-function EditsalonManagement({ payload, id, allowEdit }) {
+function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
   const [salonDetail, setSalonDetail] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
   const [bannerImages, setBannerImages] = useState([]);
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
-
 
   const fetchSalonDetailData = async () => {
     try {
@@ -40,11 +40,9 @@ function EditsalonManagement({ payload, id, allowEdit }) {
     fetchSalonDetailData();
   }, [id]);
 
-
-
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
-
+      {allowEdit ? <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1'/>: ""}
       <Row>
         <Col md={12}>
           <Salonownerdetails id={id} />

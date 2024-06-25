@@ -72,7 +72,6 @@ const AppRoute = (props) => {
           path: "salon-management",
           element: <SalonManagement />,
           children: [
-            { path: "details", element: <SalonDetails /> },
             { path: ":userId", element: <EditsalonManagement /> },
           ],
         },

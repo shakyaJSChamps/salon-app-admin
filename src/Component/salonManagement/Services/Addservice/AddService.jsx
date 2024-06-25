@@ -78,12 +78,11 @@ export default function AddService(props) {
                       name="categoryId"
                       type="number"
                     >
-                      {/* Mapping props.services to populate options */}
                       {props.services.map((service, index) => (
                         <option key={index} value={service.id}>{service.name}</option>
                       ))}
                     </InputText>
-                    <ErrorMessage name="categoryId" component="div" className={styles.error}/>
+                    <ErrorMessage name="categoryId" component="div" className={styles.error} />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -91,7 +90,7 @@ export default function AddService(props) {
                       name="serviceName"
                       type="text"
                     />
-                    <ErrorMessage name="serviceName" component="div" className={styles.error}/>
+                    <ErrorMessage name="serviceName" component="div" className={styles.error} />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -99,7 +98,7 @@ export default function AddService(props) {
                       name="serviceDuration"
                       type="number"
                     />
-                    <ErrorMessage name="serviceDuration" component="div" className={styles.error}/>
+                    <ErrorMessage name="serviceDuration" component="div" className={styles.error} />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -107,7 +106,7 @@ export default function AddService(props) {
                       name="servicePrice"
                       type="number"
                     />
-                    <ErrorMessage name="servicePrice" component="div" className={styles.error}/>
+                    <ErrorMessage name="servicePrice" component="div" className={styles.error} />
                   </Grid>
                   <Grid item xs={12}>
                     <InputText
@@ -121,7 +120,7 @@ export default function AddService(props) {
                       <option value="Female">Female</option>
                       <option value="Both">Both</option>
                     </InputText>
-                    <ErrorMessage name="type" component="div" className={styles.error}/>
+                    <ErrorMessage name="type" component="div" className={styles.error} />
                   </Grid>
                 </Grid>
                 <div className='d-flex justify-content-center align-items-center'>

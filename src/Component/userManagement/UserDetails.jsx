@@ -69,31 +69,11 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2 mt-1">
         <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">First Name</p>
+          <p className="small fw-bold">Name</p>
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2"> {rowData.firstName} </p>
-        </div>
-      </div>
-
-      <div className="row d-flex justify-content-between align-items-evenly mb-2">
-        <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">Middle Name</p>
-          <span>:</span>
-        </div>
-        <div className="col-6">
-          <p className="ps-2"> {rowData.middleName} </p>
-        </div>
-      </div>
-
-      <div className="row d-flex justify-content-between align-items-evenly mb-2">
-        <div className="col-6 d-flex justify-content-between">
-          <p className="small fw-bold">Last Name</p>
-          <span>:</span>
-        </div>
-        <div className="col-6">
-          <p className="ps-2"> {rowData.lastName} </p>
+          <p className="ps-2"> {`${rowData.firstName} ${rowData.middleName} ${rowData.lastName}`} </p>
         </div>
       </div>
 
@@ -119,34 +99,34 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
-          {
-            rowData.addresses === null ? (<p style={{ fontWeight: "500" }}>Address</p>) : (
-              <>
-                <select
-                  value={selectedAddressIndex}
-                  onChange={handleAddressChange}
-                  className="form-select"
-                  style={{ height: "40px", width: "149px" }}
-
-                >
-                  {addresses.map((address, index) => (
-                    <option key={address.id} value={index}>
-                      Address {index + 1}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )
-          }
+          {rowData.addresses === null ? (
+            <p style={{ fontWeight: "500" }}>Address</p>
+          ) : (
+            <>
+              <select
+                value={selectedAddressIndex}
+                onChange={handleAddressChange}
+                className="form-select"
+                style={{ height: "40px", width: "149px" }}
+              >
+                {addresses.map((address, index) => (
+                  <option key={address.id} value={index}>
+                    Address {index + 1}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
           <span>:</span>
         </div>
         <div className="col-6">
-
           {addresses[selectedAddressIndex] ? (
             <p className="mt-2">
               {`${addresses[selectedAddressIndex].streetAddress} ${addresses[selectedAddressIndex].city} ${addresses[selectedAddressIndex].state}`}
             </p>
-          ): (<p>{rowData.address}</p>)}
+          ) : (
+            <p>{rowData.address}</p>
+          )}
         </div>
       </div>
 
@@ -197,7 +177,11 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         </div>
         <div className="col-6">
           <p className="ps-2">
-            {new Date(rowData.createdAt).toLocaleDateString()}
+            {new Date(rowData.createdAt).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
           </p>
         </div>
       </div>

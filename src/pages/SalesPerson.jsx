@@ -8,6 +8,7 @@ import TableLoader from "../Component/common-component/TableLoader";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
+import { useNavigate } from "react-router-dom";
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -19,6 +20,7 @@ const SalesPerson = () => {
   const [option, setOption] = useState("email");
   const [searchText, setSearchText] = useState("");
 
+  const navigate = useNavigate();
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
@@ -137,13 +139,17 @@ const SalesPerson = () => {
 
   return (
     <>
-    <div className=" font-weight ps-2">
-      Sales Person
-    </div>
+      <div className=" font-weight ps-2">
+        Sales Person
+      </div>
       {selectedRow ? (
-        <UpdateSalesDetails 
-        id={selectedRow.userId}
-        allowEdit={true} />
+        <UpdateSalesDetails
+          id={selectedRow.userId}
+          allowEdit={true}
+          handleBack={() => {
+            setSelectedRow(null);
+          }}
+        />
       ) : (
         <div className="main-table rounded">
           <DataTable
@@ -156,7 +162,7 @@ const SalesPerson = () => {
                 options={[
                   { text: "Email", value: "email" },
                   { text: "Mobile Number", value: "phoneNumber" },
-                ]} 
+                ]}
               />
             }
             columns={columns}

@@ -51,6 +51,7 @@ import {
   __endpoint_salonOwner,
   __endpoint_deleteStaff,
   __endpoint_deleteService,
+  __endpoint_addStaff,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -245,3 +246,7 @@ export const deleteStaff = (id, empId) =>
 
 export const deleteService = (id) =>
   HTTP.Request(methods.DELETE, `${__endpoint_deleteService}/${id}`);
+
+export const addStaff = (id, payload) => {
+  return HTTP.Request(methods.POST, `${__endpoint_addStaff}/${id}/employees`, payload);
+};
