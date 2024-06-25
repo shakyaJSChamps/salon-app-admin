@@ -10,6 +10,7 @@ import { salonStaffSchema } from "../../../../utils/schema.js";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import Swal from "sweetalert2";
+import AddStaff from "./AddStaff.jsx";
 
 function Managestaff({ id }) {
     const [staffList, setStaffList] = useState([]);
@@ -17,7 +18,11 @@ function Managestaff({ id }) {
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    console.log("Staff", staffList)
+    const [isAddStaffModalOpen, setIsAddStaffModalOpen] = useState(false);
+
+    const handleAddStaffClick = () => {
+        setIsAddStaffModalOpen(true);
+    };
 
     const fetchStaffList = async () => {
         try {
@@ -138,11 +143,16 @@ function Managestaff({ id }) {
                                     Save
                                 </button>
                             )}
+                            <button type="button" onClick={handleAddStaffClick} className={styles.button}>
+                                Add
+                            </button>
 
                             <button type="button" onClick={removeStaff} className={styles.button}>
                                 Delete
                             </button>
+
                         </div>
+                        <AddStaff isOpen={isAddStaffModalOpen} onClose={() => setIsAddStaffModalOpen(false)} allowEdit={true} id={id} fetchStaffList={fetchStaffList} />
 
                     </div>
                 </div>)
@@ -215,6 +225,7 @@ function Managestaff({ id }) {
                                             onChange={handleChange}
                                             disabled={!isEditing}
                                             value={values.phoneNumber}
+                                            maxLength={10}
                                         />
                                         <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
                                     </Grid>
@@ -353,7 +364,15 @@ function Managestaff({ id }) {
                     </Formik>
 
                 ) : (
-                    <p>No staff Available</p>
+
+                    <div className="text-end ">
+                        <button type="button" onClick={handleAddStaffClick} className={`${styles.button}`}>
+                            Add
+                        </button>
+                        <AddStaff isOpen={isAddStaffModalOpen} onClose={() => setIsAddStaffModalOpen(false)} allowEdit={true} id={id} fetchStaffList={fetchStaffList} />
+                    </div>
+
+
                 )
             }
         </div >
