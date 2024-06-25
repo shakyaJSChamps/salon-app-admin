@@ -137,7 +137,11 @@ const UserManagement = () => {
       name: "Joined On",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
-          {new Date(row.createdAt).toLocaleDateString()}
+          {new Date(row.createdAt).toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
         </div>
       ),
       sortable: true,

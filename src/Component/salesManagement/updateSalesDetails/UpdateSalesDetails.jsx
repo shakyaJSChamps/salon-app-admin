@@ -10,8 +10,9 @@ import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import Salessalon from "../salesSalon/Salessalon.jsx";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import { IoIosArrowDropleftCircle } from "react-icons/io";
 
-function UpdateSalesDetails({ payload, id , allowEdit}) {
+function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
     const [saleDetails, setSaleDetails] = useState({});
     const [previewImages, setPreviewImages] = useState({
@@ -44,7 +45,7 @@ function UpdateSalesDetails({ payload, id , allowEdit}) {
             const response = await updateSaleDetails(values, saleDetails.userId);
             console.log("updateSaleDetails ->", response);
             Notify.success(response.data.message);
-            setIsEditing(false); // Exit edit mode
+            setIsEditing(false);
         } catch (error) {
             console.error("API error:", error);
             Notify.error(error.message);
@@ -68,7 +69,11 @@ function UpdateSalesDetails({ payload, id , allowEdit}) {
         <>
             <div className={styles.mainDiv}>
                 <div className='d-flex justify-content-between align-items-center'>
-                    <h4>Sales Details</h4>
+                    <div className="d-flex justify-content-start align-items-center gap-1">
+                        <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer fs-4 mb-2'/>
+                        <h4>Sales Details</h4>
+                    </div>
+
                     <div className="d-flex justify-content-start align-items-center mb-3">
                         {!isEditing && (
                             <button type="button" onClick={handleEditClick} className={styles.button}>

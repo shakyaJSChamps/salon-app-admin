@@ -70,7 +70,7 @@ const SaloonManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width:"250px",
+      width: "250px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
@@ -130,15 +130,21 @@ const SaloonManagement = () => {
     },
 
     {
-      name: "Joined On",
-      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString()}</p>,
-      sortable: true,
-    },
-    {
       name: "City",
       cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.city}</p>,
       sortable: true,
     },
+
+    {
+      name: "Joined On",
+      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })}</p>,
+      sortable: true,
+    },
+
   ];
 
   const customStyles = {
@@ -163,6 +169,9 @@ const SaloonManagement = () => {
         <EditsalonManagement
           id={selectedRow.id}
           allowEdit={true}
+          handleBack={() => {
+            setSelectedRow(null);
+            navigate('/salon-management');}}
         />
         :
         <div className="main-table rounded ">

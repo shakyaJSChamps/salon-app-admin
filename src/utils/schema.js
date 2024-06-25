@@ -247,6 +247,7 @@ export const salonStaffSchema = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(/^\d+$/, 'Phone number must contain only digits')
     .max(10, 'Phone number cannot exceed 10 digits')
+    .min(10, 'Phone number cannot less than 10 digits')
     .required('Phone number is required'),
   firstName: Yup.string()
     .required('First Name is required')

@@ -158,7 +158,7 @@ function Managestaff({ id }) {
                             lastName: selectedStaff.lastName || "",
                             email: selectedStaff.email || "",
                             phoneNumber: selectedStaff.phoneNumber || "",
-                            dateOfBirth: selectedStaff.dataOfBirth || "",
+                            dateOfBirth: selectedStaff.dateOfBirth || "",
                             gender: selectedStaff.gender || "",
                             profileImageUrl: selectedStaff.profileImageUrl || "",
                             aadharFrontUrl: selectedStaff.aadharFrontUrl || "",
@@ -241,7 +241,8 @@ function Managestaff({ id }) {
                                             value={values.gender}
                                             className="input"
                                         >
-                                            {/* <option value="">{values.gender}</option> */}
+
+
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </InputText>

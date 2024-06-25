@@ -113,7 +113,7 @@ function Salonownerdetails({ id }) {
                                         label="Gender"
                                         as="select"
                                         name="gender"
-                                        className="input"
+                                        className="input mb-2"
                                         type="text"
                                         value={values.gender}
                                         disabled
@@ -126,7 +126,7 @@ function Salonownerdetails({ id }) {
                             </Grid>
 
                             <Grid container spacing={2}>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Pancard</label>
                                         <Zoom>
@@ -140,7 +140,7 @@ function Salonownerdetails({ id }) {
                                     </div>
                                 </Grid>
 
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Aadhar Front</label>
                                         <Zoom>
@@ -154,7 +154,7 @@ function Salonownerdetails({ id }) {
                                     </div>
                                 </Grid>
 
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Aadhar Back</label>
                                         <Zoom>
@@ -168,7 +168,7 @@ function Salonownerdetails({ id }) {
                                     </div>
                                 </Grid>
 
-                                <Grid item xs={4} className="mb-3">
+                                <Grid item xs={3} className="mb-3">
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Profile Image</label>
                                         <Zoom>
