@@ -122,7 +122,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
         <div className="col-6">
           {addresses[selectedAddressIndex] ? (
             <p className="mt-2">
-              {`${addresses[selectedAddressIndex].streetAddress} ${addresses[selectedAddressIndex].city} ${addresses[selectedAddressIndex].state}`}
+              {` ${addresses[selectedAddressIndex].landmark}, ${addresses[selectedAddressIndex].streetAddress} ${addresses[selectedAddressIndex].city} ${addresses[selectedAddressIndex].state}`}
             </p>
           ) : (
             <p>{rowData.address}</p>

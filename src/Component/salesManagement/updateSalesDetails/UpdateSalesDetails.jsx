@@ -172,6 +172,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                         disabled
                                         onChange={handleChange}
                                         value={values.phoneNumber}
+                                        maxLength={10}
                                     />
                                     <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
                                 </Grid>
@@ -216,7 +217,6 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                             <option value="">select</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
-                                            <option value="Other">Both</option>
                                         </InputText>
                                         <br />
                                         <ErrorMessage name="gender" component="div" className={styles.error} />

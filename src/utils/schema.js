@@ -250,13 +250,11 @@ export const salonStaffSchema = Yup.object().shape({
     .min(10, 'Phone number cannot less than 10 digits')
     .required('Phone number is required'),
   firstName: Yup.string()
-    .required('First Name is required')
-    .min(3, 'First Name must be at least 3 characters long')
-    .max(30, 'First Name must be at least 30 characters long'),
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
+    .required("Fisrt name is required"),
   lastName: Yup.string()
-    .required('Last Name is required')
-    .min(3, 'Last Name must be at least 3 characters long')
-    .max(30, 'Last Name must be at least 30 characters long'),
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
+    .required("Last Name is required"),
   dateOfBirth: Yup.date()
     .max(getMinDOBDate(), `You must be at least ${MIN_AGE} years old`)
     .required("Date of birth is required"),

@@ -95,6 +95,7 @@ function Salonownerdetails({ id }) {
                                         type="text"
                                         value={values.phoneNumber}
                                         disabled
+                                        maxLength={10}
                                     />
                                 </Grid>
 

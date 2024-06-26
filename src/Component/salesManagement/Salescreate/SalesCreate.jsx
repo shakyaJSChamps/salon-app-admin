@@ -129,6 +129,7 @@ function SalesCreate(allowEdit) {
                   label="Phone Number"
                   name="phoneNumber"
                   type="text"
+                  maxLength={10}
                 />
                 <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
               </Grid>
