@@ -76,15 +76,6 @@ export const serviceDetailsSchema = Yup.object().shape({
   ),
 });
 
-export const salonOwnerDetailsSchema = Yup.object().shape({
-  address: Yup.string().required('Address is required'),
-  dateOfBirth: Yup.date().required('Date of Birth is required'),
-  firstName: Yup.string().required('First Name is required'),
-  gender: Yup.string().required('Gender is required'),
-  lastName: Yup.string().required('Last Name is required'),
-  middleName: Yup.string().required('Middle Name is required'),
-})
-
 
 export const salesDetailsSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -145,19 +136,13 @@ export const salesDetailsSchema = Yup.object().shape({
 })
 
 export const salonTimeSchema = Yup.object().shape({
-  // Define the shape of the form fields
   days: Yup.array().of(
     Yup.object().shape({
-      // isOpen should be a boolean and is required
       isOpen: Yup.boolean().required('Please specify if the salon is open or closed'),
-
-      // openTime should be a string and is required
       openTime: Yup.string().when('isOpen', {
         is: true,
         then: Yup.string().required('Please specify the opening time'),
       }),
-
-      // closeTime should be a string and is required when isOpen is true
       closeTime: Yup.string().when('isOpen', {
         is: true,
         then: Yup.string().required('Please specify the closing time'),
@@ -165,6 +150,7 @@ export const salonTimeSchema = Yup.object().shape({
     })
   ),
 });
+
 export const newADSSchema = Yup.object().shape({
   name: Yup.string().required('Advertisement name is required'),
   city: Yup.string().required('City is required'),
@@ -176,7 +162,7 @@ export const newADSSchema = Yup.object().shape({
 
 const today = new Date();
 const currentYear = today.getFullYear();
-const currentMonth = today.getMonth() + 1; // Note: January is 0
+const currentMonth = today.getMonth() + 1;
 
 export const couponSchema = Yup.object().shape({
   name: Yup.string()
@@ -276,5 +262,37 @@ export const salonStaffSchema = Yup.object().shape({
     .required("Specialization is required"),
   role: Yup.string()
     .required("Role is required")
-
 })
+
+export const salonOwnerDetailsSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
+    .required("First name is required"),
+  middleName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed"),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
+    .required("Last name is required"),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  dataOfBirth: Yup.date()
+    .required("Date of birth is required"),
+  gender: Yup.string().required('Gender is required'),
+  panCardImgUrl: Yup.string()
+    .url('Pan Card document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Pan Card document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Pancard document image is required'),
+  aadharFrontUrl: Yup.string()
+    .url('Aadhar Front document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Aadhar Front document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Front document image is required'),
+  aadharBackUrl: Yup.string()
+    .url('Aadhar Back document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Aadhar Back document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Aadhar Back document image is required'),
+  profileImageUrl: Yup.string()
+    .url('Profile Image document image must be a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Profile Image document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')
+    .required('Profile Image document image is required'),
+
+});
+
