@@ -8,7 +8,7 @@ import Loader from "../Loader";
 const UserDetails = ({ rowData, setUpdatedRowData }) => {
   const [active, setActive] = useState(rowData.active);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
+  const [selectedLandmark, setSelectedLandmark] = useState("");
 
   const handleToggleBlock = async () => {
     setIsLoading(true);
@@ -28,16 +28,20 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
     }
   };
 
-  const handleAddressChange = (event) => {
-    setSelectedAddressIndex(event.target.value);
+  const handleLandmarkChange = (event) => {
+    setSelectedLandmark(event.target.value);
   };
 
-  const addresses = rowData.address
-    ? [{ streetAddress: rowData.address, city: "", state: "", id: "primary" }]
-    : [];
-  if (rowData.addresses) {
-    addresses.push(...rowData.addresses);
-  }
+  // Assuming rowData.addresses is an array of objects with 'landmark' and 'address' fields
+  const addresses = rowData.addresses || [];
+
+  // Filter addresses based on selected landmark
+  const selectedAddress = addresses.find((address) => address.landmark === selectedLandmark);
+
+  // Extract address details
+  const addressDetails = selectedAddress
+    ? ` ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`
+    : "";
 
   return (
     <>
@@ -73,7 +77,9 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2"> {`${rowData.firstName} ${rowData.middleName} ${rowData.lastName}`} </p>
+          <p className="ps-2">
+            {`${rowData.firstName} ${rowData.middleName} ${rowData.lastName}`}
+          </p>
         </div>
       </div>
 
@@ -93,40 +99,32 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="ps-2"> {rowData.phoneNumber} </p>
+          <p className="ps-2">{rowData.phoneNumber}</p>
         </div>
       </div>
 
       <div className="row d-flex justify-content-between align-items-evenly mb-2">
         <div className="col-6 d-flex justify-content-between">
-          {rowData.addresses === null ? (
-            <p style={{ fontWeight: "500" }}>Address</p>
-          ) : (
-            <>
-              <select
-                value={selectedAddressIndex}
-                onChange={handleAddressChange}
-                className="form-select"
-                style={{ height: "40px", width: "149px" }}
-              >
-                {addresses.map((address, index) => (
-                  <option key={address.id} value={index}>
-                    Address {index + 1}
-                  </option>
-                ))}
-              </select>
-            </>
-          )}
+          <p className="small fw-bold">
+            <select
+              value={selectedLandmark}
+              onChange={handleLandmarkChange}
+              className="form-select"
+              style={{ height: "40px", width: "149px" }}
+            >
+              <option value="">Select Landmark</option>
+              {addresses.map((address, index) => (
+                <option key={index} value={address.landmark}>
+                  {address.landmark}
+                </option>
+              ))}
+            </select>
+
+          </p>
           <span>:</span>
         </div>
         <div className="col-6">
-          {addresses[selectedAddressIndex] ? (
-            <p className="mt-2">
-              {` ${addresses[selectedAddressIndex].landmark}, ${addresses[selectedAddressIndex].streetAddress} ${addresses[selectedAddressIndex].city} ${addresses[selectedAddressIndex].state}`}
-            </p>
-          ) : (
-            <p>{rowData.address}</p>
-          )}
+          {addressDetails}
         </div>
       </div>
 
@@ -146,7 +144,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
           <span>:</span>
         </div>
         <div className="col-6">
-          <p className="data-detail ps-2 "> {rowData.completed}</p>
+          <p className="data-detail ps-2">{rowData.completed}</p>
         </div>
       </div>
 

@@ -45,7 +45,7 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
       {allowEdit ? <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1'/>: ""}
       <Row>
         <Col md={12}>
-          <Salonownerdetails id={id} />
+          <Salonownerdetails id={id} allowEdit={true}/>
         </Col>
         <hr />
       </Row>

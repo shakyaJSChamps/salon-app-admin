@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
-import { salonOwner } from "../../../../api/account.api";
+import { salonOwner, updateSalonOwner } from "../../../../api/account.api";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import styles from "../Salondetails/Salondetails.module.css";
+import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
+import Notify from "../../../../utils/notify";
+import { salonOwnerDetailsSchema } from "../../../../utils/schema";
 
-function Salonownerdetails({ id }) {
+function Salonownerdetails({ id, allowEdit }) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
-    console.log("Salon Owner", salonOwnerData);
+    const [isEditing, setIsEditing] = useState(false);
+    console.log(isEditing);
+
+    const handleEditClick = () => {
+        setIsEditing(!isEditing);
+    };
 
     const getSalonOwner = async () => {
         try {
@@ -19,18 +28,58 @@ function Salonownerdetails({ id }) {
         }
     };
 
+    const updateOwner = async (values) => {
+        try {
+            const { phoneNumber, ...updatedValues } = values;
+            const response = await updateSalonOwner(id, updatedValues);
+            setIsEditing(false);
+            Notify.success(response.data.message);
+        } catch (error) {
+        }
+    }
+
     useEffect(() => {
         getSalonOwner();
     }, [id]);
 
+    const handleImageUpload = (field, imagePath, setFieldValue) => {
+        setFieldValue(field, imagePath);
+    };
+
+    const getMinDOBDate = () => {
+        const currentDate = new Date();
+        return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
+    };
+
     return (
         <div>
-            <div className="d-flex justify-content-start align-items-center">
+            <div className='d-flex justify-content-between align-items-center'>
                 <h4>Salon Owner Details</h4>
+                <div >
+                    {
+                        allowEdit ? (
+                            <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
+                                <div>
+                                    {!isEditing && (
+                                        <button type="button" className={styles.btn} onClick={handleEditClick}>
+                                            Edit
+                                        </button>
+                                    )}
+                                    {isEditing && (
+                                        <button type="submit" className={styles.btn} form="salonOwnerDetailsForm">
+                                            Save
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            null
+                        )
+                    }
+                </div>
             </div>
             {salonOwnerData && (
                 <Formik
-                    enableReinitialize
                     initialValues={{
                         phoneNumber: salonOwnerData.phoneNumber || "",
                         firstName: salonOwnerData.firstName || "",
@@ -44,9 +93,12 @@ function Salonownerdetails({ id }) {
                         aadharBackUrl: salonOwnerData.aadharBackUrl || "",
                         profileImageUrl: salonOwnerData.profileImageUrl || "",
                     }}
+                    onSubmit={updateOwner}
+                    validationSchema={salonOwnerDetailsSchema} 
+                    enableReinitialize
                 >
-                    {({ values }) => (
-                        <Form id="salesDetails">
+                    {({ values, handleChange, setFieldValue }) => (
+                        <Form id="salonOwnerDetailsForm">
                             <Grid container spacing={2}>
                                 <Grid item xs={4}>
                                     <InputText
@@ -54,8 +106,10 @@ function Salonownerdetails({ id }) {
                                         name="firstName"
                                         type="text"
                                         value={values.firstName}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
+                                    <ErrorMessage name="firstName" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -64,8 +118,10 @@ function Salonownerdetails({ id }) {
                                         name="middleName"
                                         type="text"
                                         value={values.middleName}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
+                                    <ErrorMessage name="middleName" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -74,8 +130,10 @@ function Salonownerdetails({ id }) {
                                         name="lastName"
                                         type="text"
                                         value={values.lastName}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
+                                    <ErrorMessage name="lastName" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -84,8 +142,10 @@ function Salonownerdetails({ id }) {
                                         name="email"
                                         type="email"
                                         value={values.email}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
+                                    <ErrorMessage name="email" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -94,8 +154,8 @@ function Salonownerdetails({ id }) {
                                         name="phoneNumber"
                                         type="text"
                                         value={values.phoneNumber}
+                                        onChange={handleChange}
                                         disabled
-                                        maxLength={10}
                                     />
                                 </Grid>
 
@@ -103,10 +163,13 @@ function Salonownerdetails({ id }) {
                                     <InputText
                                         label="DOB"
                                         name="dataOfBirth"
-                                        type="text"
+                                        type="date"
                                         value={values.dataOfBirth}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                        max={getMinDOBDate()}
                                     />
+                                    <ErrorMessage name="dataOfBirth" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -117,28 +180,40 @@ function Salonownerdetails({ id }) {
                                         className="input mb-2"
                                         type="text"
                                         value={values.gender}
-                                        disabled
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
                                     >
                                         <option value="">Select gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </InputText>
+                                    <ErrorMessage name="gender" component="div" className={styles.error} />
                                 </Grid>
                             </Grid>
 
                             <Grid container spacing={2}>
                                 <Grid item xs={3}>
                                     <div className="d-flex flex-column">
-                                        <label style={{ fontWeight: 500 }}>Pancard</label>
+                                        <label style={{ fontWeight: 500 }}>PanCard</label>
                                         <Zoom>
                                             <img
                                                 src={values.panCardImgUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                                alt="Pancard"
+                                                alt="Aadhar Card"
                                             />
                                         </Zoom>
 
+                                        {isEditing && (
+                                            <ImageUpdate
+                                                name="panCardImgUrl"
+                                                buttonName="Update"
+                                                inputClassName="form-control input"
+                                                onImageUpload={(imagePath) => handleImageUpload("panCardImgUrl", imagePath, setFieldValue)}
+                                                allowEdit={true}
+                                            />
+                                        )}
                                     </div>
+                                    <ErrorMessage name="panCardImgUrl" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={3}>
@@ -152,7 +227,17 @@ function Salonownerdetails({ id }) {
                                             />
                                         </Zoom>
 
+                                        {isEditing && (
+                                            <ImageUpdate
+                                                name="aadharFrontUrl"
+                                                buttonName="Update"
+                                                inputClassName="form-control input"
+                                                onImageUpload={(imagePath) => handleImageUpload("aadharFrontUrl", imagePath, setFieldValue)}
+                                                allowEdit={true}
+                                            />
+                                        )}
                                     </div>
+                                    <ErrorMessage name="aadharFrontUrl" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={3}>
@@ -166,7 +251,17 @@ function Salonownerdetails({ id }) {
                                             />
                                         </Zoom>
 
+                                        {isEditing && (
+                                            <ImageUpdate
+                                                name="aadharBackUrl"
+                                                buttonName="Update"
+                                                inputClassName="form-control input"
+                                                onImageUpload={(imagePath) => handleImageUpload("aadharBackUrl", imagePath, setFieldValue)}
+                                                allowEdit={true}
+                                            />
+                                        )}
                                     </div>
+                                    <ErrorMessage name="aadharBackUrl" component="div" className={styles.error} />
                                 </Grid>
 
                                 <Grid item xs={3} className="mb-3">
@@ -180,7 +275,17 @@ function Salonownerdetails({ id }) {
                                             />
                                         </Zoom>
 
+                                        {isEditing && (
+                                            <ImageUpdate
+                                                name="profileImageUrl"
+                                                buttonName="Update"
+                                                inputClassName="form-control input"
+                                                onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath, setFieldValue)}
+                                                allowEdit={true}
+                                            />
+                                        )}
                                     </div>
+                                    <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
                                 </Grid>
                             </Grid>
                         </Form>

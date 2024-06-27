@@ -15,7 +15,6 @@ import {
   __endpoint_updateSalonService,
   __endpoint_updateSalonDetails,
   __endpoint_fileUploaders,
-  __endpoint_updateSalonOwner,
   __endpoint_getSales,
   __endpoint_addSalesDetails,
   __endpoint_salesDetails,
@@ -52,6 +51,7 @@ import {
   __endpoint_deleteStaff,
   __endpoint_deleteService,
   __endpoint_addStaff,
+  __endpoint_updateSalonOwner,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -129,9 +129,6 @@ export const updateSaleDetails = (payload, id) =>
 
 export const fileUploaders = (payload) =>
   HTTP.Request(methods.GET, __endpoint_fileUploaders, payload);
-
-export const updateSalonOwner = (payload, id) =>
-  HTTP.Request(methods.PUT, `${__endpoint_updateSalonOwner}/${id}`, payload);
 
 export const getSales = (payload) =>
   HTTP.Request(methods.GET, __endpoint_getSales, payload);
@@ -250,3 +247,6 @@ export const deleteService = (id) =>
 export const addStaff = (id, payload) => {
   return HTTP.Request(methods.POST, `${__endpoint_addStaff}/${id}/employees`, payload);
 };
+
+export const updateSalonOwner = (id, payload) =>
+  HTTP.Request(methods.PUT, `${__endpoint_updateSalonOwner}/${id}/owner`, payload);
