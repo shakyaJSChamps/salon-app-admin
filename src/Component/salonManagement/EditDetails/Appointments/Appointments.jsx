@@ -4,25 +4,24 @@ import Completed from './Completed';
 import Pending from './Pending';
 import Cancelled from './Cancelled';
 import styles from './Appointments.module.css';
-import { getAppointmentDetails, getSalonAppointments } from '../../../../api/account.api';
+import { getSalonAppointments } from '../../../../api/account.api';
 
 function Appointments({ salonDetail }) {
 
     const [activeComponent, setActiveComponent] = useState('Completed');
     const [appointmentData, setAppointmentData] = useState()
-    // const [appointmentDetails, setAppointmentDetails] = useState()
     console.log("Appointment", appointmentData)
 
     const renderComponent = () => {
         switch (activeComponent) {
             case 'Pending':
-                return <Pending appointmentData={appointmentData} />;
+                return <Pending appointmentData={appointmentData}/>;
             case 'Cancelled':
-                return <Cancelled appointmentData={appointmentData} />;
+                return <Cancelled appointmentData={appointmentData}/>;
             case 'Completed':
-                return <Completed appointmentData={appointmentData} />;
+                return <Completed appointmentData={appointmentData}/>;
             default:
-                return <Completed appointmentData={appointmentData} />;
+                return <Completed appointmentData={appointmentData}/>;
         }
     }
 
@@ -40,7 +39,6 @@ function Appointments({ salonDetail }) {
                 console.error('Error fetching salon details:', error);
             }
         };
-
         if (salonDetail?.id) {
             getAppointments(salonDetail.id);
         } else {
@@ -52,12 +50,10 @@ function Appointments({ salonDetail }) {
     return (
         <div>
             <h5>Appointments</h5>
-
             <div className='d-flex justify-content-evenly align-items-center mb-3'>
                 <button className={getButtonClass('Pending')} onClick={() => setActiveComponent('Pending')}>Pending</button>
                 <button className={getButtonClass('Cancelled')} onClick={() => setActiveComponent('Cancelled')}>Cancelled</button>
                 <button className={getButtonClass('Completed')} onClick={() => setActiveComponent('Completed')}>Completed</button>
-                {/* <button className={getButtonClass('Todays')} onClick={() => setActiveComponent('Todays')}>Todays</button> */}
             </div>
             <div className='d-flex flex-column gap-4 mb-4'>
                 <Row>

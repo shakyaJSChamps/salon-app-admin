@@ -14,6 +14,7 @@ export default function SidebarLoader() {
           ></span>
         </div>
       </li>
+
       <li>
         <div className="side-nav-item">
           <span

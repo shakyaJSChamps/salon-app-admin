@@ -8,6 +8,7 @@ import { getUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
+import Userdata from "../Component/userManagement/Userdata";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -168,16 +169,22 @@ const UserManagement = () => {
 
   return (
     <>
-      {modalShow && selectedRow && (
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+      {selectedRow ? (
+        // <MyVerticallyCenteredModal
+        //   show={modalShow}
+        //   onHide={() => setModalShow(false)}
+        //   rowData={selectedRow}
+        //   setUpdatedRowData={setUpdatedRowData}
+        //   showForm={"user"}
+        // />
+        <Userdata
           rowData={selectedRow}
           setUpdatedRowData={setUpdatedRowData}
-          showForm={"user"}
+          handleBack={() => {
+            setSelectedRow(null);
+            navigate('/user-management');}}
         />
-      )}
-      <div className="main-table rounded ">
+      ) : <div className="main-table rounded ">
         <DataTable
           title={
             <CustomTitle
@@ -209,7 +216,8 @@ const UserManagement = () => {
           selectedRow={selectedRow}
           customStyles={customStyles}
         />
-      </div>
+      </div>}
+
     </>
   );
 };

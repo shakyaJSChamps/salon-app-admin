@@ -11,7 +11,7 @@ import booking from "../assets/image/booking.png";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { PieChart } from "react-minimal-pie-chart";
 import cancelled from "../assets/image/cancelled.png";
-import { BarPlot} from "@mui/x-charts";
+import { BarPlot } from "@mui/x-charts";
 import { LineChart, LinePlot, MarkPlot } from "@mui/x-charts/LineChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 const uData = [2000, 3000, 3200];
@@ -24,7 +24,7 @@ const data = [
     title: "Total User",
     value: 777,
     color: "red",
-    icon: <ArrowDownwardIcon sx={{ fontSize: "13px" }}/>,
+    icon: <ArrowDownwardIcon sx={{ fontSize: "13px" }} />,
     changePercentage: -25,
   },
   {
@@ -101,11 +101,11 @@ const Dashboard = () => {
   return (
     <>
       <Row className="totalOne-counts p-0 m-3">
-        {data.map((item,index) => (
+        {data.map((item, index) => (
           <Col key={item.id} lg={3}>
-            <Paper className={`paperOne ${index === 0 ? 'first-paper' : ''} ${index === 1 ? 
-              'second-paper' : ''} ${index === 2 ? 'third-paper' : ''} ${index === 3 ? 
-              'fourth-paper' : ''}`}>
+            <Paper className={`paperOne ${index === 0 ? 'first-paper' : ''} ${index === 1 ?
+              'second-paper' : ''} ${index === 2 ? 'third-paper' : ''} ${index === 3 ?
+                'fourth-paper' : ''}`}>
               <Row>
                 <Col lg={6}>
                   <img
@@ -131,11 +131,10 @@ const Dashboard = () => {
         ))}
       </Row>
       <Row className="totalTwo-counts p-0 m-3">
-        {data1.map((item,index) => (
+        {data1.map((item, index) => (
           <Col key={item.id} lg={4}>
-           <Paper   className={`total-paper ${index === 0 ? 'extra-padding' : ''} ${
-          index === 2 ? 'extra-padding' : ''
-        }`}>
+            <Paper className={`total-paper ${index === 0 ? 'extra-padding' : ''} ${index === 2 ? 'extra-padding' : ''
+              }`}>
               <Row>
                 <Col lg={4}>
                   <img
@@ -149,7 +148,7 @@ const Dashboard = () => {
                 </Col>
                 <Col lg={4}>
                   <h6>{item.value}</h6>
-                  <p style={{ color: item.color}}>
+                  <p style={{ color: item.color }}>
                     <span>{item.icon}</span>
                     {item.changePercentage}%{" "}
                     {item.changePercentage > 0 ? "Increase" : "Decrease"}
@@ -167,8 +166,8 @@ const Dashboard = () => {
             <p>total registered</p>
 
             <BarChart className="barchart"
-               width={250}
-               height={270}
+              width={250}
+              height={270}
               series={[
                 { data: uData, type: "bar", color: "#D9D9D9" },
                 { data: vData, type: "bar", color: "black" },
@@ -213,7 +212,7 @@ const Dashboard = () => {
             <h4>Total Revenue</h4>
             <h3>777</h3>
             <LineChart className="linechart"
-               width={450}
+              width={450}
               height={261}
               series={[
                 {

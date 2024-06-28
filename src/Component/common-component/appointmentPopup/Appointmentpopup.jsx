@@ -125,6 +125,9 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Email:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userDetails.email}</Typography></Grid>
 
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Gender:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userDetails.gender}</Typography></Grid>
+
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">City:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.city}</Typography></Grid>
 
@@ -133,6 +136,7 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Country:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.userAddress.country}</Typography></Grid>
+
                                 {
                                     appointmentDetails.homeService ? (
                                         <>
