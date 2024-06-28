@@ -112,7 +112,7 @@ const UserDetails = ({ rowData, setUpdatedRowData }) => {
               className="form-select"
               style={{ height: "40px", width: "149px" }}
             >
-              <option value="">Select Landmark</option>
+              <option value="">Select Name</option>
               {addresses.map((address, index) => (
                 <option key={index} value={address.landmark}>
                   {address.landmark}
