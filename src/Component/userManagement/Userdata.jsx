@@ -157,7 +157,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
 
                         <Grid item xs={4}>
                             <InputText
-                                label="Select Name"
+                                label="Name"
                                 as="select"
                                 value={selectedLandmark}
                                 onChange={handleLandmarkChange}
