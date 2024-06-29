@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import Login from "../src/Component/authentication/Login";
+import Dashboard from "../src/pages/Dashboard";
 const SalesWrapper = lazy(() => import("./Component/container/SalesWrapper"));
 const EditsalonManagement = lazy(() => import("./Component/salonManagement/EditDetails/EditsalonManagement"));
 const AccountSetting = lazy(() => import("./Component/setting/AccountSetting"));
@@ -61,12 +62,13 @@ const AppRoute = (props) => {
         { path: "changed-password", element: <ChangedPassword /> },
       ],
     },
-    { path: "", exact: true, element: <Navigate to="/user-management" /> },
+    { path: "", exact: true, element: <Navigate to="/dashboard" /> },
     {
       path: "",
       element: <ProtectedRoutes {...props} />,
       children: [
         // Existing routes
+        { path: "dashboard", element: <Dashboard /> },
         { path: "user-management", element: <UserManagement /> },
         {
           path: "salon-management",
