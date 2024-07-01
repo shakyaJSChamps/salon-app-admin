@@ -1,51 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import Completed from './Completed';
-import Pending from './Pending';
-import Cancelled from './Cancelled';
 import styles from './Appointments.module.css';
-import { getSalonAppointments } from '../../../../api/account.api';
 
-function Appointments({ salonDetail }) {
-
-    const [activeComponent, setActiveComponent] = useState('Completed');
-    const [appointmentData, setAppointmentData] = useState()
-    console.log("Appointment", appointmentData)
-
-    const renderComponent = () => {
-        switch (activeComponent) {
-            case 'Pending':
-                return <Pending appointmentData={appointmentData}/>;
-            case 'Cancelled':
-                return <Cancelled appointmentData={appointmentData}/>;
-            case 'Completed':
-                return <Completed appointmentData={appointmentData}/>;
-            default:
-                return <Completed appointmentData={appointmentData}/>;
-        }
-    }
-
+function Appointments({ activeComponent, setActiveComponent, appointmentData, renderComponent }) {
     const getButtonClass = (component) => {
         return activeComponent === component ? `${styles.button} ${styles.active}` : styles.button;
-    }
-
-    useEffect(() => {
-        const getAppointments = async (id) => {
-            try {
-                const appointments = await getSalonAppointments(id);
-                setAppointmentData(appointments?.data?.data)
-                console.log("Salon Appointments", appointments);
-            } catch (error) {
-                console.error('Error fetching salon details:', error);
-            }
-        };
-        if (salonDetail?.id) {
-            getAppointments(salonDetail.id);
-        } else {
-            console.error('Salon ID is not defined');
-        }
-    }, [salonDetail?.id]);
-
+    };
 
     return (
         <div>

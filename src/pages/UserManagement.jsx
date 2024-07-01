@@ -42,7 +42,6 @@ const UserManagement = () => {
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
-      console.log("User data -->", response)
       const userData = response.data.data.items;
       setUserData(userData);
       setTotalRows(response.data.data.total);
@@ -170,13 +169,6 @@ const UserManagement = () => {
   return (
     <>
       {selectedRow ? (
-        // <MyVerticallyCenteredModal
-        //   show={modalShow}
-        //   onHide={() => setModalShow(false)}
-        //   rowData={selectedRow}
-        //   setUpdatedRowData={setUpdatedRowData}
-        //   showForm={"user"}
-        // />
         <Userdata
           rowData={selectedRow}
           setUpdatedRowData={setUpdatedRowData}

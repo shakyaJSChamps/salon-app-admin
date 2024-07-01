@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
-import { updateUser } from "../../api/account.api";
+import { getUserData, updateUser, getUserAppointments } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import Loader from "../Loader";
 import InputText from '../common-component/Inputtext/InputText';
@@ -10,13 +10,41 @@ import { Form, Formik } from 'formik';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
-import Appointments from '../salonManagement/EditDetails/Appointments/Appointments';
-
 
 function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     const [active, setActive] = useState(rowData.active);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedLandmark, setSelectedLandmark] = useState("");
+    const [userData, setUserData] = useState({});
+    const [appointments, setAppointments] = useState({});
+    console.log("Appointments", appointments)
+
+    const getData = async () => {
+        try {
+            const response = await getUserData(rowData.id);
+            setUserData(response?.data?.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    }, [rowData.id])
+
+
+    const getAppointments = async () => {
+        try {
+            const response = await getUserAppointments(rowData.id);
+            setAppointments(response?.data?.data || {});
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getAppointments();
+    }, [rowData.id])
 
     const handleToggleBlock = async () => {
         setIsLoading(true);
@@ -40,18 +68,17 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
         setSelectedLandmark(event.target.value);
     };
 
-    // Assuming rowData.addresses is an array of objects with 'landmark' and 'address' fields
-    const addresses = rowData.addresses || [];
+    // Render address details based on selected landmark
+    let addressDetails = "";
+    if (userData && userData.addresses) {
+        const selectedAddress = userData.addresses.find((address) => address.landmark === selectedLandmark);
+        if (selectedAddress) {
+            addressDetails = `${selectedAddress.houseNo}, ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`;
+        }
+    }
 
-    // Filter addresses based on selected landmark
-    const selectedAddress = addresses.find((address) => address.landmark === selectedLandmark);
-
-    // Extract address details
-    const addressDetails = selectedAddress
-        ? ` ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`
-        : "";
     return (
-        <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
+        <div className='bg-white p-3' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
             <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1' />
             <div>
                 <div className='d-flex justify-content-between'>
@@ -66,10 +93,10 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
-                {isValidImageUrl(rowData.profileImageUrl) ? (
+                {isValidImageUrl(userData?.profileImageUrl) ? (
                     <Zoom>
                         <img
-                            src={rowData.profileImageUrl}
+                            src={userData.profileImageUrl}
                             alt="Profile"
                             style={{
                                 width: 100,
@@ -79,7 +106,6 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                             }}
                         />
                     </Zoom>
-
                 ) : (
                     <Zoom>
                         <img
@@ -93,12 +119,10 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                             }}
                         />
                     </Zoom>
-
                 )}
-
             </div>
 
-            <Formik>
+            <Formik initialValues={{}}>
                 <Form>
                     <Grid container spacing={2} className='mt-1'>
                         <Grid item xs={4}>
@@ -106,7 +130,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Name"
                                 name="name"
                                 type="text"
-                                value={`${rowData.firstName} ${rowData.middleName} ${rowData.lastName}`}
+                                value={`${userData?.firstName} ${userData?.middleName} ${userData?.lastName}`}
                                 disabled
                             />
                         </Grid>
@@ -116,7 +140,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Email"
                                 name="email"
                                 type="email"
-                                value={rowData.email}
+                                value={userData?.email}
                                 disabled
                             />
                         </Grid>
@@ -126,7 +150,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Mobile Number"
                                 name="phoneNumber"
                                 type="text"
-                                value={rowData.phoneNumber}
+                                value={userData?.phoneNumber}
                                 disabled
                             />
                         </Grid>
@@ -136,7 +160,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Gender"
                                 name="gender"
                                 type="text"
-                                value={rowData.gender}
+                                value={userData?.gender}
                                 disabled
                             />
                         </Grid>
@@ -146,7 +170,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Joining Date"
                                 name="createdAt"
                                 type="text"
-                                value={new Date(rowData.createdAt).toLocaleDateString("en-US", {
+                                value={new Date(userData?.createdAt).toLocaleDateString("en-US", {
                                     day: "numeric",
                                     month: "long",
                                     year: "numeric",
@@ -155,32 +179,34 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                             />
                         </Grid>
 
-                        <Grid item xs={4}>
-                            <InputText
-                                label="Name"
-                                as="select"
-                                value={selectedLandmark}
-                                onChange={handleLandmarkChange}
-                                className="Form-control input"
-                                style={{ outline: "none" }}
-                            >
-                                <option value="">Select Name</option>
-                                {addresses.map((address, index) => (
-                                    <option key={index} value={address.landmark}>
-                                        {address.landmark}
-                                    </option>
-                                ))}
-                            </InputText>
-                        </Grid>
+
+                        {userData.addresses &&
+                            <Grid item xs={4}>
+                                <InputText
+                                    label="Name"
+                                    as="select"
+                                    value={selectedLandmark}
+                                    onChange={handleLandmarkChange}
+                                    className="Form-control input"
+                                    style={{ outline: "none" }}
+                                >
+                                    <option value="">Select Name</option>
+                                    {userData.addresses.map((address, index) => (
+                                        <option key={index} value={address.landmark}>
+                                            {address.landmark}
+                                        </option>
+                                    ))}
+                                </InputText>
+                            </Grid>
+                        }
 
 
                         <Grid item xs={4}>
-
                             <InputText
                                 label="Address"
                                 name="address"
                                 type="text"
-                                value={addressDetails}
+                                value={userData.addresses ? addressDetails : userData.address}
                                 disabled
                                 className="form-control input"
                             />
@@ -189,10 +215,8 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                 </Form>
             </Formik>
             <hr />
-
-            <Appointments />
-        </div >
-    )
+        </div>
+    );
 }
 
-export default Userdata
+export default Userdata;

@@ -10,10 +10,9 @@ import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify";
 import { salonOwnerDetailsSchema } from "../../../../utils/schema";
 
-function Salonownerdetails({ id, allowEdit }) {
+function Salonownerdetails({ id, allowEdit, salonDetail , fetchSalonDetailData}) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-    console.log(isEditing);
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);

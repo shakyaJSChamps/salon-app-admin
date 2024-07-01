@@ -123,11 +123,11 @@ const SaloonManagement = () => {
       selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.companyName}</p>,
       sortable: true,
     },
-    {
-      name: "Service Type",
-      selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
-      sortable: true,
-    },
+    // {
+    //   name: "Service Type",
+    //   selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
+    //   sortable: true,
+    // },
 
     {
       name: "City",

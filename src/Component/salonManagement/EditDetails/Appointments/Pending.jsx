@@ -26,7 +26,6 @@ function Pending({ appointmentData }) {
                         <div>{data?.user?.profileImageUrl ? (<img src={data?.user?.profileImageUrl} style={{ height: "85px", width: "85px" }} alt="User" />) :
                             (<img src={Profile} style={{ height: "85px", width: "85px" }} alt="User" />)
                         }
-
                         </div>
 
                         <div>
