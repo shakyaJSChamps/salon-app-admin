@@ -70,7 +70,7 @@ const SaloonManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width: "250px",
+      width: "300px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex">
           <div className="d-flex justify-content-center align-items-center">
