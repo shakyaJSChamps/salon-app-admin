@@ -271,8 +271,7 @@ export const salonOwnerDetailsSchema = Yup.object().shape({
   middleName: Yup.string()
     .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed"),
   lastName: Yup.string()
-    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed")
-    .required("Last name is required"),
+    .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed"),
   email: Yup.string().email('Invalid email').required('Email is required'),
   dataOfBirth: Yup.date()
     .required("Date of birth is required"),

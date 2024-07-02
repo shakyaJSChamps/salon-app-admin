@@ -42,7 +42,6 @@ const UserManagement = () => {
     try {
       setLoading(true);
       const response = await getUser(REQ_URL);
-      console.log("User data -->", response)
       const userData = response.data.data.items;
       setUserData(userData);
       setTotalRows(response.data.data.total);
@@ -70,7 +69,7 @@ const UserManagement = () => {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      width: "260px",
+      width: "300px",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="d-flex ">
           <div className="d-flex justify-content-center align-items-center">
@@ -170,13 +169,6 @@ const UserManagement = () => {
   return (
     <>
       {selectedRow ? (
-        // <MyVerticallyCenteredModal
-        //   show={modalShow}
-        //   onHide={() => setModalShow(false)}
-        //   rowData={selectedRow}
-        //   setUpdatedRowData={setUpdatedRowData}
-        //   showForm={"user"}
-        // />
         <Userdata
           rowData={selectedRow}
           setUpdatedRowData={setUpdatedRowData}

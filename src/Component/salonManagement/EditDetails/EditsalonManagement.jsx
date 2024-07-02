@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap';
 import BankDetails from '../EditDetails/Bankdetails/BankDetails.jsx';
 import SalonTime from '../EditDetails/Salontime/SalonTime.jsx';
-import { salonDetails } from '../../../api/account.api';
+import { getSalonAppointments, salonDetails } from '../../../api/account.api';
 import { useEffect, useState } from 'react'
 import Services from '../Services/Services.jsx';
 import Appointments from '../EditDetails/Appointments/Appointments.jsx';
@@ -13,6 +13,10 @@ import VerifyPublishButton from "../Verifypublishbutton/VerifyPublishButton.jsx"
 import Salonownerdetails from './Salonownerdetails/Salonownerdetails.jsx';
 import Managestaff from './Managestaff/Managestaff.jsx';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import Pending from './Appointments/Pending.jsx';
+import Cancelled from './Appointments/Cancelled.jsx';
+import Completed from './Appointments/Completed.jsx';
+
 
 function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
   const [salonDetail, setSalonDetail] = useState([]);
@@ -21,7 +25,39 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
   const [gallaryImages, setGallaryImages] = useState([]);
   const [workingHours, setWorkingHours] = useState([]);
   const [service, setService] = useState([]);
+  const [activeComponent, setActiveComponent] = useState('Completed');
+  const [appointmentData, setAppointmentData] = useState();
 
+  useEffect(() => {
+    const getAppointments = async (id) => {
+      try {
+        const appointments = await getSalonAppointments(id);
+        setAppointmentData(appointments?.data?.data);
+        console.log("Salon Appointments", appointments);
+      } catch (error) {
+        console.error('Error fetching salon details:', error);
+      }
+    };
+    if (salonDetail?.id) {
+      getAppointments(salonDetail.id);
+    } else {
+      console.error('Salon ID is not defined');
+    }
+  }, [salonDetail?.id]);
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case 'Pending':
+        return <Pending appointmentData={appointmentData} />;
+      case 'Cancelled':
+        return <Cancelled appointmentData={appointmentData} />;
+      case 'Completed':
+        return <Completed appointmentData={appointmentData} />;
+      default:
+        return <Completed appointmentData={appointmentData} />;
+    }
+  };
+  3
   const fetchSalonDetailData = async () => {
     try {
       const data = await salonDetails(payload, id);
@@ -42,10 +78,12 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
 
   return (
     <div className='bg-white  p-3 ' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
-      {allowEdit ? <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1'/>: ""}
+      <div className='d-flex justify-content-between align-items-center'>
+        {allowEdit ? <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1' /> : ""}
+      </div>
       <Row>
         <Col md={12}>
-          <Salonownerdetails id={id} allowEdit={true}/>
+          <Salonownerdetails id={id} allowEdit={true} salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
         </Col>
         <hr />
       </Row>
@@ -108,7 +146,12 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
 
       <Row>
         <Col md={12}>
-          <Appointments salonDetail={salonDetail} />
+          <Appointments
+            activeComponent={activeComponent}
+            setActiveComponent={setActiveComponent}
+            appointmentData={appointmentData}
+            renderComponent={renderComponent}
+          />
         </Col>
         <hr />
       </Row>
@@ -123,7 +166,9 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
 
       <Row>
         <Col md={12}>
-          <VerifyPublishButton salonDetail={salonDetail} />
+          <VerifyPublishButton salonDetail={salonDetail}
+            fetchSalonDetailData={fetchSalonDetailData}
+          />
         </Col>
       </Row>
 

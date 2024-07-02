@@ -52,6 +52,8 @@ import {
   __endpoint_deleteService,
   __endpoint_addStaff,
   __endpoint_updateSalonOwner,
+  __endpoint_getUserData,
+  __endpoint_getUserAppointment,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -225,13 +227,13 @@ export const getQrCode = (id) =>
 export const salonStatus = (payload, id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_salonStatus}/${id}`, payload);
 
-export const salesSalon = (reqUrl,id) =>
+export const salesSalon = (reqUrl, id) =>
   HTTP.Request(methods.GET, `${__endpoint_salesSalon}${id}/salons${reqUrl}`);
 
 export const salonStaff = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_salonStaff}/${id}/employees`);
 
-export const updateSalonStaff = ( id, empId, payload) =>
+export const updateSalonStaff = (id, empId, payload) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonStaff}/${id}/employees/${empId}`, payload);
 
 export const salonOwner = (id) =>
@@ -250,3 +252,9 @@ export const addStaff = (id, payload) => {
 
 export const updateSalonOwner = (id, payload) =>
   HTTP.Request(methods.PUT, `${__endpoint_updateSalonOwner}/${id}/owner`, payload);
+
+export const getUserData = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getUserData}/${id}`);
+
+export const getUserAppointments = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getUserAppointment}/${id}/appointments`);

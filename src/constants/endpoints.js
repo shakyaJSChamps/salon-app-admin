@@ -57,3 +57,5 @@ export const __endpoint_deleteStaff = endpoint + "admin/salons";
 export const __endpoint_deleteService = endpoint + "admin/salons/services";
 export const __endpoint_addStaff = endpoint + "admin/salons";
 export const __endpoint_updateSalonOwner = endpoint + "admin/salons";
+export const __endpoint_getUserData = endpoint + "admin/users/consumers";
+export const __endpoint_getUserAppointment = endpoint + "admin/users/consumers";
