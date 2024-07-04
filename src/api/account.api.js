@@ -54,6 +54,7 @@ import {
   __endpoint_updateSalonOwner,
   __endpoint_getUserData,
   __endpoint_getUserAppointment,
+  __endpoint_getAppointmentbyId,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -258,3 +259,6 @@ export const getUserData = (id) =>
 
 export const getUserAppointments = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getUserAppointment}/${id}/appointments`);
+
+export const getAppointmentbyId = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getAppointmentbyId}/${id}`);

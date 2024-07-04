@@ -10,7 +10,7 @@ import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify";
 import { salonOwnerDetailsSchema } from "../../../../utils/schema";
 
-function Salonownerdetails({ id, allowEdit, salonDetail , fetchSalonDetailData}) {
+function Salonownerdetails({ id, allowEdit }) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -49,6 +49,8 @@ function Salonownerdetails({ id, allowEdit, salonDetail , fetchSalonDetailData})
         const currentDate = new Date();
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
     };
+
+    
 
     return (
         <div>
@@ -93,7 +95,7 @@ function Salonownerdetails({ id, allowEdit, salonDetail , fetchSalonDetailData})
                         profileImageUrl: salonOwnerData.profileImageUrl || "",
                     }}
                     onSubmit={updateOwner}
-                    validationSchema={salonOwnerDetailsSchema} 
+                    validationSchema={salonOwnerDetailsSchema}
                     enableReinitialize
                 >
                     {({ values, handleChange, setFieldValue }) => (

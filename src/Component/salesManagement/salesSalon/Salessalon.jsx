@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import TableLoader from "../../../Component/common-component/TableLoader";
 import { salesSalon } from "../../../api/account.api";
 import EditsalonManagement from "../../salonManagement/EditDetails/EditsalonManagement";
+import { formatDate } from "../../common-component/Formatdate/Formatdate";
 
 const Salessalon = ({ id }) => {
     const [perPage, setPerPage] = useState(10);
@@ -122,11 +123,7 @@ const Salessalon = ({ id }) => {
 
         {
             name: "Joined On",
-            cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{new Date(row.createdAt).toLocaleDateString("en-US", {
-                day:"numeric",
-                month: "long",
-                year: "numeric",
-            })}</p>,
+            cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{formatDate(row.createdAt)}</p>,
             sortable: true,
         },
 

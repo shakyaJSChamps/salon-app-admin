@@ -55,8 +55,8 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
                                     )}
                                 </div>
                             </div>
-                        ):(
-                           null 
+                        ) : (
+                            null
                         )
                     }
                 </div>
@@ -179,7 +179,6 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
                                         className="input"
                                         style={{ outline: "none" }}
                                     >
-                                        <option value="">{values.serviceType}</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="both">Both</option>
