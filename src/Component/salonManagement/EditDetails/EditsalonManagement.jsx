@@ -57,7 +57,7 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
         return <Completed appointmentData={appointmentData} />;
     }
   };
-  3
+  
   const fetchSalonDetailData = async () => {
     try {
       const data = await salonDetails(payload, id);
@@ -83,7 +83,7 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
       </div>
       <Row>
         <Col md={12}>
-          <Salonownerdetails id={id} allowEdit={true} salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
+          <Salonownerdetails id={id} allowEdit={allowEdit} />
         </Col>
         <hr />
       </Row>

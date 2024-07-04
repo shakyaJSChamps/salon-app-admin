@@ -9,6 +9,7 @@ import { deleteSubAdmin, getSubAdmin } from "../../api/account.api";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import Notify from "../../utils/notify";
+import { formatDate } from "../common-component/Formatdate/Formatdate";
 
 const ManageSubAdmin = () => {
   const [data, setData] = useState([]);
@@ -37,7 +38,7 @@ const ManageSubAdmin = () => {
       fetchData(page, perPage, searchText);
     } catch (error) {
       console.error("Delete API Error:", error);
-      Notify.error(error.message); 
+      Notify.error(error.message);
     }
   };
 
@@ -54,7 +55,7 @@ const ManageSubAdmin = () => {
       customClass: "custom-swal",
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDeleteClick(row.id); 
+        handleDeleteClick(row.id);
       }
     });
   };
@@ -113,19 +114,19 @@ const ManageSubAdmin = () => {
     {
       name: "Create Date",
       width: "200px",
-      cell: (row) => <div>{new Date(row.createdAt).toLocaleDateString()}</div>,
+      cell: (row) => <div>{formatDate(row.createdAt)}</div>,
       sortable: true,
     },
     {
       name: "Update Date",
-      cell: (row) => <div>{new Date(row.updatedAt).toLocaleDateString()}</div>,
+      cell: (row) => <div>{formatDate(row.updatedAt)}</div>,
     },
     {
       name: "",
       cell: (row) => (
         <div>
-          <MdEditSquare className="me-2" 
-          onClick={() => handleRowClick(row)}
+          <MdEditSquare className="me-2"
+            onClick={() => handleRowClick(row)}
           />
           <RiDeleteBin6Fill
             className="cursor-pointer"
@@ -166,7 +167,7 @@ const ManageSubAdmin = () => {
       const subAdminData = response.data.data.items;
       console.log("Sub Admin Data ::", subAdminData);
       setData(subAdminData);
-      setTotalRows(response.data.data.total); 
+      setTotalRows(response.data.data.total);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -235,7 +236,7 @@ const ManageSubAdmin = () => {
         show={showModal}
         onHide={handleCloseModal}
         rowData={rowData}
-        fetchData={() => fetchData(page, perPage, searchText)} 
+        fetchData={() => fetchData(page, perPage, searchText)}
         page={page}
         perPage={perPage}
         searchText={searchText}

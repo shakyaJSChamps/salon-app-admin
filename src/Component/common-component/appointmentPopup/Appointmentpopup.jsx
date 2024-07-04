@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAppointmentDetails } from '../../../api/account.api';
+import { formatDate } from '../Formatdate/Formatdate';
 
 const Appointmentpopup = ({ open, onClose, appointment }) => {
     const [appointmentDetails, setAppointmentDetails] = useState(null);
@@ -59,10 +60,10 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         </Typography>
                         <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
                             <Grid container spacing={1}>
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleDateString()}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.date)}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleTimeString()}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
@@ -77,11 +78,11 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Address:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.address}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.bookingDate)}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceEndTime}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.bookingDate).toLocaleTimeString()}</Typography></Grid>
                             </Grid>
                         </Paper>
 
@@ -106,6 +107,8 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Type:</Typography></Grid>
                                     <Grid item xs={6}><Typography variant="body2">{service.type}</Typography></Grid>
 
+                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service for:</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>
 
                                 </Grid>
                             </Paper>

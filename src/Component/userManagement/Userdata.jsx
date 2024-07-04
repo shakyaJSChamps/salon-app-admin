@@ -10,6 +10,8 @@ import { Form, Formik } from 'formik';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import Userappointment from "./Userappointment.jsx";
+import {formatDate} from "../common-component/Formatdate/Formatdate.jsx";
 
 function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     const [active, setActive] = useState(rowData.active);
@@ -17,7 +19,6 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     const [selectedLandmark, setSelectedLandmark] = useState("");
     const [userData, setUserData] = useState({});
     const [appointments, setAppointments] = useState({});
-    console.log("Appointments", appointments)
 
     const getData = async () => {
         try {
@@ -170,11 +171,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Joining Date"
                                 name="createdAt"
                                 type="text"
-                                value={new Date(userData?.createdAt).toLocaleDateString("en-US", {
-                                    day: "numeric",
-                                    month: "long",
-                                    year: "numeric",
-                                })}
+                                value={formatDate(userData?.createdAt)}
                                 disabled
                             />
                         </Grid>
@@ -215,6 +212,9 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                 </Form>
             </Formik>
             <hr />
+            <div>
+                <Userappointment appointments={appointments} />
+            </div>
         </div>
     );
 }

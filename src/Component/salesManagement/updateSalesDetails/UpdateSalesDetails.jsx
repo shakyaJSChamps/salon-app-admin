@@ -68,9 +68,9 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     return (
         <>
             <div className={styles.mainDiv}>
+                <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer fs-4' />
                 <div className='d-flex justify-content-between align-items-center'>
                     <div className="d-flex justify-content-start align-items-center gap-1">
-                        <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer fs-4 mb-2'/>
                         <h4>Sales Details</h4>
                     </div>
 

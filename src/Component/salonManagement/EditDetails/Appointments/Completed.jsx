@@ -7,7 +7,7 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
 import Profile from "../../../../assets/image/Profile.webp"
 
-function Completed({ appointmentData }) {
+function Completed({ appointmentData, appointments }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
 

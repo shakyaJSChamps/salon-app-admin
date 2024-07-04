@@ -9,6 +9,7 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import Userdata from "../Component/userManagement/Userdata";
+import { formatDate } from "../Component/common-component/Formatdate/Formatdate";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -135,15 +136,13 @@ const UserManagement = () => {
     },
     {
       name: "Joined On",
-      cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>
-          {new Date(row.createdAt).toLocaleDateString("en-US", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </div>
-      ),
+      cell: (row) => {
+        return (
+          <div onClick={() => handleRowClick(row)}>
+            {formatDate(row.createdAt)}
+          </div>
+        );
+      },
       sortable: true,
     },
 
@@ -174,7 +173,8 @@ const UserManagement = () => {
           setUpdatedRowData={setUpdatedRowData}
           handleBack={() => {
             setSelectedRow(null);
-            navigate('/user-management');}}
+            navigate('/user-management');
+          }}
         />
       ) : <div className="main-table rounded ">
         <DataTable
