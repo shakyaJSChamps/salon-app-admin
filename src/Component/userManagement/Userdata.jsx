@@ -180,7 +180,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                         {userData.addresses &&
                             <Grid item xs={4}>
                                 <InputText
-                                    label="Name"
+                                    label=" Address Name"
                                     as="select"
                                     value={selectedLandmark}
                                     onChange={handleLandmarkChange}
