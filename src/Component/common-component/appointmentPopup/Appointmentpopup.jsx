@@ -66,6 +66,9 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleTimeString()}</Typography></Grid>
 
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service for:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>
+
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.duration} minutes</Typography></Grid>
 
@@ -106,9 +109,6 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
 
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Type:</Typography></Grid>
                                     <Grid item xs={6}><Typography variant="body2">{service.type}</Typography></Grid>
-
-                                    <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service for:</Typography></Grid>
-                                    <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>
 
                                 </Grid>
                             </Paper>
