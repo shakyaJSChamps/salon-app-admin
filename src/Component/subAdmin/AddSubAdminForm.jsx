@@ -181,7 +181,8 @@ const AddSubAdminForm = ({ rowData, fetchData, page, perPage, searchText, onClos
                     setFieldValue("roleName", e.target.value);
                     setFieldValue("features", selectedFeatures);
                   }}
-                  className="form-control input"
+                  className="Form-control input"
+                  style={{outline: "none"}}
                 >
                   <option value="" label="Select role" />
                   {role.map((data, index) => (
