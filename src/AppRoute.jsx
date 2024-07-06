@@ -107,7 +107,7 @@ const AppRoute = (props) => {
           element: <SalesWrapper />,
           children: [
             { path: "", element: <SalesPerson /> },
-            { path: "creates", element: <SalesCreate /> },
+            { path: "addSalesPerson", element: <SalesCreate /> },
           ],
         },
       ],

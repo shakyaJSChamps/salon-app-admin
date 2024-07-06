@@ -7,11 +7,13 @@ import InputText from "../../common-component/Inputtext/InputText.jsx";
 import { addSalesDetails } from "../../../api/account.api.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import { salesDetailsSchema } from "../../../utils/schema.js";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function SalesCreate(allowEdit) {
   const [updatedImageUrls, setUpdatedImageUrls] = useState({});
 
-  console.log("Sales Create",allowEdit);
+  console.log("Sales Create", allowEdit);
   const [saleDetails, setSaleDetails] = useState({
     bankdocumentImageUrl: "",
     panCardImageUrl: "",
@@ -20,7 +22,7 @@ function SalesCreate(allowEdit) {
     profileImageUrl: "",
   });
 
-  const addSales = async (values, {resetForm}) => {
+  const addSales = async (values, { resetForm }) => {
     try {
       const dataToSend = {
         ...values,
@@ -42,13 +44,19 @@ function SalesCreate(allowEdit) {
     }));
     setUpdatedImageUrls((prevState) => ({
       ...prevState,
-      [fieldName]: imagePath, 
+      [fieldName]: imagePath,
     }));
-    setFieldValue(fieldName, imagePath); 
+    setFieldValue(fieldName, imagePath);
   };
+
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate('/sales-person');
+  }
 
   return (
     <div className={styles.mainDiv}>
+      <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1' />
       <div className='d-flex justify-content-between align-items-center'>
         <h4>Sales Details</h4>
         <div className="d-flex justify-content-start align-items-center mb-3">
@@ -249,7 +257,7 @@ function SalesCreate(allowEdit) {
                   onImageUpload={(imagePath) =>
                     handleImageUpload("bankdocumentImageUrl", imagePath, setFieldValue)
                   }
-                  
+
                 />
                 <ErrorMessage name="bankdocumentImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -274,7 +282,7 @@ function SalesCreate(allowEdit) {
                   onImageUpload={(imagePath) =>
                     handleImageUpload("panCardImageUrl", imagePath, setFieldValue)
                   }
-                  
+
                 />
                 <ErrorMessage name="panCardImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -299,7 +307,7 @@ function SalesCreate(allowEdit) {
                   onImageUpload={(imagePath) =>
                     handleImageUpload("aadharFrontImageUrl", imagePath, setFieldValue)
                   }
-                  
+
                 />
                 <ErrorMessage name="aadharFrontImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -323,7 +331,7 @@ function SalesCreate(allowEdit) {
                   onImageUpload={(imagePath) =>
                     handleImageUpload("aadharBackImageUrl", imagePath, setFieldValue)
                   }
-                  
+
                 />
                 <ErrorMessage name="aadharBackImageUrl" component="div" className={styles.error} />
               </Grid>
@@ -347,7 +355,7 @@ function SalesCreate(allowEdit) {
                   onImageUpload={(imagePath) =>
                     handleImageUpload("profileImageUrl", imagePath, setFieldValue)
                   }
-                
+
                 />
                 <ErrorMessage name="profileImageUrl" component="div" className={styles.error} />
               </Grid>

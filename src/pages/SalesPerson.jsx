@@ -8,7 +8,6 @@ import TableLoader from "../Component/common-component/TableLoader";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
-import { useNavigate } from "react-router-dom";
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -20,7 +19,7 @@ const SalesPerson = () => {
   const [option, setOption] = useState("email");
   const [searchText, setSearchText] = useState("");
 
-  const navigate = useNavigate();
+  
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };

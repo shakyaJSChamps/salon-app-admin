@@ -14,7 +14,7 @@ const AddButton = ({ setOption, searchByText, options, buttonText,allowEdit }) =
       setShowForm("subAdmin");
       setShowModal(true);
     } else {
-      navigate("creates");
+      navigate("addSalesPerson");
     }
   };
 

@@ -78,6 +78,7 @@ export default function AddService(props) {
                       name="categoryId"
                       type="number"
                     >
+                      <option>Select Category</option>
                       {props.services.map((service, index) => (
                         <option key={index} value={service.id}>{service.name}</option>
                       ))}
@@ -118,7 +119,7 @@ export default function AddService(props) {
                       <option value="Select">Select Option</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
-                      <option value="Both">Both</option>
+                      <option value="unisex">Unisex</option>
                     </InputText>
                     <ErrorMessage name="type" component="div" className={styles.error} />
                   </Grid>

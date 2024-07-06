@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from "./Appointments.module.css";
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
 import Profile from "../../../../assets/image/Profile.webp"
+import { formatDate} from '../../../common-component/Formatdate/Formatdate';
 
 function Pending({ appointmentData, appointments }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -36,7 +37,7 @@ function Pending({ appointmentData, appointments }) {
                                 <p className={styles.firstName}>{data.user.firstName}</p>
                                 <p className={styles.startTime}>{data.serviceStartTime}</p>
                                 <p className={styles.startTime}>{data.serviceType}</p>
-                                <p className={styles.date}>{data.date}</p>
+                                <p className={styles.date}>{formatDate(data.date)}</p>
                             </div>
                             <div className='d-flex flex-column'>
                                 <p className={styles.pendingStatus}>{data.status}</p>

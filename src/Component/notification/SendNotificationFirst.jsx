@@ -29,10 +29,10 @@ const SendNotificationFirst = () => {
             control={<Checkbox id="all-saloon" />}
             label="All Saloon"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox id="all-freelance" />}
             label="All Freelance"
-          />
+          /> */}
         </div>
         <div className="d-flex justify-content-center">
         <button type="submit" className="button mt-2">

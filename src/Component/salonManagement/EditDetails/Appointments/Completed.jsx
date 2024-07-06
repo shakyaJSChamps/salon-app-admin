@@ -6,6 +6,7 @@ import Invoice from '../../../common-component/invoice/Invoice';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
 import Profile from "../../../../assets/image/Profile.webp"
+import { formatDate } from '../../../common-component/Formatdate/Formatdate';
 
 function Completed({ appointmentData, appointments }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -48,7 +49,7 @@ function Completed({ appointmentData, appointments }) {
                             <span className={styles.firstName}>{data.user.firstName}</span>
                             <span className={styles.startTime}>{data.serviceStartTime}</span>
                             <span className={styles.startTime}>{data.startTime}</span>
-                            <span className={styles.date}>{data.date}</span>
+                            <span className={styles.date}>{formatDate(data.date)}</span>
                         </div>
 
                         <div className={`d-flex flex-column justify-content-start align-items-start ${styles.customDiv}`}>

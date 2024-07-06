@@ -36,24 +36,24 @@ const data = [
     icon: <ArrowUpwardIcon sx={{ fontSize: "13px" }} />,
     changePercentage: 25,
   },
-  {
-    id: 3,
-    imageSrc: revenue1,
-    title: "Total Revenue",
-    value: 777,
-    color: "green",
-    icon: <ArrowUpwardIcon sx={{ fontSize: "12px" }} />,
-    changePercentage: 25,
-  },
-  {
-    id: 4,
-    imageSrc: running,
-    title: "Total Freelance",
-    value: 777,
-    color: "red",
-    icon: <ArrowDownwardIcon sx={{ fontSize: "12px" }} />,
-    changePercentage: -25,
-  },
+  // {
+  //   id: 3,
+  //   imageSrc: revenue1,
+  //   title: "Total Revenue",
+  //   value: 777,
+  //   color: "green",
+  //   icon: <ArrowUpwardIcon sx={{ fontSize: "12px" }} />,
+  //   changePercentage: 25,
+  // },
+  // {
+  //   id: 4,
+  //   imageSrc: running,
+  //   title: "Total Freelance",
+  //   value: 777,
+  //   color: "red",
+  //   icon: <ArrowDownwardIcon sx={{ fontSize: "12px" }} />,
+  //   changePercentage: -25,
+  // },
 ];
 
 const data1 = [
@@ -100,6 +100,37 @@ const Dashboard = () => {
 
   return (
     <>
+
+      <Row className="totalTwo-counts p-0 m-3">
+        {data1.map((item, index) => (
+          <Col key={item.id} lg={4}>
+            <Paper className={`total-paper ${index === 0 ? 'extra-padding' : ''} ${index === 2 ? 'extra-padding' : ''
+              }`}>
+              <Row>
+                <Col lg={4}>
+                  <img
+                    src={item.imageSrc}
+                    alt={item.title}
+                    className="user-image"
+                  />
+                </Col>
+                <Col lg={4}>
+                  <h5>{item.title}</h5>
+                </Col>
+                <Col lg={4}>
+                  <h6>{item.value}</h6>
+                  <p style={{ color: item.color }}>
+                    <span>{item.icon}</span>
+                    {item.changePercentage}%{" "}
+                    {item.changePercentage > 0 ? "Increase" : "Decrease"}
+                  </p>
+                </Col>
+              </Row>
+            </Paper>
+          </Col>
+        ))}
+      </Row>
+
       <Row className="totalOne-counts p-0 m-3">
         {data.map((item, index) => (
           <Col key={item.id} lg={3}>
@@ -130,35 +161,7 @@ const Dashboard = () => {
           </Col>
         ))}
       </Row>
-      <Row className="totalTwo-counts p-0 m-3">
-        {data1.map((item, index) => (
-          <Col key={item.id} lg={4}>
-            <Paper className={`total-paper ${index === 0 ? 'extra-padding' : ''} ${index === 2 ? 'extra-padding' : ''
-              }`}>
-              <Row>
-                <Col lg={4}>
-                  <img
-                    src={item.imageSrc}
-                    alt={item.title}
-                    className="user-image"
-                  />
-                </Col>
-                <Col lg={4}>
-                  <h5>{item.title}</h5>
-                </Col>
-                <Col lg={4}>
-                  <h6>{item.value}</h6>
-                  <p style={{ color: item.color }}>
-                    <span>{item.icon}</span>
-                    {item.changePercentage}%{" "}
-                    {item.changePercentage > 0 ? "Increase" : "Decrease"}
-                  </p>
-                </Col>
-              </Row>
-            </Paper>
-          </Col>
-        ))}
-      </Row>
+
       <Row className="totalThree-counts p-0 m-3">
         <Col lg={3}>
           <Paper className="registeredUser">
@@ -207,7 +210,7 @@ const Dashboard = () => {
             </ul>
           </Paper>
         </Col>
-        <Col lg={6}>
+        {/* <Col lg={6}>
           <Paper className="graph-revennue">
             <h4>Total Revenue</h4>
             <h3>777</h3>
@@ -243,7 +246,7 @@ const Dashboard = () => {
               <MarkPlot />
             </LineChart>
           </Paper>
-        </Col>
+        </Col> */}
       </Row>
     </>
   );
