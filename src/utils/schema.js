@@ -217,8 +217,8 @@ export const subAdminSchema = Yup.object().shape({
     .max(10, "Mobile number is not greater than 10 digits")
     .min(10, "Mobile number must be of 10 digits")
     .required("Mobile number is required"),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string().required("Password is required"),
+  // email: Yup.string().email('Invalid email').required('Email is required'),
+  // password: Yup.string().required("Password is required"),
   roleName: Yup.string().required("Role is required"),
 });
 

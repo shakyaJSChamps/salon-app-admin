@@ -57,10 +57,11 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
         return <Completed appointmentData={appointmentData} />;
     }
   };
-  
+
   const fetchSalonDetailData = async () => {
     try {
       const data = await salonDetails(payload, id);
+      console.log("salonDetails", data);
       setSalonDetail(data?.data?.data?.salon);
       setBankDetails(data?.data?.data?.bankDetail);
       setBannerImages(data?.data?.data?.bannerImages);

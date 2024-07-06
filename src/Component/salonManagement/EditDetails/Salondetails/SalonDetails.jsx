@@ -181,7 +181,7 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
                                     >
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
-                                        <option value="both">Both</option>
+                                        <option value="unisex">Unisex</option>
                                     </InputText><br />
                                     <ErrorMessage name="serviceType" component="div" className={styles.error} />
 

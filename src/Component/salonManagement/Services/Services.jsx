@@ -163,7 +163,7 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
                                     >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
-                                        <option value="Both">Both</option>
+                                        <option value="unisex">Unisex</option>
                                     </InputText>
                                     <ErrorMessage name={`services[${index}].type`} component="div" className={styles.error} />
                                 </Grid>

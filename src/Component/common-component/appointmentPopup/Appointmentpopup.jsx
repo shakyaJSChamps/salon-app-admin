@@ -64,13 +64,19 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.date)}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.date).toLocaleTimeString()}</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.startTime}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment start Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment End Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceEndTime}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service for:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.duration} minutes</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.duration} min</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Home Service:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.homeService ? 'Yes' : 'No'}</Typography></Grid>

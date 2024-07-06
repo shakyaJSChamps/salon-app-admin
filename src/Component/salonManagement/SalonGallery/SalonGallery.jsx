@@ -67,7 +67,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
             try {
                 const updatedData = {
                     imageUrl: imagePath,
-                    thumbnailUrl: 'https://example.com/thumb103.jpg',
+                    thumbnailUrl: '',
                 };
                 const updateResponse = await updateMaingate(updatedData, salonDetail.id);
                 setMainGateImageUrl(updateResponse.data.data.imageUrl);
@@ -81,7 +81,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
                 const updatedData = {
                     imageUrl: imagePath,
                     imageType: "MainGate",
-                    thumbnailUrl: 'https://example.com/thumb103.jpg',
+                    thumbnailUrl: '',
                 };
                 const updateResponse = await updateImage(updatedData, salonDetail.id);
                 setMainGateImageUrl(updateResponse.data.data.imageUrl);

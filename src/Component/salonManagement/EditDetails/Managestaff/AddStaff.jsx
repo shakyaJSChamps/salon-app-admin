@@ -106,6 +106,7 @@ function AddStaff({ isOpen, onClose, id, fetchStaffList }) {
                                             type="text"
                                             onChange={handleChange}
                                             value={values.phoneNumber}
+                                            maxLength={10}
                                         />
                                         <ErrorMessage name="phoneNumber" component="div" className={styles.error} />
                                     </Grid>
