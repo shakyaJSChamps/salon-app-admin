@@ -45,7 +45,6 @@ function Completed({ appointmentData, appointments }) {
     const fetchInvoice = async (id) => {
         try {
             const res = await getUserInvoice(id);
-            console.log("response user", res)
             setUserInvoice(res.data.data);
         } catch (error) {
             console.error("Error fetching invoice", error);
