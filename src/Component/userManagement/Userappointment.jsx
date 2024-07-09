@@ -4,7 +4,7 @@ import styles from "../salonManagement/EditDetails/Appointments/Appointments.mod
 import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Userappointmentdetails from './Userappointmentdetails';
-import {formatDate} from "../common-component/Formatdate/Formatdate.jsx";
+import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
 
 function Userappointment({ appointments }) {
     const [activeComponent, setActiveComponent] = useState('Completed');
@@ -32,7 +32,7 @@ function Userappointment({ appointments }) {
             <h5>Appointments</h5>
             <div className='d-flex justify-content-evenly align-items-center mb-3'>
                 <button className={getButtonClass('Rejected')} onClick={() => setActiveComponent('Rejected')}>Rejected</button>
-                <button className={getButtonClass('Pending')} onClick={() => setActiveComponent('Pending')}>Pending</button>
+                <button className={getButtonClass('Pending')} onClick={() => setActiveComponent('Pending')}>Upcoming</button>
                 <button className={getButtonClass('Confirmed')} onClick={() => setActiveComponent('Confirmed')}>Confirmed</button>
                 <button className={getButtonClass('Cancelled')} onClick={() => setActiveComponent('Cancelled')}>Cancelled</button>
                 <button className={getButtonClass('Completed')} onClick={() => setActiveComponent('Completed')}>Completed</button>
