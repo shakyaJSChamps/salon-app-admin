@@ -11,7 +11,7 @@ function Appointments({ activeComponent, setActiveComponent, appointmentData, re
         <div>
             <h5>Appointments</h5>
             <div className='d-flex justify-content-evenly align-items-center mb-3'>
-                <button className={getButtonClass('Pending')} onClick={() => setActiveComponent('Pending')}>Pending</button>
+                <button className={getButtonClass('Pending')} onClick={() => setActiveComponent('Pending')}>Upcoming</button>
                 <button className={getButtonClass('Cancelled')} onClick={() => setActiveComponent('Cancelled')}>Cancelled</button>
                 <button className={getButtonClass('Completed')} onClick={() => setActiveComponent('Completed')}>Completed</button>
             </div>

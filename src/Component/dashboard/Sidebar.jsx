@@ -48,10 +48,9 @@ const Sidebar = (props) => {
         filteredFeatures[settingsIndex].children = settingsSubmenu.children;
       }
 
-      console.log("FilteredFeature::::> ", filteredFeatures);
       dispatch(setFeature(filteredFeatures));
     } catch (error) {
-      console.error("Error ::>", error);
+      console.error("Error fetching features:", error);
       Notify.error(error.message);
     }
   }, [dispatch]);
@@ -60,7 +59,7 @@ const Sidebar = (props) => {
     if (authToken && feature.length === 0) {
       getFeatureList();
     }
-  }, [getFeatureList, authToken, feature]);
+  }, [authToken, feature.length, getFeatureList]);
 
   const menus = {
     Dashboard: <FaChartPie />,
@@ -152,21 +151,21 @@ const Sidebar = (props) => {
       );
     } else {
       return (
-          <li key={index}>
-            <NavLink
-              to={item.name.toLowerCase().replace(/\s+/g, "-")}
-              className="text-decoration-none text-dark "
-            >
-              <div className="side-nav-item">
-                <span className="side-nav-icon m-auto">
-                  {menus[item.name.replace(/\s+/g, "")]}
-                </span>
-                {props.toggleSidebar && (
-                  <span className="side-nav-label m-auto ps-2">{item.name}</span>
-                )}
-              </div>
-            </NavLink>
-          </li>
+        <li key={index}>
+          <NavLink
+            to={item.name.toLowerCase().replace(/\s+/g, "-")}
+            className="text-decoration-none text-dark "
+          >
+            <div className="side-nav-item">
+              <span className="side-nav-icon m-auto">
+                {menus[item.name.replace(/\s+/g, "")]}
+              </span>
+              {props.toggleSidebar && (
+                <span className="side-nav-label m-auto ps-2">{item.name}</span>
+              )}
+            </div>
+          </NavLink>
+        </li>
       );
     }
   };

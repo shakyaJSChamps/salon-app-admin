@@ -55,6 +55,8 @@ import {
   __endpoint_getUserData,
   __endpoint_getUserAppointment,
   __endpoint_getAppointmentbyId,
+  __endpoint_getuserInvoice,
+  __endpoint_getvendorInvoice,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -262,3 +264,9 @@ export const getUserAppointments = (id) =>
 
 export const getAppointmentbyId = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getAppointmentbyId}/${id}`);
+
+export const getUserInvoice = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getuserInvoice}/${id}/invoice`);
+
+export const getVendorInvoice = (id) =>
+  HTTP.Request(methods.GET, `${__endpoint_getvendorInvoice}/${id}/invoice`);

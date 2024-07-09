@@ -163,7 +163,7 @@ const Dashboard = () => {
       </Row>
 
       <Row className="totalThree-counts p-0 m-3">
-        <Col lg={3}>
+        <Col lg={6}>
           <Paper className="registeredUser">
             <h4>Total User</h4>
             <p>total registered</p>
@@ -185,7 +185,7 @@ const Dashboard = () => {
             </BarChart>
           </Paper>
         </Col>
-        <Col lg={3}>
+        <Col lg={6}>
           <Paper className="booking-graph">
             <h4>Bookings</h4>
 

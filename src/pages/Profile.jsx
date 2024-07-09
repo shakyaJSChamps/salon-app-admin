@@ -25,8 +25,8 @@ const Profile = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleLogout = () => {
-    dispatch(removeToken());
-    navigate("/account/login");
+    navigate("/account/login");    //Firstly navigate to login page
+    dispatch(removeToken());       // remove uerInfo from store
     setAnchorElUser(null);
   };
 
@@ -76,7 +76,7 @@ const Profile = () => {
             key="Profile"
             onClick={handleCloseUserMenu}
             className="menu-item"
-            style={{borderBottom:"2px solid white"}}
+            style={{ borderBottom: "2px solid white" }}
           >
             <FaRegUser className="menu-icon" />
             <Typography textAlign="center">Profile</Typography>
