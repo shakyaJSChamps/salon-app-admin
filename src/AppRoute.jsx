@@ -46,7 +46,7 @@ const ChangedPassword = lazy(() =>
 const Error = lazy(() => import("../src/Component/Error"));
 
 const ProtectedRoutes = ({ authToken }) => {
-  return authToken ? <Layout /> : <Navigate to="/account/login" />;
+  return authToken ? <Layout /> : <Navigate to="account/login" />;
 };
 
 const AppRoute = (props) => {
@@ -119,3 +119,7 @@ const AppRoute = (props) => {
 };
 
 export default AppRoute;
+
+
+
+

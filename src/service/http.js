@@ -1,22 +1,23 @@
 import axios from 'axios';
 import session from "./session";
-import {PUBLIC_URLS} from '../constants/public-endpoint';
+import { PUBLIC_URLS } from '../constants/public-endpoint';
 import Notify from '../utils/notify';
-import { removeToken } from '../features/authInfo'; // Import the removeToken action from your authSlice
-import store from '../app/store'; // Import your Redux store
+// import { removeToken, storeToken } from '../features/authInfo'; // Import the removeToken action from your authSlice
 //TODO: handle public endpoints, multiple-part request, json request
+import store from "../../src/app/store"
+import { removeToken } from '../features/authInfo';
 
 /*Setting up interceptors with axios*/
 axios.interceptors.request.use(function (config) {
-   
+
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
 
-    if(isRequireToken(config.url)){
-        config.headers["Authorization"]= `Bearer ${session.get('token')}`;     
-    } 
+    if (isRequireToken(config.url)) {
+        config.headers["Authorization"] = `Bearer ${session.get('token')}`;
+    }
     return config;
 
 
@@ -25,8 +26,8 @@ axios.interceptors.request.use(function (config) {
 })
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {   
-    
+axios.interceptors.response.use(function (response) {
+
     // Do something with response data 
     // 200 OR 20*
     // SUCESS: if request by PUT/POST/DELETE
@@ -35,15 +36,17 @@ axios.interceptors.response.use(function (response) {
 
     return response;
 
+
+
 }, function (error) {
     if (!error.response && error.message === 'Network Error') {
         return Promise.reject("Couldn't connect to server. Please try again later.");
-    }else if (error.response && error.response.data.status === 401) { // Assuming 401 is the unauthorized status
+    } else if (error.response && error.response.status === 401) {
         // Dispatch removeToken action if response status is 401
         store.dispatch(removeToken());
-    }else if(error.response && error.response.data){
+    } else if (error.response && error.response.data) {
         return Promise.reject(error.response.data);
-    }else{
+    } else {
         return Promise.reject("Server Connection Failed");
     }
 });
@@ -51,7 +54,7 @@ axios.interceptors.response.use(function (response) {
 
 export default class HTTP {
     static Request(method, url, data = null) {
-        
+
         return new Promise((resolve, reject) => {
             const request = {
                 method,
@@ -60,7 +63,6 @@ export default class HTTP {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-   
             };
             axios(request)
                 .then(response => resolve(response))
@@ -75,7 +77,7 @@ export default class HTTP {
     }
 }
 
-function isRequireToken(url){
-    const match = PUBLIC_URLS.filter(u=> url.endsWith(u));
-    return  match.length === 0;
+function isRequireToken(url) {
+    const match = PUBLIC_URLS.filter(u => url.endsWith(u));
+    return match.length === 0;
 }

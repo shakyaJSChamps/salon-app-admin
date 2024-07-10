@@ -20,13 +20,21 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.authInfo.userInfo);
-  const { email } = JSON.parse(userInfo);
+
+  let userEmail = "";
+
+  try {
+    const parsedUserInfo = userInfo ? JSON.parse(userInfo) : {};
+    userEmail = parsedUserInfo.email || "";
+  } catch (error) {
+    console.error("Error parsing userInfo:", error);
+  }
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleLogout = () => {
-    navigate("/account/login");    //Firstly navigate to login page
-    dispatch(removeToken());       // remove uerInfo from store
+    navigate("/account/login");
+    dispatch(removeToken());
     setAnchorElUser(null);
   };
 
@@ -51,7 +59,7 @@ const Profile = () => {
       >
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar>{email.charAt(0).toUpperCase()}</Avatar>
+            <Avatar>{userEmail.charAt(0).toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
         <Menu

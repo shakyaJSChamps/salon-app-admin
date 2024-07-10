@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { doLogin, getFeature } from "../../api/account.api";
 import { storeToken } from "../../features/authInfo";
@@ -82,11 +82,10 @@ const App = () => {
                   name="email"
                   placeholder="Enter email"
                   autoComplete="off"
-                  className={`mt-2 form-control input  ${
-                    props.touched.email && props.errors.email
-                      ? "is-invalid"
-                      : ""
-                  }`}
+                  className={`mt-2 form-control input  ${props.touched.email && props.errors.email
+                    ? "is-invalid"
+                    : ""
+                    }`}
                 />
                 <ErrorMessage
                   component="div"
@@ -103,11 +102,10 @@ const App = () => {
                   type="password"
                   name="password"
                   placeholder="Enter password"
-                  className={`mt-2 form-control input ${
-                    props.touched.password && props.errors.password
-                      ? "is-invalid"
-                      : "Password is wrong"
-                  }`}
+                  className={`mt-2 form-control input ${props.touched.password && props.errors.password
+                    ? "is-invalid"
+                    : "Password is wrong"
+                    }`}
                 />
                 <ErrorMessage
                   component="div"
