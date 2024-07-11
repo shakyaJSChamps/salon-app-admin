@@ -8,13 +8,13 @@ import Appointmentpopup from '../../../common-component/appointmentPopup/Appoint
 import Profile from "../../../../assets/image/Profile.webp"
 import { formatDate } from '../../../common-component/Formatdate/Formatdate';
 import { getUserInvoice, getVendorInvoice } from '../../../../api/account.api';
+import Notify from "../../../../utils/notify"
 
 function Completed({ appointmentData, appointments }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [userInvoice, setUserInvoice] = useState([]);
     const [vendorInvoice, setVendorInvoice] = useState([]);
-    console.log("vendor", vendorInvoice)
 
     const handleOpenDrawer = (appointment) => {
         setSelectedAppointment(appointment);
@@ -47,13 +47,17 @@ function Completed({ appointmentData, appointments }) {
             const res = await getUserInvoice(id);
             setUserInvoice(res.data.data);
         } catch (error) {
-            console.error("Error fetching invoice", error);
+            Notify.error(error.message);
         }
     };
 
     const handleDownloadInvoice = async () => {
         try {
+            if (!userInvoice.invoicePath) {
+                return;
+            }
             const invoicePath = userInvoice.invoicePath;
+            console.log("User", invoicePath)
             const link = document.createElement('a');
             link.href = invoicePath;
             link.setAttribute('download', '');
@@ -61,7 +65,7 @@ function Completed({ appointmentData, appointments }) {
             link.click();
             document.body.removeChild(link);
         } catch (error) {
-            console.error("Error downloading invoice", error);
+            Notify.error(error.message);
         }
     };
 
@@ -71,16 +75,17 @@ function Completed({ appointmentData, appointments }) {
             console.log("response", res);
             setVendorInvoice(res.data.data);
         } catch (error) {
-            console.error("Error fetching invoice", error);
+            Notify.error(error.message);
         }
     };
 
     const downloadInvoice = async () => {
         try {
-
-            const invoicePath = vendorInvoice.invoicePath;  //invoice  path
-
-            // Initiate download
+            if (!vendorInvoice.invoicePath) {
+                return;
+            }
+            const invoicePath = vendorInvoice.invoicePath;
+            console.log( "Vendor", invoicePath )
             const link = document.createElement('a');
             link.href = invoicePath;
             link.setAttribute('download', '');
@@ -88,7 +93,7 @@ function Completed({ appointmentData, appointments }) {
             link.click();
             document.body.removeChild(link);
         } catch (error) {
-            console.error("Error downloading invoice", error);
+            Notify.error(error.message);
         }
     };
 

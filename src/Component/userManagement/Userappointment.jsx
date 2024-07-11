@@ -5,11 +5,15 @@ import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Userappointmentdetails from './Userappointmentdetails';
 import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
+import { MdOutlineFileDownload } from 'react-icons/md';
+import { getUserInvoice } from '../../api/account.api.js';
+import Notify from "../../utils/notify.js"
 
 function Userappointment({ appointments }) {
     const [activeComponent, setActiveComponent] = useState('Completed');
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [userInvoice, setUserInvoice] = useState([]);
 
 
     const getButtonClass = (component) => {
@@ -26,6 +30,34 @@ function Userappointment({ appointments }) {
     };
 
     const handleCloseDrawer = () => setDrawerOpen(false);
+
+    const fetchInvoice = async (appointment) => {
+        const id = appointment.id;
+        try {
+            const res = await getUserInvoice(id);
+            setUserInvoice(res.data.data);
+        } catch (error) {
+            Notify.error(error.message)
+        }
+    };
+
+    const handleDownloadInvoice = async () => {
+        try {
+
+            if (!userInvoice.invoicePath) {
+                return;
+            }
+            const invoicePath = userInvoice.invoicePath;
+            const link = document.createElement('a');
+            link.href = invoicePath;
+            link.setAttribute('download', '');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
 
     return (
         <div>
@@ -202,6 +234,10 @@ function Userappointment({ appointments }) {
                                                     >
                                                         View Details
                                                     </Link>
+                                                    <div className='d-flex justify-content-center align-items-center flex-row gap-1 mt-2 cursor-pointer' onClick={() => { handleDownloadInvoice(), fetchInvoice(appointment) }}>
+                                                        <Link className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer" style={{ fontSize: "13px" }}>Download Invoice</Link>
+                                                        <MdOutlineFileDownload className="fs-5 " />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Paper>

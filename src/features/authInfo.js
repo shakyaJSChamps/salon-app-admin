@@ -25,7 +25,6 @@ export const authInfo = createSlice({
       state.token = "";
       state.userInfo = {};
       Session.remove("userInfo");
-      console.log("UserInfo removed");
     }
   },
 })

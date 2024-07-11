@@ -42,7 +42,7 @@ axios.interceptors.response.use(function (response) {
     if (!error.response && error.message === 'Network Error') {
         return Promise.reject("Couldn't connect to server. Please try again later.");
     } else if (error.response && error.response.status === 401) {
-        // Dispatch removeToken action if response status is 401
+        // store.dispatch(logout())
         store.dispatch(removeToken());
     } else if (error.response && error.response.data) {
         return Promise.reject(error.response.data);
