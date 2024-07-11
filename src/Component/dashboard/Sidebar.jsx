@@ -50,8 +50,8 @@ const Sidebar = (props) => {
 
       dispatch(setFeature(filteredFeatures));
     } catch (error) {
-      console.error("Error fetching features:", error);
-      Notify.error(error.message);
+      // console.error("Error fetching features:", error);
+      // Notify.error(error.message);
     }
   }, [dispatch]);
 
