@@ -16,11 +16,16 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
     const [isImageUpdated, setIsImageUpdated] = useState(false);
 
     useEffect(() => {
-        if (gallaryImages && bannerImages) {
-            setBannerImage(bannerImages || []);
+        if (gallaryImages) {
             setGallaryImage(gallaryImages || []);
         }
-    }, [gallaryImages, bannerImages]);
+    }, [gallaryImages]);
+
+    useEffect(() => {
+        if (bannerImages) {
+            setBannerImage(bannerImages || []);
+        }
+    }, [bannerImages]);
 
     useEffect(() => {
         if (imagePath !== '') {
@@ -156,7 +161,7 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
                                 {
                                     allowEdit ? (
                                         <button type="button" className={styles.deleteButton} onClick={() => removeImage(image.id, 'banner')}>Remove</button>
-                                    ):(
+                                    ) : (
                                         null
                                     )
                                 }

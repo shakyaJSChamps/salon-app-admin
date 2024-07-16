@@ -11,7 +11,7 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Userappointment from "./Userappointment.jsx";
-import {formatDate} from "../common-component/Formatdate/Formatdate.jsx";
+import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
 
 function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     const [active, setActive] = useState(rowData.active);
@@ -208,6 +208,19 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 className="form-control input"
                             />
                         </Grid>
+
+                        {userData.deletedAt !== null &&
+                            <Grid item xs={4}>
+                                <InputText
+                                    label="Deleted At"
+                                    name="deletedAt"
+                                    type="text"
+                                    value={formatDate(userData.DeletedAt)}
+                                    disabled
+                                    // className="form-control input"
+                                />
+                            </Grid>
+                        }
                     </Grid>
                 </Form>
             </Formik>
