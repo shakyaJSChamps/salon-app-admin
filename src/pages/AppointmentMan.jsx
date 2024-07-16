@@ -11,7 +11,7 @@ import TableLoader from "../Component/common-component/TableLoader";
 
 const AppointmentManagement = () => {
   const title = "Appointment Management";
-  const icon = <AiOutlineUser />;
+  const icon = <AiOutlineUser/>;
   const [modalShow, setModalShow] = React.useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [perPage, setPerPage] = useState(10);
@@ -77,7 +77,7 @@ const AppointmentManagement = () => {
               <img
                 src={row.profileImageUrl}
                 alt="Profile"
-                style={{ width: 35, height: 35, borderRadius: "50%" }}
+                style={{ width:35, height: 35, borderRadius: "50%" }}
               />
             ) : (
               <img
@@ -86,7 +86,7 @@ const AppointmentManagement = () => {
                 style={{
                   width: 35,
                   height: 35,
-                  borderRadius: "50%",
+                  borderRadius:"50%",
                   objectFit: "cover",
                 }}
               />
@@ -170,23 +170,21 @@ const AppointmentManagement = () => {
 
   return (
     <>
-      {/* {modalShow && selectedRow && (
-        <MyVerticallyCenteredModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          rowData={selectedRow}
-          setUpdatedRowData={setUpdatedRowData}
-          showForm={"user"}
-        />
-      )} */}
+      <div className=" font-weight ps-2">
+        Appointment Management
+      </div>
       <div className="main-table rounded ">
         <DataTable
           title={
             <CustomTitle
-              icon={icon}
-              title={title}
+              showDropdown={true}
               setOption={setOption}
               searchByText={searchByText}
+              options={[
+                { text: "Name", value: "name" },
+                { text: "Services", value: "services" },
+                { text: "Appointment Id", value: "appointmentid" },
+              ]}
             />
           }
           columns={columns}
