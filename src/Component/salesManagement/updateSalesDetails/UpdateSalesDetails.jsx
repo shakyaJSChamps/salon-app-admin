@@ -4,13 +4,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import Notify from "../../../utils/notify.js";
 import InputText from "../../common-component/Inputtext/InputText.jsx";
-import { updateSaleDetails, salesDetail } from "../../../api/account.api.js";
+import { updateSaleDetails, salesDetail, restoreSales } from "../../../api/account.api.js";
 import { salesDetailsSchema } from "../../../utils/schema.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import Salessalon from "../salesSalon/Salessalon.jsx";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { JoinedDate } from "../../common-component/Formatdate/Joinedondate.jsx";
 
 function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -27,23 +28,22 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         setIsEditing(!isEditing);
     };
 
+    const fetchSalesDetail = async () => {
+        try {
+            const data = await salesDetail(payload, id);
+            setSaleDetails(data?.data?.data || {});
+        } catch (error) {
+            console.error('Error fetching salon details:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchSalesDetail = async () => {
-            try {
-                const data = await salesDetail(payload, id);
-                console.log("Single sale data-->", data);
-                setSaleDetails(data?.data?.data || {});
-            } catch (error) {
-                console.error('Error fetching salon details:', error);
-            }
-        };
         fetchSalesDetail();
     }, [id]);
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
             const response = await updateSaleDetails(values, saleDetails.userId);
-            console.log("updateSaleDetails ->", response);
             Notify.success(response.data.message);
             setIsEditing(false);
         } catch (error) {
@@ -65,6 +65,20 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         }));
     };
 
+    const handlerestore = async () => {
+        const payload = {
+            field: "active",
+            value: "False",
+        };
+        try {
+            const response = await restoreSales(payload, saleDetails.userId);
+            fetchSalesDetail();
+            Notify.success(response.data.message);
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
+
     return (
         <>
             <div className={styles.mainDiv}>
@@ -74,7 +88,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                         <h4>Sales Details</h4>
                     </div>
 
-                    <div className="d-flex justify-content-start align-items-center mb-3">
+                    <div className="d-flex justify-content-start align-items-center mb-3 gap-2">
                         {!isEditing && (
                             <button type="button" onClick={handleEditClick} className={styles.button}>
                                 Edit
@@ -85,7 +99,17 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                 Save
                             </button>
                         )}
+
+                        {saleDetails.DeletedAt !== null ?
+                            <button
+                                onClick={handlerestore}
+                                className={styles.button}
+                            >
+                                Restore
+                            </button> : null}
                     </div>
+
+
                 </div>
                 <Formik
                     initialValues={{
@@ -201,6 +225,18 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                     />
                                     <ErrorMessage name="dob" component="div" className={styles.error} />
                                 </Grid>
+
+                                {saleDetails.DeletedAt !== null &&
+                                    <Grid item xs={4}>
+                                        <InputText
+                                            label="Deleted At"
+                                            name="deletedAt"
+                                            type="text"
+                                            disabled
+                                            value={JoinedDate(saleDetails.DeletedAt)}
+                                        />
+                                    </Grid>
+                                }
 
                                 <Grid item xs={4}>
                                     <div>

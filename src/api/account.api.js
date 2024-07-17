@@ -57,6 +57,8 @@ import {
   __endpoint_getAppointmentbyId,
   __endpoint_getuserInvoice,
   __endpoint_getvendorInvoice,
+  __endpoint_restoreUser,
+  __endpoint_restoreSales,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -270,3 +272,9 @@ export const getUserInvoice = (id) =>
 
 export const getVendorInvoice = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getvendorInvoice}/${id}/invoice`);
+
+export const restoreUser = ( id) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_restoreUser}/${id}/restore`,id);
+
+export const restoreSales = (id) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_restoreSales}/${id}/user`,id);

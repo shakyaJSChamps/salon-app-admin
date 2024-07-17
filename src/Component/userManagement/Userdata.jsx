@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
-import { getUserData, updateUser, getUserAppointments } from "../../api/account.api";
+import { getUserData, updateUser, getUserAppointments, restoreUser } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import Loader from "../Loader";
 import InputText from '../common-component/Inputtext/InputText';
@@ -11,7 +11,7 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Userappointment from "./Userappointment.jsx";
-import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
+import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx";
 
 function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     const [active, setActive] = useState(rowData.active);
@@ -65,6 +65,20 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
         }
     };
 
+    const handlerestore = async () => {
+        // const payload = {
+        //     field: "active",
+        //     value: active ? "false" : "true",
+        // };
+        try {
+            const response = await restoreUser(rowData.id);
+            getData();
+            Notify.success(response.data.message);
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
+
     const handleLandmarkChange = (event) => {
         setSelectedLandmark(event.target.value);
     };
@@ -81,16 +95,24 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     return (
         <div className='bg-white p-3' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
             <IoIosArrowDropleftCircle onClick={handleBack} className='cursor-pointer mb-2 fs-4 mr-1' />
-            <div>
+            <div className=''>
                 <div className='d-flex justify-content-between'>
                     <h4>User Details</h4>
-                    <button
-                        onClick={handleToggleBlock}
-                        className="button"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? <Loader /> : active ? "Block" : "Unblock"}
-                    </button>
+                    <div className='d-flex gap-2'>
+                        <button
+                            onClick={handleToggleBlock}
+                            className="button"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <Loader /> : active ? "Block" : "Unblock"}
+                        </button>
+                        {userData.deletedAt !== null ? <button
+                            onClick={handlerestore}
+                            className="button"
+                        >
+                            Restore
+                        </button> : null}
+                    </div>
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
@@ -171,7 +193,7 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                                 label="Joining Date"
                                 name="createdAt"
                                 type="text"
-                                value={formatDate(userData?.createdAt)}
+                                value={JoinedDate(userData?.createdAt)}
                                 disabled
                             />
                         </Grid>
@@ -209,17 +231,16 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
                             />
                         </Grid>
 
-                        {userData.deletedAt !== null &&
+                        {userData.deletedAt !== null ?
                             <Grid item xs={4}>
                                 <InputText
                                     label="Deleted At"
                                     name="deletedAt"
                                     type="text"
-                                    value={formatDate(userData.DeletedAt)}
+                                    value={JoinedDate(userData.deletedAt)}
                                     disabled
-                                    // className="form-control input"
                                 />
-                            </Grid>
+                            </Grid> : null
                         }
                     </Grid>
                 </Form>
