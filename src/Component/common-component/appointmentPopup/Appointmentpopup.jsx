@@ -60,10 +60,10 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                         </Typography>
                         <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
                             <Grid container spacing={1}>
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.date)}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Start Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.startTime}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment start Time:</Typography></Grid>
@@ -90,8 +90,6 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.bookingDate)}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{new Date(appointmentDetails.bookingDate).toLocaleTimeString()}</Typography></Grid>
                             </Grid>
                         </Paper>
 

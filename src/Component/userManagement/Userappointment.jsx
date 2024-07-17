@@ -224,7 +224,7 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.firstName}>{appointment.salon}</p>
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
-                                                    <p className={styles.date}>{formatDate(appointment.date)}</p>
+                                                    <p className={styles.date}>{formatDate(appointment.serviceDate)}</p>
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>

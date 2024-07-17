@@ -9,7 +9,7 @@ import TableLoader from "../Component/common-component/TableLoader";
 import EditsalonManagement from "../Component/salonManagement/EditDetails/EditsalonManagement";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineContentCut } from "react-icons/md";
-import { formatDate } from "../Component/common-component/Formatdate/Formatdate";
+import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
 
 const SaloonManagement = () => {
   const title = "Saloon Management";
@@ -138,7 +138,7 @@ const SaloonManagement = () => {
 
     {
       name: "Joined On",
-      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{formatDate(row.createdAt)}</p>,
+      cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{JoinedDate(row.createdAt)}</p>,
       sortable: true,
     },
 

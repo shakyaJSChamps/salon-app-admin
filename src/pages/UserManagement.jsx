@@ -9,7 +9,7 @@ import DataTable from "react-data-table-component";
 import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import Userdata from "../Component/userManagement/Userdata";
-import { formatDate } from "../Component/common-component/Formatdate/Formatdate";
+import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -139,7 +139,7 @@ const UserManagement = () => {
       cell: (row) => {
         return (
           <div onClick={() => handleRowClick(row)}>
-            {formatDate(row.createdAt)}
+            {JoinedDate(row.createdAt)}
           </div>
         );
       },

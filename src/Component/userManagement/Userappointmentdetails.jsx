@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -27,7 +26,6 @@ const Userappointmentdetails = ({ open, onClose, selectedAppointment }) => {
             }
             setLoading(false);
         };
-
         if (open) {
             fetchAppointmentDetails();
         }
@@ -42,7 +40,6 @@ const Userappointmentdetails = ({ open, onClose, selectedAppointment }) => {
         >
             <Box sx={{ width: 400, padding: '20px' }}>
                 {loading && <CircularProgress />}
-
                 <>
                     {
                         appointmentDetails &&
@@ -68,10 +65,10 @@ const Userappointmentdetails = ({ open, onClose, selectedAppointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Id:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.appointmentId}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.date)}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Start Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.startTime}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Duration:</Typography></Grid>
@@ -82,6 +79,9 @@ const Userappointmentdetails = ({ open, onClose, selectedAppointment }) => {
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment For:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.serviceDate)}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Start Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>

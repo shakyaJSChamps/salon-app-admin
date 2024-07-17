@@ -1,7 +1,23 @@
 export const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('en-US', { month: 'short' });
-    const year = date.getFullYear();
-    return `${day} ${month} ${year}`;
+    if (!dateString) {
+        return 'Invalid date';
+    }
+
+    const dateParts = dateString.split('-');
+    if (dateParts.length !== 3) {
+        return 'Invalid date format';
+    }
+
+    const [day, month, year] = dateParts;
+    const date = new Date(`${year}-${month}-${day}`);
+
+    if (isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+
+    const formattedDay = date.getDate();
+    const formattedMonth = date.toLocaleString('en-US', { month: 'short' });
+    const formattedYear = date.getFullYear();
+
+    return `${formattedDay} ${formattedMonth} ${formattedYear}`;
 };

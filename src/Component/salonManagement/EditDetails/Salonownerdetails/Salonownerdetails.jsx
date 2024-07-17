@@ -22,6 +22,11 @@ function Salonownerdetails({ id, allowEdit }) {
         try {
             const response = await salonOwner(id);
             setSalonOwnerData(response?.data?.data);
+            if (salonOwnerData && salonOwnerData.dataOfBirth) {
+                const [day, month, year] = salonOwnerData.dataOfBirth.split('/');
+                salonOwnerData.dataOfBirth = `${year}-${month}-${day}`;
+                console.log("dob", salonOwnerData.dataOfBirth);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -50,7 +55,7 @@ function Salonownerdetails({ id, allowEdit }) {
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
     };
 
-    
+
 
     return (
         <div>
