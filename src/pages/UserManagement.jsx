@@ -10,6 +10,7 @@ import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import Userdata from "../Component/userManagement/Userdata";
 import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
+import { formatDate } from "../Component/common-component/Formatdate/Formatdate";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -128,9 +129,9 @@ const UserManagement = () => {
       sortable: true,
     },
     {
-      name: "City",
+      name: "Deleted On",
       cell: (row) => (
-        <div onClick={() => handleRowClick(row)}>{row.address}</div>
+        <div onClick={() => handleRowClick(row)}>{JoinedDate(row.deletedAt)}</div>
       ),
       sortable: true,
     },
