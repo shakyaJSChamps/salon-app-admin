@@ -66,12 +66,8 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     };
 
     const handlerestore = async () => {
-        const payload = {
-            field: "active",
-            value: "False",
-        };
         try {
-            const response = await restoreSales(payload, saleDetails.userId);
+            const response = await restoreSales(saleDetails.userId);
             fetchSalesDetail();
             Notify.success(response.data.message);
         } catch (error) {

@@ -8,6 +8,7 @@ import TableLoader from "../Component/common-component/TableLoader";
 import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
+import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
 
 const SalesPerson = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -19,7 +20,7 @@ const SalesPerson = () => {
   const [option, setOption] = useState("email");
   const [searchText, setSearchText] = useState("");
 
-  
+
   const handleRowClick = (row) => {
     setSelectedRow(row);
   };
@@ -112,6 +113,13 @@ const SalesPerson = () => {
       cell: (row) => <div onClick={() => handleRowClick(row)}>{row.address}</div>,
       sortable: true,
     },
+
+    {
+      name: "Deleted On",
+      cell: (row) => <div onClick={() => handleRowClick(row)}>{JoinedDate(row.DeletedAt)}</div>,
+      sortable: true,
+    },
+
     {
       name: "UPI Id",
       cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,

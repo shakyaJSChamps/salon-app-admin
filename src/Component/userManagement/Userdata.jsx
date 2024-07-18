@@ -66,10 +66,6 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
     };
 
     const handlerestore = async () => {
-        // const payload = {
-        //     field: "active",
-        //     value: active ? "false" : "true",
-        // };
         try {
             const response = await restoreUser(rowData.id);
             getData();
