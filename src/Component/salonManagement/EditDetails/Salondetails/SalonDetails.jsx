@@ -83,7 +83,7 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
                         <Grid container spacing={2}>
                             <Grid item xs={4}>
                                 <InputText
-                                    label="Company Name"
+                                    label="Company Name(Optional)"
                                     name="companyName"
                                     type="text"
                                     disabled={!isEditing}
@@ -119,7 +119,7 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
 
                             <Grid item xs={4}>
                                 <InputText
-                                    label="Email ID"
+                                    label="Email ID(Optional)"
                                     name="email"
                                     type="text"
                                     disabled={!isEditing}
@@ -131,7 +131,7 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
 
                             <Grid item xs={4}>
                                 <InputText
-                                    label="Gst Number"
+                                    label="Gst Number(Optional)"
                                     name="gstNumber"
                                     type="text"
                                     disabled={!isEditing}

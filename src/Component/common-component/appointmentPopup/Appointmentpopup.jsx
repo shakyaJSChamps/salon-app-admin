@@ -87,7 +87,7 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Address:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.address}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.bookingDate)}</Typography></Grid>
 
                             </Grid>
