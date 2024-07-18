@@ -49,13 +49,8 @@ export const bankDetailsSchema = Yup.object().shape({
 
 export const salonDetailsSchema = Yup.object().shape({
   companyName: Yup.string()
-    .required('Company Name is required')
     .max(30, 'Company Name must be at least 30 characters long'),
-
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  gstNumber: Yup.string()
-    .required('GST Number is required')
-    .matches(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, 'Invalid GST Number format'),
+  email: Yup.string().email('Invalid email'),
   address: Yup.string().required('Address is required'),
   pincode: Yup.string()
     .required('Pincode is required')
@@ -273,8 +268,8 @@ export const salonOwnerDetailsSchema = Yup.object().shape({
   lastName: Yup.string()
     .matches(/^[a-zA-Z\s]+$/, "Only upper and lower case letters and spaces are allowed"),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  dataOfBirth: Yup.date()
-    .required("Date of birth is required"),
+  // dataOfBirth: Yup.date()
+  //   .required("Date of birth is required"),
   gender: Yup.string().required('Gender is required'),
   panCardImgUrl: Yup.string()
     .url('Pan Card document image must be a valid URL')

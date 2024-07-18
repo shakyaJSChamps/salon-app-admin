@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
-import { Grid } from "@mui/material";
+import { Grid, Input } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
 import { salonOwner, updateSalonOwner } from "../../../../api/account.api";
 import Zoom from 'react-medium-image-zoom';
@@ -9,6 +9,8 @@ import styles from "../Salondetails/Salondetails.module.css";
 import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify";
 import { salonOwnerDetailsSchema } from "../../../../utils/schema";
+import { format,parse } from 'date-fns'
+
 
 function Salonownerdetails({ id, allowEdit }) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
@@ -22,11 +24,6 @@ function Salonownerdetails({ id, allowEdit }) {
         try {
             const response = await salonOwner(id);
             setSalonOwnerData(response?.data?.data);
-            if (salonOwnerData && salonOwnerData.dataOfBirth) {
-                const [day, month, year] = salonOwnerData.dataOfBirth.split('/');
-                salonOwnerData.dataOfBirth = `${year}-${month}-${day}`;
-                console.log("dob", salonOwnerData.dataOfBirth);
-            }
         } catch (error) {
             console.log(error);
         }
@@ -55,7 +52,36 @@ function Salonownerdetails({ id, allowEdit }) {
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
     };
 
+    const formatDisplayDate = (dateString) => {
+        // Date formats to try parsing
+        const formats = [
+            'yyyy-MM-dd',
+            'dd-MM-yyyy',
+            'MM-dd-yyyy',
+            'yyyy/MM/dd',
+            'dd/MM/yyyy',
+            'MM/dd/yyyy',
+            'dd-MMM-yyyy',
+            'MMM dd, yyyy'
+        ];
 
+        let parsedDate;
+
+        for (let fmt of formats) {
+            try {
+                parsedDate = parse(dateString, fmt, new Date());
+                if (!isNaN(parsedDate)) break;
+            } catch (error) {
+                continue;
+            }
+        }
+
+        if (!parsedDate || isNaN(parsedDate)) {
+            return 'Invalid Date Format';
+        }
+
+        return format(parsedDate, 'dd-MMM-yyyy');
+    };
 
     return (
         <div>
@@ -120,7 +146,7 @@ function Salonownerdetails({ id, allowEdit }) {
 
                                 <Grid item xs={4}>
                                     <InputText
-                                        label="Middle Name"
+                                        label="Middle Name(Optional)"
                                         name="middleName"
                                         type="text"
                                         value={values.middleName}
@@ -132,7 +158,7 @@ function Salonownerdetails({ id, allowEdit }) {
 
                                 <Grid item xs={4}>
                                     <InputText
-                                        label="Last Name"
+                                        label="Last Name(Optional)"
                                         name="lastName"
                                         type="text"
                                         value={values.lastName}
@@ -165,18 +191,29 @@ function Salonownerdetails({ id, allowEdit }) {
                                     />
                                 </Grid>
 
-                                <Grid item xs={4}>
+                                {isEditing ? (<Grid item xs={4}>
                                     <InputText
                                         label="DOB"
                                         name="dataOfBirth"
                                         type="date"
-                                        value={values.dataOfBirth}
+                                        value={(values.dataOfBirth)}
                                         onChange={handleChange}
                                         disabled={!isEditing}
                                         max={getMinDOBDate()}
                                     />
                                     <ErrorMessage name="dataOfBirth" component="div" className={styles.error} />
-                                </Grid>
+                                </Grid>) : (<Grid item xs={4}>
+                                    <InputText
+                                        label="DOB"
+                                        name="dataOfBirth"
+                                        type="text"
+                                        value={formatDisplayDate(values.dataOfBirth)}
+                                        onChange={handleChange}
+                                        disabled={!isEditing}
+                                        max={getMinDOBDate()}
+                                    />
+                                    <ErrorMessage name="dataOfBirth" component="div" className={styles.error} />
+                                </Grid>)}
 
                                 <Grid item xs={4}>
                                     <InputText

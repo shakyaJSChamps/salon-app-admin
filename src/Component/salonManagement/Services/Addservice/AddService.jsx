@@ -119,7 +119,7 @@ export default function AddService(props) {
                       <option value="Select">Select Option</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
-                      <option value="unisex">Unisex</option>
+                      <option value="Both">Unisex</option>
                     </InputText>
                     <ErrorMessage name="type" component="div" className={styles.error} />
                   </Grid>
