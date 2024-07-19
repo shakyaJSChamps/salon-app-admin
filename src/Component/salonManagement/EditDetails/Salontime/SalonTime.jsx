@@ -7,7 +7,9 @@ import Notify from '../../../../utils/notify';
 import { salonTimeSchema } from '../../../../utils/schema';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo'; // Import DemoContainer
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers'; // Import renderTimeViewClock
 import dayjs from 'dayjs';
 
 function SalonTime({ workingHours, salonDetail, allowEdit, fetchSalonDetailData }) {
@@ -95,22 +97,36 @@ function SalonTime({ workingHours, salonDetail, allowEdit, fetchSalonDetailData 
                                 </Grid>
                                 <Grid item xs={3} className='mt-4'>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimePicker
-                                            value={values[`openTime${index}`] ? dayjs(values[`openTime${index}`]) : null}
-                                            onChange={(newValue) => setFieldValue(`openTime${index}`, newValue ? newValue.format() : null)}
-                                            disabled={!isEditing}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
+                                        <DemoContainer components={['TimePicker']}>
+                                            <TimePicker
+                                                value={values[`openTime${index}`] ? dayjs(values[`openTime${index}`]) : null}
+                                                onChange={(newValue) => setFieldValue(`openTime${index}`, newValue ? newValue.format() : null)}
+                                                disabled={!isEditing}
+                                                viewRenderers={{
+                                                    hours: renderTimeViewClock,
+                                                    minutes: renderTimeViewClock,
+                                                    seconds: renderTimeViewClock,
+                                                }}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        </DemoContainer>
                                     </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={3} className='mt-4'>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimePicker
-                                            value={values[`closeTime${index}`] ? dayjs(values[`closeTime${index}`]) : null}
-                                            onChange={(newValue) => setFieldValue(`closeTime${index}`, newValue ? newValue.format() : null)}
-                                            disabled={!isEditing}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
+                                        <DemoContainer components={['TimePicker']}>
+                                            <TimePicker
+                                                value={values[`closeTime${index}`] ? dayjs(values[`closeTime${index}`]) : null}
+                                                onChange={(newValue) => setFieldValue(`closeTime${index}`, newValue ? newValue.format() : null)}
+                                                disabled={!isEditing}
+                                                viewRenderers={{
+                                                    hours: renderTimeViewClock,
+                                                    minutes: renderTimeViewClock,
+                                                    seconds: renderTimeViewClock,
+                                                }}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        </DemoContainer>
                                     </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={2} className="d-flex justify-content-center align-items-center mt-3 flex-column">

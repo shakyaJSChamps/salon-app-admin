@@ -75,7 +75,7 @@ function Services({ service, salonDetail, fetchSalonDetailData, allowEdit }) {
                 <h4 className={styles.color}>Services</h4>
                 {allowEdit ? (
                     <div className="d-flex justify-content-start align-items-center mb-3 gap-1">
-                        {!isEditing && (
+                        {!isEditing &&(
                             <button type="button" className={styles.btn} onClick={handleEditClick}>
                                 Edit
                             </button>

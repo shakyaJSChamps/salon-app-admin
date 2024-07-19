@@ -11,7 +11,7 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import Swal from "sweetalert2";
 import AddStaff from "./AddStaff.jsx";
-import { format, parse } from 'date-fns'
+import { formatDisplayDate, formatInputDate } from "../../../common-component/Formatdate/Formatdate.jsx";
 
 function Managestaff({ id }) {
     const [staffList, setStaffList] = useState([]);
@@ -108,37 +108,6 @@ function Managestaff({ id }) {
     const getMinDOBDate = () => {
         const currentDate = new Date();
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
-    };
-
-    const formatDisplayDate = (dateString) => {
-        // Date formats to try parsing
-        const formats = [
-            'yyyy-MM-dd',
-            'dd-MM-yyyy',
-            'MM-dd-yyyy',
-            'yyyy/MM/dd',
-            'dd/MM/yyyy',
-            'MM/dd/yyyy',
-            'dd-MMM-yyyy',
-            'MMM dd, yyyy'
-        ];
-
-        let parsedDate;
-
-        for (let fmt of formats) {
-            try {
-                parsedDate = parse(dateString, fmt, new Date());
-                if (!isNaN(parsedDate)) break;
-            } catch (error) {
-                continue;
-            }
-        }
-
-        if (!parsedDate || isNaN(parsedDate)) {
-            return 'Invalid Date Format';
-        }
-
-        return format(parsedDate, 'dd-MMM-yyyy');
     };
 
     return (
@@ -269,7 +238,7 @@ function Managestaff({ id }) {
                                             type="date"
                                             onChange={handleChange}
                                             disabled={!isEditing}
-                                            value={values.dateOfBirth}
+                                            value={formatInputDate(values.dateOfBirth)}
                                             max={getMinDOBDate()}
                                         />
                                         <ErrorMessage name="dateOfBirth" component="div" className={styles.error} />

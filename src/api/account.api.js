@@ -277,4 +277,4 @@ export const restoreUser = ( id) =>
   HTTP.Request(methods.PATCH, `${__endpoint_restoreUser}/${id}/restore`,id);
 
 export const restoreSales = (id) =>
-  HTTP.Request(methods.PATCH, `${__endpoint_restoreSales}/${id}/user`,id);
+  HTTP.Request(methods.PATCH, `${__endpoint_restoreSales}/${id}/user/restore`,id);

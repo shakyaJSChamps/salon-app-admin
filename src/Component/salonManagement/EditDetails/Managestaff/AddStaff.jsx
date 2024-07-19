@@ -184,7 +184,7 @@ function AddStaff({ isOpen, onClose, id, fetchStaffList }) {
 
                                                 <ImageUpdate
                                                     name="profileImageUrl"
-                                                    buttonName="Update"
+                                                    buttonName="Add"
                                                     inputClassName="form-control input"
                                                     onImageUpload={(imagePath) => handleImageUpload("profileImageUrl", imagePath, setFieldValue)}
                                                     allowEdit={true}
@@ -209,7 +209,7 @@ function AddStaff({ isOpen, onClose, id, fetchStaffList }) {
 
                                                 <ImageUpdate
                                                     name="aadharFrontUrl"
-                                                    buttonName="Update"
+                                                    buttonName="Add"
                                                     inputClassName="form-control input"
                                                     onImageUpload={(imagePath) => handleImageUpload("aadharFrontUrl", imagePath, setFieldValue)}
                                                     allowEdit={true}
@@ -234,7 +234,7 @@ function AddStaff({ isOpen, onClose, id, fetchStaffList }) {
 
                                                 <ImageUpdate
                                                     name="aadharBackUrl"
-                                                    buttonName="Update"
+                                                    buttonName="Add"
                                                     inputClassName="form-control input"
                                                     onImageUpload={(imagePath) => handleImageUpload("aadharBackUrl", imagePath, setFieldValue)}
                                                     allowEdit={true}
