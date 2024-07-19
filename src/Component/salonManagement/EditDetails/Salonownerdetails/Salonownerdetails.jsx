@@ -117,7 +117,7 @@ function Salonownerdetails({ id, allowEdit }) {
                         firstName: salonOwnerData.firstName || "",
                         middleName: salonOwnerData.middleName || "",
                         lastName: salonOwnerData.lastName || "",
-                        dataOfBirth: salonOwnerData.dataOfBirth || "",
+                        dateOfBirth: salonOwnerData.dateOfBirth || "",
                         gender: salonOwnerData.gender || "",
                         email: salonOwnerData.email || "",
                         panCardImgUrl: salonOwnerData.panCardImgUrl || "",
@@ -196,7 +196,7 @@ function Salonownerdetails({ id, allowEdit }) {
                                         label="DOB"
                                         name="dataOfBirth"
                                         type="date"
-                                        value={(values.dataOfBirth)}
+                                        value={(values.dateOfBirth)}
                                         onChange={handleChange}
                                         disabled={!isEditing}
                                         max={getMinDOBDate()}
@@ -207,7 +207,7 @@ function Salonownerdetails({ id, allowEdit }) {
                                         label="DOB"
                                         name="dataOfBirth"
                                         type="text"
-                                        value={formatDisplayDate(values.dataOfBirth)}
+                                        value={formatDisplayDate(values.dateOfBirth)}
                                         onChange={handleChange}
                                         disabled={!isEditing}
                                         max={getMinDOBDate()}

@@ -12,6 +12,7 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { JoinedDate } from "../../common-component/Formatdate/Joinedondate.jsx";
+import { format, parse } from 'date-fns'
 
 function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -73,6 +74,36 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         } catch (error) {
             Notify.error(error.message);
         }
+    };
+
+    const formatDisplayDate = (dateString) => {
+        // Date formats to try parsing
+        const formats = [
+            'yyyy-MM-dd',
+            'dd-MM-yyyy',
+            'MM-dd-yyyy',
+            'yyyy/MM/dd',
+            'dd/MM/yyyy',
+            'MM/dd/yyyy',
+            'dd-MMM-yyyy',
+            'MMM dd, yyyy'
+        ];
+
+        let parsedDate;
+        for (let fmt of formats) {
+            try {
+                parsedDate = parse(dateString, fmt, new Date());
+                if (!isNaN(parsedDate)) break;
+            } catch (error) {
+                continue;
+            }
+        }
+
+        if (!parsedDate || isNaN(parsedDate)) {
+            return 'Invalid Date Format';
+        }
+
+        return format(parsedDate, 'dd-MMM-yyyy');
     };
 
     return (
@@ -209,18 +240,35 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                     <ErrorMessage name="countryCode" component="div" className={styles.error} />
                                 </Grid>
 
-                                <Grid item xs={4}>
-                                    <InputText
-                                        label="DOB"
-                                        name="dob"
-                                        type="date"
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                        value={values.dob}
-                                        max={new Date().toISOString().split("T")[0]}
-                                    />
-                                    <ErrorMessage name="dob" component="div" className={styles.error} />
-                                </Grid>
+                                {isEditing ? (
+                                    <Grid item xs={4}>
+                                        <InputText
+                                            label="DOB"
+                                            name="dob"
+                                            type="date"
+                                            disabled={!isEditing}
+                                            onChange={handleChange}
+                                            value={values.dob}
+                                            max={new Date().toISOString().split("T")[0]}
+                                        />
+                                        <ErrorMessage name="dob" component="div" className={styles.error} />
+                                    </Grid>
+                                ) : (
+                                    <Grid item xs={4}>
+                                        <InputText
+                                            label="DOB"
+                                            name="dob"
+                                            type="text"
+                                            disabled={!isEditing}
+                                            onChange={handleChange}
+                                            value={formatDisplayDate(values.dob)}
+                                            max={new Date().toISOString().split("T")[0]}
+                                        />
+                                        <ErrorMessage name="dob" component="div" className={styles.error} />
+                                    </Grid>
+                                )}
+
+
 
                                 {saleDetails.DeletedAt !== null &&
                                     <Grid item xs={4}>

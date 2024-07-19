@@ -7,6 +7,8 @@ import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getAppointmentDetails } from '../../../api/account.api';
 import { formatDate } from '../Formatdate/Formatdate';
+import { addDurationToStartTime } from '../Addtimeduration/Addtimeduration';
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const Appointmentpopup = ({ open, onClose, appointment }) => {
     const [appointmentDetails, setAppointmentDetails] = useState(null);
@@ -23,7 +25,6 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                 setAppointmentDetails(response.data.data);
             } catch (error) {
                 setError('Error fetching appointment details. Please try again later.');
-                console.error('Error fetching appointment details:', error);
             }
             setLoading(false);
         };
@@ -66,7 +67,16 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking Start Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.startTime}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment start Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Booking End Time:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{addDurationToStartTime(appointmentDetails.startTime, appointmentDetails.duration)}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.serviceDate)}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment ID:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.appointmentId}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Start Time:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment End Time:</Typography></Grid>
@@ -81,14 +91,9 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Home Service:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.homeService ? 'Yes' : 'No'}</Typography></Grid>
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment ID:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.appointmentId}</Typography></Grid>
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Address:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.salon.address}</Typography></Grid>
-
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Date:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{formatDate(appointmentDetails.bookingDate)}</Typography></Grid>
 
                             </Grid>
                         </Paper>
@@ -106,10 +111,10 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                     <Grid item xs={6}><Typography variant="body2">{service.serviceName}</Typography></Grid>
 
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Price:</Typography></Grid>
-                                    <Grid item xs={6}><Typography variant="body2">{service.servicePrice}</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2"><FaIndianRupeeSign />{service.servicePrice}</Typography></Grid>
 
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Duration:</Typography></Grid>
-                                    <Grid item xs={6}><Typography variant="body2">{service.serviceDuration}</Typography></Grid>
+                                    <Grid item xs={6}><Typography variant="body2">{service.serviceDuration} min</Typography></Grid>
 
                                     <Grid item xs={6}><Typography variant="body2" className="fw-bold">Service Type:</Typography></Grid>
                                     <Grid item xs={6}><Typography variant="body2">{service.type}</Typography></Grid>
@@ -161,7 +166,29 @@ const Appointmentpopup = ({ open, onClose, appointment }) => {
                                     ) : (null)
 
                                 }
+                            </Grid>
+                        </Paper>
 
+                        <Typography variant="h6" gutterBottom className='fw-bold'>
+                            Payment Details
+                        </Typography>
+                        <Paper elevation={2} sx={{ padding: '10px', marginBottom: '10px' }}>
+                            <Grid container spacing={1}>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Payment  Status:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.paymentStatus.paymentStatus}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Payment Mode:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.paymentStatus.paymentMode}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Discount:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.paymentStatus.discount}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Subtotal:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2"><FaIndianRupeeSign />{appointmentDetails.paymentStatus.subTotal}</Typography></Grid>
+
+                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Total:</Typography></Grid>
+                                <Grid item xs={6}><Typography variant="body2"><FaIndianRupeeSign />{appointmentDetails.paymentStatus.total}</Typography></Grid>
 
                             </Grid>
                         </Paper>

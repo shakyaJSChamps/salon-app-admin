@@ -19,5 +19,5 @@ export const formatDate = (dateString) => {
     const formattedMonth = date.toLocaleString('en-US', { month: 'short' });
     const formattedYear = date.getFullYear();
 
-    return `${formattedDay} ${formattedMonth} ${formattedYear}`;
+    return `${formattedDay}-${formattedMonth}-${formattedYear}`;
 };
