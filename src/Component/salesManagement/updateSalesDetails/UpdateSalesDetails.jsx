@@ -13,6 +13,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { JoinedDate } from "../../common-component/Formatdate/Joinedondate.jsx";
 import { format, parse } from 'date-fns'
+import { formatDisplayDate, formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
 
 function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -76,34 +77,9 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         }
     };
 
-    const formatDisplayDate = (dateString) => {
-        // Date formats to try parsing
-        const formats = [
-            'yyyy-MM-dd',
-            'dd-MM-yyyy',
-            'MM-dd-yyyy',
-            'yyyy/MM/dd',
-            'dd/MM/yyyy',
-            'MM/dd/yyyy',
-            'dd-MMM-yyyy',
-            'MMM dd, yyyy'
-        ];
-
-        let parsedDate;
-        for (let fmt of formats) {
-            try {
-                parsedDate = parse(dateString, fmt, new Date());
-                if (!isNaN(parsedDate)) break;
-            } catch (error) {
-                continue;
-            }
-        }
-
-        if (!parsedDate || isNaN(parsedDate)) {
-            return 'Invalid Date Format';
-        }
-
-        return format(parsedDate, 'dd-MMM-yyyy');
+    const getMinDOBDate = () => {
+        const currentDate = new Date();
+        return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
     };
 
     return (
@@ -248,8 +224,8 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                             type="date"
                                             disabled={!isEditing}
                                             onChange={handleChange}
-                                            value={values.dob}
-                                            max={new Date().toISOString().split("T")[0]}
+                                            value={formatInputDate(values.dob)}
+                                            max={getMinDOBDate()}
                                         />
                                         <ErrorMessage name="dob" component="div" className={styles.error} />
                                     </Grid>
@@ -262,7 +238,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                             disabled={!isEditing}
                                             onChange={handleChange}
                                             value={formatDisplayDate(values.dob)}
-                                            max={new Date().toISOString().split("T")[0]}
+                                            max={getMinDOBDate()}
                                         />
                                         <ErrorMessage name="dob" component="div" className={styles.error} />
                                     </Grid>
