@@ -64,3 +64,5 @@ export const __endpoint_getuserInvoice = endpoint + "admin/appointments";
 export const __endpoint_getvendorInvoice = endpoint + "admin/b2b/appointments";
 export const __endpoint_restoreUser = endpoint + "admin/users/consumers";
 export const __endpoint_restoreSales = endpoint + "admin/sales";
+export const __endpoint_userCount = endpoint + "admin/users/consumers";
+export const __endpoint_salonCount = endpoint + "admin/salons/count";

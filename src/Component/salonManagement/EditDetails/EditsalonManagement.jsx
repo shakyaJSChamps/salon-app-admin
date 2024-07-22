@@ -33,7 +33,6 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
       try {
         const appointments = await getSalonAppointments(id);
         setAppointmentData(appointments?.data?.data);
-        console.log("Salon Appointments", appointments);
       } catch (error) {
         console.error('Error fetching salon details:', error);
       }

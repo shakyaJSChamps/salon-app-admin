@@ -9,9 +9,10 @@ import UpdateSalesDetails from "../Component/salesManagement/updateSalesDetails/
 import CommonImage from "../Component/common-component/CommonImage";
 import AddButton from "../Component/AddButton";
 import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
+import { useNavigate } from "react-router-dom";
 
 const SalesPerson = () => {
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRow, setSelectedRow] = useState();
   const [perPage, setPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [salesData, setSalesData] = useState([]);
@@ -19,10 +20,12 @@ const SalesPerson = () => {
   const [loading, setLoading] = useState(false);
   const [option, setOption] = useState("email");
   const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
 
 
   const handleRowClick = (row) => {
     setSelectedRow(row);
+    navigate(`/sales-person/${row.userId}`)
   };
 
   const handlePageChange = (page) => {
@@ -155,6 +158,7 @@ const SalesPerson = () => {
           allowEdit={true}
           handleBack={() => {
             setSelectedRow(null);
+            navigate(`/sales-person`);
           }}
         />
       ) : (

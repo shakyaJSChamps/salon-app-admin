@@ -18,8 +18,8 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
 
   const handleDeleteConfirmation = (row) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "Coupon deleted successfully",
+      title: "Warning?",
+      text: "Are you sure you want to delete the coupon?",
       icon: "warning",
       width: "30%",
       showCancelButton: true,

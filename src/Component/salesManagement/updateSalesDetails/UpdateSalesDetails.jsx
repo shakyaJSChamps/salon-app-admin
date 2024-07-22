@@ -12,8 +12,8 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { JoinedDate } from "../../common-component/Formatdate/Joinedondate.jsx";
-import { format, parse } from 'date-fns'
 import { formatDisplayDate, formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
+import { useNavigate } from "react-router-dom";
 
 function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -25,6 +25,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         aadharBackImageUrl: null,
         profileImageUrl: null,
     });
+
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
