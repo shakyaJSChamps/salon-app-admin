@@ -12,13 +12,15 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Userappointment from "./Userappointment.jsx";
 import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx";
+import { useNavigate } from 'react-router-dom';
 
-function Userdata({ rowData, setUpdatedRowData, handleBack }) {
+function Userdata({ rowData, setUpdatedRowData,setSelectedRow }) {
     const [active, setActive] = useState(rowData.active);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedLandmark, setSelectedLandmark] = useState("");
     const [userData, setUserData] = useState({});
     const [appointments, setAppointments] = useState({});
+    const navigate = useNavigate();
 
     const getData = async () => {
         try {
@@ -28,7 +30,6 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
             console.log(error);
         }
     }
-
     useEffect(() => {
         getData();
     }, [rowData.id])
@@ -87,6 +88,11 @@ function Userdata({ rowData, setUpdatedRowData, handleBack }) {
             addressDetails = `${selectedAddress.houseNo}, ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`;
         }
     }
+
+    const handleBack=() => {
+        setSelectedRow(null);
+        navigate('/user-management');
+      }
 
     return (
         <div className='bg-white p-3' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>

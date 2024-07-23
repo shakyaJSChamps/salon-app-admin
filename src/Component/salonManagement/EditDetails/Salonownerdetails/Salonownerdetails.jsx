@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
-import { Grid, Input } from "@mui/material";
+import { Grid } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
 import { salonOwner, updateSalonOwner } from "../../../../api/account.api";
 import Zoom from 'react-medium-image-zoom';
@@ -10,7 +10,6 @@ import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify";
 import { salonOwnerDetailsSchema } from "../../../../utils/schema";
 import { formatDisplayDate, formatInputDate } from "../../../common-component/Formatdate/Formatdate";
-
 
 function Salonownerdetails({ id, allowEdit }) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
@@ -38,7 +37,7 @@ function Salonownerdetails({ id, allowEdit }) {
         } catch (error) {
         }
     }
-    
+
     useEffect(() => {
         getSalonOwner();
     }, [id]);
@@ -54,9 +53,16 @@ function Salonownerdetails({ id, allowEdit }) {
 
     return (
         <div>
+            <style>
+                {`
+                    .custom-zoom-overlay .react-medium-image-zoom__overlay {
+                        background-color: transparent !important;
+                    }
+                `}
+            </style>
             <div className='d-flex justify-content-between align-items-center'>
                 <h4>Salon Owner Details</h4>
-                <div >
+                <div>
                     {
                         allowEdit ? (
                             <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
@@ -184,9 +190,6 @@ function Salonownerdetails({ id, allowEdit }) {
                                     <ErrorMessage name="dateOfBirth" component="div" className={styles.error} />
                                 </Grid>)}
 
-
-
-
                                 <Grid item xs={4}>
                                     <InputText
                                         label="Gender"
@@ -210,11 +213,11 @@ function Salonownerdetails({ id, allowEdit }) {
                                 <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>PanCard</label>
-                                        <Zoom>
+                                        <Zoom className="custom-zoom-overlay">
                                             <img
                                                 src={values.panCardImgUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                                alt="Aadhar Card"
+                                                alt="PanCard"
                                             />
                                         </Zoom>
 
@@ -234,7 +237,7 @@ function Salonownerdetails({ id, allowEdit }) {
                                 <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Aadhar Front</label>
-                                        <Zoom>
+                                        <Zoom className="custom-zoom-overlay">
                                             <img
                                                 src={values.aadharFrontUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
@@ -258,7 +261,7 @@ function Salonownerdetails({ id, allowEdit }) {
                                 <Grid item xs={3}>
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Aadhar Back</label>
-                                        <Zoom>
+                                        <Zoom className="custom-zoom-overlay">
                                             <img
                                                 src={values.aadharBackUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
@@ -282,11 +285,11 @@ function Salonownerdetails({ id, allowEdit }) {
                                 <Grid item xs={3} className="mb-3">
                                     <div className="d-flex flex-column">
                                         <label style={{ fontWeight: 500 }}>Profile Image</label>
-                                        <Zoom>
+                                        <Zoom className="custom-zoom-overlay">
                                             <img
                                                 src={values.profileImageUrl}
                                                 style={{ height: '150px', width: '150px', marginBottom: '10px' }}
-                                                alt="Aadhar Back"
+                                                alt="Profile Image"
                                             />
                                         </Zoom>
 

@@ -83,12 +83,14 @@ export const salesDetailsSchema = Yup.object().shape({
     .required('First Name is required')
     .min(3, 'First Name must be at least 3 characters long')
     .max(30, 'First Name must be at least 30 characters long'),
+  middleName: Yup.string()
+    .min(3, 'Middle Name must be at least 3 characters long')
+    .max(30, 'Middle Name must be at least 30 characters long'),
   lastName: Yup.string()
     .required('Last Name is required')
     .min(3, 'Last Name must be at least 3 characters long')
     .max(30, 'Last Name must be at least 30 characters long'),
   dob: Yup.date()
-    .max(getMinDOBDate(), `You must be at least ${MIN_AGE} years old`)
     .required("Date of birth is required"),
   gender: Yup.string().required('Gender is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -107,7 +109,7 @@ export const salesDetailsSchema = Yup.object().shape({
     .required("IFSC Code is required")
     .min(11, "IFSC Code must be at least 11 characters"),
   address: Yup.string().required('Address is required'),
-  upiID: Yup.string().required("Upi Id is required"),
+  // upiID: Yup.string().required("Upi Id is required"),
   bankdocumentImageUrl: Yup.string()
     .url('Bank document image must be a valid URL')
     .matches(/\.(jpg|jpeg|png|gif|bmp|tiff|heic|heif)$/i, 'Bank document image must be in a supported image format (JPG, JPEG, PNG, GIF, BMP, TIFF, HEIC, HEIF)')

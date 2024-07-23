@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import Profile from "../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../constants";
-import MyVerticallyCenteredModal from "../Component/modal/ModalPop";
 import Notify from "../utils/notify";
 import { getUser } from "../api/account.api";
 import DataTable from "react-data-table-component";
@@ -10,7 +9,6 @@ import CustomTitle from "../Component/CustomTitle";
 import TableLoader from "../Component/common-component/TableLoader";
 import Userdata from "../Component/userManagement/Userdata";
 import { JoinedDate } from "../Component/common-component/Formatdate/Joinedondate";
-import { formatDate } from "../Component/common-component/Formatdate/Formatdate";
 
 const UserManagement = () => {
   const title = "User Management";
@@ -172,10 +170,7 @@ const UserManagement = () => {
         <Userdata
           rowData={selectedRow}
           setUpdatedRowData={setUpdatedRowData}
-          handleBack={() => {
-            setSelectedRow(null);
-            navigate('/user-management');
-          }}
+          setSelectedRow={setSelectedRow}
         />
       ) : <div className="main-table rounded ">
         <DataTable

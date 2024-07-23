@@ -6,9 +6,10 @@ import Notify from "../../../utils/notify.js";
 import InputText from "../../common-component/Inputtext/InputText.jsx";
 import { addSalesDetails } from "../../../api/account.api.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
-import { salesDetailsSchema } from "../../../utils/schema.js";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
+import { salesDetailsSchema } from "../../../utils/schema.js";
 
 function SalesCreate(allowEdit) {
   const [updatedImageUrls, setUpdatedImageUrls] = useState({});
@@ -24,13 +25,29 @@ function SalesCreate(allowEdit) {
 
   const addSales = async (values, { resetForm }) => {
     try {
+      const formattedDOB = formatInputDate(values.dob);
       const dataToSend = {
         ...values,
+        dob: formattedDOB,
         ...saleDetails,
       };
       const res = await addSalesDetails(dataToSend)
       console.log("response:::>", res.data);
       resetForm();
+      setSaleDetails({
+        bankdocumentImageUrl: "",
+        panCardImageUrl: "",
+        aadharFrontImageUrl: "",
+        aadharBackImageUrl: "",
+        profileImageUrl: "",
+      });
+      setUpdatedImageUrls({
+        bankdocumentImageUrl: "",
+        panCardImageUrl: "",
+        aadharFrontImageUrl: "",
+        aadharBackImageUrl: "",
+        profileImageUrl: "",
+      });
       Notify.success(res.data.message);
     } catch (error) {
       Notify.error(error.message);
@@ -53,6 +70,11 @@ function SalesCreate(allowEdit) {
   const handleBack = () => {
     navigate('/sales-person');
   }
+
+  const getMinDOBDate = () => {
+    const currentDate = new Date();
+    return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
+  };
 
   return (
     <div className={styles.mainDiv}>
@@ -111,7 +133,6 @@ function SalesCreate(allowEdit) {
                   name="middleName"
                   type="text"
                 />
-                <ErrorMessage name="middleName" component="div" className={styles.error} />
               </Grid>
 
               <Grid item xs={4}>
@@ -156,7 +177,7 @@ function SalesCreate(allowEdit) {
                   label="DOB"
                   name="dob"
                   type="date"
-                  max={new Date().toISOString().split("T")[0]}
+                  max={getMinDOBDate()}
                 />
                 <ErrorMessage name="dob" component="div" className={styles.error} />
               </Grid>

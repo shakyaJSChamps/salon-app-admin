@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import Login from "../src/Component/authentication/Login";
 import Dashboard from "../src/pages/Dashboard";
+import Userdata from "./Component/userManagement/Userdata";
+import UpdateSalesDetails from "./Component/salesManagement/updateSalesDetails/UpdateSalesDetails";
 const SalesWrapper = lazy(() => import("./Component/container/SalesWrapper"));
 const EditsalonManagement = lazy(() => import("./Component/salonManagement/EditDetails/EditsalonManagement"));
 const AccountSetting = lazy(() => import("./Component/setting/AccountSetting"));
@@ -74,7 +76,7 @@ const AppRoute = (props) => {
           path: "salon-management",
           element: <SalonManagement />,
           children: [
-            { path: ":userId", element: <EditsalonManagement /> },
+            { path: ":salonId", element: <EditsalonManagement /> },
           ],
         },
         // { path: "freelance-management", element: <FreelanceManagement /> },
@@ -106,7 +108,13 @@ const AppRoute = (props) => {
           path: "sales-person",
           element: <SalesWrapper />,
           children: [
-            { path: "", element: <SalesPerson /> },
+            {
+              path: "",
+              element: <SalesPerson />,
+              children: [
+                { path: ":salesId", element: <UpdateSalesDetails /> }
+              ]
+            },
             { path: "addSalesPerson", element: <SalesCreate /> },
           ],
         },
