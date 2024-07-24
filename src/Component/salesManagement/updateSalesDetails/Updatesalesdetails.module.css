@@ -19,3 +19,15 @@
     color: red;
     font-size: 15px;
 }
+
+.inactive {
+    color: white;
+    border:none;
+    background-color: red;
+}
+
+ .active{
+    color: white;
+    border: none;
+    background-color: green;
+}

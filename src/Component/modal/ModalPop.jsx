@@ -13,8 +13,6 @@ function MyVerticallyCenteredModal({ show, onHide, rowData, showForm, setUpdated
     setAllowEdit(allowEditProp);
   }, [allowEditProp]);
 
-  console.log(allowEdit);
-
   return (
     <Modal
       show={show}

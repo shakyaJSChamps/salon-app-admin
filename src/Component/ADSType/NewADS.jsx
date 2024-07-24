@@ -67,9 +67,9 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
         onUpdateAd(response.data.data);
       } else {
         response = await addAdsType(formattedValues);
+        console.log("Advertisement",response);
         onAddAd(response.data.data);
       }
-      console.log("Add/Update Advertisement Response:", response);
       Notify.success(response.data.message);
       resetForm();
       setUploaderKey(Date.now());
@@ -187,7 +187,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
               <label className="fw-bold">Advertisement Image</label>
               {values.mediaUrl && (
                 <div className="d-flex justify-content-center align-items-center">
-                  <img src={values.mediaUrl} alt="Advertisement" className=" mb-2" style={{height:"150px",width:"300px"}}/>
+                  <img src={values.mediaUrl} alt="Advertisement" className=" mb-2" style={{ height: "150px", width: "300px" }} />
                 </div>
               )}
               <ImageUpdate
@@ -208,7 +208,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
             </div>
 
             <div className="d-flex justify-content-center ">
-              <button type="submit" className="submit-ads-btn mt-4">
+              <button type="submit" className="submit-ads-btn mt-4 mb-4">
                 {selectedRow ? "Update" : "Add"}
               </button>
             </div>

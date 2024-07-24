@@ -106,7 +106,7 @@ const SaloonManagement = () => {
       ),
     },
     {
-      name: "Active",
+      name: "Status",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)} className="cursor-pointer">
           <span

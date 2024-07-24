@@ -13,27 +13,21 @@ const AdsManagement = () => {
 
  
   const fetchData = async () => {
-    // console.log("search text ::>", searchText)
     let REQ_URL = `?${option}=${searchText}`;
-    console.log("Search URL:", REQ_URL);
     try {
       const response = await getAdsManagement(REQ_URL);
-      // console.log("Ads Management Response:", response);
       const adsData = response.data.data.items;
-      // console.log("Ads Data:", adsData);
       setAdsData(adsData);
     } catch (error) {
       Notify.error(error.message);
     }
   };
 
-  // Function to handle search text change
   const handleSearchChange = (searchText) => {
     console.log("Search called ::>", searchText);
     setSearchText(searchText);
   };
 
-  // Function to handle row selection for edit
   const handleEditRow = (row) => {
     setSelectedRow(row);
   };
@@ -44,14 +38,13 @@ const AdsManagement = () => {
     setAdsData((prevAdsData) =>
       prevAdsData.map((ad) => (ad.id === updatedAd.id ? updatedAd : ad))
     );
-    setSelectedRow(null); // Clear the selected row after updating
+    setSelectedRow(null);
   };
 
   const handleDeleteRow = (id) => {
     setAdsData((prevAdsData) => prevAdsData.filter((ad) => ad.id !== id));
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
     console.log("called ::>", searchText);
