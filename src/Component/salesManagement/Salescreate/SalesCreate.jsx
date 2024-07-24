@@ -31,8 +31,7 @@ function SalesCreate(allowEdit) {
         dob: formattedDOB,
         ...saleDetails,
       };
-      const res = await addSalesDetails(dataToSend)
-      console.log("response:::>", res.data);
+      const res = await addSalesDetails(dataToSend);
       resetForm();
       setSaleDetails({
         bankdocumentImageUrl: "",

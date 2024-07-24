@@ -78,6 +78,11 @@ function Salonownerdetails({ id, allowEdit }) {
                                         </button>
                                     )}
                                 </div>
+
+                                <button type="button" className={styles.btn}>
+                                    Restore
+                                </button>
+
                             </div>
                         ) : (
                             null

@@ -3,7 +3,7 @@ import styles from './Salonstatus.module.css';
 import Notify from "../../../../utils/notify"
 import { salonStatus } from '../../../../api/account.api';
 
-function Salonstatus({ salonDetail,fetchSalonDetailData }) {
+ function Salonstatus({ salonDetail,fetchSalonDetailData }) {
 
     const updateSalonStatus = async () => {
         const data = {

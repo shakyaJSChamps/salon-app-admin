@@ -106,6 +106,20 @@ const SalesPerson = () => {
         </div>
       ),
     },
+
+    {
+      name: "Status",
+      cell: (row) => (
+        <div onClick={() => handleRowClick(row)} className="cursor-pointer">
+          <span
+            className={`rounded-pill ${row.active ? "active-pill" : "blocked-pill"
+              }`}
+          >
+            {row.active ? "Active" : "Blocked"}
+          </span>
+        </div>
+      ),
+    },
     {
       name: "Mobile Number",
       cell: (row) => <div onClick={() => handleRowClick(row)}>{row.phoneNumber}</div>,
@@ -123,11 +137,11 @@ const SalesPerson = () => {
       sortable: true,
     },
 
-    {
-      name: "UPI Id",
-      cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,
-      sortable: true,
-    },
+    // {
+    //   name: "UPI Id",
+    //   cell: (row) => <div onClick={() => handleRowClick(row)}>{row.upiID}</div>,
+    //   sortable: true,
+    // },
   ];
 
   const customStyles = {

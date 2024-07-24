@@ -28,8 +28,7 @@ export const __endpoint_updateImage = endpoint + "admin/salons";
 export const __endpoint_deleteImage = endpoint + "admin/salons/image";
 export const __endpoint_verifySalon = endpoint + "admin/salons/verified";
 export const __endpoint_publishSalon = endpoint + "admin/salons/publish";
-export const __endpoint_getAdsManagement =
-  endpoint + "admin/services/advertisement";
+export const __endpoint_getAdsManagement = endpoint + "admin/services/advertisement";
 export const __endpoint_addAdsType = endpoint + "admin/services/advertisement";
 export const __endpoint_putAdsType = endpoint + "admin/services/advertisement";
 export const __endpoint_updateMaingate = endpoint + "admin/salons";
@@ -66,3 +65,4 @@ export const __endpoint_restoreUser = endpoint + "admin/users/consumers";
 export const __endpoint_restoreSales = endpoint + "admin/sales";
 export const __endpoint_userCount = endpoint + "admin/users/consumers";
 export const __endpoint_salonCount = endpoint + "admin/salons/count";
+export const __endpoint_salesStatus = endpoint + "admin/sales";

@@ -7,7 +7,6 @@ const AddButton = ({ setOption, searchByText, options, buttonText,allowEdit }) =
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState("");
-  console.log("Modal popup", allowEdit)
 
   const handleButtonClick = () => {
     if (buttonText === "Add sub admin") {

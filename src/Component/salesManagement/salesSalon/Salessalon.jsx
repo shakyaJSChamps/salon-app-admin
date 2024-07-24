@@ -36,7 +36,6 @@ const Salessalon = ({ id }) => {
         try {
             setLoading(true);
             const response = await salesSalon(REQ_URL, id);
-            console.log("data", response);
             setSaloonsData(response.data.data);
             setTotalRows(response.data.data.total);
             setLoading(false);

@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import Notify from "../../../utils/notify.js";
 import InputText from "../../common-component/Inputtext/InputText.jsx";
-import { updateSaleDetails, salesDetail, restoreSales } from "../../../api/account.api.js";
+import { updateSaleDetails, salesDetail, restoreSales, salesStatus } from "../../../api/account.api.js";
 import { salesDetailsSchema } from "../../../utils/schema.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import Salessalon from "../salesSalon/Salessalon.jsx";
@@ -27,6 +27,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     });
 
 
+
     const handleEditClick = () => {
         setIsEditing(!isEditing);
     };
@@ -43,6 +44,25 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     useEffect(() => {
         fetchSalesDetail();
     }, [id]);
+
+
+    const updateSalesStatus = async () => {
+        const payload = {
+            field: "active",
+            value: saleDetails.active ? "false" : "true",
+        };
+        try {
+            const response = await salesStatus(saleDetails.userId, payload);
+            if (response.status === 200) {
+                Notify.success(response.data.message);
+                fetchSalesDetail();
+            } else {
+                console.error('Failed to update status', response);
+            }
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
@@ -111,6 +131,13 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                             >
                                 Restore
                             </button> : null}
+
+                        <button
+                            onClick={updateSalesStatus}
+                            className={`${styles.button} ${saleDetails.active ? styles.active : styles.inactive}`}
+                        >
+                            {saleDetails.active ? 'Block' : 'Unblock'}
+                        </button>
                     </div>
 
 

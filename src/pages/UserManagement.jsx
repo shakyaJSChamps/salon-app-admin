@@ -107,7 +107,7 @@ const UserManagement = () => {
     },
 
     {
-      name: "Active",
+      name: "Status",
       cell: (row) => (
         <div onClick={() => handleRowClick(row)}>
           <span

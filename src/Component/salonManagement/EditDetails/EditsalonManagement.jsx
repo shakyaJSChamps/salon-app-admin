@@ -68,7 +68,7 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
       setWorkingHours(data?.data?.data?.workingHours);
       setService(data?.data?.data?.services);
     } catch (error) {
-      console.error('Error fetching salon details:', error);
+      // console.error('Error fetching salon details:', error);
     }
   };
 
