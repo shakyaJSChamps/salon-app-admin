@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
-import { salonOwner, updateSalonOwner } from "../../../../api/account.api";
+import { restoreSalon, salonOwner, updateSalonOwner } from "../../../../api/account.api";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import styles from "../Salondetails/Salondetails.module.css";
@@ -10,8 +10,11 @@ import ImageUpdate from "../../../common-component/Imageupdate/ImageUpdate";
 import Notify from "../../../../utils/notify";
 import { salonOwnerDetailsSchema } from "../../../../utils/schema";
 import { formatDisplayDate, formatInputDate } from "../../../common-component/Formatdate/Formatdate";
+import { JoinedDate } from "../../../common-component/Formatdate/Joinedondate";
+import Salonstatus from "../Salonstatus/Salonstatus";
+import { format } from 'date-fns';
 
-function Salonownerdetails({ id, allowEdit }) {
+function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData }) {
     const [salonOwnerData, setSalonOwnerData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -30,7 +33,8 @@ function Salonownerdetails({ id, allowEdit }) {
 
     const updateOwner = async (values) => {
         try {
-            const { phoneNumber, ...updatedValues } = values;
+            const { phoneNumber, dateOfBirth, ...updatedValues } = values;
+            updatedValues.dateOfBirth = formatPayloadDate(dateOfBirth);
             const response = await updateSalonOwner(id, updatedValues);
             setIsEditing(false);
             Notify.success(response.data.message);
@@ -49,6 +53,21 @@ function Salonownerdetails({ id, allowEdit }) {
     const getMinDOBDate = () => {
         const currentDate = new Date();
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
+    };
+
+
+    const handlerestore = async () => {
+        try {
+            const response = await restoreSalon(salonOwnerData.userId);
+            getSalonOwner();
+            Notify.success(response.data.message);
+        } catch (error) {
+            Notify.error(error.message);
+        }
+    };
+
+    const formatPayloadDate = (date) => {
+        return format(new Date(date), 'dd-MM-yyyy');
     };
 
     return (
@@ -78,10 +97,12 @@ function Salonownerdetails({ id, allowEdit }) {
                                         </button>
                                     )}
                                 </div>
-
-                                <button type="button" className={styles.btn}>
+                                {salonOwnerData && salonOwnerData.deletedAt !== null ? <button type="button" className={styles.btn} onClick={handlerestore}>
                                     Restore
-                                </button>
+                                </button> : null}
+
+                                {salonOwnerData && salonOwnerData.deletedAt === null ? <Salonstatus salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} /> : null}
+
 
                             </div>
                         ) : (
@@ -194,6 +215,17 @@ function Salonownerdetails({ id, allowEdit }) {
                                     />
                                     <ErrorMessage name="dateOfBirth" component="div" className={styles.error} />
                                 </Grid>)}
+
+                                {salonOwnerData && salonOwnerData.deletedAt !== null ? (<Grid item xs={4}>
+                                    <InputText
+                                        label="Deleted On"
+                                        name="deletedAt"
+                                        type="text"
+                                        value={JoinedDate(salonOwnerData.deletedAt)}
+                                        disabled
+                                    />
+                                </Grid>) : (null)}
+
 
                                 <Grid item xs={4}>
                                     <InputText

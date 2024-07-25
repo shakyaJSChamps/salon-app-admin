@@ -83,7 +83,7 @@ function EditsalonManagement({ payload, id, allowEdit, handleBack }) {
       </div>
       <Row>
         <Col md={12}>
-          <Salonownerdetails id={id} allowEdit={allowEdit} />
+          <Salonownerdetails id={id} allowEdit={allowEdit} salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData}/>
         </Col>
         <hr />
       </Row>

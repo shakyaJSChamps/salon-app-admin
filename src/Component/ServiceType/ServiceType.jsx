@@ -19,6 +19,7 @@ import CustomTitle from "../CustomTitle";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../../constants";
 import CommonImage from "../common-component/CommonImage";
+import { JoinedDate } from "../common-component/Formatdate/Joinedondate";
 
 const ServiceType = (props) => {
   const [services, setServices] = useState([]);
@@ -114,7 +115,10 @@ const ServiceType = (props) => {
     {
       name: "Created Date",
       sortable: true,
-      cell: (row) => <FDate date={row.createAt} formatStr="dd/MM/yyyy" />,
+      width: "150px",
+      cell: (row) => <div>
+        {JoinedDate(row.createAt)}
+      </div>,
     },
     {
       name: "",

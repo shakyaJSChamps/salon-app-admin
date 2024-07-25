@@ -57,14 +57,15 @@ export const formatDisplayDate = (dateString) => {
 
 
 export const formatInputDate = (dateInput) => {
-    // If dateInput is already in a standard format, return it directly
+    if (!dateInput) return ""; // Handle null or undefined dateInput
+
+    // Check if the input is already in yyyy-MM-dd format
     if (/^\d{4}-\d{2}-\d{2}$/.test(dateInput)) {
         return dateInput;
     }
 
-    // Date formats to try parsing
+    // Try parsing different formats
     const formats = [
-        'yyyy-MM-dd',
         'dd-MM-yyyy',
         'MM-dd-yyyy',
         'yyyy/MM/dd',
@@ -84,6 +85,7 @@ export const formatInputDate = (dateInput) => {
             continue;
         }
     }
+
     if (!parsedDate || isNaN(parsedDate)) {
         throw new Error('Invalid date format');
     }

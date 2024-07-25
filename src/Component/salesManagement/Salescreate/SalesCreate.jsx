@@ -10,6 +10,7 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
 import { salesDetailsSchema } from "../../../utils/schema.js";
+import { format } from 'date-fns';
 
 function SalesCreate(allowEdit) {
   const [updatedImageUrls, setUpdatedImageUrls] = useState({});
@@ -25,7 +26,7 @@ function SalesCreate(allowEdit) {
 
   const addSales = async (values, { resetForm }) => {
     try {
-      const formattedDOB = formatInputDate(values.dob);
+      const formattedDOB = formatPayloadDate(values.dob);
       const dataToSend = {
         ...values,
         dob: formattedDOB,
@@ -73,6 +74,10 @@ function SalesCreate(allowEdit) {
   const getMinDOBDate = () => {
     const currentDate = new Date();
     return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
+  };
+
+  const formatPayloadDate = (date) => {
+    return format(new Date(date), 'dd-MM-yyyy');
   };
 
   return (
