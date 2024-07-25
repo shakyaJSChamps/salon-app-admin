@@ -66,3 +66,4 @@ export const __endpoint_restoreSales = endpoint + "admin/sales";
 export const __endpoint_userCount = endpoint + "admin/users/consumers";
 export const __endpoint_salonCount = endpoint + "admin/salons/count";
 export const __endpoint_salesStatus = endpoint + "admin/sales";
+export const __endpoint_restoreSalon = endpoint + "admin/salons/owner";

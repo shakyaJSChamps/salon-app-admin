@@ -89,7 +89,7 @@ const Dashboard = () => {
   return (
     <>
       <Row className="p-0 m-3">
-        <Col lg={6}>
+        <Col lg={5}>
           <Row className="totalTwo-counts">
             {data1.map((item, index) => (
               <Col key={item.id} lg={12} className="mb-3">

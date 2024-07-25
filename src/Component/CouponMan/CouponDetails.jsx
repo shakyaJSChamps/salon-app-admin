@@ -8,6 +8,7 @@ import CustomTitle from "../CustomTitle";
 import CommonImage from "../common-component/CommonImage";
 import { deleteCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
+import {JoinedDate} from "../common-component/Formatdate/Joinedondate.jsx"
 
 const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) => {
   const [data, setData] = useState([]);
@@ -90,10 +91,10 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
         <div className="mt-4 ads-duration">
           <div>
             Starts
-            <br /> {new Date(row.startDate).toLocaleDateString()}
+            <br /> {JoinedDate(row.startDate)}
           </div>
           <p className="expire-text">
-            Expire on <br /> {new Date(row.endDate).toLocaleDateString()}
+            Expire on <br /> {JoinedDate(row.endDate)}
           </p>
         </div>
       ),

@@ -14,7 +14,7 @@ import Userappointment from "./Userappointment.jsx";
 import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx";
 import { useNavigate } from 'react-router-dom';
 
-function Userdata({ rowData, setUpdatedRowData,setSelectedRow }) {
+function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
     const [active, setActive] = useState(rowData.active);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedLandmark, setSelectedLandmark] = useState("");
@@ -89,10 +89,10 @@ function Userdata({ rowData, setUpdatedRowData,setSelectedRow }) {
         }
     }
 
-    const handleBack=() => {
+    const handleBack = () => {
         setSelectedRow(null);
         navigate('/user-management');
-      }
+    }
 
     return (
         <div className='bg-white p-3' style={{ border: '3px solid #eae4e4', borderRadius: '5px' }}>
@@ -101,13 +101,14 @@ function Userdata({ rowData, setUpdatedRowData,setSelectedRow }) {
                 <div className='d-flex justify-content-between'>
                     <h4>User Details</h4>
                     <div className='d-flex gap-2'>
-                        <button
+                        {userData.deletedAt === null ? <button
                             onClick={handleToggleBlock}
                             className="button"
                             disabled={isLoading}
                         >
                             {isLoading ? <Loader /> : active ? "Block" : "Unblock"}
-                        </button>
+                        </button> : null}
+
                         {userData.deletedAt !== null ? <button
                             onClick={handlerestore}
                             className="button"

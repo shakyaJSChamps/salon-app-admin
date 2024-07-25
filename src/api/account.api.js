@@ -61,6 +61,7 @@ import {
   __endpoint_restoreSales,
   __endpoint_userCount,
   __endpoint_salesStatus,
+  __endpoint_restoreSalon,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -276,10 +277,10 @@ export const getVendorInvoice = (id) =>
   HTTP.Request(methods.GET, `${__endpoint_getvendorInvoice}/${id}/invoice`);
 
 export const restoreUser = (id) =>
-  HTTP.Request(methods.PATCH, `${__endpoint_restoreUser}/${id}/restore`, id);
+  HTTP.Request(methods.PATCH, `${__endpoint_restoreUser}/${id}/restore`);
 
 export const restoreSales = (id) =>
-  HTTP.Request(methods.PATCH, `${__endpoint_restoreSales}/${id}/user/restore`, id);
+  HTTP.Request(methods.PATCH, `${__endpoint_restoreSales}/${id}/user/restore`);
 
 export const userCount = () =>
   HTTP.Request(methods.GET, __endpoint_userCount);
@@ -287,5 +288,8 @@ export const userCount = () =>
 export const salonCount = () =>
   HTTP.Request(methods.GET, __endpoint_salonCount);
 
-export const salesStatus = (id,payload) =>
-  HTTP.Request(methods.PATCH, `${__endpoint_salesStatus}/${id}/user`,payload);
+export const salesStatus = (id, payload) =>
+  HTTP.Request(methods.PATCH, `${__endpoint_salesStatus}/${id}/user`, payload);
+
+export const restoreSalon = (id) =>
+  HTTP.Request(methods.POST, `${__endpoint_restoreSalon}/${id}/restore`);

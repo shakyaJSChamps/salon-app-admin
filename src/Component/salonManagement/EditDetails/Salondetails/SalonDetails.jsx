@@ -8,7 +8,7 @@ import Notify from "../../../../utils/notify";
 import { salonDetailsSchema } from "../../../../utils/schema";
 import Salonstatus from '../Salonstatus/Salonstatus';
 
-function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
+function SalonDetails({ salonDetail,allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);
 
     const handleEditClick = () => {
@@ -41,7 +41,6 @@ function SalonDetails({ salonDetail, fetchSalonDetailData, allowEdit }) {
                     {
                         allowEdit ? (
                             <div className="d-flex justify-content-between align-items-center mb-3 gap-2">
-                                <Salonstatus salonDetail={salonDetail} fetchSalonDetailData={fetchSalonDetailData} />
                                 <div>
                                     {!isEditing && (
                                         <button type="button" className={styles.btn} onClick={handleEditClick}>

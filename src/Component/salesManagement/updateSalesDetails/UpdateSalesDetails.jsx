@@ -13,7 +13,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { JoinedDate } from "../../common-component/Formatdate/Joinedondate.jsx";
 import { formatDisplayDate, formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
-import { useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 
 function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +26,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         profileImageUrl: null,
     });
 
-
+    console.log("Sales Details", saleDetails);
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
@@ -66,7 +66,14 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
 
     const editDetails = async (values, { setSubmitting }) => {
         try {
-            const response = await updateSaleDetails(values, saleDetails.userId);
+            const formattedValues = {
+                ...values,
+                dob: formatPayloadDate(values.dob)
+            };
+            // console.log("Payload being sent:", formattedValues);
+            const response = await updateSaleDetails(formattedValues, saleDetails.userId);
+            // console.log("API Response:", response);
+            // fetchSalesDetail();
             Notify.success(response.data.message);
             setIsEditing(false);
         } catch (error) {
@@ -103,6 +110,10 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
         return new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()).toISOString().split("T")[0];
     };
 
+    const formatPayloadDate = (date) => {
+        return format(new Date(date), 'dd-MM-yyyy');
+    };
+
     return (
         <>
             <div className={styles.mainDiv}>
@@ -132,12 +143,14 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                 Restore
                             </button> : null}
 
-                        <button
-                            onClick={updateSalesStatus}
-                            className={`${styles.button} ${saleDetails.active ? styles.active : styles.inactive}`}
-                        >
-                            {saleDetails.active ? 'Block' : 'Unblock'}
-                        </button>
+                        {saleDetails.DeletedAt === null ?
+                            <button
+                                onClick={updateSalesStatus}
+                                className={`${styles.button} ${saleDetails.active ? styles.active : styles.inactive}`}
+                            >
+                                {saleDetails.active ? 'Block' : 'Unblock'}
+                            </button> : null}
+
                     </div>
 
 
@@ -149,7 +162,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                         firstName: saleDetails.firstName || "",
                         middleName: saleDetails.middleName || "",
                         lastName: saleDetails.lastName || "",
-                        dob: saleDetails.dob || "",
+                        dob: saleDetails.dob ? formatInputDate(saleDetails.dob) : "",
                         gender: saleDetails.gender || "",
                         email: saleDetails.email || "",
                         accountNumber: saleDetails.accountNumber || "",
@@ -252,7 +265,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                                             type="date"
                                             disabled={!isEditing}
                                             onChange={handleChange}
-                                            value={formatInputDate(values.dob)}
+                                            value={values.dob}
                                             max={getMinDOBDate()}
                                         />
                                         <ErrorMessage name="dob" component="div" className={styles.error} />
