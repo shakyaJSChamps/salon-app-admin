@@ -33,7 +33,8 @@ function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData })
 
     const updateOwner = async (values) => {
         try {
-            const { phoneNumber, ...updatedValues } = values;
+            const { phoneNumber, dateOfBirth, ...updatedValues } = values;
+            updatedValues.dateOfBirth = formatPayloadDate(dateOfBirth);
             const response = await updateSalonOwner(id, updatedValues);
             setIsEditing(false);
             Notify.success(response.data.message);
@@ -65,9 +66,14 @@ function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData })
         }
     };
 
-    // const formatPayloadDate = (date) => {
-    //     return format(new Date(date), 'dd-MM-yyyy');
-    // };
+    const formatPayloadDate = (date) => {
+        // Check if date is already in dd-MM-yyyy format
+        const regex = /^\d{2}-\d{2}-\d{4}$/;
+        if (regex.test(date)) {
+            return date;
+        }
+        return format(new Date(date), 'dd-MM-yyyy');
+    };
 
     return (
         <div>
