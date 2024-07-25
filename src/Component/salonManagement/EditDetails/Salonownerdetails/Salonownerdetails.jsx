@@ -33,8 +33,7 @@ function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData })
 
     const updateOwner = async (values) => {
         try {
-            const { phoneNumber, dateOfBirth, ...updatedValues } = values;
-            updatedValues.dateOfBirth = formatPayloadDate(dateOfBirth);
+            const { phoneNumber, ...updatedValues } = values;
             const response = await updateSalonOwner(id, updatedValues);
             setIsEditing(false);
             Notify.success(response.data.message);
@@ -66,9 +65,9 @@ function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData })
         }
     };
 
-    const formatPayloadDate = (date) => {
-        return format(new Date(date), 'dd-MM-yyyy');
-    };
+    // const formatPayloadDate = (date) => {
+    //     return format(new Date(date), 'dd-MM-yyyy');
+    // };
 
     return (
         <div>
