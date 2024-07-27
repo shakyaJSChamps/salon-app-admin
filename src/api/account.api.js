@@ -62,6 +62,8 @@ import {
   __endpoint_userCount,
   __endpoint_salesStatus,
   __endpoint_restoreSalon,
+  __endpoint_salonCount,
+  __endpoint_appointmentCount,
 } from "../constants/endpoints";
 
 export const doLogin = (payload) =>
@@ -287,6 +289,9 @@ export const userCount = () =>
 
 export const salonCount = () =>
   HTTP.Request(methods.GET, __endpoint_salonCount);
+
+export const appointmentCount = () =>
+  HTTP.Request(methods.GET, __endpoint_appointmentCount);
 
 export const salesStatus = (id, payload) =>
   HTTP.Request(methods.PATCH, `${__endpoint_salesStatus}/${id}/user`, payload);

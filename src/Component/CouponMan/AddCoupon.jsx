@@ -8,6 +8,8 @@ import { couponSchema } from "../../utils/schema";
 import { addCouponType, putCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
+import { format } from "date-fns";
+import { formatInputDate } from "../common-component/Formatdate/Formatdate";
 
 const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit }) => {
   const initialFormValues = {
@@ -45,15 +47,19 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit
   }, [selectedCoupon]);
 
   const handleSubmit = async (values, { resetForm }) => {
-    const formatDate = (date) => {
-      const d = new Date(date);
-      return d.toISOString();
+    // const formatDate = (date) => {
+    //   const d = new Date(date);
+    //   return d.toISOString();
+    // };
+
+    const formatPayloadDate = (date) => {
+      return format(new Date(date), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     };
 
     const formattedValues = {
       ...values,
-      startDate: formatDate(values.startDate),
-      endDate: formatDate(values.endDate),
+      startDate: formatPayloadDate(values.startDate),
+      endDate: formatPayloadDate(values.endDate),
       imageUrl: uploadedImageUrl,
     };
 
