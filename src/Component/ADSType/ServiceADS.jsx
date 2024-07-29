@@ -9,6 +9,7 @@ import CustomTitle from "../CustomTitle";
 import { deleteADSType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import CommonImage from "../common-component/CommonImage";
+import { formatDate } from "../common-component/Formatdate/Formatdate";
 
 const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption}) => {
   const [page, setPage] = useState(1);
@@ -34,8 +35,8 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
 
   const handleDeleteConfirmation = (row) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "Advertisement deleted successfully",
+      title: "Warning!",
+      text: "Are you sure you want todelete this advertisement?",
       icon: "warning",
       width: "30%",
       showCancelButton: true,
@@ -85,14 +86,15 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
     },
     {
       name: <strong>DURATION</strong>,
+      width: "200px",
       cell: (row) => (
         <div className="mt-4 ads-duration">
           <div>
             Starts
-            <br /> {new Date(row.startDate).toLocaleDateString()}
+            <br /> {formatDate(row.startDate)}
           </div>
           <p className="expire-text">
-            Expire on {new Date(row.endDate).toLocaleDateString()}
+            Expire on {formatDate(row.endDate)}
           </p>
         </div>
       ),

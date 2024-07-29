@@ -22,7 +22,7 @@ const Dashboard = () => {
   const getUserCount = async () => {
     try {
       const response = await userCount();
-      setUserCountData(response.data.data.total);
+      setUserCountData(response.data.data);
     } catch (error) {
       console.log(error);
     }

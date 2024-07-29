@@ -8,6 +8,8 @@ import { addAdsType, putAdsType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import { newADSSchema } from "../../utils/schema";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
+import { formatInputDate } from "../common-component/Formatdate/Formatdate";
+import { format, parse } from "date-fns";
 
 const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdit }) => {
   const [uploaderKey, setUploaderKey] = useState(Date.now());
@@ -21,6 +23,17 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
     active: true,
   });
 
+  // Utility function to validate date
+  const isValidDate = (date) => {
+    return date instanceof Date && !isNaN(date.getTime());
+  };
+
+  // Utility function to format date to dd-MM-yyyy
+  const formatToDDMMYYYY = (date) => {
+    if (!isValidDate(date)) return '';
+    return format(date, 'dd-MM-yyyy');
+  };
+
   useEffect(() => {
     if (selectedRow) {
       setInitialValues({
@@ -29,10 +42,10 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
         redirectLink: selectedRow.redirectLink || "",
         city: selectedRow.city || "",
         startDate: selectedRow.startDate
-          ? new Date(selectedRow.startDate).toISOString().split("T")[0]
+          ? formatInputDate(selectedRow.startDate)
           : "",
         endDate: selectedRow.endDate
-          ? new Date(selectedRow.endDate).toISOString().split("T")[0]
+          ? formatInputDate(selectedRow.endDate)
           : "",
         active: selectedRow.active || true,
       });
@@ -50,14 +63,17 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
   }, [selectedRow]);
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("Form Submission::", values);
+    // Convert dates to the format expected by the API
+    const convertToAPIFormat = (date) => {
+      if (!date) return '';
+      const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+      return isValidDate(parsedDate) ? formatToDDMMYYYY(parsedDate) : '';
+    };
     try {
       const formattedValues = {
         ...values,
-        startDate: values.startDate
-          ? new Date(values.startDate).toISOString()
-          : null,
-        endDate: values.endDate ? new Date(values.endDate).toISOString() : null,
+        startDate: convertToAPIFormat(values.startDate),
+        endDate: convertToAPIFormat(values.endDate),
         active: true,
       };
 
@@ -67,7 +83,7 @@ const NewADS = ({ selectedRow, onAddAd, onUpdateAd, onClearSelectedRow, allowEdi
         onUpdateAd(response.data.data);
       } else {
         response = await addAdsType(formattedValues);
-        console.log("Advertisement",response);
+        console.log("Advertisement", response);
         onAddAd(response.data.data);
       }
       Notify.success(response.data.message);
