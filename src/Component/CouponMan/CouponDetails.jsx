@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineConfirmationNumber, MdEditSquare } from "react-icons/md";
 import { Paper } from "@mui/material";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import DataTable from "react-data-table-component";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import CustomTitle from "../CustomTitle";
 import CommonImage from "../common-component/CommonImage";
 import { deleteCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
-import {JoinedDate} from "../common-component/Formatdate/Joinedondate.jsx"
+import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx"
+import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
 
 const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) => {
   const [data, setData] = useState([]);
@@ -31,11 +32,11 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
       allowOutsideClick: false, // Prevent closing on outside click
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteCoupon(row); 
+        deleteCoupon(row);
       }
     });
   };
-  
+
 
   const deleteCoupon = async (coupon) => {
     try {
@@ -91,10 +92,10 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
         <div className="mt-4 ads-duration">
           <div>
             Starts
-            <br /> {JoinedDate(row.startDate)}
+            <br /> {formatDate(row.startDate)}
           </div>
           <p className="expire-text">
-            Expire on <br /> {JoinedDate(row.endDate)}
+            Expire on <br /> {formatDate(row.endDate)}
           </p>
         </div>
       ),
@@ -109,7 +110,7 @@ const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) =>
             style={{ cursor: "pointer" }}
           />
           <RiDeleteBin6Fill
-             onClick={() => handleDeleteConfirmation(row)}
+            onClick={() => handleDeleteConfirmation(row)}
             style={{ cursor: "pointer" }}
           />
         </div>

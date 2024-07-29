@@ -51,7 +51,6 @@ const SalesPerson = () => {
     try {
       setLoading(true);
       const response = await getSales(payload);
-      console.log("Sales data -->", response);
       const salesData = response.data.data.items;
       setSalesData(salesData);
       setTotalRows(response.data.data.total);
