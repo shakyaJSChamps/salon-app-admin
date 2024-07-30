@@ -8,8 +8,19 @@ import { couponSchema } from "../../utils/schema";
 import { addCouponType, putCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
 import ImageUpdate from "../common-component/Imageupdate/ImageUpdate";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { formatInputDate } from "../common-component/Formatdate/Formatdate";
+
+// Utility function to validate date
+const isValidDate = (date) => {
+  return date instanceof Date && !isNaN(date.getTime());
+};
+
+// Utility function to format date to dd-MM-yyyy
+const formatToDDMMYYYY = (date) => {
+  if (!isValidDate(date)) return '';
+  return format(date, 'dd-MM-yyyy');
+};
 
 const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit }) => {
   const initialFormValues = {
@@ -30,14 +41,16 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit
 
   useEffect(() => {
     if (selectedCoupon) {
+      const startDate = selectedCoupon.startDate
+        ? formatInputDate(selectedCoupon.startDate)
+        : "";
+      const endDate = selectedCoupon.endDate
+        ? formatInputDate(selectedCoupon.endDate)
+        : "";
       setInitialValues({
         ...selectedCoupon,
-        startDate: selectedCoupon.startDate
-          ? new Date(selectedCoupon.startDate).toISOString().split("T")[0]
-          : "",
-        endDate: selectedCoupon.endDate
-          ? new Date(selectedCoupon.endDate).toISOString().split("T")[0]
-          : "",
+        startDate,
+        endDate,
       });
       setUploadedImageUrl(selectedCoupon.imageUrl || "");
     } else {
@@ -47,19 +60,17 @@ const AddCoupon = ({ selectedCoupon, onCouponSaved, setSelectedCoupon, allowEdit
   }, [selectedCoupon]);
 
   const handleSubmit = async (values, { resetForm }) => {
-    // const formatDate = (date) => {
-    //   const d = new Date(date);
-    //   return d.toISOString();
-    // };
-
-    const formatPayloadDate = (date) => {
-      return format(new Date(date), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    // Convert dates to the format expected by the API
+    const convertToAPIFormat = (date) => {
+      if (!date) return '';
+      const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+      return isValidDate(parsedDate) ? formatToDDMMYYYY(parsedDate) : '';
     };
 
     const formattedValues = {
       ...values,
-      startDate: formatPayloadDate(values.startDate),
-      endDate: formatPayloadDate(values.endDate),
+      startDate: convertToAPIFormat(values.startDate),
+      endDate: convertToAPIFormat(values.endDate),
       imageUrl: uploadedImageUrl,
     };
 
