@@ -10,6 +10,7 @@ import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import Notify from "../../utils/notify";
 import { formatDate } from "../common-component/Formatdate/Formatdate";
+import { JoinedDate } from "../common-component/Formatdate/Joinedondate";
 
 const ManageSubAdmin = () => {
   const [data, setData] = useState([]);
@@ -113,13 +114,12 @@ const ManageSubAdmin = () => {
     },
     {
       name: "Create Date",
-      width: "200px",
-      cell: (row) => <div>{formatDate(row.createdAt)}</div>,
+      cell: (row) => <div>{JoinedDate(row.createdAt)}</div>,
       sortable: true,
     },
     {
       name: "Update Date",
-      cell: (row) => <div>{formatDate(row.updatedAt)}</div>,
+      cell: (row) => <div>{JoinedDate(row.updatedAt)}</div>,
     },
     {
       name: "",
