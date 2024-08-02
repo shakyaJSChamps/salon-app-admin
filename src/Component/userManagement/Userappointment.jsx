@@ -84,6 +84,7 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
                                                     <p className={styles.date}>{formatDate(appointment.date)}</p>
+                                                    <p className={styles.startTime}>{appointment.appointmentId}</p>
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>
@@ -120,6 +121,7 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
                                                     <p className={styles.date}>{formatDate(appointment.date)}</p>
+                                                    <p className={styles.startTime}>{appointment.appointmentId}</p>
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>
@@ -155,6 +157,7 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
                                                     <p className={styles.date}>{formatDate(appointment.date)}</p>
+                                                    <p className={styles.startTime}>{appointment.appointmentId}</p>
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>
@@ -190,9 +193,13 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
                                                     <p className={styles.date}>{formatDate(appointment.date)}</p>
+                                                    <p className={styles.startTime}>{appointment.appointmentId}</p>
+                                                    
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>
+                                                    <p className={styles.startTime}>Cancelled by {appointment.cancelledBy}</p>
+                                                    <p className={styles.startTime}>Reason {appointment.cancelReason}</p>
                                                     <Link
                                                         className={`link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer ${styles.link}`}
                                                         onClick={() => handleOpenDrawer(appointment)}
@@ -225,9 +232,11 @@ function Userappointment({ appointments }) {
                                                     <p className={styles.startTime}>{appointment.serviceStartTime}</p>
                                                     <p className={styles.startTime}>{appointment.serviceType}</p>
                                                     <p className={styles.date}>{formatDate(appointment.serviceDate)}</p>
+                                                    
                                                 </div>
                                                 <div className='d-flex flex-column'>
                                                     <p className={styles.pendingStatus}>{appointment.status}</p>
+                                                    <p className={styles.startTime}>{appointment.appointmentId}</p>
                                                     <Link
                                                         className={`link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer ${styles.link}`}
                                                         onClick={() => handleOpenDrawer(appointment)}

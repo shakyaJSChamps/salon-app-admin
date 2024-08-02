@@ -79,12 +79,21 @@ const Userappointmentdetails = ({ open, onClose, selectedAppointment }) => {
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Id:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.appointmentId}</Typography></Grid>
+                                {
+                                    appointmentDetails.serviceStartTime &&
+                                    <>
+                                        <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Start Time:</Typography></Grid>
+                                        <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
+                                    </>
+                                }
 
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment Start Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceStartTime}</Typography></Grid>
-
-                                <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment End Time:</Typography></Grid>
-                                <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceEndTime}</Typography></Grid>
+                                {
+                                    appointmentDetails.serviceEndTime &&
+                                    <>
+                                        <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment End Time:</Typography></Grid>
+                                        <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceEndTime}</Typography></Grid>
+                                    </>
+                                }
 
                                 <Grid item xs={6}><Typography variant="body2" className="fw-bold">Appointment For:</Typography></Grid>
                                 <Grid item xs={6}><Typography variant="body2">{appointmentDetails.serviceType}</Typography></Grid>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styles from './Appointments.module.css';
 
-function Appointments({ activeComponent, setActiveComponent, appointmentData, renderComponent }) {
+function Appointments({ activeComponent, setActiveComponent, renderComponent }) {
     const getButtonClass = (component) => {
         return activeComponent === component ? `${styles.button} ${styles.active}` : styles.button;
     };

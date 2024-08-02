@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Paper, responsiveFontSizes } from '@mui/material';
 import { Link } from 'react-router-dom';
 import styles from "./Appointments.module.css";
-import Invoice from '../../../common-component/invoice/Invoice';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Appointmentpopup from '../../../common-component/appointmentPopup/Appointmentpopup';
 import Profile from "../../../../assets/image/Profile.webp"
@@ -85,7 +84,7 @@ function Completed({ appointmentData, appointments }) {
                 return;
             }
             const invoicePath = vendorInvoice.invoicePath;
-            console.log( "Vendor", invoicePath )
+            console.log("Vendor", invoicePath)
             const link = document.createElement('a');
             link.href = invoicePath;
             link.setAttribute('download', '');
@@ -112,6 +111,7 @@ function Completed({ appointmentData, appointments }) {
                             <span className={styles.startTime}>{data.serviceStartTime}</span>
                             <span className={styles.startTime}>{data.startTime}</span>
                             <span className={styles.date}>{formatDate(data.date)}</span>
+                            <span className={styles.startTime}>{data.appointmentId}</span>
                         </div>
 
                         <div className={`d-flex flex-column justify-content-start align-items-start ${styles.customDiv}`}>

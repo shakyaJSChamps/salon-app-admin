@@ -34,10 +34,13 @@ function Cancelled({ appointmentData }) {
                             <p className={styles.startTime}>{data.serviceStartTime}</p>
                             <p className={styles.startTime}>{data.serviceType}</p>
                             <p className={styles.date}>{formatDate(data.date)}</p>
+                            <p className={styles.startTime}>{data.appointmentId}</p>
                         </div>
 
-                        <div className='d-flex flex-column'>
+                        <div className={`d-flex flex-column ${styles.cancelHeight}`}>
                             <p className={styles.cancelledStatus}>{data.status}</p>
+                            {data.cancelledBy && <p className={styles.startTime}>Cancelled by {data.cancelledBy}</p>}
+                            {data.cancelReason && <p className={styles.startTime}>Reason {data.cancelReason}</p>}
                             <Link
                                 className={`link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover cursor-pointer ${styles.link}`}
                                 onClick={() => handleOpenDrawer(data)}
