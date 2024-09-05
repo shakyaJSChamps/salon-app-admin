@@ -13,6 +13,7 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Userappointment from "./Userappointment.jsx";
 import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx";
 import { useNavigate } from 'react-router-dom';
+import styles from '../salonManagement/EditDetails/Salondetails/Salondetails.module.css'
 
 function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
     const [active, setActive] = useState(rowData.active);
@@ -101,21 +102,25 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                 <div className='d-flex justify-content-between'>
                     <h4>User Details</h4>
                     <div className='d-flex gap-2'>
-                        {userData.deletedAt === null ? <button
-                            onClick={handleToggleBlock}
-                            className="button"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? <Loader /> : active ? "Block" : "Unblock"}
-                        </button> : null}
+                        {userData.deletedAt === null ? (
+                            <button
+                                onClick={handleToggleBlock}
+                                className={`${styles.btn} ${active ? styles.bgGreen : styles.bgRed}`}
+                            >
+                                {active ? "Block" : "Unblock"}
+                            </button>
+                        ) : null}
 
-                        {userData.deletedAt !== null ? <button
-                            onClick={handlerestore}
-                            className="button"
-                        >
-                            Restore
-                        </button> : null}
+                        {userData.deletedAt !== null ? (
+                            <button
+                                onClick={handlerestore}
+                                className={`${styles.btn} ${active ? styles.bgGreen : styles.bgRed}`}
+                            >
+                                Restore
+                            </button>
+                        ) : null}
                     </div>
+
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
