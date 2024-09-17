@@ -18,7 +18,8 @@ import styles from '../salonManagement/EditDetails/Salondetails/Salondetails.mod
 function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
     const [active, setActive] = useState(rowData.active);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedLandmark, setSelectedLandmark] = useState("");
+    const [selectedAddressId, setSelectedAddressId] = useState("");
+    const [addressDetails, setAddressDetails] = useState("");
     const [userData, setUserData] = useState({});
     const [appointments, setAppointments] = useState({});
     const navigate = useNavigate();
@@ -77,18 +78,21 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
         }
     };
 
-    const handleLandmarkChange = (event) => {
-        setSelectedLandmark(event.target.value);
-    };
+    const handleAddressChange = (event) => {
+        const selectedId = event.target.value;
+        setSelectedAddressId(selectedId);
 
-    // Render address details based on selected landmark
-    let addressDetails = "";
-    if (userData && userData.addresses) {
-        const selectedAddress = userData.addresses.find((address) => address.landmark === selectedLandmark);
-        if (selectedAddress) {
-            addressDetails = `${selectedAddress.houseNo}, ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`;
+        if (userData && userData.addresses) {
+            const selectedAddress = userData.addresses.find(address => address.id.toString() === selectedId);
+            if (selectedAddress) {
+                setAddressDetails(
+                    `${selectedAddress.houseNo}, ${selectedAddress.streetAddress}, ${selectedAddress.city}, ${selectedAddress.state}`
+                );
+            } else {
+                setAddressDetails("");
+            }
         }
-    }
+    };
 
     const handleBack = () => {
         setSelectedRow(null);
@@ -210,16 +214,16 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                         {userData.addresses &&
                             <Grid item xs={4}>
                                 <InputText
-                                    label=" Address Name"
+                                    label="Address Name"
                                     as="select"
-                                    value={selectedLandmark}
-                                    onChange={handleLandmarkChange}
+                                    value={selectedAddressId}
+                                    onChange={handleAddressChange}
                                     className="Form-control input"
                                     style={{ outline: "none" }}
                                 >
                                     <option value="">Select Name</option>
                                     {userData.addresses.map((address, index) => (
-                                        <option key={index} value={address.landmark}>
+                                        <option key={index} value={address.id}>
                                             {address.landmark}
                                         </option>
                                     ))}
@@ -233,7 +237,7 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                                 label="Address"
                                 name="address"
                                 type="text"
-                                value={userData.addresses ? addressDetails : userData.address}
+                                value={addressDetails}
                                 disabled
                                 className="form-control input"
                             />
