@@ -67,7 +67,6 @@ function Salonownerdetails({ id, allowEdit, salonDetail, fetchSalonDetailData })
     };
 
     const formatPayloadDate = (date) => {
-        // Check if date is already in dd-MM-yyyy format
         const regex = /^\d{2}-\d{2}-\d{4}$/;
         if (regex.test(date)) {
             return date;

@@ -8,7 +8,6 @@ import CustomTitle from "../CustomTitle";
 import CommonImage from "../common-component/CommonImage";
 import { deleteCouponType } from "../../api/account.api";
 import Notify from "../../utils/notify";
-import { JoinedDate } from "../common-component/Formatdate/Joinedondate.jsx"
 import { formatDate } from "../common-component/Formatdate/Formatdate.jsx";
 
 const CouponDetails = ({ onEditCoupon, couponData, searchByText, setOption }) => {

@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
-import { doLogin, getFeature } from "../../api/account.api";
+import { doLogin } from "../../api/account.api";
 import { storeToken } from "../../features/authInfo";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Notify from "../../utils/notify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import { Col, Container, Row } from "react-bootstrap";
 import logo from "../../assets/image/DLogo.png";
 import { LoginSchema } from "../../utils/schema";
-import { setFeature } from "../../features/featuresSlice";
 
 const initialValues = {
   email: "",
@@ -18,7 +17,6 @@ const initialValues = {
 
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
@@ -32,7 +30,7 @@ const App = () => {
         role: res.data.data.role,
       };
       dispatch(storeToken({ token, userInfo }));
-      navigate("/user-management");
+      navigate("/dashboard");
       setSubmitting(false);
     } catch (error) {
       Notify.error(error.message);

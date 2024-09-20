@@ -6,7 +6,6 @@ import InputText from '../../../common-component/Inputtext/InputText';
 import { updateSalonDetails } from '../../../../api/account.api';
 import Notify from "../../../../utils/notify";
 import { salonDetailsSchema } from "../../../../utils/schema";
-import Salonstatus from '../Salonstatus/Salonstatus';
 
 function SalonDetails({ salonDetail,allowEdit }) {
     const [isEditing, setIsEditing] = useState(false);

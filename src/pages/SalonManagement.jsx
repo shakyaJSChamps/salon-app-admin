@@ -125,12 +125,6 @@ const SaloonManagement = () => {
       sortable: true,
     },
     
-    // {
-    //   name: "Service Type",
-    //   selector: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.serviceType}</p>,
-    //   sortable: true,
-    // },
-
     {
       name: "City",
       cell: (row) => <p onClick={() => handleRowClick(row)} className="cursor-pointer">{row.city}</p>,

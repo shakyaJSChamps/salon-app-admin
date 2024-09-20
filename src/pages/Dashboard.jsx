@@ -54,8 +54,6 @@ const Dashboard = () => {
     getAppointmentCount();
   }, []);
 
-  const uData = [2000, 3000, 3200];
-  const vData = [3200, 4000, 3200];
 
   const data = [
     {
@@ -74,21 +72,21 @@ const Dashboard = () => {
     },
 
     {
-      id: 1,
+      id: 3,
       imageSrc: booking,
       title: "Total Completed Booking",
       value: <CountUp start={0} end={completed} duration={5} />,
       color: "green",
     },
     {
-      id: 2,
+      id: 4,
       imageSrc: cancel,
       title: "Total Cancelled Booking",
       value: <CountUp start={0} end={cancelled} duration={5} />,
       color: "red",
     },
     {
-      id: 3,
+      id: 5,
       imageSrc: email,
       title: "Total Upcoming Bookings",
       value: <CountUp start={0} end={upcoming} duration={5} />,

@@ -49,7 +49,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
       if (result.isConfirmed) {
         handleDeleteClick(row.id);
       }
-    });
+    });s
   };
 
   const handleChangePage = (newPage) => {
@@ -57,7 +57,7 @@ const ServiceADS = ({ adsData, onEditRow, onDeleteRow, searchByText, setOption})
   };
 
   const totalRows = adsData.length;
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
+  
 
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = Math.min(startIndex + rowsPerPage, totalRows);

@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[958],{9958:(a,s,e)=>{e.r(s),e.d(s,{default:()=>p});e(2791);var n=e(184);const p=()=>(0,n.jsx)("div",{children:"PaymentMan"})}}]);
-//# sourceMappingURL=958.2831f011.chunk.js.map

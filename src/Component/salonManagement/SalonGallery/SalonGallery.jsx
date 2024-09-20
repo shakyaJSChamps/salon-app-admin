@@ -17,13 +17,13 @@ function SalonGallery({ salonDetail, bannerImages, gallaryImages, allowEdit }) {
 
     useEffect(() => {
         if (gallaryImages) {
-            setGallaryImage(gallaryImages || []);
+            setGallaryImage(gallaryImages);
         }
     }, [gallaryImages]);
 
     useEffect(() => {
         if (bannerImages) {
-            setBannerImage(bannerImages || []);
+            setBannerImage(bannerImages);
         }
     }, [bannerImages]);
 

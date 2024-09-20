@@ -3,20 +3,15 @@ import { NavLink } from "react-router-dom";
 import { FaChartPie } from "react-icons/fa";
 import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { MdOutlineContentCut } from "react-icons/md";
-import { MdOutlineAccessibility } from "react-icons/md";
 import { MdOutlineContentPaste } from "react-icons/md";
 import { MdOutlineConfirmationNumber } from "react-icons/md";
-import { RiBarChartFill, RiFolderReceivedLine } from "react-icons/ri";
+import { RiBarChartFill} from "react-icons/ri";
 import { MdOutlineContactMail } from "react-icons/md";
-import { MdSend } from "react-icons/md";
-import { MdOutlinePayment } from "react-icons/md";
-import { IoMdNotifications } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
 import { RiShieldUserLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getFeature } from "../../api/account.api";
 import { setFeature } from "../../features/feature";
-import Notify from "../../utils/notify";
 import SidebarLoader from "./sidebarloader/SidebarLoader";
 
 const Sidebar = (props) => {
@@ -65,31 +60,31 @@ const Sidebar = (props) => {
     Dashboard: <FaChartPie />,
     UserManagement: <MdOutlineSupervisorAccount />,
     SalonManagement: <MdOutlineContentCut />,
-    FreelanceManagement: <MdOutlineAccessibility />,
+    // FreelanceManagement: <MdOutlineAccessibility />,
     ServiceTypeManagement: <MdOutlineContentPaste />,
     CouponManagement: <MdOutlineConfirmationNumber />,
-    AppointmentManagement: <MdOutlineSupervisorAccount />,
+    // AppointmentManagement: <MdOutlineSupervisorAccount />,
     SalesPerson: <RiBarChartFill />,
     AdsManagement: <MdOutlineContactMail />,
-    PaymentManagement: <MdOutlinePayment />,
-    Notifications: <IoMdNotifications />,
+    // PaymentManagement: <MdOutlinePayment />,
+    // Notifications: <IoMdNotifications />,
     Setting: <MdSettingsSuggest />,
   };
 
-  const notificationsSubmenu = {
-    children: [
-      {
-        name: "Send Notification",
-        path: "/send-notification",
-        icon: <MdSend />,
-      },
-      // {
-      //   name: "Receive Notification",
-      //   path: "/receive-notification",
-      //   icon: <RiFolderReceivedLine />,
-      // },
-    ],
-  };
+  // const notificationsSubmenu = {
+  //   children: [
+  //     {
+  //       name: "Send Notification",
+  //       path: "/send-notification",
+  //       icon: <MdSend />,
+  //     },
+  //     // {
+  //     //   name: "Receive Notification",
+  //     //   path: "/receive-notification",
+  //     //   icon: <RiFolderReceivedLine />,
+  //     // },
+  //   ],
+  // };
 
   const settingsSubmenu = {
     children: [

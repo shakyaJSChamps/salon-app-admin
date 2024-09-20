@@ -24,8 +24,8 @@ const CustomTitle = (props) => {
               >
 
                 {
-                  searchOptions.map((item) => (
-                    <option>
+                  searchOptions.map((item,index) => (
+                    <option key={index}>
                       {item}
                     </option>
                   ))

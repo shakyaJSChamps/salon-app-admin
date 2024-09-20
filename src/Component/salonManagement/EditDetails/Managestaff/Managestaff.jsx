@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
-import { Grid, FormControl, Select, MenuItem, FormControlLabel } from "@mui/material";
+import { Grid, FormControl, Select, MenuItem } from "@mui/material";
 import InputText from "../../../common-component/Inputtext/InputText";
 import { deleteStaff, salonStaff, updateSalonStaff } from "../../../../api/account.api";
 import styles from "./Managestaff.module.css";

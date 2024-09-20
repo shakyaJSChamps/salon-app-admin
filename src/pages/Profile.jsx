@@ -14,7 +14,6 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
-const settings = ["Profile", "Sign Out"];
 
 const Profile = () => {
   const navigate = useNavigate();

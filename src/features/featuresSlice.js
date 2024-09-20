@@ -4,7 +4,7 @@ import Session from "../service/session";
 const featureSlice = createSlice({
   name: "feature",
   initialState: {
-    value: JSON.parse(Session.get("feature")) || [], // Initial state is an empty array
+    value: JSON.parse(Session.get("feature")) || [],
   },
   reducers: {
     setFeature: (state, action) => {

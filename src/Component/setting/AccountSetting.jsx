@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
-import { MdSettingsSuggest } from "react-icons/md";
 import ellips from "../../assets/image/ellipse.webp";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { AccountSettingSchema } from "../../utils/schema";
 import AccountDropDown from "./SettingDropDown";
 import InputText from "../common-component/Inputtext/InputText";

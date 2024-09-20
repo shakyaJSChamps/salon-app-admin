@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[489],{4489:(a,n,p)=>{p.r(n),p.d(n,{default:()=>e});p(2791);var s=p(184);const e=()=>(0,s.jsx)("div",{children:"AppointmentMan"})}}]);
-//# sourceMappingURL=489.907950ea.chunk.js.map

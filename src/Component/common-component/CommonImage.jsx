@@ -16,10 +16,6 @@ const CommonImage = ({ imageUrl, alt, classes }) => {
     img.src = imageUrl;
   }, [imageUrl]);
 
-  if (!isValid === null) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <img
       src={isValid ? imageUrl : Profile}

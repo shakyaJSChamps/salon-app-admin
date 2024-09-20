@@ -9,7 +9,6 @@ export const fetchSalonTypes = createAsyncThunk(
     return response.data;
   }
   );
-  // console.log("respose data ::::>", response.data);
 
 const salonTypesSlice = createSlice({
   name: 'salonTypes',

@@ -9,7 +9,6 @@ import { deleteSubAdmin, getSubAdmin } from "../../api/account.api";
 import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import Notify from "../../utils/notify";
-import { formatDate } from "../common-component/Formatdate/Formatdate";
 import { JoinedDate } from "../common-component/Formatdate/Joinedondate";
 
 const ManageSubAdmin = () => {

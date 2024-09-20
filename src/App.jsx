@@ -11,7 +11,7 @@ function App() {
   const location = useLocation();
 
   if (authToken && location.pathname === "/account/login") {
-    return <Navigate to={"/user-management"} />;
+    return <Navigate to={"/dashboard"} />;
   }
 
   return (

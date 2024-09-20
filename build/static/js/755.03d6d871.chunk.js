@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksaloon_app=self.webpackChunksaloon_app||[]).push([[755],{5755:(a,s,e)=>{e.r(s),e.d(s,{default:()=>o});e(2791);var n=e(184);const o=()=>(0,n.jsx)("div",{children:"Notification"})}}]);
-//# sourceMappingURL=755.03d6d871.chunk.js.map

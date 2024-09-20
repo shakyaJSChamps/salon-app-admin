@@ -3,7 +3,6 @@ import { isValidImageUrl } from "../../constants";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { getUserData, updateUser, getUserAppointments, restoreUser } from "../../api/account.api";
 import Notify from "../../utils/notify";
-import Loader from "../Loader";
 import InputText from '../common-component/Inputtext/InputText';
 import { Grid } from '@mui/material';
 import { Form, Formik } from 'formik';
@@ -106,7 +105,7 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                 <div className='d-flex justify-content-between'>
                     <h4>User Details</h4>
                     <div className='d-flex gap-2'>
-                        {userData.deletedAt === null ? (
+                        {userData?.deletedAt === null ? (
                             <button
                                 onClick={handleToggleBlock}
                                 className={`${styles.btn} ${active ? styles.bgGreen : styles.bgRed}`}
@@ -115,7 +114,7 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                             </button>
                         ) : null}
 
-                        {userData.deletedAt !== null ? (
+                        {userData?.deletedAt !== null ? (
                             <button
                                 onClick={handlerestore}
                                 className={`${styles.btn} ${active ? styles.bgGreen : styles.bgRed}`}
@@ -124,14 +123,13 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                             </button>
                         ) : null}
                     </div>
-
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-center">
                 {isValidImageUrl(userData?.profileImageUrl) ? (
                     <Zoom>
                         <img
-                            src={userData.profileImageUrl}
+                            src={userData?.profileImageUrl}
                             alt="Profile"
                             style={{
                                 width: 100,
@@ -210,8 +208,7 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                             />
                         </Grid>
 
-
-                        {userData.addresses &&
+                        {userData?.addresses &&
                             <Grid item xs={4}>
                                 <InputText
                                     label="Address Name"
@@ -222,7 +219,7 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                                     style={{ outline: "none" }}
                                 >
                                     <option value="">Select Name</option>
-                                    {userData.addresses.map((address, index) => (
+                                    {userData?.addresses.map((address, index) => (
                                         <option key={index} value={address.id}>
                                             {address.landmark}
                                         </option>
@@ -230,7 +227,6 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                                 </InputText>
                             </Grid>
                         }
-
 
                         <Grid item xs={4}>
                             <InputText
@@ -243,17 +239,17 @@ function Userdata({ rowData, setUpdatedRowData, setSelectedRow }) {
                             />
                         </Grid>
 
-                        {userData.deletedAt !== null ?
+                        {userData?.deletedAt !== null ? (
                             <Grid item xs={4}>
                                 <InputText
                                     label="Deleted At"
                                     name="deletedAt"
                                     type="text"
-                                    value={JoinedDate(userData.deletedAt)}
+                                    value={JoinedDate(userData?.deletedAt)}
                                     disabled
                                 />
-                            </Grid> : null
-                        }
+                            </Grid>
+                        ) : null}
                     </Grid>
                 </Form>
             </Formik>

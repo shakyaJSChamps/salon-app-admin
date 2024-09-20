@@ -75,7 +75,6 @@ function SalesDetails() {
           }
         }
         onSubmit={addSales}
-        // enableReinitialize
       >
         <Form id="salesDetails">
           <Grid container spacing={2}>
@@ -162,35 +161,30 @@ function SalesDetails() {
               <InputText
                 label="Account Number"
                 name="accountNumber"
-              // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="Account Holder Name"
                 name="accountHolderName"
-              // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="Bank Name"
                 name="bankName"
-              // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="IFSC Code"
                 name="ifscCode"
-              // disabled={!isEditing}
               />
             </Grid>
             <Grid item xs={4}>
               <InputText
                 label="Address"
                 name="address"
-              // disabled={!isEditing}
               />
             </Grid>
           </Grid>

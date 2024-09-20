@@ -3,19 +3,10 @@ import { MdOutlineContentPaste } from "react-icons/md";
 import Swal from "sweetalert2";
 import { getServiceType, deleteServiceType } from "../../api/account.api";
 import Notify from "../../utils/notify";
-import {
-  Paper,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Button,
-} from "@mui/material";
+import {Paper} from "@mui/material";
 import DataTable from "react-data-table-component";
 import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import FDate from "../controls/FDate";
-import CustomTitle from "../CustomTitle";
 import Profile from "../../assets/image/dummy-profile.jpg";
 import { isValidImageUrl } from "../../constants";
 import CommonImage from "../common-component/CommonImage";

@@ -1,10 +1,9 @@
-// In features/countriesInfo.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const featureSlice = createSlice({
   name: "feature",
   initialState: {
-    value: [], // Initial state is an empty array
+    value: [], 
   },
   reducers: {
     setFeature: (state, action) => {

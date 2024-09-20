@@ -23,12 +23,12 @@ function Pending({ appointmentData, appointments }) {
     return (
         <div>
             <div className='d-flex flex-row flex-wrap gap-4'>
-                {pendingAppointments.map((data, index) => (
+                {pendingAppointments?.map((data, index) => (
                     <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
                         <div className='d-flex justify-content-around align-items-center'>
                             <div>
-                                {data?.user?.profileImageUrl ? (
-                                    <img src={data?.user?.profileImageUrl} style={{ height: "85px", width: "85px" }} alt="User" />
+                                {data.user.profileImageUrl ? (
+                                    <img src={data.user.profileImageUrl} style={{ height: "85px", width: "85px" }} alt="User" />
                                 ) : (
                                     <img src={Profile} style={{ height: "85px", width: "85px" }} alt="User" />
                                 )}

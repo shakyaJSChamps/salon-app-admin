@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../updateSalesDetails/Updatesalesdetails.module.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form,ErrorMessage } from "formik";
 import { Grid } from "@mui/material";
 import Notify from "../../../utils/notify.js";
 import InputText from "../../common-component/Inputtext/InputText.jsx";
@@ -70,10 +70,7 @@ function UpdateSalesDetails({ payload, id, allowEdit, handleBack }) {
                 ...values,
                 dob: formatPayloadDate(values.dob)
             };
-            // console.log("Payload being sent:", formattedValues);
             const response = await updateSaleDetails(formattedValues, saleDetails.userId);
-            // console.log("API Response:", response);
-            // fetchSalesDetail();
             Notify.success(response.data.message);
             setIsEditing(false);
         } catch (error) {

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import styles from './Salonstatus.module.css';
 import Notify from "../../../../utils/notify"
 import { salonStatus } from '../../../../api/account.api';

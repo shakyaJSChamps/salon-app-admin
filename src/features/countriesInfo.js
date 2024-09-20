@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const countriesSlice = createSlice({
   name: 'countries',
   initialState: {
-    data: [], // Initial state is an empty array
-    searchTerm: '', // New state property for search term
+    data: [],
+    searchTerm: '', 
   },
   reducers: {
     setCountries: (state, action) => {

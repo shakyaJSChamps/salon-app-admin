@@ -8,7 +8,6 @@ import { addSalesDetails } from "../../../api/account.api.js";
 import ImageUpdate from "../../common-component/Imageupdate/ImageUpdate.jsx";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { formatInputDate } from "../../common-component/Formatdate/Formatdate.jsx";
 import { salesDetailsSchema } from "../../../utils/schema.js";
 import { format } from 'date-fns';
 

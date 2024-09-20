@@ -10,19 +10,19 @@ const Qrcode = ({ salonDetail }) => {
     const getQr = async () => {
       try {
         const response = await getQrCode(salonDetail.id);
-        console.log("API response:", response);  // Debugging log
+        console.log("API response:", response); 
 
         if (response && response.data && response.data.data) {
           const myQR = response.data.data;
           const qrCode = `data:image/png;base64,${myQR}`;
-          console.log("Formatted QR code:", qrCode);  // Debugging log
+          console.log("Formatted QR code:", qrCode); 
 
           setQr(qrCode);
         } else {
           throw new Error("Invalid QR code data");
         }
       } catch (error) {
-        console.error("Failed to fetch QR code:", error);  // Added console error
+        console.error("Failed to fetch QR code:", error); 
         Notify.error(error.message || "Failed to fetch QR code");
       }
     };

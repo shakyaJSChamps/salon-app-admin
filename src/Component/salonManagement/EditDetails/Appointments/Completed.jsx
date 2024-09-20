@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Paper, responsiveFontSizes } from '@mui/material';
+import React, { useState } from 'react';
+import { Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import styles from "./Appointments.module.css";
 import { MdOutlineFileDownload } from 'react-icons/md';
@@ -24,22 +24,6 @@ function Completed({ appointmentData, appointments }) {
 
     const handleCloseDrawer = () => setDrawerOpen(false);
     const completedAppointments = appointmentData ? appointmentData.filter(data => data.status === "COMPLETED") : [];
-
-    const invoiceData = {
-        image: null,
-        name: "Aniket Singh",
-        address: "2972 Westheimer Rd. Santa Ana, Illinois 85486",
-        phone: "(603) 555-0123",
-        email: "tim.jennings@example.com",
-        paymentMethod: "Credit Card",
-        billName: "Aniket Singh",
-        type: "Service",
-        tax: "$50",
-        amount: "$500",
-        total: "$550",
-    };
-
-
 
     const fetchInvoice = async (id) => {
         try {
@@ -98,10 +82,10 @@ function Completed({ appointmentData, appointments }) {
 
     return (
         <div className='d-flex flex-row flex-wrap gap-5'>
-            {completedAppointments.map((data, index) => (
+            {completedAppointments?.map((data, index) => (
                 <Paper elevation={3} style={{ width: "455px" }} key={index} className={styles.paper}>
                     <div className='d-flex justify-content-around align-items-center'>
-                        <div>{data?.user?.profileImageUrl ? (<img src={data?.user?.profileImageUrl} style={{ height: "85px", width: "85px" }}></img>)
+                        <div>{data.user.profileImageUrl ? (<img src={data.user.profileImageUrl} style={{ height: "85px", width: "85px" }}></img>)
                             : (<img src={Profile} style={{ height: "85px", width: "85px" }}></img>)}
 
                         </div>

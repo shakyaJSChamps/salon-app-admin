@@ -4,8 +4,10 @@ const MIN_AGE = 18;
 const getMinDOBDate = () => {
   const currentDate = new Date();
   return new Date(currentDate.getFullYear() - MIN_AGE, currentDate.getMonth(), currentDate.getDate());
-
 }
+
+const today = new Date();
+const currentMonth = today.getMonth() + 1;
 
 export const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -157,9 +159,6 @@ export const newADSSchema = Yup.object().shape({
 });
 
 
-const today = new Date();
-const currentYear = today.getFullYear();
-const currentMonth = today.getMonth() + 1;
 
 export const couponSchema = Yup.object().shape({
   name: Yup.string()
